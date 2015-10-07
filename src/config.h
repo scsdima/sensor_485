@@ -1,0 +1,43 @@
+#define _PIC18F45K20
+
+#pragma config IESO=OFF, FOSC=INTIO67, FCMEN=OFF
+#pragma config BOREN=NOSLP, BORV=27,PWRT=ON
+#pragma config WDTPS=1024, WDTEN=ON, PBADEN=OFF,LPT1OSC=ON,MCLRE=ON,HFOFST=ON
+#pragma config DEBUG=OFF,STVREN=ON,XINST=OFF,LVP=OFF
+#pragma config CP0=OFF,CP1=OFF,CP2=OFF,CP3=OFF
+
+
+#ifndef CONFIG_H
+#define CONFIG_H
+
+#define ANALOG_SIGNAL  				0   // AN0
+#define ANALOG_CABLE_TAMPER  		1   //AN1
+#define ANALOG_POWER  				2   //AN2
+
+
+
+#define PIN_TRIM0			LATDbits.LATD0
+#define PIN_TRIM1			LATDbits.LATD1
+#define PIN_TRIM2			LATDbits.LATD2
+#define PIN_TRIM3			LATDbits.LATD3
+#define PIN_DET_INHIBIT		LATDbits.LATD4
+#define PIN_DET_CONTROL     LATDbits.LATD5
+#define PIN_LED_TAMPER 		LATDbits.LATD6
+#define PIN_LED_ALARM 		LATDbits.LATD7
+
+#define PIN_REED_CONTACT	PORTDbits.RB0
+#define PIN_SENSE0			PORTDbits.RB1
+#define PIN_SENSE1			PORTDbits.RB2
+#define PIN_SENSE2			PORTDbits.RB3
+#define PIN_SENSE3			PORTDbits.RB4
+#define PIN_SENSE4			PORTDbits.RB5
+
+#define PIN_ZERO_CROSS		PORTCbits.RC0
+#define PIN_COMM_POWER_DOWN	LATCbits.LATC1
+#define PIN_I2C_SCLW		LATCbits.LATC3	
+#define PIN_I2C_SCLR		PORTCbits.PORTC3	
+#define PIN_I2C_SDAW		LATCbits.LATC4	
+#define PIN_I2C_SDAR		PORTCbits.PORTC4
+
+
+#endif

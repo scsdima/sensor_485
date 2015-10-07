@@ -1,0 +1,20 @@
+_startup: CODE, 450 0 38
+_scheduler_event_clear: CODE, 382 0 68
+_sysclk_init: CODE, 640 0 6
+_delay_interrupt_service: CODE, 616 0 16
+_sysclk_setup_intosc: CODE, 600 0 16
+_main: CODE, 488 0 4294967258
+_this_get_next: CODE, 44 0 84
+_this_execute_event: CODE, 308 0 74
+_uart_init: CODE, 584 0 16
+__initialization: CODE, 226 0 72
+_syx_param_list: MEDIUMCONST, 32134 0 528
+_isr_high: CODE, 8 0 32
+_syx_cmd_list: MEDIUMCONST, 32662 0 105
+_rd_buffer_init: CODE, 142 0 84
+_scheduler_process: CODE, 520 0 28
+_delay_ms: CODE, 566 0 18
+_adc_init: CODE, 548 0 18
+PL2: CODE, 128 0 14
+_scheduler_empty: CODE, 632 0 8
+Total: 1187
