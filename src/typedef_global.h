@@ -21,12 +21,7 @@ typedef enum {
     RESULT_FAIL =     0
 } ResultSuccess_t;
 
-/*cable state*/
-typedef enum {
-    CABLE_NORMAL =  0, /* normal state cable is ok */
-    CABLE_SHORT =   1, /* terminal is shorted */
-    CABLE_NO_END =  2 /* Cable has no resistor */
-} CableState_t;
+
 
 
 

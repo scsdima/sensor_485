@@ -6,82 +6,82 @@
   @Function name:  vcInit
   @Return: (void)
   @Parameters:
-        PeakDetector_t *vc
+        PeakDetector_t *d
   @Description: detector initialization
 
  ********************************************************************* */
-void pd_init(PeakDetector_t *vc) {
-    UINT8 i;
-    for (i = 0; i < vc->config.lval_cnt; i++) {
-        vc->last_v_buf[i] = 0;
+void pd_init(PeakDetector_t *d) {
+    IDX8 i;
+    for (i = 0; i < d->config.lval_cnt; i++) {
+        d->last_v_buf[i] = 0;
     }
-    vc->last_v = 0;
-    vc->last_v_idx = 0;
-    vc->ref_v_idx = 0;
-    vc->status.firststart = TRUE;
+    d->last_v = 0;
+    d->last_v_idx = 0;
+    d->ref_v_idx = 0;
+    d->status.firststart = TRUE;
 }
 
 /* *********************************************************************
   @Function name:  vcAddNewValue
   @Return: (    BOOL) - alarm = 1 
   @Parameters:
-        PeakDetector_t*vc
-         UINT16 val
+        PeakDetector_t*d
+         INT24 val
   @Description: adds new value to detect aarm or warning
 
  ********************************************************************* */
-BOOL pd_add_value(PeakDetector_t*vc, UINT16 val) {
-    UINT8 i;
-    INT32 tmp;
+BOOL pd_add_value(PeakDetector_t*d, INT24 val) {
+    IDX8 i;
+    INT24 tmp;
 
-    vc->last_v_idx %= vc->config.lval_cnt;
-    vc->last_v_buf[vc->last_v_idx] = (INT24) val;
-    vc->last_v_idx++;
-    vc->last_v = vc->cur_v;
-    vc->cur_v = vc->next_v; //current_value = new_value
-    vc->next_v = val; //new_value = value
+    d->last_v_idx %= d->config.lval_cnt;
+    d->last_v_buf[d->last_v_idx] = (INT24) val;
+    d->last_v_idx++;
+    d->last_v = d->cur_v;
+    d->cur_v = d->next_v; //current_value = new_value
+    d->next_v = val; //new_value = value
 
     tmp = 0;
-    for (i = 0; i < vc->config.lval_cnt; i++) {
-        tmp += vc->last_v_buf[i];
+    for (i = 0; i < d->config.lval_cnt; i++) {
+        tmp += d->last_v_buf[i];
     }
-    vc->avlv = tmp/vc->config.lval_cnt;
+    d->avlv = tmp/d->config.lval_cnt;
 
-    vc->wval = vc->cur_v * vc->cur_v - vc->avlv * vc->next_v; // y(x) = x(n)*x(n) - x(n+1)*x(n-1);
-    //sprintf(buf,"w=%d,trig=%d",vc->wval,vc->config.wtrigger
-    if ((ABS(vc->wval)) > vc->config.wtrigger) {
-        if (!vc->status.alarm && !vc->status.firststart) {
-            vc->status.alarm = 1;
+    d->wval = d->cur_v * d->cur_v - d->avlv * d->next_v; // y(x) = x(n)*x(n) - x(n+1)*x(n-1);
+    //sprintf(buf,"w=%d,trig=%d",d->wval,d->config.wtrigger
+    if ((ABS(d->wval)) > d->config.wtrigger) {
+        if (!d->status.alarm && !d->status.firststart) {
+            d->status.alarm = 1;
             return TRUE;
         }
     }
-    if (vc->status.alarm && (ABS(vc->wval)) < NORMAL_SIGNAL_WLEV
-            && ABS(vc->cur_v - vc->ref_v) < vc->config.tolerance
-            && ABS(vc->next_v - vc->ref_v) < vc->config.tolerance) {
+    if (d->status.alarm && (ABS(d->wval)) < NORMAL_SIGNAL_WLEV
+            && ABS(d->cur_v - d->ref_v) < d->config.tolerance
+            && ABS(d->next_v - d->ref_v) < d->config.tolerance) {
 
-        for (i = 0; i < vc->config.lval_cnt; i++) {
-            vc->last_v_buf[i] = vc->cur_v;
+        for (i = 0; i < d->config.lval_cnt; i++) {
+            d->last_v_buf[i] = d->cur_v;
         }
-        vc->status.alarm = FALSE;
+        d->status.alarm = FALSE;
     }
 
-    //  if((!vc->alarm && vc->wval<10 )||wc.firststart)
-    if (ABS(vc->wval) < QUIET_SIGNAL_WLEV) {
-        if (vc->ref_v_idx == 9) {
-            vc->status.firststart = FALSE;
+    //  if((!d->alarm && d->wval<10 )||wc.firststart)
+    if (ABS(d->wval) < QUIET_SIGNAL_WLEV) {
+        if (d->ref_v_idx == 9) {
+            d->status.firststart = FALSE;
         }
 
         /* adding new value to rval*/
-        vc->ref_v_buf[vc->ref_v_idx] = vc->cur_v;
-        vc->ref_v_idx = (vc->ref_v_idx + 1) % vc->config.rval_cnt;
+        d->ref_v_buf[d->ref_v_idx] = d->cur_v;
+        d->ref_v_idx = (d->ref_v_idx + 1) % d->config.rval_cnt;
 
         /*calculating refference value*/
         tmp = 0;
-        for (i = 0; i < vc->config.rval_cnt; i++) {
-            tmp += vc->ref_v_buf[i];
+        for (i = 0; i < d->config.rval_cnt; i++) {
+            tmp += d->ref_v_buf[i];
         }
         /* calculating average value*/
-        vc->ref_v = tmp/vc->config.rval_cnt;
+        d->ref_v = tmp/d->config.rval_cnt;
     }
 
     return FALSE;
@@ -89,17 +89,17 @@ BOOL pd_add_value(PeakDetector_t*vc, UINT16 val) {
 
 
 /* *********************************************************************
-  @Function name:  vc_result
+  @Function name:  pd_result
   @Return: (void)
   @Parameters:
-        PeakDetector_t *vc
+        PeakDetector_t *d
          UINT16 *value
          UINT16 *time
   @Description: gets result from algoritm
 
  ********************************************************************* */
-void pd_result(PeakDetector_t *vc, UINT16 *value, UINT16 *time) {
+void pd_result(PeakDetector_t *d, INT24 *pvalue, INT24 *ptime) {
     /*allways return 0*/
-    *value = 0;
-    *time = 0;
+    *pvalue = 0;
+    *ptime = 0;
 }

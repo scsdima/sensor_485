@@ -43,11 +43,11 @@ typedef volatile struct {
 } PeakDetector_t;
 
 
-void    pd_init(PeakDetector_t *vc);
+void    pd_init(PeakDetector_t *d);
 
-BOOL   pd_add_value(PeakDetector_t *vc, UINT16 val);
+BOOL   pd_add_value(PeakDetector_t *d, INT24 val);
 
-void    pd_result(PeakDetector_t *vc, UINT16 *value, UINT16 *time);
+void    pd_result(PeakDetector_t *d, INT24 *pvalue, INT24 *ptime);
 
 #endif
 

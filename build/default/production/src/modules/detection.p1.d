@@ -10,4 +10,5 @@ src/typedef_global.h  \
 src/modules/detection.h  \
 src/modules/timers.h  \
 src/memory_register_map.h  \
-src/drivers/sw_i2c.h 
+src/drivers/sw_i2c.h  \
+src/modules/detection.h 

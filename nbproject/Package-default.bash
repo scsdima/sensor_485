@@ -10,9 +10,9 @@ CND_CONF=default
 CND_DISTDIR=dist
 TMPDIR=build/${CND_CONF}/${IMAGE_TYPE}/tmp-packaging
 TMPDIRNAME=tmp-packaging
-OUTPUT_PATH=dist/${CND_CONF}/${IMAGE_TYPE}/mamba3.X.${IMAGE_TYPE}.${OUTPUT_SUFFIX}
-OUTPUT_BASENAME=mamba3.X.${IMAGE_TYPE}.${OUTPUT_SUFFIX}
-PACKAGE_TOP_DIR=mamba3.x/
+OUTPUT_PATH=dist/${CND_CONF}/${IMAGE_TYPE}/sensor_485.${IMAGE_TYPE}.${OUTPUT_SUFFIX}
+OUTPUT_BASENAME=sensor_485.${IMAGE_TYPE}.${OUTPUT_SUFFIX}
+PACKAGE_TOP_DIR=sensor485/
 
 # Functions
 function checkReturnCode
@@ -57,15 +57,15 @@ mkdir -p ${TMPDIR}
 
 # Copy files and create directories and links
 cd "${TOP}"
-makeDirectory ${TMPDIR}/mamba3.x/bin
+makeDirectory ${TMPDIR}/sensor485/bin
 copyFileToTmpDir "${OUTPUT_PATH}" "${TMPDIR}/${PACKAGE_TOP_DIR}bin/${OUTPUT_BASENAME}" 0755
 
 
 # Generate tar file
 cd "${TOP}"
-rm -f ${CND_DISTDIR}/${CND_CONF}/package/mamba3.x.tar
+rm -f ${CND_DISTDIR}/${CND_CONF}/package/sensor485.tar
 cd ${TMPDIR}
-tar -vcf ../../../../${CND_DISTDIR}/${CND_CONF}/package/mamba3.x.tar *
+tar -vcf ../../../../${CND_DISTDIR}/${CND_CONF}/package/sensor485.tar *
 checkReturnCode
 
 # Cleanup

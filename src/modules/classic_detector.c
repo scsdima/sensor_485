@@ -1,15 +1,3 @@
-/* *********************************************************************
-
-
-  @File:classic_detector.c
-
-  @Project: MAMBA2
-  @Date: 2013\06\26 09-52-27
-  @Description: calassic detector  algoritm
-
-
- 
- ********************************************************************* */
 
 
 #include "classic_detector.h"
@@ -23,7 +11,7 @@
   @Description: initialization of detector
  
  ********************************************************************* */
-  void ccInit(ClassicDetector_t *d)
+  void cla_init(ClassicDetector_t *d)
   {
     d->sig_count=0;
     d->sig_sum=0;
@@ -32,7 +20,7 @@
   }
 
 /* ********************************************************************* 
-  @Function name:  ccAddNewValue
+  @Function name:  cla_add_value
   @Return: (    BOOL) - alarm = 1 
   @Parameters: 
   	ClassicDetector_t *d
@@ -41,7 +29,7 @@
   @Description: adds new value to algoritm
  
  ********************************************************************* */
-  BOOL ccAddNewValue(ClassicDetector_t *d,INT16 val,INT16 zero)
+  BOOL cla_add_value(ClassicDetector_t *d,INT24 val,INT24 zero)
   {
         d->cur_v = ABS(val- zero); //making from - to +        
         d->over_trig_value = (d->cur_v > d->config.sig_trig) ? (d->cur_v - d->config.sig_trig):0;
@@ -92,7 +80,7 @@
   @Description: classic detection setup
  
  ********************************************************************* */
-  void cc_setup(ClassicDetector_t *d,UINT16 trig,UINT16 trig_sum,UINT16 trig_window)
+  void cla_setup(ClassicDetector_t *d,INT24 trig,INT24 trig_sum,INT24 trig_window)
   {
     d->config.sig_trig = trig;
     d->config.sig_sum_trig = (trig_sum > SIGNAL_SUM_MINIMUM)? 
@@ -114,8 +102,8 @@
   @Description: returns result data from detection algoritm
  
  ********************************************************************* */
-void cc_result(ClassicDetector_t*d,UINT16 *value,UINT16 *time)
+void cla_result(ClassicDetector_t*d,INT24 *pvalue,INT24 *ptime)
   {
-    *value=d->sig_sum;
-    *time=d->sig_count;
+    *pvalue=d->sig_sum;
+    *ptime=d->sig_count;
   }

@@ -22,10 +22,7 @@ volatile BOOL   this_alarm;
 
 
 PeakDetector_t    pd_detector;
-
 ClassicDetector_t   cla_detector;
-
-
 
 
 /* *********************************************************************
@@ -92,55 +89,53 @@ BOOL detection_detect(void)
 {
     static BOOL alarm_cla;
     static BOOL alarm_wav;
-    INT16  zero;
-    UINT16 new_value =g_analog0;
+    INT24  zero;
 
-
-    alarm_wav = (BOOL)pd_add_value(&pd_detector, (INT16)new_value);
-    zero = (INT16)pd_detector.ref_v;/* refference zero value*/
-    alarm_cla = (BOOL)cla_add_value(&cla_detector, (INT16)new_value, zero);
+    alarm_wav = (BOOL)pd_add_value(&pd_detector, (INT24)g_analog0);
+    zero = pd_detector.ref_v;/* refference zero value*/
+    alarm_cla = (BOOL)cla_add_value(&cla_detector, (INT24)g_analog0, zero);
     this_warning = cla_detector.status.over_trig;
 
-//    switch (g_CONFIG.det_config.mode)
-//    {
-//        /*
-//         * Classical sicurit detection mode
-//         */
-//    case DETECTION_MODE_OFF :
-//        this_alarm = FALSE;
-//        break;
-//
-//    case DETECTION_MODE_CLA:                
-//        ///*D*/   printf("\ncalassic val:%d zero:%d cur_v:%d",new_value,this_zero,g_classicdetector.cur_v);
-//        this_alarm = alarm_cla;
-//        break;
-//        
-//        /*
-//         * vavelet function
-//         */
-//    case DETECTION_MODE_WAV:        
-//        ///*D*/   printf("\nwavelet: val:%d zero:%d cur_v:%d",new_value,this_zero,g_videodetector.avlv);
-//        this_alarm= alarm_wav;
-//        break;
-//        
-//    default:
-//        this_alarm = FALSE;
-//        break;
-//
-//    }//switch    
+   switch (g_CONFIG.det_mode)
+   {
+       /*
+        * Classical  detection mode
+        */
+   case DETECTION_MODE_OFF :
+       this_alarm = FALSE;
+       break;
+
+   case DETECTION_MODE_CLA:                
+       ///*D*/   printf("\ncalassic val:%d zero:%d cur_v:%d",new_value,this_zero,g_classicdetector.cur_v);
+       this_alarm = alarm_cla;
+       break;
+       
+       /*
+        * vavelet function
+        */
+   case DETECTION_MODE_PEAK:        
+       ///*D*/   printf("\nwavelet: val:%d zero:%d cur_v:%d",new_value,this_zero,g_videodetector.avlv);
+       this_alarm= alarm_wav;
+       break;
+       
+   default:
+       this_alarm = FALSE;
+       break;
+
+   }//switch    
     return this_alarm;
 }
 
 /* *********************************************************************
   @Function name:  detection_get_zero
-  @Return: (UINT32) Detection get zero
+  @Return: (INT24) Detection get zero
   @Parameters:
 	void
   @Description: detection get zero
 
  ********************************************************************* */
 
- INT16   detection_get_zero(void){
-    return 0;
+ INT24   detection_get_zero(void){
+    return pd_detector.ref_v;
 }
 
