@@ -121,9 +121,9 @@ BOOL rd_buffer_get(RdBuffer *pbuffer, RdBufferRecord *prec){
   if(first  != last)  {
     (*prec) = pbuffer->list[first ];
     first  ++;
-pbuffer->head.first = first ;/*DMEM_WRITE*/
+    pbuffer->head.first = first ;/*DMEM_WRITE*/
     if(first  == pbuffer->head.size){
-pbuffer->head.first = 0;/*DMEM_WRITE*/
+    pbuffer->head.first = 0;/*DMEM_WRITE*/
     }
     result = TRUE;
   }
