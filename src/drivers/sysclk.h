@@ -18,5 +18,8 @@ void sysclk_init(void);
 
 void sysclk_setup_intosc(IntOscFrequency_t frequency);
 
+// TODO get frequency
+IntOscFrequency_t sysclk_intosc(void);
+
 
 #endif

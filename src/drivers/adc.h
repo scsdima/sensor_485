@@ -6,6 +6,6 @@
 void adc_init(void);
 
 UINT16 adc_read(UINT8 adc_number);
-
+void adc_enable(BOOL on);
 
 #endif

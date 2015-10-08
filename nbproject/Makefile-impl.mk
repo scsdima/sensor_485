@@ -24,7 +24,7 @@ CLEAN_SUBPROJECTS=${CLEAN_SUBPROJECTS_${SUBPROJECTS}}
 
 
 # Project Name
-PROJECTNAME=sensor_485
+PROJECTNAME=mamba3.X
 
 # Active Configuration
 DEFAULTCONF=default

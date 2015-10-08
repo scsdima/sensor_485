@@ -2,6 +2,16 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group/>
+        <group>
+            <file>file:/C:/Users/Lenovo/Dropbox/workspaces/mamba3_project/mamba3.X/src/config.h</file>
+            <file>file:/C:/Users/Lenovo/Dropbox/workspaces/mamba3_project/mamba3.X/src/drivers/adc.c</file>
+            <file>file:/C:/Users/Lenovo/Dropbox/workspaces/mamba3_project/mamba3.X/src/startup/startup.c</file>
+            <file>file:/C:/Users/Lenovo/Dropbox/workspaces/mamba3_project/mamba3.X/src/drivers/gpio.h</file>
+            <file>file:/C:/Users/Lenovo/Dropbox/workspaces/mamba3_project/mamba3.X/src/modules/detection.c</file>
+            <file>file:/C:/Users/Lenovo/Dropbox/workspaces/mamba3_project/mamba3.X/src/drivers/uart.c</file>
+            <file>file:/C:/Users/Lenovo/Dropbox/workspaces/mamba3_project/mamba3.X/src/sensor_config.h</file>
+            <file>file:/C:/Users/Lenovo/Dropbox/workspaces/mamba3_project/mamba3.X/src/drivers/adc.h</file>
+            <file>file:/C:/Users/Lenovo/Dropbox/workspaces/mamba3_project/mamba3.X/src/main.c</file>
+        </group>
     </open-files>
 </project-private>

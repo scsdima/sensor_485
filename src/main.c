@@ -18,14 +18,20 @@
 #include "delay.h"
 
 
-/* ********************************************************************* 
-  @Function name:  main
- 
- ********************************************************************* */
 int main(void) 
 {
+	
+	startup();
+	//TRISD=0;
+	//TRISC=0;
+	//LATD=0xff;
+	//LATC=0xff;
+	PIN_LED_ALARM=1;
+	PIN_LED_TAMPER=1;
+	while(1);
     while(startup() != RESULT_SUCCESS)
     {
+	    
       delay_ms(1000);
     };
     while(1) 

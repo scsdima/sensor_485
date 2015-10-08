@@ -6,6 +6,8 @@
 
 void uart_init(void);
 
+void uart_enable(BOOL on);
+
 void uart_puts(const CHAR *pstr, SIZE size);
 
 ResultSuccess_t uart_getc(CHAR *pbyte);

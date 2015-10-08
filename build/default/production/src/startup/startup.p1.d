@@ -6,6 +6,7 @@ src/drivers/adc.h  \
 src/drivers/uart.h  \
 src/modules/scheduler.h  \
 src/modules/rd_buffer.h  \
+src/drivers/gpio.h  \
 src/modules/classic_detector.h  \
 src/compiler.h  \
 src/startup/startup.h  \

@@ -2,22 +2,34 @@
 #include "compiler.h"
 
 void  uart_init(void )
-{
-    TRISCbits.TRISC7= TRUE;
-    TRISCbits.TRISC6= TRUE;
+{    
     TXSTA   =   0b00100110;
     RCSTA   =   0b10010000;
     BAUDCTL =   0b00000000;
+    BAUDCON =   0b00000000;
+}
+
+void uart_set_baudrate(UINT24 baudrate)
+{
+    // TODO recalc on frequency
+    SPBRG = 12;
+    ///SPBRG = (uint16_t)(current_frequency/(64*baudrate))-1;
+}
+
+void uart_enable(BOOL on)
+{
+    RCSTA &= ~0x80;
+    RCSTA |= (UINT8)on<<7;
 }
 
 /* sends a string n-number bytes*/
 void uart_puts(const CHAR *pstr, SIZE size)
 {
     while(size-- && *pstr)
-            {            
-            uart_putc(*pstr);
-            pstr++;
-            }    
+    {            
+        uart_putc(*pstr);
+        pstr++;
+    }    
 }
 
 void uart_putc( CHAR byte)
@@ -56,12 +68,13 @@ ResultSuccess_t uart_getc(CHAR *pbyte)
 
  void uart_reset() 
 {
-    while(uart_error() || uart_byte_received())
+    while(uart_error() )
         {   
             CREN = 0;   // uart disable
             RCREG;      // dummy read
             RCREG;      // dummy read
             CREN = 1;  //uart enable
+            while(uart_byte_received());
         }   
 }
 

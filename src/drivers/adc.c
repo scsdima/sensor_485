@@ -3,23 +3,29 @@
 
 void adc_init(void)
 {
-	ADCON0	=	0b00000000;
-	ADCON1	=	0b00000000;
-	ADCON2	=	0b10111000;
+	ADCON0	=	0b00000001;// enabled
+	ADCON1	=	0b00000000;// reference vdd ,vss
+	ADCON2	=	0b10010000;
     ANSEL   =   0b01100011; //analog ports ANS5 ANS6 ANS0 ANS1
-    ANS9 = 0;
-    ANSELH  =   0;
+    ANSELH  = 0;
 }
 
-UINT16 adc_read(UINT8 adc_number )
+void adc_enable(BOOL on)
 {
+    ADCON0 &= ~1;
+    ADCON0 |= (UINT8)on;
+}
+
+UINT16  adc_read(UINT8 adc_number )
+{    
     if(ADCON0bits.CHS != adc_number)
     {
-        ADCON0 = 0b10000001 | (adc_number << 2);
+        ADCON0bits.CHS = adc_number;
+        NOP();NOP();NOP();NOP();NOP();NOP();NOP();
     }
-    GODONE = 1;
-    while (GODONE) NOP();
-    ADIF = 0;
+    ADCON0bits.GO_nDONE = TRUE;
+    while (GODONE) {NOP();NOP();}
+    ADIF = FALSE;
     return ADRES;
 }
 

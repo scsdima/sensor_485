@@ -19,5 +19,5 @@ typedef unsigned int   IDX16;//index 16 bit
 
 typedef signed  int     SIZE;
 
-
+#define BOOL CHAR
 #endif

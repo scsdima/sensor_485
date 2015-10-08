@@ -1,5 +1,5 @@
 
-# 1 "src/drivers/sw_i2c.c"
+# 1 "src/drivers/gpio.c"
 
 # 44 "C:\Program Files\Microchip\xc8\v1.12\include\pic18f45k20.h"
 extern volatile unsigned char SSPMSK @ 0xF77;
@@ -5087,212 +5087,19 @@ extern void _delaywdt(unsigned long);
 #pragma intrinsic(_delay3)
 extern void _delay3(unsigned char);
 
+# 5 "src/drivers/gpio.h"
+void gpio_init();
 
-# 9 "src\config.h"
-#pragma config FOSC = INTIO67
-#pragma config FCMEN = OFF
-#pragma config IESO = OFF
-
-
-#pragma config PWRT = ON
-#pragma config BOREN = OFF
-#pragma config BORV = 27
-
-
-#pragma config WDTEN = ON
-#pragma config WDTPS = 1024
-
-
-#pragma config CCP2MX = PORTC
-#pragma config PBADEN = OFF
-#pragma config LPT1OSC = ON
-#pragma config HFOFST = ON
-#pragma config MCLRE = OFF
-
-
-#pragma config STVREN = ON
-#pragma config LVP = OFF
-#pragma config XINST = OFF
-
-
-#pragma config CP0 = OFF
-#pragma config CP1 = OFF
-#pragma config CP2 = OFF
-#pragma config CP3 = OFF
-
-
-#pragma config CPB = OFF
-#pragma config CPD = OFF
-
-
-#pragma config WRT0 = OFF
-#pragma config WRT1 = OFF
-#pragma config WRT2 = OFF
-#pragma config WRT3 = OFF
-
-
-#pragma config WRTC = OFF
-#pragma config WRTB = OFF
-#pragma config WRTD = OFF
-
-
-#pragma config EBTR0 = OFF
-#pragma config EBTR1 = OFF
-#pragma config EBTR2 = OFF
-#pragma config EBTR3 = OFF
-
-
-#pragma config EBTRB = OFF
-
-# 6 "src/drivers/sw_i2c.c"
-static UINT16 this_gpio_sda;
-
-static UINT16 this_gpio_scl;
-
-volatile UINT8 i2c_buff;
-volatile UINT8 bitcount;
-
-
-ResultError_t this_clock_test1(void);
-
-# 33
-static
-void this_delay_i2c(volatile UINT16 tmr) {
-while (tmr--) {
-asm(" nop");
-};
-}
-
-# 66
-void sw_i2c_switch(UINT16 gpio_sda, UINT16 gpio_scl) {
-this_gpio_sda = gpio_sda;
-this_gpio_scl = gpio_scl;
-}
-
-# 81
-void sw_i2c_write_nak(void) {
-;
-;
-this_delay_i2c((200));
-;
-this_delay_i2c((200));
-}
-
-# 99
-void sw_i2c_write_ack(void) {
-;
-this_delay_i2c((200));
-;
-this_delay_i2c((200));
-}
-
-# 116
-void sw_i2c_start(void) {
-;
-;
-this_delay_i2c((200));
-;
-this_delay_i2c(2 * (200));
-}
-
-# 134
-void sw_i2c_restart(void) {
-this_delay_i2c(2 * (200));
-;
-;
-this_delay_i2c((200));
-;
-this_delay_i2c((200));
-;
-this_delay_i2c((200));
-}
-
-# 155
-void sw_i2c_stop(void) {
-this_delay_i2c((200));
-;
-;
-this_delay_i2c((200));
-;
-this_delay_i2c((200));
-;
-;
-this_delay_i2c(2 * (200));
-}
-
-# 177
-ResultError_t sw_i2c_read_ack(void) {
-;
-;
-this_delay_i2c((200) / 2);
-;
-this_delay_i2c((200));
-if (1) {
-return ( RESULT_ERROR);
-}
-return ( RESULT_NO_ERROR);
-}
-
-# 199
-ResultError_t this_clock_test1(void) {
-this_delay_i2c(2 * (200));
-if (!1) {
-return ( RESULT_NULL);
-}
-return ( RESULT_NO_ERROR);
-}
-
-# 217
-ResultError_t sw_i2c_read_byte(UINT8 *byte) {
-bitcount = 8;
-i2c_buff = 0;
-
-while (bitcount--)
+# 3 "src/drivers/gpio.c"
+void gpio_init()
 {
-;
-;
-this_delay_i2c((200));
-;
-this_delay_i2c((200) / 5);
-if (!1)
-{
-if (this_clock_test1() != RESULT_NO_ERROR) {
-return RESULT_NULL;
-}
-}
-i2c_buff <<= 1;
-i2c_buff &= (0xFEu);
 
-if (1)
-i2c_buff |= 0x01;
-}
-*byte = i2c_buff;
-return ( RESULT_NO_ERROR);
-}
 
-# 254
-ResultError_t sw_i2c_write_byte(UINT8 byte) {
-bitcount = 8;
-i2c_buff = byte;
-;
-while (bitcount--) {
-if (!1) {
-if (this_clock_test1() != RESULT_NO_ERROR) {
-return ( RESULT_ERROR);
+TRISA=0xff;
+TRISB=0xff;
+ANSELH=0;
+TRISC=0xc1;
+TRISD=0x00;
+LATC=0;
+LATD=0;
 }
-}
-;
-if (i2c_buff & 0x80) {
-;
-} else
-{
-;
-}
-i2c_buff <<= 1;
-this_delay_i2c((200));
-;
-this_delay_i2c((200));
-}
-return sw_i2c_read_ack();
-}
-
