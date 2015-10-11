@@ -1,13 +1,16 @@
 3h
 1h
-uart-2h
-init-2h
-interrupt
-roundbuf
-analog
-config/eeprom
-startup
-tasks
+uart-3h
+init-3h
+
+interrupts -1h
+analog -2h
+acc-3h
+detection - 5h
+detection_config -5h
+config/eeprom -3h
+startup -3h
+tasks - 1h
 test-lab
 test-field
 
