@@ -5107,7 +5107,7 @@ extern void _delay3(unsigned char);
 #pragma config PBADEN = OFF
 #pragma config LPT1OSC = ON
 #pragma config HFOFST = ON
-#pragma config MCLRE = OFF
+#pragma config MCLRE = ON
 
 
 #pragma config STVREN = ON
@@ -5147,21 +5147,6 @@ extern void _delay3(unsigned char);
 # 7 "src/startup\startup.h"
 ResultSuccess_t startup(void);
 
-# 18 "src/modules\scheduler.h"
-typedef void (*EventFunctionPtr_t)(UINT8);
-typedef void* EventDataPtr_t;
-typedef UINT8 Event_t;
-
-
-
-
-ResultError_t scheduler_event_setup(UINT8 event_number,EventFunctionPtr_t pevent_func);
-void scheduler_event_clear(UINT8 event_number);
-CHAR scheduler_empty(void);
-void scheduler_event_push(UINT8 event_number, UINT16 timeout,void *pevent_data);
-CHAR scheduler_event_get_data(UINT8 event_number,void **ppevent_data);
-void scheduler_process(void);
-
 
 # 9 "src\config.h"
 #pragma config FOSC = INTIO67
@@ -5182,7 +5167,7 @@ void scheduler_process(void);
 #pragma config PBADEN = OFF
 #pragma config LPT1OSC = ON
 #pragma config HFOFST = ON
-#pragma config MCLRE = OFF
+#pragma config MCLRE = ON
 
 
 #pragma config STVREN = ON
@@ -5231,26 +5216,87 @@ inline CHAR delay_timeout(void);
 
 void delay_interrupt_service(void);
 
-# 21 "src/main.c"
+# 7 "src/drivers\uart.h"
+void uart_init(void);
+
+void uart_set_baudrate(UINT24 baudrate);
+
+void uart_enable(CHAR on);
+
+void uart_puts(const CHAR *pstr, SIZE size);
+
+ResultSuccess_t uart_getc(CHAR *pbyte);
+
+
+void uart_putc(CHAR byte);
+
+
+CHAR uart_byte_available(void);
+
+
+CHAR uart_byte_sent(void);
+
+
+CHAR uart_error(void);
+
+void uart_reset(void);
+
+# 7 "src/modules\serialport.h"
+ResultSuccess_t serialport_startup(void);
+
+
+void serialport_service(void);
+
+
+void serialport_task();
+
+void serialport_write(const CHAR *pstr);
+
+# 13 "src/interrupts.c"
+interrupt static void isr_high(void)
+{
+
+if ((INTCONbits.TMR0IF) )
+{
+delay_interrupt_service();
+
+do{INTCONbits.TMR0IF=0;TMR0 = -500; }while(0);;
+}
+
+if(PIR1bits.RCIF)
+{
+
+serialport_service();
+PIR1bits.RCIF = 0;
+}
+
+# 38
+}
+
+# 8 "src/modules\scheduler.h"
+typedef void (*PEVENT)(void);
+
+
+extern volatile UINT8 pool;
+extern volatile PEVENT events[8];
+extern volatile UINT8 current_event;
+
+
+volatile UINT8 pool;
+volatile PEVENT events[8];
+volatile UINT8 current_event;
+
+# 24 "src/main.c"
 int main(void)
 {
-
-startup();
-
-
-
-
-LATDbits.LATD7=1;
-LATDbits.LATD6=1;
-while(1);
 while(startup() != RESULT_SUCCESS)
 {
-
 delay_ms(1000);
 };
+do{INTCONbits.GIEH=(1); INTCONbits.GIEL=(1);}while(0);;
 while(1)
 {
-scheduler_process();
+do{if(pool&(1<<current_event) && events[current_event]!= (0)){ events[current_event](); } pool &= ~(1<<current_event); current_event++; current_event %= 8;}while(0);;
 asm(" clrwdt");
 }
 }

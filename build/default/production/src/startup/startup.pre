@@ -5090,10 +5090,64 @@ extern void _delay3(unsigned char);
 # 7 "src/startup/startup.h"
 ResultSuccess_t startup(void);
 
-# 8 "src/modules\rd_buffer.h"
-typedef UINT8 RdBufferRecord;
+
+# 9 "src\config.h"
+#pragma config FOSC = INTIO67
+#pragma config FCMEN = OFF
+#pragma config IESO = OFF
 
 
+#pragma config PWRT = ON
+#pragma config BOREN = OFF
+#pragma config BORV = 27
+
+
+#pragma config WDTEN = ON
+#pragma config WDTPS = 1024
+
+
+#pragma config CCP2MX = PORTC
+#pragma config PBADEN = OFF
+#pragma config LPT1OSC = ON
+#pragma config HFOFST = ON
+#pragma config MCLRE = ON
+
+
+#pragma config STVREN = ON
+#pragma config LVP = OFF
+#pragma config XINST = OFF
+
+
+#pragma config CP0 = OFF
+#pragma config CP1 = OFF
+#pragma config CP2 = OFF
+#pragma config CP3 = OFF
+
+
+#pragma config CPB = OFF
+#pragma config CPD = OFF
+
+
+#pragma config WRT0 = OFF
+#pragma config WRT1 = OFF
+#pragma config WRT2 = OFF
+#pragma config WRT3 = OFF
+
+
+#pragma config WRTC = OFF
+#pragma config WRTB = OFF
+#pragma config WRTD = OFF
+
+
+#pragma config EBTR0 = OFF
+#pragma config EBTR1 = OFF
+#pragma config EBTR2 = OFF
+#pragma config EBTR3 = OFF
+
+
+#pragma config EBTRB = OFF
+
+# 11 "src/modules\rd_buffer.h"
 typedef struct {
 struct {
 
@@ -5101,16 +5155,15 @@ INT16 last;
 
 INT16 first;
 SIZE size;
-CHAR stream;
 } head;
-RdBufferRecord list[(200u)];
+UINT8 list[((100))+1];
 } RdBuffer;
 
 
-SIZE rd_buffer_capacity(RdBuffer *pbuffer);
 
-CHAR rd_buffer_init(RdBuffer *pbuffer, SIZE size, CHAR stream);
+CHAR rd_buffer_init(RdBuffer *pbuffer, SIZE size);
 
+CHAR rd_buffer_readline(RdBuffer *pbuffer, CHAR *pdata, SIZE *psize);
 
 SIZE rd_buffer_cnt(RdBuffer *pbuffer);
 
@@ -5124,18 +5177,18 @@ CHAR rd_buffer_is_full(RdBuffer *pbuffer);
 
 
 
-CHAR rd_buffer_get(RdBuffer *pbuffer,RdBufferRecord *prec);
+CHAR rd_buffer_get(RdBuffer *pbuffer,UINT8 *prec);
 
 
-CHAR rd_buffer_put(RdBuffer *pbuffer,RdBufferRecord *prec);
+CHAR rd_buffer_put(RdBuffer *pbuffer,UINT8 *prec);
 
 
 
-CHAR rd_buffer_getn(RdBuffer *pbuffer, RdBufferRecord prec[], SIZE rec_count);
+CHAR rd_buffer_getn(RdBuffer *pbuffer, UINT8 prec[], SIZE rec_count);
 
-CHAR rd_buffer_first(RdBuffer *pbuffer, RdBufferRecord *prec);
+CHAR rd_buffer_first(RdBuffer *pbuffer, UINT8 *prec);
 
-CHAR rd_buffer_last(RdBuffer *pbuffer, RdBufferRecord *prec);
+CHAR rd_buffer_last(RdBuffer *pbuffer, UINT8 *prec);
 
 # 14 "src/modules\peak_detector.h"
 typedef struct {
@@ -5265,7 +5318,6 @@ volatile UINT16 g_STATUS;
 volatile UINT16 g_analog0;
 volatile UINT16 g_analog1;
 volatile UINT16 g_analog2;
-RdBuffer g_rx_buffer;
 
 # 60
 extern volatile Config_t g_CONFIG;
@@ -5273,25 +5325,11 @@ extern volatile UINT16 g_STATUS;
 extern volatile UINT16 g_analog0;
 extern volatile UINT16 g_analog1;
 extern volatile UINT16 g_analog2;
-extern RdBuffer g_rx_buffer;
-
-# 18 "src/modules\scheduler.h"
-typedef void (*EventFunctionPtr_t)(UINT8);
-typedef void* EventDataPtr_t;
-typedef UINT8 Event_t;
-
-
-
-
-ResultError_t scheduler_event_setup(UINT8 event_number,EventFunctionPtr_t pevent_func);
-void scheduler_event_clear(UINT8 event_number);
-CHAR scheduler_empty(void);
-void scheduler_event_push(UINT8 event_number, UINT16 timeout,void *pevent_data);
-CHAR scheduler_event_get_data(UINT8 event_number,void **ppevent_data);
-void scheduler_process(void);
 
 # 7 "src/drivers\uart.h"
 void uart_init(void);
+
+void uart_set_baudrate(UINT24 baudrate);
 
 void uart_enable(CHAR on);
 
@@ -5303,7 +5341,7 @@ ResultSuccess_t uart_getc(CHAR *pbyte);
 void uart_putc(CHAR byte);
 
 
-CHAR uart_byte_received(void);
+CHAR uart_byte_available(void);
 
 
 CHAR uart_byte_sent(void);
@@ -5352,7 +5390,88 @@ IntOscFrequency_t sysclk_intosc(void);
 # 5 "src/drivers\gpio.h"
 void gpio_init();
 
-# 13 "src/startup/startup.c"
+# 7 "src/modules\serialport.h"
+ResultSuccess_t serialport_startup(void);
+
+
+void serialport_service(void);
+
+
+void serialport_task();
+
+void serialport_write(const CHAR *pstr);
+
+
+# 9 "src\config.h"
+#pragma config FOSC = INTIO67
+#pragma config FCMEN = OFF
+#pragma config IESO = OFF
+
+
+#pragma config PWRT = ON
+#pragma config BOREN = OFF
+#pragma config BORV = 27
+
+
+#pragma config WDTEN = ON
+#pragma config WDTPS = 1024
+
+
+#pragma config CCP2MX = PORTC
+#pragma config PBADEN = OFF
+#pragma config LPT1OSC = ON
+#pragma config HFOFST = ON
+#pragma config MCLRE = ON
+
+
+#pragma config STVREN = ON
+#pragma config LVP = OFF
+#pragma config XINST = OFF
+
+
+#pragma config CP0 = OFF
+#pragma config CP1 = OFF
+#pragma config CP2 = OFF
+#pragma config CP3 = OFF
+
+
+#pragma config CPB = OFF
+#pragma config CPD = OFF
+
+
+#pragma config WRT0 = OFF
+#pragma config WRT1 = OFF
+#pragma config WRT2 = OFF
+#pragma config WRT3 = OFF
+
+
+#pragma config WRTC = OFF
+#pragma config WRTB = OFF
+#pragma config WRTD = OFF
+
+
+#pragma config EBTR0 = OFF
+#pragma config EBTR1 = OFF
+#pragma config EBTR2 = OFF
+#pragma config EBTR3 = OFF
+
+
+#pragma config EBTRB = OFF
+
+# 8 "src/modules\scheduler.h"
+typedef void (*PEVENT)(void);
+
+
+extern volatile UINT8 pool;
+extern volatile PEVENT events[8];
+extern volatile UINT8 current_event;
+
+
+volatile UINT8 pool;
+volatile PEVENT events[8];
+volatile UINT8 current_event;
+
+# 15 "src/startup/startup.c"
 ResultSuccess_t startup(void)
 {
 ResultSuccess_t result = RESULT_FAIL;
@@ -5360,12 +5479,18 @@ gpio_init();
 sysclk_init();
 adc_init();
 uart_init();
-
+events[(5)] = (PEVENT)serialport_task;
+uart_puts("[1]",100);
 do{
-rd_buffer_init(&g_rx_buffer, (200u) , FALSE);
+uart_puts("[2]",100);
+if(!serialport_startup()) break;
+uart_puts("[3]",100);
 
-# 28
+
+
+
+result = RESULT_SUCCESS;
 }while(0);
-
+uart_puts("[4]",100);
 return result;
 }

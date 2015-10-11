@@ -5122,7 +5122,7 @@ ResultError_t eeprom_read_data(UINT16 addr, UINT8 *data, UINT16 len, EepromReadM
 #pragma config PBADEN = OFF
 #pragma config LPT1OSC = ON
 #pragma config HFOFST = ON
-#pragma config MCLRE = OFF
+#pragma config MCLRE = ON
 
 
 #pragma config STVREN = ON

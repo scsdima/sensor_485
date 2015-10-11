@@ -5090,6 +5090,8 @@ extern void _delay3(unsigned char);
 # 7 "src/drivers/uart.h"
 void uart_init(void);
 
+void uart_set_baudrate(UINT24 baudrate);
+
 void uart_enable(CHAR on);
 
 void uart_puts(const CHAR *pstr, SIZE size);
@@ -5100,7 +5102,7 @@ ResultSuccess_t uart_getc(CHAR *pbyte);
 void uart_putc(CHAR byte);
 
 
-CHAR uart_byte_received(void);
+CHAR uart_byte_available(void);
 
 
 CHAR uart_byte_sent(void);
@@ -5117,6 +5119,10 @@ TXSTA = 0b00100110;
 RCSTA = 0b10010000;
 BAUDCTL = 0b00000000;
 BAUDCON = 0b00000000;
+uart_set_baudrate(19200);
+
+PIE1bits.RCIE=1;
+PIR1bits.RCIF=1;
 }
 
 void uart_set_baudrate(UINT24 baudrate)
@@ -5154,11 +5160,10 @@ return TXIF;
 }
 
 
-CHAR uart_byte_received(void)
+CHAR uart_byte_available(void)
 {
-return RCIF;
+return RC1IF;
 }
-
 ResultSuccess_t uart_getc(CHAR *pbyte)
 {
 ResultSuccess_t result = RESULT_FAIL;
@@ -5167,7 +5172,7 @@ if ( uart_error())
 uart_reset();
 }
 else
-if( uart_byte_received() )
+if( uart_byte_available() )
 {
 *pbyte = RCREG;
 RCIF = 0;
@@ -5184,7 +5189,7 @@ CREN = 0;
 RCREG;
 RCREG;
 CREN = 1;
-while(uart_byte_received());
+while(uart_byte_available());
 }
 }
 

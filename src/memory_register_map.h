@@ -51,7 +51,7 @@ volatile UINT16  g_STATUS;
 volatile UINT16  g_analog0; //main signal
 volatile UINT16  g_analog1; //r of cable
 volatile UINT16  g_analog2; //pwr        
-RdBuffer    g_rx_buffer;
+
 
 
 
@@ -62,7 +62,6 @@ extern volatile UINT16 	g_STATUS;
 extern volatile UINT16  g_analog0; //main signal
 extern volatile UINT16  g_analog1; //r of cable
 extern volatile UINT16  g_analog2; //pwr        
-extern RdBuffer    g_rx_buffer;
 ///    Axis_t     axis;
 
 /*cable state*/

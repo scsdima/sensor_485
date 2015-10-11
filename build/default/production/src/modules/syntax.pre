@@ -5329,7 +5329,7 @@ static const SyntaxParameter_t syx_param_list[] = {
 };
 
 # 11 "src/modules/syntax.c"
-CHAR case_sensitive;
+CHAR this_case_sensitive;
 
 INT16 command_id;
 
@@ -5394,7 +5394,7 @@ INT16 i = 0;
 INT16 len = string_utils_strchr(pbuf, ('$'));
 while(syx_cmd_list[i].name[0] != 0x1D) {
 const char *pname = syx_cmd_list[i].name;
-CHAR is_equal = string_utils_strncmp(pbuf, pname, len, case_sensitive);
+CHAR is_equal = string_utils_strncmp(pbuf, pname, len, this_case_sensitive);
 if ( is_equal ) {
 command_id = syx_cmd_list[i].id;
 found = TRUE;
@@ -5427,7 +5427,7 @@ string_utils_copy(parameter_text, pvar, var_len);
 parameter_text[var_len] = '\0';
 while( syx_param_list[i].name[0] != 0x1D ) {
 if (string_utils_strlen( syx_param_list[i].name ) == var_len){
-CHAR is_equal = string_utils_strncmp(syx_param_list[i].name, pvar, var_len, case_sensitive);
+CHAR is_equal = string_utils_strncmp(syx_param_list[i].name, pvar, var_len, this_case_sensitive);
 if ( is_equal ) {
 parameter_id = syx_param_list[i].id;
 parameter_type = syx_param_list[i].type;
@@ -5448,6 +5448,7 @@ INT16 syntax_string(const char pstr[], CHAR case_sensitive) {
 INT16 chains ;
 INT16 result =0;
 INT16 str_len = string_utils_strlen(pstr);
+this_case_sensitive = case_sensitive;
 chains = string_utils_split(this_buf, pstr, str_len, ('$'));
 command_id = -1;
 parameter_id = -1;
@@ -5489,7 +5490,7 @@ on_parameter_found(PARSER_ERROR,-1, -1, (void*)(0), PARSER_TYPE_NO_TYPE);
 return result;
 }
 
-# 222
+# 223
 const char* syntax_get_text(void) {
 return parameter_text;
 }

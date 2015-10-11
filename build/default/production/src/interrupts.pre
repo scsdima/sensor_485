@@ -5107,7 +5107,7 @@ extern void _delay3(unsigned char);
 #pragma config PBADEN = OFF
 #pragma config LPT1OSC = ON
 #pragma config HFOFST = ON
-#pragma config MCLRE = OFF
+#pragma config MCLRE = ON
 
 
 #pragma config STVREN = ON
@@ -5156,25 +5156,34 @@ inline CHAR delay_timeout(void);
 
 void delay_interrupt_service(void);
 
-# 7 "src/interrupts.c"
+# 7 "src/modules\serialport.h"
+ResultSuccess_t serialport_startup(void);
+
+
+void serialport_service(void);
+
+
+void serialport_task();
+
+void serialport_write(const CHAR *pstr);
+
+# 13 "src/interrupts.c"
 interrupt static void isr_high(void)
 {
 
-# 14
-if (INTCONbits.TMR0IF && INTCONbits.TMR0IE)
+if ((INTCONbits.TMR0IF) )
 {
-TMR0 = -500;
-TMR0IF = 0;
-
 delay_interrupt_service();
 
+do{INTCONbits.TMR0IF=0;TMR0 = -500; }while(0);;
 }
 
-# 27
+if(PIR1bits.RCIF)
 {
 
-
+serialport_service();
+PIR1bits.RCIF = 0;
 }
 
-# 40
+# 38
 }

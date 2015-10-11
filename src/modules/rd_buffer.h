@@ -1,30 +1,29 @@
 #ifndef RD_BUFFER_H
 #define RD_BUFFER_H
 #include "compiler.h"
+#include "config.h"
+
 
 /*Round buffer max size*/
-#define RD_BUFFER_SIZE           (200u)
-
-typedef UINT8 RdBufferRecord;
+#define RD_BUFFER_SIZE           (COMMUNICATION_BUFFER_SIZE)
 
 
 typedef struct {
     struct {    
-/*last added record*/
+	/*last added record*/
     INT16  last;  
-/*current unread rcord*/
+	/*current unread rcord*/
     INT16  first;
     SIZE  size;
-    BOOL stream;
     }   head;   
-    RdBufferRecord   list[RD_BUFFER_SIZE];
+    UINT8   list[RD_BUFFER_SIZE+1];
 } RdBuffer;
 
 
-SIZE rd_buffer_capacity(RdBuffer *pbuffer);
 /*init*/
-BOOL rd_buffer_init(RdBuffer *pbuffer, SIZE size, BOOL stream);
-
+BOOL rd_buffer_init(RdBuffer *pbuffer, SIZE size);
+/**/
+BOOL rd_buffer_readline(RdBuffer *pbuffer, CHAR *pdata, SIZE *psize);
 /*gets count of records in buffer*/
 SIZE rd_buffer_cnt(RdBuffer *pbuffer);
 
@@ -38,18 +37,18 @@ BOOL rd_buffer_is_full(RdBuffer *pbuffer);
 
 /*put/get*/
 /*gets next record*/
-BOOL rd_buffer_get(RdBuffer *pbuffer,RdBufferRecord *prec);
+BOOL rd_buffer_get(RdBuffer *pbuffer,UINT8 *prec);
 
 /*puts record to periodical data buffer*/
-BOOL rd_buffer_put(RdBuffer *pbuffer,RdBufferRecord *prec);
+BOOL rd_buffer_put(RdBuffer *pbuffer,UINT8 *prec);
 
 
 /*get number of records*/
-BOOL rd_buffer_getn(RdBuffer *pbuffer, RdBufferRecord prec[], SIZE rec_count);
+BOOL rd_buffer_getn(RdBuffer *pbuffer, UINT8 prec[], SIZE rec_count);
 
-BOOL rd_buffer_first(RdBuffer *pbuffer, RdBufferRecord *prec);
+BOOL rd_buffer_first(RdBuffer *pbuffer, UINT8 *prec);
 
-BOOL rd_buffer_last(RdBuffer *pbuffer, RdBufferRecord *prec);
+BOOL rd_buffer_last(RdBuffer *pbuffer, UINT8 *prec);
 
 #endif 
 

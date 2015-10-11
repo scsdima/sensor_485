@@ -4390,8 +4390,8 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;cmd_data.h: 93: {"\x1d\x1d" ,-1 , PARSER_TYPE_NO_TYPE }
 [; ;cmd_data.h: 95: };
 "11 src/modules/syntax.c
-[v _case_sensitive `uc ~T0 @X0 1 e ]
-[; ;syntax.c: 11: CHAR case_sensitive;
+[v _this_case_sensitive `uc ~T0 @X0 1 e ]
+[; ;syntax.c: 11: CHAR this_case_sensitive;
 "13
 [v _command_id `i ~T0 @X0 1 e ]
 [; ;syntax.c: 13: INT16 command_id;
@@ -4539,8 +4539,8 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e = _pname &U . *U + &U _syx_cmd_list * -> -> _i `ui `ux -> -> # *U &U _syx_cmd_list `ui `ux 0 ]
 "101
 [v _is_equal `uc ~T0 @X0 1 a ]
-[; ;syntax.c: 101: CHAR is_equal = string_utils_strncmp(pbuf, pname, len, case_sensitive);
-[e = _is_equal ( _string_utils_strncmp (4 , , , -> _pbuf `*Cuc _pname _len _case_sensitive ]
+[; ;syntax.c: 101: CHAR is_equal = string_utils_strncmp(pbuf, pname, len, this_case_sensitive);
+[e = _is_equal ( _string_utils_strncmp (4 , , , -> _pbuf `*Cuc _pname _len _this_case_sensitive ]
 [; ;syntax.c: 102: if ( is_equal ) {
 "102
 [e $ ! != -> _is_equal `i -> -> -> 0 `i `uc `i 405  ]
@@ -4650,8 +4650,8 @@ Version 3.2 HI-TECH Software Intermediate Code
 {
 "142
 [v _is_equal `uc ~T0 @X0 1 a ]
-[; ;syntax.c: 142: CHAR is_equal = string_utils_strncmp(syx_param_list[i].name, pvar, var_len, case_sensitive);
-[e = _is_equal ( _string_utils_strncmp (4 , , , &U . *U + &U _syx_param_list * -> -> _i `ui `ux -> -> # *U &U _syx_param_list `ui `ux 0 _pvar _var_len _case_sensitive ]
+[; ;syntax.c: 142: CHAR is_equal = string_utils_strncmp(syx_param_list[i].name, pvar, var_len, this_case_sensitive);
+[e = _is_equal ( _string_utils_strncmp (4 , , , &U . *U + &U _syx_param_list * -> -> _i `ui `ux -> -> # *U &U _syx_param_list `ui `ux 0 _pvar _var_len _this_case_sensitive ]
 [; ;syntax.c: 143: if ( is_equal ) {
 "143
 [e $ ! != -> _is_equal `i -> -> -> 0 `i `uc `i 414  ]
@@ -4724,209 +4724,212 @@ Version 3.2 HI-TECH Software Intermediate Code
 [v _str_len `i ~T0 @X0 1 a ]
 [; ;syntax.c: 170: INT16 str_len = string_utils_strlen(pstr);
 [e = _str_len ( _string_utils_strlen (1 _pstr ]
-[; ;syntax.c: 171: chains = string_utils_split(this_buf, pstr, str_len, ('$'));
+[; ;syntax.c: 171: this_case_sensitive = case_sensitive;
 "171
-[e = _chains ( _string_utils_split (4 , , , &U _this_buf _pstr _str_len -> -> 36 `ui `uc ]
-[; ;syntax.c: 172: command_id = -1;
+[e = _this_case_sensitive _case_sensitive ]
+[; ;syntax.c: 172: chains = string_utils_split(this_buf, pstr, str_len, ('$'));
 "172
-[e = _command_id -U -> 1 `i ]
-[; ;syntax.c: 173: parameter_id = -1;
+[e = _chains ( _string_utils_split (4 , , , &U _this_buf _pstr _str_len -> -> 36 `ui `uc ]
+[; ;syntax.c: 173: command_id = -1;
 "173
-[e = _parameter_id -U -> 1 `i ]
-[; ;syntax.c: 174: parameter_value[0] = '\0';
+[e = _command_id -U -> 1 `i ]
+[; ;syntax.c: 174: parameter_id = -1;
 "174
-[e = *U + &U _parameter_value * -> -> -> 0 `i `ui `ux -> -> # *U &U _parameter_value `ui `ux -> -> 0 `ui `uc ]
-[; ;syntax.c: 175: parameter_text[0] = '\0';
+[e = _parameter_id -U -> 1 `i ]
+[; ;syntax.c: 175: parameter_value[0] = '\0';
 "175
-[e = *U + &U _parameter_text * -> -> -> 0 `i `ui `ux -> -> # *U &U _parameter_text `ui `ux -> -> 0 `ui `uc ]
-[; ;syntax.c: 176: if (chains >= 1 ) {
+[e = *U + &U _parameter_value * -> -> -> 0 `i `ui `ux -> -> # *U &U _parameter_value `ui `ux -> -> 0 `ui `uc ]
+[; ;syntax.c: 176: parameter_text[0] = '\0';
 "176
+[e = *U + &U _parameter_text * -> -> -> 0 `i `ui `ux -> -> # *U &U _parameter_text `ui `ux -> -> 0 `ui `uc ]
+[; ;syntax.c: 177: if (chains >= 1 ) {
+"177
 [e $ ! >= _chains -> 1 `i 417  ]
 {
-"177
-[v _pos `i ~T0 @X0 1 a ]
-[; ;syntax.c: 177: INT16 pos = 0;
-[e = _pos -> 0 `i ]
 "178
-[v _pchain `*uc ~T0 @X0 1 a ]
-[; ;syntax.c: 178: char *pchain;
-[; ;syntax.c: 179: result = chains -1;
+[v _pos `i ~T0 @X0 1 a ]
+[; ;syntax.c: 178: INT16 pos = 0;
+[e = _pos -> 0 `i ]
 "179
-[e = _result - _chains -> 1 `i ]
-[; ;syntax.c: 180: while ( chains-- ) {
+[v _pchain `*uc ~T0 @X0 1 a ]
+[; ;syntax.c: 179: char *pchain;
+[; ;syntax.c: 180: result = chains -1;
 "180
+[e = _result - _chains -> 1 `i ]
+[; ;syntax.c: 181: while ( chains-- ) {
+"181
 [e $U 418  ]
 [e :U 419 ]
 {
-[; ;syntax.c: 181: pchain = &this_buf[pos];
-"181
-[e = _pchain &U *U + &U _this_buf * -> -> _pos `ui `ux -> -> # *U &U _this_buf `ui `ux ]
-[; ;syntax.c: 182: if (pos == 0 ) {
+[; ;syntax.c: 182: pchain = &this_buf[pos];
 "182
+[e = _pchain &U *U + &U _this_buf * -> -> _pos `ui `ux -> -> # *U &U _this_buf `ui `ux ]
+[; ;syntax.c: 183: if (pos == 0 ) {
+"183
 [e $ ! == _pos -> 0 `i 421  ]
 {
-[; ;syntax.c: 184: if ( !this_parse_command( pchain ) ) {result =0;break;}
-"184
+[; ;syntax.c: 185: if ( !this_parse_command( pchain ) ) {result =0;break;}
+"185
 [e $ ! ! != -> ( _this_parse_command (1 _pchain `i -> -> -> 0 `i `uc `i 422  ]
 {
 [e = _result -> 0 `i ]
 [e $U 420  ]
 }
 [e :U 422 ]
-[; ;syntax.c: 185: on_parameter_found(PARSER_START, command_id, -1, (void*)(0), PARSER_TYPE_NO_TYPE);
-"185
-[e ( _on_parameter_found (4 , , , , -> . `E4396 1 `E4396 -> _command_id `c -> -U -> 1 `i `c -> -> -> 0 `i `*v `*Cv -> . `E4387 0 `E4387 ]
+[; ;syntax.c: 186: on_parameter_found(PARSER_START, command_id, -1, (void*)(0), PARSER_TYPE_NO_TYPE);
 "186
-}
-[; ;syntax.c: 186: }
-[e $U 423  ]
+[e ( _on_parameter_found (4 , , , , -> . `E4396 1 `E4396 -> _command_id `c -> -U -> 1 `i `c -> -> -> 0 `i `*v `*Cv -> . `E4387 0 `E4387 ]
 "187
+}
+[; ;syntax.c: 187: }
+[e $U 423  ]
+"188
 [e :U 421 ]
-[; ;syntax.c: 187: else {
+[; ;syntax.c: 188: else {
 {
-[; ;syntax.c: 189: if (this_parse_parameter( pchain ) == TRUE) {
-"189
+[; ;syntax.c: 190: if (this_parse_parameter( pchain ) == TRUE) {
+"190
 [e $ ! == -> ( _this_parse_parameter (1 _pchain `i -> . `E3585 1 `i 424  ]
 {
-[; ;syntax.c: 190: on_parameter_found(PARSER_PARAMETER, command_id, parameter_id, (void*)parameter_value, parameter_type);
-"190
-[e ( _on_parameter_found (4 , , , , -> . `E4396 0 `E4396 -> _command_id `c -> _parameter_id `c -> -> &U _parameter_value `*v `*Cv _parameter_type ]
+[; ;syntax.c: 191: on_parameter_found(PARSER_PARAMETER, command_id, parameter_id, (void*)parameter_value, parameter_type);
 "191
+[e ( _on_parameter_found (4 , , , , -> . `E4396 0 `E4396 -> _command_id `c -> _parameter_id `c -> -> &U _parameter_value `*v `*Cv _parameter_type ]
+"192
 }
-[; ;syntax.c: 191: }
+[; ;syntax.c: 192: }
 [e $U 425  ]
-"193
-[e :U 424 ]
-[; ;syntax.c: 193: else {
-{
-[; ;syntax.c: 194: on_parameter_found(PARSER_PARAMETER, command_id, -1 , (void*)parameter_text, PARSER_TYPE_NO_TYPE);
 "194
-[e ( _on_parameter_found (4 , , , , -> . `E4396 0 `E4396 -> _command_id `c -> -U -> 1 `i `c -> -> &U _parameter_text `*v `*Cv -> . `E4387 0 `E4387 ]
+[e :U 424 ]
+[; ;syntax.c: 194: else {
+{
+[; ;syntax.c: 195: on_parameter_found(PARSER_PARAMETER, command_id, -1 , (void*)parameter_text, PARSER_TYPE_NO_TYPE);
 "195
-}
-[e :U 425 ]
+[e ( _on_parameter_found (4 , , , , -> . `E4396 0 `E4396 -> _command_id `c -> -U -> 1 `i `c -> -> &U _parameter_text `*v `*Cv -> . `E4387 0 `E4387 ]
 "196
 }
-[e :U 423 ]
-[; ;syntax.c: 195: }
-[; ;syntax.c: 196: }
-[; ;syntax.c: 198: pos += string_utils_strchr(pchain, ('$')) + 1;
-"198
-[e =+ _pos + ( _string_utils_strchr (2 , -> _pchain `*Cuc -> -> 36 `ui `uc -> 1 `i ]
-"199
+[e :U 425 ]
+"197
 }
-[e :U 418 ]
-"180
-[e $ != -- _chains -> 1 `i -> 0 `i 419  ]
-[e :U 420 ]
+[e :U 423 ]
+[; ;syntax.c: 196: }
+[; ;syntax.c: 197: }
+[; ;syntax.c: 199: pos += string_utils_strchr(pchain, ('$')) + 1;
+"199
+[e =+ _pos + ( _string_utils_strchr (2 , -> _pchain `*Cuc -> -> 36 `ui `uc -> 1 `i ]
 "200
 }
-[e :U 417 ]
-[; ;syntax.c: 199: }
-[; ;syntax.c: 200: }
-[; ;syntax.c: 201: if (result>0 )
+[e :U 418 ]
+"181
+[e $ != -- _chains -> 1 `i -> 0 `i 419  ]
+[e :U 420 ]
 "201
-[e $ ! > _result -> 0 `i 426  ]
-[; ;syntax.c: 202: {
-"202
-{
-[; ;syntax.c: 203: on_parameter_found(PARSER_STOP, command_id, -1, (void*)(0), PARSER_TYPE_NO_TYPE);
-"203
-[e ( _on_parameter_found (4 , , , , -> . `E4396 2 `E4396 -> _command_id `c -> -U -> 1 `i `c -> -> -> 0 `i `*v `*Cv -> . `E4387 0 `E4387 ]
-"204
 }
-[; ;syntax.c: 204: }
-[e $U 427  ]
-"205
-[e :U 426 ]
-[; ;syntax.c: 205: else {
+[e :U 417 ]
+[; ;syntax.c: 200: }
+[; ;syntax.c: 201: }
+[; ;syntax.c: 202: if (result>0 )
+"202
+[e $ ! > _result -> 0 `i 426  ]
+[; ;syntax.c: 203: {
+"203
 {
-[; ;syntax.c: 206: on_parameter_found(PARSER_ERROR,-1, -1, (void*)(0), PARSER_TYPE_NO_TYPE);
+[; ;syntax.c: 204: on_parameter_found(PARSER_STOP, command_id, -1, (void*)(0), PARSER_TYPE_NO_TYPE);
+"204
+[e ( _on_parameter_found (4 , , , , -> . `E4396 2 `E4396 -> _command_id `c -> -U -> 1 `i `c -> -> -> 0 `i `*v `*Cv -> . `E4387 0 `E4387 ]
+"205
+}
+[; ;syntax.c: 205: }
+[e $U 427  ]
 "206
-[e ( _on_parameter_found (4 , , , , -> . `E4396 3 `E4396 -> -U -> 1 `i `c -> -U -> 1 `i `c -> -> -> 0 `i `*v `*Cv -> . `E4387 0 `E4387 ]
+[e :U 426 ]
+[; ;syntax.c: 206: else {
+{
+[; ;syntax.c: 207: on_parameter_found(PARSER_ERROR,-1, -1, (void*)(0), PARSER_TYPE_NO_TYPE);
 "207
+[e ( _on_parameter_found (4 , , , , -> . `E4396 3 `E4396 -> -U -> 1 `i `c -> -U -> 1 `i `c -> -> -> 0 `i `*v `*Cv -> . `E4387 0 `E4387 ]
+"208
 }
 [e :U 427 ]
-[; ;syntax.c: 207: }
-[; ;syntax.c: 209: return result;
-"209
+[; ;syntax.c: 208: }
+[; ;syntax.c: 210: return result;
+"210
 [e ) _result ]
 [e $UE 416  ]
-[; ;syntax.c: 210: }
-"210
+[; ;syntax.c: 211: }
+"211
 [e :UE 416 ]
 }
-"222
+"223
 [v _syntax_get_text `(*Cuc ~T0 @X0 1 ef ]
 {
-[; ;syntax.c: 222: const char* syntax_get_text(void) {
+[; ;syntax.c: 223: const char* syntax_get_text(void) {
 [e :U _syntax_get_text ]
 [f ]
-[; ;syntax.c: 223: return parameter_text;
-"223
+[; ;syntax.c: 224: return parameter_text;
+"224
 [e ) -> &U _parameter_text `*Cuc ]
 [e $UE 428  ]
-[; ;syntax.c: 224: }
-"224
+[; ;syntax.c: 225: }
+"225
 [e :UE 428 ]
 }
-"228
+"229
 [v _syntax_as_integer `(i ~T0 @X0 1 ef ]
 {
-[; ;syntax.c: 227: INT16 syntax_as_integer(void)
-[; ;syntax.c: 228: {
+[; ;syntax.c: 228: INT16 syntax_as_integer(void)
+[; ;syntax.c: 229: {
 [e :U _syntax_as_integer ]
 [f ]
-[; ;syntax.c: 229: return *((INT16*)parameter_value);
-"229
+[; ;syntax.c: 230: return *((INT16*)parameter_value);
+"230
 [e ) *U -> &U _parameter_value `*i ]
 [e $UE 429  ]
-[; ;syntax.c: 230: }
-"230
+[; ;syntax.c: 231: }
+"231
 [e :UE 429 ]
 }
-"233
+"234
 [v _syntax_as_double `(d ~T0 @X0 1 ef ]
 {
-[; ;syntax.c: 232: double syntax_as_double(void)
-[; ;syntax.c: 233: {
+[; ;syntax.c: 233: double syntax_as_double(void)
+[; ;syntax.c: 234: {
 [e :U _syntax_as_double ]
 [f ]
-[; ;syntax.c: 234: return *((double*)parameter_value);
-"234
+[; ;syntax.c: 235: return *((double*)parameter_value);
+"235
 [e ) *U -> &U _parameter_value `*d ]
 [e $UE 430  ]
-[; ;syntax.c: 235: }
-"235
+[; ;syntax.c: 236: }
+"236
 [e :UE 430 ]
 }
-"238
+"239
 [v _syntax_as_BOOL `(uc ~T0 @X0 1 ef ]
 {
-[; ;syntax.c: 237: CHAR syntax_as_BOOL(void)
-[; ;syntax.c: 238: {
+[; ;syntax.c: 238: CHAR syntax_as_BOOL(void)
+[; ;syntax.c: 239: {
 [e :U _syntax_as_BOOL ]
 [f ]
-[; ;syntax.c: 239: return *((CHAR*)parameter_value);
-"239
+[; ;syntax.c: 240: return *((CHAR*)parameter_value);
+"240
 [e ) *U &U _parameter_value ]
 [e $UE 431  ]
-[; ;syntax.c: 240: }
-"240
+[; ;syntax.c: 241: }
+"241
 [e :UE 431 ]
 }
-"243
+"244
 [v _syntax_as_bytearray `(*uc ~T0 @X0 1 ef ]
 {
-[; ;syntax.c: 242: UINT8 * syntax_as_bytearray(void)
-[; ;syntax.c: 243: {
+[; ;syntax.c: 243: UINT8 * syntax_as_bytearray(void)
+[; ;syntax.c: 244: {
 [e :U _syntax_as_bytearray ]
 [f ]
-[; ;syntax.c: 244: return (UINT8*)parameter_value;
-"244
+[; ;syntax.c: 245: return (UINT8*)parameter_value;
+"245
 [e ) &U _parameter_value ]
 [e $UE 432  ]
-[; ;syntax.c: 245: }
-"245
+[; ;syntax.c: 246: }
+"246
 [e :UE 432 ]
 }

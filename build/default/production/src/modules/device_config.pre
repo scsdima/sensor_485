@@ -5113,10 +5113,64 @@ void device_config_lock(void);
 void device_config_unlock(CHAR *pstrpsw);
 UINT8 device_config_checksum(UINT8 *pdata, UINT8 size);
 
-# 8 "src/modules\rd_buffer.h"
-typedef UINT8 RdBufferRecord;
+
+# 9 "src\config.h"
+#pragma config FOSC = INTIO67
+#pragma config FCMEN = OFF
+#pragma config IESO = OFF
 
 
+#pragma config PWRT = ON
+#pragma config BOREN = OFF
+#pragma config BORV = 27
+
+
+#pragma config WDTEN = ON
+#pragma config WDTPS = 1024
+
+
+#pragma config CCP2MX = PORTC
+#pragma config PBADEN = OFF
+#pragma config LPT1OSC = ON
+#pragma config HFOFST = ON
+#pragma config MCLRE = ON
+
+
+#pragma config STVREN = ON
+#pragma config LVP = OFF
+#pragma config XINST = OFF
+
+
+#pragma config CP0 = OFF
+#pragma config CP1 = OFF
+#pragma config CP2 = OFF
+#pragma config CP3 = OFF
+
+
+#pragma config CPB = OFF
+#pragma config CPD = OFF
+
+
+#pragma config WRT0 = OFF
+#pragma config WRT1 = OFF
+#pragma config WRT2 = OFF
+#pragma config WRT3 = OFF
+
+
+#pragma config WRTC = OFF
+#pragma config WRTB = OFF
+#pragma config WRTD = OFF
+
+
+#pragma config EBTR0 = OFF
+#pragma config EBTR1 = OFF
+#pragma config EBTR2 = OFF
+#pragma config EBTR3 = OFF
+
+
+#pragma config EBTRB = OFF
+
+# 11 "src/modules\rd_buffer.h"
 typedef struct {
 struct {
 
@@ -5124,16 +5178,15 @@ INT16 last;
 
 INT16 first;
 SIZE size;
-CHAR stream;
 } head;
-RdBufferRecord list[(200u)];
+UINT8 list[((100))+1];
 } RdBuffer;
 
 
-SIZE rd_buffer_capacity(RdBuffer *pbuffer);
 
-CHAR rd_buffer_init(RdBuffer *pbuffer, SIZE size, CHAR stream);
+CHAR rd_buffer_init(RdBuffer *pbuffer, SIZE size);
 
+CHAR rd_buffer_readline(RdBuffer *pbuffer, CHAR *pdata, SIZE *psize);
 
 SIZE rd_buffer_cnt(RdBuffer *pbuffer);
 
@@ -5147,18 +5200,18 @@ CHAR rd_buffer_is_full(RdBuffer *pbuffer);
 
 
 
-CHAR rd_buffer_get(RdBuffer *pbuffer,RdBufferRecord *prec);
+CHAR rd_buffer_get(RdBuffer *pbuffer,UINT8 *prec);
 
 
-CHAR rd_buffer_put(RdBuffer *pbuffer,RdBufferRecord *prec);
+CHAR rd_buffer_put(RdBuffer *pbuffer,UINT8 *prec);
 
 
 
-CHAR rd_buffer_getn(RdBuffer *pbuffer, RdBufferRecord prec[], SIZE rec_count);
+CHAR rd_buffer_getn(RdBuffer *pbuffer, UINT8 prec[], SIZE rec_count);
 
-CHAR rd_buffer_first(RdBuffer *pbuffer, RdBufferRecord *prec);
+CHAR rd_buffer_first(RdBuffer *pbuffer, UINT8 *prec);
 
-CHAR rd_buffer_last(RdBuffer *pbuffer, RdBufferRecord *prec);
+CHAR rd_buffer_last(RdBuffer *pbuffer, UINT8 *prec);
 
 # 14 "src/modules\peak_detector.h"
 typedef struct {
@@ -5288,7 +5341,6 @@ volatile UINT16 g_STATUS;
 volatile UINT16 g_analog0;
 volatile UINT16 g_analog1;
 volatile UINT16 g_analog2;
-RdBuffer g_rx_buffer;
 
 # 60
 extern volatile Config_t g_CONFIG;
@@ -5296,7 +5348,6 @@ extern volatile UINT16 g_STATUS;
 extern volatile UINT16 g_analog0;
 extern volatile UINT16 g_analog1;
 extern volatile UINT16 g_analog2;
-extern RdBuffer g_rx_buffer;
 
 # 40 "src/modules/device_config.c"
 static CHAR locked = TRUE;

@@ -1,18 +1,16 @@
 Version 3.2 HI-TECH Software Intermediate Code
-[c E4324 0 1 2 3 4 5 6 7 .. ]
-[n E4324 . PROFILE_DIS PROFILE1 PROFILE2 PROFILE3 PROFILE4 PROFILE5 PROFILE6 PROFILES_COUNT  ]
-[c E4305 0 1 2 3 .. ]
-[n E4305 . DETECTION_MODE_OFF DETECTION_MODE_CLA DETECTION_MODE_PEAK DETECTION_MODE_COUNT  ]
+[c E4323 0 1 2 3 4 5 6 7 .. ]
+[n E4323 . PROFILE_DIS PROFILE1 PROFILE2 PROFILE3 PROFILE4 PROFILE5 PROFILE6 PROFILES_COUNT  ]
+[c E4304 0 1 2 3 .. ]
+[n E4304 . DETECTION_MODE_OFF DETECTION_MODE_CLA DETECTION_MODE_PEAK DETECTION_MODE_COUNT  ]
 [s S394 `m 1 `m 1 `m 1 ]
 [n S394 . sig_max_count sig_sum_trig sig_trig ]
 [s S391 `m 1 `m 1 `uc 1 `uc 1 ]
 [n S391 . wtrigger tolerance lval_cnt rval_cnt ]
-[s S397 `uc 1 `E4324 1 `uc 1 `uc 1 `uc 1 `ui 1 `E4305 1 `S394 1 `S391 1 ]
+[s S397 `uc 1 `E4323 1 `uc 1 `uc 1 `uc 1 `ui 1 `E4304 1 `S394 1 `S391 1 ]
 [n S397 . checksum profile_number address potentiometer acc_sensitivity power_trig det_mode cla_config pd_config ]
-[s S390 `i 1 `i 1 `i 1 `uc 1 ]
-[n S390 . last first size stream ]
-[s S389 `S390 1 `uc -> 200 `ui ]
-[n S389 . head list ]
+"8 src/modules\scheduler.h
+[v F4424 `(v ~T0 @X0 0 tf ]
 [c E3388 1 0 .. ]
 [n E3388 . RESULT_SUCCESS RESULT_FAIL  ]
 "5 src/drivers\gpio.h
@@ -23,10 +21,12 @@ Version 3.2 HI-TECH Software Intermediate Code
 [v _adc_init `(v ~T0 @X0 0 ef ]
 "7 src/drivers\uart.h
 [v _uart_init `(v ~T0 @X0 0 ef ]
-"26 src/modules\rd_buffer.h
-[v _rd_buffer_init `(uc ~T0 @X0 0 ef3`*S389`i`uc ]
-[c E3585 0 1 .. ]
-[n E3585 _BOOL FALSE TRUE  ]
+"13 src/modules\serialport.h
+[v _serialport_task `(v ~T0 @X0 0 ef ]
+"13 src/drivers\uart.h
+[v _uart_puts `(v ~T0 @X0 0 ef2`*Cuc`i ]
+"7 src/modules\serialport.h
+[v _serialport_startup `(E3388 ~T0 @X0 0 ef ]
 [; ;pic18f45k20.h: 44: extern volatile unsigned char SSPMSK @ 0xF77;
 "46 C:\Program Files\Microchip\xc8\v1.12\include\pic18f45k20.h
 [; ;pic18f45k20.h: 46: asm("SSPMSK equ 0F77h");
@@ -3830,27 +3830,93 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;pic18.h: 146: extern void _delaywdt(unsigned long);
 [; ;pic18.h: 148: extern void _delay3(unsigned char);
 [; ;startup.h: 7: ResultSuccess_t startup(void);
-[; ;modules\rd_buffer.h: 8: typedef UINT8 RdBufferRecord;
+"9 src\config.h
+[p x FOSC=INTIO67 ]
+"10
+[p x FCMEN=OFF ]
+"11
+[p x IESO=OFF ]
+"14
+[p x PWRT=ON ]
+"15
+[p x BOREN=OFF ]
+"16
+[p x BORV=27 ]
+"19
+[p x WDTEN=ON ]
+"20
+[p x WDTPS=1024 ]
+"23
+[p x CCP2MX=PORTC ]
+"24
+[p x PBADEN=OFF ]
+"25
+[p x LPT1OSC=ON ]
+"26
+[p x HFOFST=ON ]
+"27
+[p x MCLRE=ON ]
+"30
+[p x STVREN=ON ]
+"31
+[p x LVP=OFF ]
+"32
+[p x XINST=OFF ]
+"35
+[p x CP0=OFF ]
+"36
+[p x CP1=OFF ]
+"37
+[p x CP2=OFF ]
+"38
+[p x CP3=OFF ]
+"41
+[p x CPB=OFF ]
+"42
+[p x CPD=OFF ]
+"45
+[p x WRT0=OFF ]
+"46
+[p x WRT1=OFF ]
+"47
+[p x WRT2=OFF ]
+"48
+[p x WRT3=OFF ]
+"51
+[p x WRTC=OFF ]
+"52
+[p x WRTB=OFF ]
+"53
+[p x WRTD=OFF ]
+"56
+[p x EBTR0=OFF ]
+"57
+[p x EBTR1=OFF ]
+"58
+[p x EBTR2=OFF ]
+"59
+[p x EBTR3=OFF ]
+"62
+[p x EBTRB=OFF ]
 [; ;modules\rd_buffer.h: 11: typedef struct {
 [; ;modules\rd_buffer.h: 12: struct {
 [; ;modules\rd_buffer.h: 14: INT16 last;
 [; ;modules\rd_buffer.h: 16: INT16 first;
 [; ;modules\rd_buffer.h: 17: SIZE size;
-[; ;modules\rd_buffer.h: 18: CHAR stream;
-[; ;modules\rd_buffer.h: 19: } head;
-[; ;modules\rd_buffer.h: 20: RdBufferRecord list[(200u)];
-[; ;modules\rd_buffer.h: 21: } RdBuffer;
-[; ;modules\rd_buffer.h: 24: SIZE rd_buffer_capacity(RdBuffer *pbuffer);
-[; ;modules\rd_buffer.h: 26: CHAR rd_buffer_init(RdBuffer *pbuffer, SIZE size, CHAR stream);
-[; ;modules\rd_buffer.h: 29: SIZE rd_buffer_cnt(RdBuffer *pbuffer);
-[; ;modules\rd_buffer.h: 31: void rd_buffer_reset(RdBuffer *pbuffer);
-[; ;modules\rd_buffer.h: 34: CHAR rd_buffer_is_empty(RdBuffer *pbuffer);
-[; ;modules\rd_buffer.h: 37: CHAR rd_buffer_is_full(RdBuffer *pbuffer);
-[; ;modules\rd_buffer.h: 41: CHAR rd_buffer_get(RdBuffer *pbuffer,RdBufferRecord *prec);
-[; ;modules\rd_buffer.h: 44: CHAR rd_buffer_put(RdBuffer *pbuffer,RdBufferRecord *prec);
-[; ;modules\rd_buffer.h: 48: CHAR rd_buffer_getn(RdBuffer *pbuffer, RdBufferRecord prec[], SIZE rec_count);
-[; ;modules\rd_buffer.h: 50: CHAR rd_buffer_first(RdBuffer *pbuffer, RdBufferRecord *prec);
-[; ;modules\rd_buffer.h: 52: CHAR rd_buffer_last(RdBuffer *pbuffer, RdBufferRecord *prec);
+[; ;modules\rd_buffer.h: 18: } head;
+[; ;modules\rd_buffer.h: 19: UINT8 list[((100))+1];
+[; ;modules\rd_buffer.h: 20: } RdBuffer;
+[; ;modules\rd_buffer.h: 24: CHAR rd_buffer_init(RdBuffer *pbuffer, SIZE size);
+[; ;modules\rd_buffer.h: 26: CHAR rd_buffer_readline(RdBuffer *pbuffer, CHAR *pdata, SIZE *psize);
+[; ;modules\rd_buffer.h: 28: SIZE rd_buffer_cnt(RdBuffer *pbuffer);
+[; ;modules\rd_buffer.h: 30: void rd_buffer_reset(RdBuffer *pbuffer);
+[; ;modules\rd_buffer.h: 33: CHAR rd_buffer_is_empty(RdBuffer *pbuffer);
+[; ;modules\rd_buffer.h: 36: CHAR rd_buffer_is_full(RdBuffer *pbuffer);
+[; ;modules\rd_buffer.h: 40: CHAR rd_buffer_get(RdBuffer *pbuffer,UINT8 *prec);
+[; ;modules\rd_buffer.h: 43: CHAR rd_buffer_put(RdBuffer *pbuffer,UINT8 *prec);
+[; ;modules\rd_buffer.h: 47: CHAR rd_buffer_getn(RdBuffer *pbuffer, UINT8 prec[], SIZE rec_count);
+[; ;modules\rd_buffer.h: 49: CHAR rd_buffer_first(RdBuffer *pbuffer, UINT8 *prec);
+[; ;modules\rd_buffer.h: 51: CHAR rd_buffer_last(RdBuffer *pbuffer, UINT8 *prec);
 [; ;modules\peak_detector.h: 14: typedef struct {
 [; ;modules\peak_detector.h: 15: INT24 wtrigger;
 [; ;modules\peak_detector.h: 16: INT24 tolerance;
@@ -3955,33 +4021,21 @@ Version 3.2 HI-TECH Software Intermediate Code
 "53
 [v _g_analog2 `Vui ~T0 @X0 1 e ]
 [; ;memory_register_map.h: 53: volatile UINT16 g_analog2;
-"54
-[v _g_rx_buffer `S389 ~T0 @X0 1 e ]
-[; ;memory_register_map.h: 54: RdBuffer g_rx_buffer;
 [; ;memory_register_map.h: 60: extern volatile Config_t g_CONFIG;
 [; ;memory_register_map.h: 61: extern volatile UINT16 g_STATUS;
 [; ;memory_register_map.h: 62: extern volatile UINT16 g_analog0;
 [; ;memory_register_map.h: 63: extern volatile UINT16 g_analog1;
 [; ;memory_register_map.h: 64: extern volatile UINT16 g_analog2;
-[; ;memory_register_map.h: 65: extern RdBuffer g_rx_buffer;
-[; ;modules\scheduler.h: 18: typedef void (*EventFunctionPtr_t)(UINT8);
-[; ;modules\scheduler.h: 19: typedef void* EventDataPtr_t;
-[; ;modules\scheduler.h: 20: typedef UINT8 Event_t;
-[; ;modules\scheduler.h: 25: ResultError_t scheduler_event_setup(UINT8 event_number,EventFunctionPtr_t pevent_func);
-[; ;modules\scheduler.h: 26: void scheduler_event_clear(UINT8 event_number);
-[; ;modules\scheduler.h: 27: CHAR scheduler_empty(void);
-[; ;modules\scheduler.h: 28: void scheduler_event_push(UINT8 event_number, UINT16 timeout,void *pevent_data);
-[; ;modules\scheduler.h: 29: CHAR scheduler_event_get_data(UINT8 event_number,void **ppevent_data);
-[; ;modules\scheduler.h: 30: void scheduler_process(void);
 [; ;drivers\uart.h: 7: void uart_init(void);
-[; ;drivers\uart.h: 9: void uart_enable(CHAR on);
-[; ;drivers\uart.h: 11: void uart_puts(const CHAR *pstr, SIZE size);
-[; ;drivers\uart.h: 13: ResultSuccess_t uart_getc(CHAR *pbyte);
-[; ;drivers\uart.h: 16: void uart_putc(CHAR byte);
-[; ;drivers\uart.h: 19: CHAR uart_byte_received(void);
-[; ;drivers\uart.h: 22: CHAR uart_byte_sent(void);
-[; ;drivers\uart.h: 25: CHAR uart_error(void);
-[; ;drivers\uart.h: 27: void uart_reset(void);
+[; ;drivers\uart.h: 9: void uart_set_baudrate(UINT24 baudrate);
+[; ;drivers\uart.h: 11: void uart_enable(CHAR on);
+[; ;drivers\uart.h: 13: void uart_puts(const CHAR *pstr, SIZE size);
+[; ;drivers\uart.h: 15: ResultSuccess_t uart_getc(CHAR *pbyte);
+[; ;drivers\uart.h: 18: void uart_putc(CHAR byte);
+[; ;drivers\uart.h: 21: CHAR uart_byte_available(void);
+[; ;drivers\uart.h: 24: CHAR uart_byte_sent(void);
+[; ;drivers\uart.h: 27: CHAR uart_error(void);
+[; ;drivers\uart.h: 29: void uart_reset(void);
 [; ;drivers\eeprom.h: 9: typedef enum {EEPROM_BY_BLOCK,EEPROM_BY_BYTE} EepromReadMode_t;
 [; ;drivers\eeprom.h: 11: void eeprom_lock(void);
 [; ;drivers\eeprom.h: 13: void eeprom_unlock(void);
@@ -4005,45 +4059,88 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;drivers\sysclk.h: 19: void sysclk_setup_intosc(IntOscFrequency_t frequency);
 [; ;drivers\sysclk.h: 22: IntOscFrequency_t sysclk_intosc(void);
 [; ;drivers\gpio.h: 5: void gpio_init();
-"14 src/startup/startup.c
+[; ;modules\serialport.h: 7: ResultSuccess_t serialport_startup(void);
+[; ;modules\serialport.h: 10: void serialport_service(void);
+[; ;modules\serialport.h: 13: void serialport_task();
+[; ;modules\serialport.h: 15: void serialport_write(const CHAR *pstr);
+[; ;modules\scheduler.h: 8: typedef void (*PEVENT)(void);
+[; ;modules\scheduler.h: 11: extern volatile UINT8 pool;
+[; ;modules\scheduler.h: 12: extern volatile PEVENT events[8];
+[; ;modules\scheduler.h: 13: extern volatile UINT8 current_event;
+"16 src/modules\scheduler.h
+[v _pool `Vuc ~T0 @X0 1 e ]
+[; ;modules\scheduler.h: 16: volatile UINT8 pool;
+"8
+[v _PEVENT `*F4424 ~T0 @X0 1 t ]
+"17
+[v _events `V*F4424 ~T0 @X0 -> 8 `i e ]
+[; ;modules\scheduler.h: 17: volatile PEVENT events[8];
+"18
+[v _current_event `Vuc ~T0 @X0 1 e ]
+[; ;modules\scheduler.h: 18: volatile UINT8 current_event;
+"16 src/startup/startup.c
 [v _startup `(E3388 ~T0 @X0 1 ef ]
 {
-[; ;startup.c: 13: ResultSuccess_t startup(void)
-[; ;startup.c: 14: {
+[; ;startup.c: 15: ResultSuccess_t startup(void)
+[; ;startup.c: 16: {
 [e :U _startup ]
 [f ]
-"15
-[v _result `E3388 ~T0 @X0 1 a ]
-[; ;startup.c: 15: ResultSuccess_t result = RESULT_FAIL;
-[e = _result -> . `E3388 1 `E3388 ]
-[; ;startup.c: 16: gpio_init();
-"16
-[e ( _gpio_init ..  ]
-[; ;startup.c: 17: sysclk_init();
 "17
-[e ( _sysclk_init ..  ]
-[; ;startup.c: 18: adc_init();
+[v _result `E3388 ~T0 @X0 1 a ]
+[; ;startup.c: 17: ResultSuccess_t result = RESULT_FAIL;
+[e = _result -> . `E3388 1 `E3388 ]
+[; ;startup.c: 18: gpio_init();
 "18
-[e ( _adc_init ..  ]
-[; ;startup.c: 19: uart_init();
+[e ( _gpio_init ..  ]
+[; ;startup.c: 19: sysclk_init();
 "19
-[e ( _uart_init ..  ]
-[; ;startup.c: 21: do{
+[e ( _sysclk_init ..  ]
+[; ;startup.c: 20: adc_init();
+"20
+[e ( _adc_init ..  ]
+[; ;startup.c: 21: uart_init();
 "21
+[e ( _uart_init ..  ]
+[; ;startup.c: 22: events[(5)] = (PEVENT)serialport_task;
+"22
+[e = *U + &U _events * -> -> -> 5 `i `ui `ux -> -> # *U &U _events `ui `ux -> -> &U _serialport_task `*F4424 `V*F4424 ]
+[; ;startup.c: 23: uart_puts("[1]",100);
+"23
+[e ( _uart_puts (2 , :s 1C -> 100 `i ]
+[; ;startup.c: 24: do{
+"24
 [e :U 402 ]
 {
-[; ;startup.c: 22: rd_buffer_init(&g_rx_buffer, (200u) , FALSE);
-"22
-[e ( _rd_buffer_init (3 , , &U _g_rx_buffer -> -> 200 `ui `i -> . `E3585 0 `uc ]
-"28
+[; ;startup.c: 25: uart_puts("[2]",100);
+"25
+[e ( _uart_puts (2 , :s 2C -> 100 `i ]
+[; ;startup.c: 26: if(!serialport_startup()) break;
+"26
+[e $ ! ! != -> ( _serialport_startup ..  `i -> -> -> 0 `i `E3388 `i 403  ]
+[e $U 401  ]
+[e :U 403 ]
+[; ;startup.c: 27: uart_puts("[3]",100);
+"27
+[e ( _uart_puts (2 , :s 3C -> 100 `i ]
+[; ;startup.c: 32: result = RESULT_SUCCESS;
+"32
+[e = _result -> . `E3388 0 `E3388 ]
+"33
 }
 [e :U 401 ]
-[; ;startup.c: 28: }while(0);
-[; ;startup.c: 30: return result;
-"30
+[; ;startup.c: 33: }while(0);
+[; ;startup.c: 34: uart_puts("[4]",100);
+"34
+[e ( _uart_puts (2 , :s 4C -> 100 `i ]
+[; ;startup.c: 35: return result;
+"35
 [e ) _result ]
 [e $UE 399  ]
-[; ;startup.c: 31: }
-"31
+[; ;startup.c: 36: }
+"36
 [e :UE 399 ]
 }
+[a 4C 91 52 93 0 ]
+[a 3C 91 51 93 0 ]
+[a 2C 91 50 93 0 ]
+[a 1C 91 49 93 0 ]

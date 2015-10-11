@@ -1,18 +1,14 @@
 Version 3.2 HI-TECH Software Intermediate Code
-[c E4363 0 1 2 3 4 5 6 7 .. ]
-[n E4363 . PROFILE_DIS PROFILE1 PROFILE2 PROFILE3 PROFILE4 PROFILE5 PROFILE6 PROFILES_COUNT  ]
-[c E4344 0 1 2 3 .. ]
-[n E4344 . DETECTION_MODE_OFF DETECTION_MODE_CLA DETECTION_MODE_PEAK DETECTION_MODE_COUNT  ]
+[c E4362 0 1 2 3 4 5 6 7 .. ]
+[n E4362 . PROFILE_DIS PROFILE1 PROFILE2 PROFILE3 PROFILE4 PROFILE5 PROFILE6 PROFILES_COUNT  ]
+[c E4343 0 1 2 3 .. ]
+[n E4343 . DETECTION_MODE_OFF DETECTION_MODE_CLA DETECTION_MODE_PEAK DETECTION_MODE_COUNT  ]
 [s S394 `m 1 `m 1 `m 1 ]
 [n S394 . sig_max_count sig_sum_trig sig_trig ]
 [s S391 `m 1 `m 1 `uc 1 `uc 1 ]
 [n S391 . wtrigger tolerance lval_cnt rval_cnt ]
-[s S397 `uc 1 `E4363 1 `uc 1 `uc 1 `uc 1 `ui 1 `E4344 1 `S394 1 `S391 1 ]
+[s S397 `uc 1 `E4362 1 `uc 1 `uc 1 `uc 1 `ui 1 `E4343 1 `S394 1 `S391 1 ]
 [n S397 . checksum profile_number address potentiometer acc_sensitivity power_trig det_mode cla_config pd_config ]
-[s S390 `i 1 `i 1 `i 1 `uc 1 ]
-[n S390 . last first size stream ]
-[s S389 `S390 1 `uc -> 200 `ui ]
-[n S389 . head list ]
 [c E3585 0 1 .. ]
 [n E3585 _BOOL FALSE TRUE  ]
 [c E3388 1 0 .. ]
@@ -3844,27 +3840,93 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;device_config.h: 18: void device_config_lock(void);
 [; ;device_config.h: 19: void device_config_unlock(CHAR *pstrpsw);
 [; ;device_config.h: 20: UINT8 device_config_checksum(UINT8 *pdata, UINT8 size);
-[; ;modules\rd_buffer.h: 8: typedef UINT8 RdBufferRecord;
+"9 src\config.h
+[p x FOSC=INTIO67 ]
+"10
+[p x FCMEN=OFF ]
+"11
+[p x IESO=OFF ]
+"14
+[p x PWRT=ON ]
+"15
+[p x BOREN=OFF ]
+"16
+[p x BORV=27 ]
+"19
+[p x WDTEN=ON ]
+"20
+[p x WDTPS=1024 ]
+"23
+[p x CCP2MX=PORTC ]
+"24
+[p x PBADEN=OFF ]
+"25
+[p x LPT1OSC=ON ]
+"26
+[p x HFOFST=ON ]
+"27
+[p x MCLRE=ON ]
+"30
+[p x STVREN=ON ]
+"31
+[p x LVP=OFF ]
+"32
+[p x XINST=OFF ]
+"35
+[p x CP0=OFF ]
+"36
+[p x CP1=OFF ]
+"37
+[p x CP2=OFF ]
+"38
+[p x CP3=OFF ]
+"41
+[p x CPB=OFF ]
+"42
+[p x CPD=OFF ]
+"45
+[p x WRT0=OFF ]
+"46
+[p x WRT1=OFF ]
+"47
+[p x WRT2=OFF ]
+"48
+[p x WRT3=OFF ]
+"51
+[p x WRTC=OFF ]
+"52
+[p x WRTB=OFF ]
+"53
+[p x WRTD=OFF ]
+"56
+[p x EBTR0=OFF ]
+"57
+[p x EBTR1=OFF ]
+"58
+[p x EBTR2=OFF ]
+"59
+[p x EBTR3=OFF ]
+"62
+[p x EBTRB=OFF ]
 [; ;modules\rd_buffer.h: 11: typedef struct {
 [; ;modules\rd_buffer.h: 12: struct {
 [; ;modules\rd_buffer.h: 14: INT16 last;
 [; ;modules\rd_buffer.h: 16: INT16 first;
 [; ;modules\rd_buffer.h: 17: SIZE size;
-[; ;modules\rd_buffer.h: 18: CHAR stream;
-[; ;modules\rd_buffer.h: 19: } head;
-[; ;modules\rd_buffer.h: 20: RdBufferRecord list[(200u)];
-[; ;modules\rd_buffer.h: 21: } RdBuffer;
-[; ;modules\rd_buffer.h: 24: SIZE rd_buffer_capacity(RdBuffer *pbuffer);
-[; ;modules\rd_buffer.h: 26: CHAR rd_buffer_init(RdBuffer *pbuffer, SIZE size, CHAR stream);
-[; ;modules\rd_buffer.h: 29: SIZE rd_buffer_cnt(RdBuffer *pbuffer);
-[; ;modules\rd_buffer.h: 31: void rd_buffer_reset(RdBuffer *pbuffer);
-[; ;modules\rd_buffer.h: 34: CHAR rd_buffer_is_empty(RdBuffer *pbuffer);
-[; ;modules\rd_buffer.h: 37: CHAR rd_buffer_is_full(RdBuffer *pbuffer);
-[; ;modules\rd_buffer.h: 41: CHAR rd_buffer_get(RdBuffer *pbuffer,RdBufferRecord *prec);
-[; ;modules\rd_buffer.h: 44: CHAR rd_buffer_put(RdBuffer *pbuffer,RdBufferRecord *prec);
-[; ;modules\rd_buffer.h: 48: CHAR rd_buffer_getn(RdBuffer *pbuffer, RdBufferRecord prec[], SIZE rec_count);
-[; ;modules\rd_buffer.h: 50: CHAR rd_buffer_first(RdBuffer *pbuffer, RdBufferRecord *prec);
-[; ;modules\rd_buffer.h: 52: CHAR rd_buffer_last(RdBuffer *pbuffer, RdBufferRecord *prec);
+[; ;modules\rd_buffer.h: 18: } head;
+[; ;modules\rd_buffer.h: 19: UINT8 list[((100))+1];
+[; ;modules\rd_buffer.h: 20: } RdBuffer;
+[; ;modules\rd_buffer.h: 24: CHAR rd_buffer_init(RdBuffer *pbuffer, SIZE size);
+[; ;modules\rd_buffer.h: 26: CHAR rd_buffer_readline(RdBuffer *pbuffer, CHAR *pdata, SIZE *psize);
+[; ;modules\rd_buffer.h: 28: SIZE rd_buffer_cnt(RdBuffer *pbuffer);
+[; ;modules\rd_buffer.h: 30: void rd_buffer_reset(RdBuffer *pbuffer);
+[; ;modules\rd_buffer.h: 33: CHAR rd_buffer_is_empty(RdBuffer *pbuffer);
+[; ;modules\rd_buffer.h: 36: CHAR rd_buffer_is_full(RdBuffer *pbuffer);
+[; ;modules\rd_buffer.h: 40: CHAR rd_buffer_get(RdBuffer *pbuffer,UINT8 *prec);
+[; ;modules\rd_buffer.h: 43: CHAR rd_buffer_put(RdBuffer *pbuffer,UINT8 *prec);
+[; ;modules\rd_buffer.h: 47: CHAR rd_buffer_getn(RdBuffer *pbuffer, UINT8 prec[], SIZE rec_count);
+[; ;modules\rd_buffer.h: 49: CHAR rd_buffer_first(RdBuffer *pbuffer, UINT8 *prec);
+[; ;modules\rd_buffer.h: 51: CHAR rd_buffer_last(RdBuffer *pbuffer, UINT8 *prec);
 [; ;modules\peak_detector.h: 14: typedef struct {
 [; ;modules\peak_detector.h: 15: INT24 wtrigger;
 [; ;modules\peak_detector.h: 16: INT24 tolerance;
@@ -3969,15 +4031,11 @@ Version 3.2 HI-TECH Software Intermediate Code
 "53
 [v _g_analog2 `Vui ~T0 @X0 1 e ]
 [; ;memory_register_map.h: 53: volatile UINT16 g_analog2;
-"54
-[v _g_rx_buffer `S389 ~T0 @X0 1 e ]
-[; ;memory_register_map.h: 54: RdBuffer g_rx_buffer;
 [; ;memory_register_map.h: 60: extern volatile Config_t g_CONFIG;
 [; ;memory_register_map.h: 61: extern volatile UINT16 g_STATUS;
 [; ;memory_register_map.h: 62: extern volatile UINT16 g_analog0;
 [; ;memory_register_map.h: 63: extern volatile UINT16 g_analog1;
 [; ;memory_register_map.h: 64: extern volatile UINT16 g_analog2;
-[; ;memory_register_map.h: 65: extern RdBuffer g_rx_buffer;
 "40 src/modules/device_config.c
 [v _locked `uc ~T0 @X0 1 s ]
 [i _locked

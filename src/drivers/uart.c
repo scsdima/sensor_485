@@ -6,7 +6,11 @@ void  uart_init(void )
     TXSTA   =   0b00100110;
     RCSTA   =   0b10010000;
     BAUDCTL =   0b00000000;
-    BAUDCON =   0b00000000;
+    BAUDCON =   0b00000000;    
+    uart_set_baudrate(19200);
+    // interrupts
+    PIE1bits.RCIE=1;
+    PIR1bits.RCIF=1;
 }
 
 void uart_set_baudrate(UINT24 baudrate)
@@ -44,11 +48,10 @@ BOOL uart_byte_sent(void)
 }
 
 
-BOOL uart_byte_received(void)
+BOOL uart_byte_available(void)
 {
-    return RCIF;
+    return RC1IF;
 }
-
 ResultSuccess_t uart_getc(CHAR *pbyte)
 {
     ResultSuccess_t result = RESULT_FAIL;
@@ -57,7 +60,7 @@ ResultSuccess_t uart_getc(CHAR *pbyte)
             uart_reset();            
     }
     else 
-    if( uart_byte_received() )
+    if( uart_byte_available() )
     {
         *pbyte = RCREG;
         RCIF = 0;
@@ -74,7 +77,7 @@ ResultSuccess_t uart_getc(CHAR *pbyte)
             RCREG;      // dummy read
             RCREG;      // dummy read
             CREN = 1;  //uart enable
-            while(uart_byte_received());
+            while(uart_byte_available());
         }   
 }
 

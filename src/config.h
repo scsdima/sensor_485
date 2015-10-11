@@ -24,7 +24,7 @@
 #pragma config PBADEN = OFF     // PORTB A/D Enable bit (PORTB<4:0> pins are configured as digital I/O on Reset)
 #pragma config LPT1OSC = ON     // Low-Power Timer1 Oscillator Enable bit (Timer1 configured for low-power operation)
 #pragma config HFOFST = ON      // HFINTOSC Fast Start-up (HFINTOSC starts clocking the CPU without waiting for the oscillator to stablize.)
-#pragma config MCLRE = OFF       // MCLR Pin Enable bit (MCLR pin enabled; RE3 input pin disabled)
+#pragma config MCLRE = ON       // MCLR Pin Enable bit (MCLR pin enabled; RE3 input pin disabled)
 
 // CONFIG4L
 #pragma config STVREN = ON      // Stack Full/Underflow Reset Enable bit (Stack full/underflow will cause Reset)
@@ -94,5 +94,9 @@
 #define PIN_I2C_SDAW		LATCbits.LATC4	
 #define PIN_I2C_SDAR		PORTCbits.PORTC4
 
+
+//scheduler tasks
+#define TASK_COMMUNICATION	(5)
+#define COMMUNICATION_BUFFER_SIZE (100)
 
 #endif

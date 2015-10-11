@@ -9,6 +9,7 @@ src/compiler.h  \
 src/typedef_global.h  \
 src/modules/detection.h  \
 src/modules/timers.h  \
+src/config.h  \
 src/memory_register_map.h  \
 src/drivers/sw_i2c.h  \
 src/modules/detection.h 

@@ -39,8 +39,6 @@
           <itemPath>src/modules/timers.h</itemPath>
           <itemPath>src/modules/device_config.c</itemPath>
           <itemPath>src/modules/device_config.h</itemPath>
-          <itemPath>src/modules/scheduler.c</itemPath>
-          <itemPath>src/modules/scheduler.h</itemPath>
           <itemPath>src/modules/detector_profiles.h</itemPath>
           <itemPath>src/modules/serialport.c</itemPath>
           <itemPath>src/modules/serialport.h</itemPath>
@@ -55,6 +53,7 @@
           <itemPath>src/modules/detection.c</itemPath>
           <itemPath>src/modules/detection.h</itemPath>
           <itemPath>src/modules/on_parameter_found.c</itemPath>
+          <itemPath>src/modules/scheduler.h</itemPath>
         </logicalFolder>
         <logicalFolder name="startup" displayName="startup" projectFiles="true">
           <itemPath>src/startup/startup.h</itemPath>
@@ -185,6 +184,7 @@
         <property key="ToolFirmwareFilePath"
                   value="Press to browse for a specific firmware version"/>
         <property key="ToolFirmwareOption.UseLatestFirmware" value="true"/>
+        <property key="firmware.download.all" value="false"/>
         <property key="hwtoolclock.frcindebug" value="false"/>
         <property key="memories.aux" value="false"/>
         <property key="memories.bootflash" value="true"/>

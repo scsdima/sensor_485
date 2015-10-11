@@ -5252,11 +5252,156 @@ UINT8 * syntax_as_bytearray(void);
 void on_parameter_found(ParserOperation_t operation ,INT8 cmd_id
 , INT8 p_id ,const void* p, ParserType_t type);
 
-# 47 "src/modules/on_parameter_found.c"
-void on_parameter_found(ParserOperation_t operation ,INT8 cmd_id
-, INT8 p_id , const void* p, ParserType_t type)
+# 8 "src/modules/cmd_data.h"
+typedef enum {
+Command_set,
+Command_get,
+Command_init,
+Command_selftest,
+COMMAND_COUNT
+}SyntaxCommandId_t;
+
+typedef enum {
+Parameter_signal,
+Parameter_imp,
+Parameter_pwr,
+Parameter_pot,
+Parameter_ver,
+Parameter_status,
+Parameter_error,
+Parameter_acc,
+Parameter_adr,
+Parameter_defaults,
+Parameter_mod,
+Parameter_profile,
+Parameter_pwrtrig,
+Parameter_acctrig,
+Parameter_triglev,
+Parameter_trigsum,
+Parameter_trigcnt,
+Parameter_wavtole,
+Parameter_wavtrig,
+Parameter_wavlcnt,
+Parameter_wavrcnt,
+Parameter_id,
+Parameter_psw,
+PARAMETERS_COUNT
+}SyntaxParameterId_t;
+
+# 58
+static const SyntaxCommand_t syx_cmd_list[] =
+{
+{"set", Command_set },
+{"get", Command_get },
+{"init", Command_init },
+{"selftest", Command_selftest },
+{"\x1d\x1d" , 0 }
+};
+
+
+static const SyntaxParameter_t syx_param_list[] = {
+
+{"signal" , Parameter_signal , PARSER_TYPE_INTEGER},
+{"imp" , Parameter_imp , PARSER_TYPE_INTEGER},
+{"pwr" , Parameter_pwr , PARSER_TYPE_INTEGER},
+{"pot" , Parameter_pot , PARSER_TYPE_INTEGER},
+{"ver" , Parameter_ver , PARSER_TYPE_INTEGER},
+{"status" , Parameter_status , PARSER_TYPE_INTEGER},
+{"acc" , Parameter_acc , PARSER_TYPE_INTEGER},
+{"adr" , Parameter_adr , PARSER_TYPE_INTEGER},
+{"error" , Parameter_error , PARSER_TYPE_INTEGER},
+{"defaults" , Parameter_defaults , PARSER_TYPE_INTEGER},
+{"mod" , Parameter_mod , PARSER_TYPE_BYTEARRAY},
+{"profile" , Parameter_profile , PARSER_TYPE_INTEGER},
+{"pwrtrig" , Parameter_pwrtrig , PARSER_TYPE_INTEGER},
+{"acctrig" , Parameter_acctrig , PARSER_TYPE_INTEGER},
+{"triglev" , Parameter_triglev , PARSER_TYPE_INTEGER},
+{"trigsum" , Parameter_trigsum , PARSER_TYPE_INTEGER},
+{"trigcnt" , Parameter_trigcnt , PARSER_TYPE_INTEGER},
+{"wavtole" , Parameter_wavtole , PARSER_TYPE_INTEGER},
+{"wavtrig" , Parameter_wavtrig , PARSER_TYPE_INTEGER},
+{"wavlcnt" , Parameter_wavlcnt , PARSER_TYPE_INTEGER},
+{"wavrcnt" , Parameter_wavrcnt , PARSER_TYPE_INTEGER},
+{"idid" , Parameter_id , PARSER_TYPE_INTEGER},
+{"pswpsw" , Parameter_psw , PARSER_TYPE_INTEGER},
+{"\x1d\x1d" ,-1 , PARSER_TYPE_NO_TYPE }
+
+};
+
+# 7 "src/modules/serialport.h"
+ResultSuccess_t serialport_startup(void);
+
+
+void serialport_service(void);
+
+
+void serialport_task();
+
+void serialport_write(const CHAR *pstr);
+
+# 5 "src/modules/on_parameter_found.c"
+CHAR set_parameter(INT8 p_id);
+CHAR get_parameter(INT8 p_id);
+CHAR run_command(void);
+
+
+void on_parameter_found(ParserOperation_t operation, INT8 cmd_id
+, INT8 p_id, const void* p, ParserType_t type)
+{
+CHAR ok;
+if (operation == PARSER_PARAMETER) {
+switch (cmd_id) {
+case Command_set:
+ok = set_parameter(p_id);
+break;
+
+case Command_get:
+ok = get_parameter(p_id);
+break;
+
+# 28
+default:
+break;
+}
+}
+else if (operation == PARSER_STOP) {
+
+# 48
+} else if (operation == PARSER_ERROR) {
+serialport_write("err\n");
+}
+}
+
+
+CHAR set_parameter(INT8 p_id ) {
+CHAR ok = FALSE;
+
+# 63
+serialport_write( syntax_get_text() );
+
+if( ok )
+{
+serialport_write( ":ok " );
+}
+else
+{
+serialport_write( ":err " );
+}
+return ok;
+}
+
+CHAR get_parameter(INT8 p_id) {
+CHAR ok = FALSE;
+
+# 87
+if(ok)
 {
 
-# 90
+}
+else
+{
+serialport_write( ":err " );
+}
+return ok;
 }
 

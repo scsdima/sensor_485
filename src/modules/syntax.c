@@ -8,7 +8,7 @@
 #define SYNTAX_SEPARATOR        ('$')
 
 //last options
-BOOL case_sensitive;
+BOOL this_case_sensitive;
 //last parsed command id
 INT16 command_id;
 //last parsed parameter  id
@@ -98,7 +98,7 @@ BOOL  this_parse_command(char pbuf[]) {
   INT16 len = string_utils_strchr(pbuf, SYNTAX_SEPARATOR);
   while(syx_cmd_list[i].name[0] != 0x1D)    {
     const char *pname  = syx_cmd_list[i].name;
-    BOOL is_equal = string_utils_strncmp(pbuf, pname, len, case_sensitive);
+    BOOL is_equal = string_utils_strncmp(pbuf, pname, len, this_case_sensitive);
     if ( is_equal ) {
       command_id = syx_cmd_list[i].id;
       found = TRUE;
@@ -139,7 +139,7 @@ BOOL this_parse_parameter(char pstr[]) {
     parameter_text[var_len] = '\0';
       while( syx_param_list[i].name[0] != 0x1D ) {
         if (string_utils_strlen( syx_param_list[i].name ) == var_len){
-          BOOL is_equal = string_utils_strncmp(syx_param_list[i].name, pvar, var_len, case_sensitive);
+          BOOL is_equal = string_utils_strncmp(syx_param_list[i].name, pvar, var_len, this_case_sensitive);
           if ( is_equal ) {
             parameter_id =  syx_param_list[i].id;
             parameter_type = syx_param_list[i].type;            
@@ -168,6 +168,7 @@ INT16 syntax_string(const char pstr[], BOOL case_sensitive) {
   INT16 chains ;
   INT16 result =0;
   INT16 str_len = string_utils_strlen(pstr);
+  this_case_sensitive = case_sensitive;
   chains = string_utils_split(this_buf, pstr, str_len, SYNTAX_SEPARATOR);
   command_id = -1;
   parameter_id = -1;

@@ -5107,7 +5107,7 @@ extern void _delay3(unsigned char);
 #pragma config PBADEN = OFF
 #pragma config LPT1OSC = ON
 #pragma config HFOFST = ON
-#pragma config MCLRE = OFF
+#pragma config MCLRE = ON
 
 
 #pragma config STVREN = ON

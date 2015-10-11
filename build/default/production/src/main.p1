@@ -1,35 +1,43 @@
 Version 3.2 HI-TECH Software Intermediate Code
+[s S347 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
+[n S347 . RBIF INT0IF TMR0IF RBIE INT0IE TMR0IE PEIE_GIEL GIE_GIEH ]
+[s S348 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
+[n S348 . RBIF INT0IF TMR0IF RBIE INT0IE TMR0IE PEIE GIE ]
+[s S349 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
+[n S349 . RBIF INT0IF TMR0IF RBIE INT0IE TMR0IE GIEL GIEH ]
+[s S350 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
+[n S350 . . INT0F T0IF . INT0E T0IE PEIE GIE ]
+[s S351 :6 `uc 1 :1 `uc 1 :1 `uc 1 ]
+[n S351 . . GIEL GIEH ]
+[u S346 `S347 1 `S348 1 `S349 1 `S350 1 `S351 1 ]
+[n S346 . . . . . . ]
+"7091 C:\Program Files\Microchip\xc8\v1.12\include\pic18f45k20.h
+[v _INTCONbits `VS346 ~T0 @X0 0 e@4082 ]
+"28 src/drivers\delay.h
+[v _delay_interrupt_service `(v ~T0 @X0 0 ef ]
+"6622 C:\Program Files\Microchip\xc8\v1.12\include\pic18f45k20.h
+[v _TMR0 `Vus ~T0 @X0 0 e@4054 ]
+[s S170 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
+[n S170 . TMR1IF TMR2IF CCP1IF SSPIF TXIF RCIF ADIF PSPIF ]
+[s S171 :5 `uc 1 :1 `uc 1 ]
+[n S171 . . RC1IF ]
+[s S172 :4 `uc 1 :1 `uc 1 ]
+[n S172 . . TX1IF ]
+[u S169 `S170 1 `S171 1 `S172 1 ]
+[n S169 . . . . ]
+"3471
+[v _PIR1bits `VS169 ~T0 @X0 0 e@3998 ]
+"10 src/modules\serialport.h
+[v _serialport_service `(v ~T0 @X0 0 ef ]
+"8 src/modules\scheduler.h
+[v F4240 `(v ~T0 @X0 0 tf ]
 [p mainexit ]
+"23 src/drivers\delay.h
+[v _delay_ms `(v ~T0 @X0 0 ef1`ui ]
 [c E3388 1 0 .. ]
 [n E3388 . RESULT_SUCCESS RESULT_FAIL  ]
 "7 src/startup\startup.h
 [v _startup `(E3388 ~T0 @X0 0 ef ]
-[s S113 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
-[n S113 . LATD0 LATD1 LATD2 LATD3 LATD4 LATD5 LATD6 LATD7 ]
-[s S114 :1 `uc 1 ]
-[n S114 . LD0 ]
-[s S115 :1 `uc 1 :1 `uc 1 ]
-[n S115 . . LD1 ]
-[s S116 :2 `uc 1 :1 `uc 1 ]
-[n S116 . . LD2 ]
-[s S117 :3 `uc 1 :1 `uc 1 ]
-[n S117 . . LD3 ]
-[s S118 :4 `uc 1 :1 `uc 1 ]
-[n S118 . . LD4 ]
-[s S119 :5 `uc 1 :1 `uc 1 ]
-[n S119 . . LD5 ]
-[s S120 :6 `uc 1 :1 `uc 1 ]
-[n S120 . . LD6 ]
-[s S121 :7 `uc 1 :1 `uc 1 ]
-[n S121 . . LD7 ]
-[u S112 `S113 1 `S114 1 `S115 1 `S116 1 `S117 1 `S118 1 `S119 1 `S120 1 `S121 1 ]
-[n S112 . . . . . . . . . . ]
-"2077 C:\Program Files\Microchip\xc8\v1.12\include\pic18f45k20.h
-[v _LATDbits `VS112 ~T0 @X0 0 e@3980 ]
-"23 src/drivers\delay.h
-[v _delay_ms `(v ~T0 @X0 0 ef1`ui ]
-"30 src/modules\scheduler.h
-[v _scheduler_process `(v ~T0 @X0 0 ef ]
 [; ;pic18f45k20.h: 44: extern volatile unsigned char SSPMSK @ 0xF77;
 "46 C:\Program Files\Microchip\xc8\v1.12\include\pic18f45k20.h
 [; ;pic18f45k20.h: 46: asm("SSPMSK equ 0F77h");
@@ -3857,7 +3865,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 "26
 [p x HFOFST=ON ]
 "27
-[p x MCLRE=OFF ]
+[p x MCLRE=ON ]
 "30
 [p x STVREN=ON ]
 "31
@@ -3901,80 +3909,153 @@ Version 3.2 HI-TECH Software Intermediate Code
 "62
 [p x EBTRB=OFF ]
 [; ;startup\startup.h: 7: ResultSuccess_t startup(void);
-[; ;modules\scheduler.h: 18: typedef void (*EventFunctionPtr_t)(UINT8);
-[; ;modules\scheduler.h: 19: typedef void* EventDataPtr_t;
-[; ;modules\scheduler.h: 20: typedef UINT8 Event_t;
-[; ;modules\scheduler.h: 25: ResultError_t scheduler_event_setup(UINT8 event_number,EventFunctionPtr_t pevent_func);
-[; ;modules\scheduler.h: 26: void scheduler_event_clear(UINT8 event_number);
-[; ;modules\scheduler.h: 27: CHAR scheduler_empty(void);
-[; ;modules\scheduler.h: 28: void scheduler_event_push(UINT8 event_number, UINT16 timeout,void *pevent_data);
-[; ;modules\scheduler.h: 29: CHAR scheduler_event_get_data(UINT8 event_number,void **ppevent_data);
-[; ;modules\scheduler.h: 30: void scheduler_process(void);
 [; ;drivers\delay.h: 19: extern volatile UINT16 this_delay_timerMs;
 [; ;drivers\delay.h: 20: extern volatile UINT16 this_delay_timerUs;
 [; ;drivers\delay.h: 23: void delay_ms(UINT16 delay);
 [; ;drivers\delay.h: 24: void delay_timeout_set(UINT16 delay);
 [; ;drivers\delay.h: 25: inline CHAR delay_timeout(void);
 [; ;drivers\delay.h: 28: void delay_interrupt_service(void);
-"22 src/main.c
+[; ;drivers\uart.h: 7: void uart_init(void);
+[; ;drivers\uart.h: 9: void uart_set_baudrate(UINT24 baudrate);
+[; ;drivers\uart.h: 11: void uart_enable(CHAR on);
+[; ;drivers\uart.h: 13: void uart_puts(const CHAR *pstr, SIZE size);
+[; ;drivers\uart.h: 15: ResultSuccess_t uart_getc(CHAR *pbyte);
+[; ;drivers\uart.h: 18: void uart_putc(CHAR byte);
+[; ;drivers\uart.h: 21: CHAR uart_byte_available(void);
+[; ;drivers\uart.h: 24: CHAR uart_byte_sent(void);
+[; ;drivers\uart.h: 27: CHAR uart_error(void);
+[; ;drivers\uart.h: 29: void uart_reset(void);
+[; ;modules\serialport.h: 7: ResultSuccess_t serialport_startup(void);
+[; ;modules\serialport.h: 10: void serialport_service(void);
+[; ;modules\serialport.h: 13: void serialport_task();
+[; ;modules\serialport.h: 15: void serialport_write(const CHAR *pstr);
+"14 src/interrupts.c
+[v F4238 `(v ~T0 @X0 1 tf ]
+[v _isr_high `IF4238 ~T0 @X0 1 s ]
+{
+[; ;interrupts.c: 13: interrupt static void isr_high(void)
+[; ;interrupts.c: 14: {
+[e :U _isr_high ]
+[f ]
+[; ;interrupts.c: 16: if ((INTCONbits.TMR0IF) )
+"16
+[e $ ! != -> . . _INTCONbits 0 2 `i -> -> -> 0 `i `Vuc `i 390  ]
+[; ;interrupts.c: 17: {
+"17
+{
+[; ;interrupts.c: 18: delay_interrupt_service();
+"18
+[e ( _delay_interrupt_service ..  ]
+[; ;interrupts.c: 20: do{INTCONbits.TMR0IF=0;TMR0 = -500; }while(0);;
+"20
+[e :U 393 ]
+{
+[e = . . _INTCONbits 0 2 -> -> 0 `i `uc ]
+[e = _TMR0 -> -U -> 500 `i `us ]
+}
+[e :U 392 ]
+"21
+}
+[e :U 390 ]
+[; ;interrupts.c: 21: }
+[; ;interrupts.c: 23: if(PIR1bits.RCIF)
+"23
+[e $ ! != -> . . _PIR1bits 0 5 `i -> -> -> 0 `i `Vuc `i 394  ]
+[; ;interrupts.c: 24: {
+"24
+{
+[; ;interrupts.c: 26: serialport_service();
+"26
+[e ( _serialport_service ..  ]
+[; ;interrupts.c: 27: PIR1bits.RCIF = 0;
+"27
+[e = . . _PIR1bits 0 5 -> -> 0 `i `uc ]
+"28
+}
+[e :U 394 ]
+[; ;interrupts.c: 28: }
+[; ;interrupts.c: 38: }
+"38
+[e :UE 389 ]
+}
+[; ;modules\scheduler.h: 8: typedef void (*PEVENT)(void);
+[; ;modules\scheduler.h: 11: extern volatile UINT8 pool;
+[; ;modules\scheduler.h: 12: extern volatile PEVENT events[8];
+[; ;modules\scheduler.h: 13: extern volatile UINT8 current_event;
+"16 src/modules\scheduler.h
+[v _pool `Vuc ~T0 @X0 1 e ]
+[; ;modules\scheduler.h: 16: volatile UINT8 pool;
+"8
+[v _PEVENT `*F4240 ~T0 @X0 1 t ]
+"17
+[v _events `V*F4240 ~T0 @X0 -> 8 `i e ]
+[; ;modules\scheduler.h: 17: volatile PEVENT events[8];
+"18
+[v _current_event `Vuc ~T0 @X0 1 e ]
+[; ;modules\scheduler.h: 18: volatile UINT8 current_event;
+"25 src/main.c
 [v _main `(i ~T0 @X0 1 ef ]
 {
-[; ;main.c: 21: int main(void)
-[; ;main.c: 22: {
+[; ;main.c: 24: int main(void)
+[; ;main.c: 25: {
 [e :U _main ]
 [f ]
-[; ;main.c: 24: startup();
-"24
-[e ( _startup ..  ]
-[; ;main.c: 29: LATDbits.LATD7=1;
-"29
-[e = . . _LATDbits 0 7 -> -> 1 `i `uc ]
-[; ;main.c: 30: LATDbits.LATD6=1;
-"30
-[e = . . _LATDbits 0 6 -> -> 1 `i `uc ]
-[; ;main.c: 31: while(1);
-"31
-[e :U 391 ]
-[e :U 390 ]
-[e $U 391  ]
-[e :U 392 ]
-[; ;main.c: 32: while(startup() != RESULT_SUCCESS)
-"32
-[e $U 393  ]
-[e :U 394 ]
-[; ;main.c: 33: {
-"33
-{
-[; ;main.c: 35: delay_ms(1000);
-"35
-[e ( _delay_ms (1 -> -> 1000 `i `ui ]
-"36
-}
-[e :U 393 ]
-"32
-[e $ != -> ( _startup ..  `i -> . `E3388 0 `i 394  ]
-[e :U 395 ]
-[; ;main.c: 36: };
-[; ;main.c: 37: while(1)
-"37
+[; ;main.c: 26: while(startup() != RESULT_SUCCESS)
+"26
+[e $U 396  ]
 [e :U 397 ]
-[; ;main.c: 38: {
-"38
+[; ;main.c: 27: {
+"27
 {
-[; ;main.c: 39: scheduler_process();
-"39
-[e ( _scheduler_process ..  ]
-[; ;main.c: 40: asm(" clrwdt");
-"40
-[; <"  clrwdt ;# ">
-"41
+[; ;main.c: 28: delay_ms(1000);
+"28
+[e ( _delay_ms (1 -> -> 1000 `i `ui ]
+"29
 }
 [e :U 396 ]
-"37
-[e $U 397  ]
+"26
+[e $ != -> ( _startup ..  `i -> . `E3388 0 `i 397  ]
 [e :U 398 ]
-[; ;main.c: 41: }
-[; ;main.c: 42: }
-"42
-[e :UE 389 ]
+[; ;main.c: 29: };
+[; ;main.c: 30: do{INTCONbits.GIEH=(1); INTCONbits.GIEL=(1);}while(0);;
+"30
+[e :U 401 ]
+{
+[e = . . _INTCONbits 2 7 -> -> 1 `i `uc ]
+[e = . . _INTCONbits 2 6 -> -> 1 `i `uc ]
+}
+[e :U 400 ]
+[; ;main.c: 31: while(1)
+"31
+[e :U 403 ]
+[; ;main.c: 32: {
+"32
+{
+[; ;main.c: 33: do{if(pool&(1<<current_event) && events[current_event]!= (0)){ events[current_event](); } pool &= ~(1<<current_event); current_event++; current_event %= 8;}while(0);;
+"33
+[e :U 407 ]
+{
+[e $ ! && != & -> _pool `i << -> 1 `i _current_event -> 0 `i != *U + &U _events * -> _current_event `ux -> -> # *U &U _events `ui `ux -> -> 0 `i `V*F4240 408  ]
+{
+[e ( *U *U + &U _events * -> _current_event `ux -> -> # *U &U _events `ui `ux ..  ]
+}
+[e :U 408 ]
+[e =& _pool -> ~ << -> 1 `i _current_event `uc ]
+[e ++ _current_event -> -> 1 `i `uc ]
+[e =% _current_event -> 8 `uc ]
+}
+[e :U 406 ]
+[; ;main.c: 34: asm(" clrwdt");
+"34
+[; <"  clrwdt ;# ">
+"35
+}
+[e :U 402 ]
+"31
+[e $U 403  ]
+[e :U 404 ]
+[; ;main.c: 35: }
+[; ;main.c: 36: }
+"36
+[e :UE 395 ]
 }

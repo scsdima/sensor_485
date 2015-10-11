@@ -9,6 +9,7 @@ src/modules/classic_detector.h  \
 src/compiler.h  \
 src/typedef_global.h  \
 src/modules/timers.h  \
+src/config.h  \
 src/memory_register_map.h  \
 src/drivers/sw_i2c.h  \
 src/modules/peak_detector.h  \

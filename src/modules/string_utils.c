@@ -332,7 +332,6 @@ BOOL string_utils_is_digit(char symb)
 
 UINT8 symb_from_hex_to_bin(char symb)
 {
-    UINT8 value = 0;
     switch (symb)
     {
     case '0':

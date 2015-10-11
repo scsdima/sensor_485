@@ -6,6 +6,8 @@
 
 void uart_init(void);
 
+void uart_set_baudrate(UINT24 baudrate);
+
 void uart_enable(BOOL on);
 
 void uart_puts(const CHAR *pstr, SIZE size);
@@ -16,7 +18,7 @@ ResultSuccess_t uart_getc(CHAR *pbyte);
 void uart_putc(CHAR byte);  
 
 ////#pragma inline (uart_byte_received)
-BOOL uart_byte_received(void);
+BOOL uart_byte_available(void);
 
 //#pragma inline (uart_byte_sent)
 BOOL uart_byte_sent(void);

@@ -13,12 +13,22 @@ Version 3.2 HI-TECH Software Intermediate Code
 [n S346 . . . . . . ]
 "7091 C:\Program Files\Microchip\xc8\v1.12\include\pic18f45k20.h
 [v _INTCONbits `VS346 ~T0 @X0 0 e@4082 ]
-"6622
-[v _TMR0 `Vus ~T0 @X0 0 e@4054 ]
-"8477
-[v _TMR0IF `Vb ~T0 @X0 0 e@32658 ]
 "28 src/drivers\delay.h
 [v _delay_interrupt_service `(v ~T0 @X0 0 ef ]
+"6622 C:\Program Files\Microchip\xc8\v1.12\include\pic18f45k20.h
+[v _TMR0 `Vus ~T0 @X0 0 e@4054 ]
+[s S170 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
+[n S170 . TMR1IF TMR2IF CCP1IF SSPIF TXIF RCIF ADIF PSPIF ]
+[s S171 :5 `uc 1 :1 `uc 1 ]
+[n S171 . . RC1IF ]
+[s S172 :4 `uc 1 :1 `uc 1 ]
+[n S172 . . TX1IF ]
+[u S169 `S170 1 `S171 1 `S172 1 ]
+[n S169 . . . . ]
+"3471
+[v _PIR1bits `VS169 ~T0 @X0 0 e@3998 ]
+"10 src/modules\serialport.h
+[v _serialport_service `(v ~T0 @X0 0 ef ]
 [; ;pic18f45k20.h: 44: extern volatile unsigned char SSPMSK @ 0xF77;
 "46 C:\Program Files\Microchip\xc8\v1.12\include\pic18f45k20.h
 [; ;pic18f45k20.h: 46: asm("SSPMSK equ 0F77h");
@@ -3846,7 +3856,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 "26
 [p x HFOFST=ON ]
 "27
-[p x MCLRE=OFF ]
+[p x MCLRE=ON ]
 "30
 [p x STVREN=ON ]
 "31
@@ -3895,40 +3905,56 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;drivers\delay.h: 24: void delay_timeout_set(UINT16 delay);
 [; ;drivers\delay.h: 25: inline CHAR delay_timeout(void);
 [; ;drivers\delay.h: 28: void delay_interrupt_service(void);
-"8 src/interrupts.c
-[v F4208 `(v ~T0 @X0 1 tf ]
-[v _isr_high `IF4208 ~T0 @X0 1 s ]
+[; ;modules\serialport.h: 7: ResultSuccess_t serialport_startup(void);
+[; ;modules\serialport.h: 10: void serialport_service(void);
+[; ;modules\serialport.h: 13: void serialport_task();
+[; ;modules\serialport.h: 15: void serialport_write(const CHAR *pstr);
+"14 src/interrupts.c
+[v F4215 `(v ~T0 @X0 1 tf ]
+[v _isr_high `IF4215 ~T0 @X0 1 s ]
 {
-[; ;interrupts.c: 7: interrupt static void isr_high(void)
-[; ;interrupts.c: 8: {
+[; ;interrupts.c: 13: interrupt static void isr_high(void)
+[; ;interrupts.c: 14: {
 [e :U _isr_high ]
 [f ]
-[; ;interrupts.c: 14: if (INTCONbits.TMR0IF && INTCONbits.TMR0IE)
-"14
-[e $ ! && != -> . . _INTCONbits 0 2 `i -> -> -> 0 `i `Vuc `i != -> . . _INTCONbits 0 5 `i -> -> -> 0 `i `Vuc `i 390  ]
-[; ;interrupts.c: 15: {
-"15
-{
-[; ;interrupts.c: 16: TMR0 = -500;
+[; ;interrupts.c: 16: if ((INTCONbits.TMR0IF) )
 "16
-[e = _TMR0 -> -U -> 500 `i `us ]
-[; ;interrupts.c: 17: TMR0IF = 0;
+[e $ ! != -> . . _INTCONbits 0 2 `i -> -> -> 0 `i `Vuc `i 390  ]
+[; ;interrupts.c: 17: {
 "17
-[e = _TMR0IF -> -> 0 `i `b ]
-[; ;interrupts.c: 19: delay_interrupt_service();
-"19
+{
+[; ;interrupts.c: 18: delay_interrupt_service();
+"18
 [e ( _delay_interrupt_service ..  ]
+[; ;interrupts.c: 20: do{INTCONbits.TMR0IF=0;TMR0 = -500; }while(0);;
+"20
+[e :U 393 ]
+{
+[e = . . _INTCONbits 0 2 -> -> 0 `i `uc ]
+[e = _TMR0 -> -U -> 500 `i `us ]
+}
+[e :U 392 ]
 "21
 }
 [e :U 390 ]
 [; ;interrupts.c: 21: }
-[; ;interrupts.c: 27: {
-"27
+[; ;interrupts.c: 23: if(PIR1bits.RCIF)
+"23
+[e $ ! != -> . . _PIR1bits 0 5 `i -> -> -> 0 `i `Vuc `i 394  ]
+[; ;interrupts.c: 24: {
+"24
 {
-"30
+[; ;interrupts.c: 26: serialport_service();
+"26
+[e ( _serialport_service ..  ]
+[; ;interrupts.c: 27: PIR1bits.RCIF = 0;
+"27
+[e = . . _PIR1bits 0 5 -> -> 0 `i `uc ]
+"28
 }
-[; ;interrupts.c: 30: }
-[; ;interrupts.c: 40: }
-"40
+[e :U 394 ]
+[; ;interrupts.c: 28: }
+[; ;interrupts.c: 38: }
+"38
 [e :UE 389 ]
 }

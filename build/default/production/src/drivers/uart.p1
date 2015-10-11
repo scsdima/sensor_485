@@ -7,26 +7,50 @@ Version 3.2 HI-TECH Software Intermediate Code
 [v _BAUDCTL `Vuc ~T0 @X0 0 e@4024 ]
 "4823
 [v _BAUDCON `Vuc ~T0 @X0 0 e@4024 ]
+"9 src/drivers/uart.h
+[v _uart_set_baudrate `(v ~T0 @X0 0 ef1`um ]
+[s S166 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
+[n S166 . TMR1IE TMR2IE CCP1IE SSPIE TXIE RCIE ADIE PSPIE ]
+[s S167 :5 `uc 1 :1 `uc 1 ]
+[n S167 . . RC1IE ]
+[s S168 :4 `uc 1 :1 `uc 1 ]
+[n S168 . . TX1IE ]
+[u S165 `S166 1 `S167 1 `S168 1 ]
+[n S165 . . . . ]
+"3392 C:\Program Files\Microchip\xc8\v1.12\include\pic18f45k20.h
+[v _PIE1bits `VS165 ~T0 @X0 0 e@3997 ]
+[s S170 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
+[n S170 . TMR1IF TMR2IF CCP1IF SSPIF TXIF RCIF ADIF PSPIF ]
+[s S171 :5 `uc 1 :1 `uc 1 ]
+[n S171 . . RC1IF ]
+[s S172 :4 `uc 1 :1 `uc 1 ]
+[n S172 . . TX1IF ]
+[u S169 `S170 1 `S171 1 `S172 1 ]
+[n S169 . . . . ]
+"3471
+[v _PIR1bits `VS169 ~T0 @X0 0 e@3998 ]
 "4421
 [v _SPBRG `Vuc ~T0 @X0 0 e@4015 ]
-"16 src/drivers/uart.h
+"18 src/drivers/uart.h
 [v _uart_putc `(v ~T0 @X0 0 ef1`uc ]
-"22
+"24
 [v _uart_byte_sent `(uc ~T0 @X0 0 ef ]
 "4399 C:\Program Files\Microchip\xc8\v1.12\include\pic18f45k20.h
 [v _TXREG `Vuc ~T0 @X0 0 e@4013 ]
 "8621
 [v _TXIF `Vb ~T0 @X0 0 e@31988 ]
-"8241
-[v _RCIF `Vb ~T0 @X0 0 e@31989 ]
+"8219
+[v _RC1IF `Vb ~T0 @X0 0 e@31989 ]
 [c E3388 1 0 .. ]
 [n E3388 . RESULT_SUCCESS RESULT_FAIL  ]
-"25 src/drivers/uart.h
+"27 src/drivers/uart.h
 [v _uart_error `(uc ~T0 @X0 0 ef ]
-"27
+"29
 [v _uart_reset `(v ~T0 @X0 0 ef ]
 "4410 C:\Program Files\Microchip\xc8\v1.12\include\pic18f45k20.h
 [v _RCREG `Vuc ~T0 @X0 0 e@4014 ]
+"8241
+[v _RCIF `Vb ~T0 @X0 0 e@31989 ]
 "7605
 [v _CREN `Vb ~T0 @X0 0 e@32092 ]
 [s S195 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
@@ -3842,14 +3866,15 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;pic18.h: 146: extern void _delaywdt(unsigned long);
 [; ;pic18.h: 148: extern void _delay3(unsigned char);
 [; ;uart.h: 7: void uart_init(void);
-[; ;uart.h: 9: void uart_enable(CHAR on);
-[; ;uart.h: 11: void uart_puts(const CHAR *pstr, SIZE size);
-[; ;uart.h: 13: ResultSuccess_t uart_getc(CHAR *pbyte);
-[; ;uart.h: 16: void uart_putc(CHAR byte);
-[; ;uart.h: 19: CHAR uart_byte_received(void);
-[; ;uart.h: 22: CHAR uart_byte_sent(void);
-[; ;uart.h: 25: CHAR uart_error(void);
-[; ;uart.h: 27: void uart_reset(void);
+[; ;uart.h: 9: void uart_set_baudrate(UINT24 baudrate);
+[; ;uart.h: 11: void uart_enable(CHAR on);
+[; ;uart.h: 13: void uart_puts(const CHAR *pstr, SIZE size);
+[; ;uart.h: 15: ResultSuccess_t uart_getc(CHAR *pbyte);
+[; ;uart.h: 18: void uart_putc(CHAR byte);
+[; ;uart.h: 21: CHAR uart_byte_available(void);
+[; ;uart.h: 24: CHAR uart_byte_sent(void);
+[; ;uart.h: 27: CHAR uart_error(void);
+[; ;uart.h: 29: void uart_reset(void);
 "5 src/drivers/uart.c
 [v _uart_init `(v ~T0 @X0 1 ef ]
 {
@@ -3869,240 +3894,249 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;uart.c: 9: BAUDCON = 0b00000000;
 "9
 [e = _BAUDCON -> -> 0 `i `uc ]
-[; ;uart.c: 10: }
+[; ;uart.c: 10: uart_set_baudrate(19200);
 "10
+[e ( _uart_set_baudrate (1 -> -> -> 19200 `i `m `um ]
+[; ;uart.c: 12: PIE1bits.RCIE=1;
+"12
+[e = . . _PIE1bits 0 5 -> -> 1 `i `uc ]
+[; ;uart.c: 13: PIR1bits.RCIF=1;
+"13
+[e = . . _PIR1bits 0 5 -> -> 1 `i `uc ]
+[; ;uart.c: 14: }
+"14
 [e :UE 389 ]
 }
-"13
+"17
 [v _uart_set_baudrate `(v ~T0 @X0 1 ef1`um ]
 {
-[; ;uart.c: 12: void uart_set_baudrate(UINT24 baudrate)
-[; ;uart.c: 13: {
+[; ;uart.c: 16: void uart_set_baudrate(UINT24 baudrate)
+[; ;uart.c: 17: {
 [e :U _uart_set_baudrate ]
 [v _baudrate `um ~T0 @X0 1 r1 ]
 [f ]
-[; ;uart.c: 15: SPBRG = 12;
-"15
+[; ;uart.c: 19: SPBRG = 12;
+"19
 [e = _SPBRG -> -> 12 `i `uc ]
-[; ;uart.c: 17: }
-"17
+[; ;uart.c: 21: }
+"21
 [e :UE 390 ]
 }
-"20
+"24
 [v _uart_enable `(v ~T0 @X0 1 ef1`uc ]
 {
-[; ;uart.c: 19: void uart_enable(CHAR on)
-[; ;uart.c: 20: {
+[; ;uart.c: 23: void uart_enable(CHAR on)
+[; ;uart.c: 24: {
 [e :U _uart_enable ]
 [v _on `uc ~T0 @X0 1 r1 ]
 [f ]
-[; ;uart.c: 21: RCSTA &= ~0x80;
-"21
+[; ;uart.c: 25: RCSTA &= ~0x80;
+"25
 [e =& _RCSTA -> ~ -> 128 `i `uc ]
-[; ;uart.c: 22: RCSTA |= (UINT8)on<<7;
-"22
+[; ;uart.c: 26: RCSTA |= (UINT8)on<<7;
+"26
 [e =| _RCSTA -> << -> _on `i -> 7 `i `uc ]
-[; ;uart.c: 23: }
-"23
+[; ;uart.c: 27: }
+"27
 [e :UE 391 ]
 }
-"27
+"31
 [v _uart_puts `(v ~T0 @X0 1 ef2`*Cuc`i ]
 {
-[; ;uart.c: 26: void uart_puts(const CHAR *pstr, SIZE size)
-[; ;uart.c: 27: {
+[; ;uart.c: 30: void uart_puts(const CHAR *pstr, SIZE size)
+[; ;uart.c: 31: {
 [e :U _uart_puts ]
 [v _pstr `*Cuc ~T0 @X0 1 r1 ]
 [v _size `i ~T0 @X0 1 r2 ]
 [f ]
-[; ;uart.c: 28: while(size-- && *pstr)
-"28
+[; ;uart.c: 32: while(size-- && *pstr)
+"32
 [e $U 393  ]
 [e :U 394 ]
-[; ;uart.c: 29: {
-"29
+[; ;uart.c: 33: {
+"33
 {
-[; ;uart.c: 30: uart_putc(*pstr);
-"30
+[; ;uart.c: 34: uart_putc(*pstr);
+"34
 [e ( _uart_putc (1 *U _pstr ]
-[; ;uart.c: 31: pstr++;
-"31
+[; ;uart.c: 35: pstr++;
+"35
 [e ++ _pstr * -> -> 1 `i `x -> -> # *U _pstr `i `x ]
-"32
+"36
 }
 [e :U 393 ]
-"28
+"32
 [e $ && != -- _size -> 1 `i -> 0 `i != -> *U _pstr `i -> -> -> 0 `i `Cuc `i 394  ]
 [e :U 395 ]
-[; ;uart.c: 32: }
-[; ;uart.c: 33: }
-"33
+[; ;uart.c: 36: }
+[; ;uart.c: 37: }
+"37
 [e :UE 392 ]
 }
-"36
+"40
 [v _uart_putc `(v ~T0 @X0 1 ef1`uc ]
 {
-[; ;uart.c: 35: void uart_putc( CHAR byte)
-[; ;uart.c: 36: {
+[; ;uart.c: 39: void uart_putc( CHAR byte)
+[; ;uart.c: 40: {
 [e :U _uart_putc ]
 [v _byte `uc ~T0 @X0 1 r1 ]
 [f ]
-[; ;uart.c: 37: while( !uart_byte_sent() );
-"37
+[; ;uart.c: 41: while( !uart_byte_sent() );
+"41
 [e $U 397  ]
 [e :U 398 ]
 [e :U 397 ]
 [e $ ! != -> ( _uart_byte_sent ..  `i -> -> -> 0 `i `uc `i 398  ]
 [e :U 399 ]
-[; ;uart.c: 38: TXREG = byte;
-"38
+[; ;uart.c: 42: TXREG = byte;
+"42
 [e = _TXREG _byte ]
-[; ;uart.c: 39: }
-"39
+[; ;uart.c: 43: }
+"43
 [e :UE 396 ]
 }
-"42
+"46
 [v _uart_byte_sent `(uc ~T0 @X0 1 ef ]
 {
-[; ;uart.c: 41: CHAR uart_byte_sent(void)
-[; ;uart.c: 42: {
+[; ;uart.c: 45: CHAR uart_byte_sent(void)
+[; ;uart.c: 46: {
 [e :U _uart_byte_sent ]
 [f ]
-[; ;uart.c: 43: return TXIF;
-"43
+[; ;uart.c: 47: return TXIF;
+"47
 [e ) -> -> _TXIF `i `uc ]
 [e $UE 400  ]
-[; ;uart.c: 44: }
-"44
+[; ;uart.c: 48: }
+"48
 [e :UE 400 ]
 }
-"48
-[v _uart_byte_received `(uc ~T0 @X0 1 ef ]
+"52
+[v _uart_byte_available `(uc ~T0 @X0 1 ef ]
 {
-[; ;uart.c: 47: CHAR uart_byte_received(void)
-[; ;uart.c: 48: {
-[e :U _uart_byte_received ]
+[; ;uart.c: 51: CHAR uart_byte_available(void)
+[; ;uart.c: 52: {
+[e :U _uart_byte_available ]
 [f ]
-[; ;uart.c: 49: return RCIF;
-"49
-[e ) -> -> _RCIF `i `uc ]
+[; ;uart.c: 53: return RC1IF;
+"53
+[e ) -> -> _RC1IF `i `uc ]
 [e $UE 401  ]
-[; ;uart.c: 50: }
-"50
+[; ;uart.c: 54: }
+"54
 [e :UE 401 ]
 }
-"53
+"56
 [v _uart_getc `(E3388 ~T0 @X0 1 ef1`*uc ]
 {
-[; ;uart.c: 52: ResultSuccess_t uart_getc(CHAR *pbyte)
-[; ;uart.c: 53: {
+[; ;uart.c: 55: ResultSuccess_t uart_getc(CHAR *pbyte)
+[; ;uart.c: 56: {
 [e :U _uart_getc ]
 [v _pbyte `*uc ~T0 @X0 1 r1 ]
 [f ]
-"54
-[v _result `E3388 ~T0 @X0 1 a ]
-[; ;uart.c: 54: ResultSuccess_t result = RESULT_FAIL;
-[e = _result -> . `E3388 1 `E3388 ]
-[; ;uart.c: 55: if ( uart_error())
-"55
-[e $ ! != -> ( _uart_error ..  `i -> -> -> 0 `i `uc `i 403  ]
-[; ;uart.c: 56: {
-"56
-{
-[; ;uart.c: 57: uart_reset();
 "57
-[e ( _uart_reset ..  ]
+[v _result `E3388 ~T0 @X0 1 a ]
+[; ;uart.c: 57: ResultSuccess_t result = RESULT_FAIL;
+[e = _result -> . `E3388 1 `E3388 ]
+[; ;uart.c: 58: if ( uart_error())
 "58
-}
-[; ;uart.c: 58: }
-[e $U 404  ]
+[e $ ! != -> ( _uart_error ..  `i -> -> -> 0 `i `uc `i 403  ]
+[; ;uart.c: 59: {
 "59
-[e :U 403 ]
-[; ;uart.c: 59: else
-[; ;uart.c: 60: if( uart_byte_received() )
-"60
-[e $ ! != -> ( _uart_byte_received ..  `i -> -> -> 0 `i `uc `i 405  ]
-[; ;uart.c: 61: {
-"61
 {
-[; ;uart.c: 62: *pbyte = RCREG;
+[; ;uart.c: 60: uart_reset();
+"60
+[e ( _uart_reset ..  ]
+"61
+}
+[; ;uart.c: 61: }
+[e $U 404  ]
 "62
-[e = *U _pbyte _RCREG ]
-[; ;uart.c: 63: RCIF = 0;
+[e :U 403 ]
+[; ;uart.c: 62: else
+[; ;uart.c: 63: if( uart_byte_available() )
 "63
-[e = _RCIF -> -> 0 `i `b ]
-[; ;uart.c: 64: result = RESULT_SUCCESS;
+[e $ ! != -> ( _uart_byte_available ..  `i -> -> -> 0 `i `uc `i 405  ]
+[; ;uart.c: 64: {
 "64
-[e = _result -> . `E3388 0 `E3388 ]
+{
+[; ;uart.c: 65: *pbyte = RCREG;
 "65
+[e = *U _pbyte _RCREG ]
+[; ;uart.c: 66: RCIF = 0;
+"66
+[e = _RCIF -> -> 0 `i `b ]
+[; ;uart.c: 67: result = RESULT_SUCCESS;
+"67
+[e = _result -> . `E3388 0 `E3388 ]
+"68
 }
 [e :U 405 ]
-"66
+"69
 [e :U 404 ]
-[; ;uart.c: 65: }
-[; ;uart.c: 66: return result;
+[; ;uart.c: 68: }
+[; ;uart.c: 69: return result;
 [e ) _result ]
 [e $UE 402  ]
-[; ;uart.c: 67: }
-"67
+[; ;uart.c: 70: }
+"70
 [e :UE 402 ]
 }
-"70
+"73
 [v _uart_reset `(v ~T0 @X0 1 ef ]
 {
-[; ;uart.c: 69: void uart_reset()
-[; ;uart.c: 70: {
+[; ;uart.c: 72: void uart_reset()
+[; ;uart.c: 73: {
 [e :U _uart_reset ]
 [f ]
-[; ;uart.c: 71: while(uart_error() )
-"71
+[; ;uart.c: 74: while(uart_error() )
+"74
 [e $U 407  ]
 [e :U 408 ]
-[; ;uart.c: 72: {
-"72
-{
-[; ;uart.c: 73: CREN = 0;
-"73
-[e = _CREN -> -> 0 `i `b ]
-[; ;uart.c: 74: RCREG;
-"74
-[e _RCREG ]
-[; ;uart.c: 75: RCREG;
+[; ;uart.c: 75: {
 "75
-[e _RCREG ]
-[; ;uart.c: 76: CREN = 1;
+{
+[; ;uart.c: 76: CREN = 0;
 "76
-[e = _CREN -> -> 1 `i `b ]
-[; ;uart.c: 77: while(uart_byte_received());
+[e = _CREN -> -> 0 `i `b ]
+[; ;uart.c: 77: RCREG;
 "77
+[e _RCREG ]
+[; ;uart.c: 78: RCREG;
+"78
+[e _RCREG ]
+[; ;uart.c: 79: CREN = 1;
+"79
+[e = _CREN -> -> 1 `i `b ]
+[; ;uart.c: 80: while(uart_byte_available());
+"80
 [e $U 410  ]
 [e :U 411 ]
 [e :U 410 ]
-[e $ != -> ( _uart_byte_received ..  `i -> -> -> 0 `i `uc `i 411  ]
+[e $ != -> ( _uart_byte_available ..  `i -> -> -> 0 `i `uc `i 411  ]
 [e :U 412 ]
-"78
+"81
 }
 [e :U 407 ]
-"71
+"74
 [e $ != -> ( _uart_error ..  `i -> -> -> 0 `i `uc `i 408  ]
 [e :U 409 ]
-[; ;uart.c: 78: }
-[; ;uart.c: 79: }
-"79
+[; ;uart.c: 81: }
+[; ;uart.c: 82: }
+"82
 [e :UE 406 ]
 }
-"82
+"85
 [v _uart_error `(uc ~T0 @X0 1 ef ]
 {
-[; ;uart.c: 81: CHAR uart_error()
-[; ;uart.c: 82: {
+[; ;uart.c: 84: CHAR uart_error()
+[; ;uart.c: 85: {
 [e :U _uart_error ]
 [f ]
-[; ;uart.c: 83: return RCSTAbits.OERR || RCSTAbits.FERR ;
-"83
+[; ;uart.c: 86: return RCSTAbits.OERR || RCSTAbits.FERR ;
+"86
 [e ) -> -> || != -> . . _RCSTAbits 0 1 `i -> -> -> 0 `i `Vuc `i != -> . . _RCSTAbits 0 2 `i -> -> -> 0 `i `Vuc `i `i `uc ]
 [e $UE 413  ]
-[; ;uart.c: 84: }
-"84
+[; ;uart.c: 87: }
+"87
 [e :UE 413 ]
 }

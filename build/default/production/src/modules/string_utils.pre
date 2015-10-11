@@ -5428,7 +5428,6 @@ return (symb >= '0' && symb <= '9');
 
 UINT8 symb_from_hex_to_bin(char symb)
 {
-UINT8 value = 0;
 switch (symb)
 {
 case '0':

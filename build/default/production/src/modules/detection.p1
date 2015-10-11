@@ -1,18 +1,14 @@
 Version 3.2 HI-TECH Software Intermediate Code
-[c E4322 0 1 2 3 4 5 6 7 .. ]
-[n E4322 . PROFILE_DIS PROFILE1 PROFILE2 PROFILE3 PROFILE4 PROFILE5 PROFILE6 PROFILES_COUNT  ]
+[c E4321 0 1 2 3 4 5 6 7 .. ]
+[n E4321 . PROFILE_DIS PROFILE1 PROFILE2 PROFILE3 PROFILE4 PROFILE5 PROFILE6 PROFILES_COUNT  ]
 [c E4263 0 1 2 3 .. ]
 [n E4263 . DETECTION_MODE_OFF DETECTION_MODE_CLA DETECTION_MODE_PEAK DETECTION_MODE_COUNT  ]
 [s S392 `m 1 `m 1 `m 1 ]
 [n S392 . sig_max_count sig_sum_trig sig_trig ]
 [s S389 `m 1 `m 1 `uc 1 `uc 1 ]
 [n S389 . wtrigger tolerance lval_cnt rval_cnt ]
-[s S397 `uc 1 `E4322 1 `uc 1 `uc 1 `uc 1 `ui 1 `E4263 1 `S392 1 `S389 1 ]
+[s S397 `uc 1 `E4321 1 `uc 1 `uc 1 `uc 1 `ui 1 `E4263 1 `S392 1 `S389 1 ]
 [n S397 . checksum profile_number address potentiometer acc_sensitivity power_trig det_mode cla_config pd_config ]
-[s S396 `i 1 `i 1 `i 1 `uc 1 ]
-[n S396 . last first size stream ]
-[s S395 `S396 1 `uc -> 200 `ui ]
-[n S395 . head list ]
 [s S391 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
 [n S391 . alarm warning firststart ]
 [s S390 `m -> 20 `i `uc 1 `um 1 `m -> 20 `i `uc 1 `m 1 `m 1 `m 1 `m 1 `m 1 `S391 1 `S389 1 ]
@@ -3896,27 +3892,93 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;detection.h: 23: CHAR detection_is_warning(void);
 [; ;detection.h: 24: CHAR detection_is_alarm(void) ;
 [; ;detection.h: 25: INT24 detection_get_zero(void) ;
-[; ;modules\rd_buffer.h: 8: typedef UINT8 RdBufferRecord;
+"9 src\config.h
+[p x FOSC=INTIO67 ]
+"10
+[p x FCMEN=OFF ]
+"11
+[p x IESO=OFF ]
+"14
+[p x PWRT=ON ]
+"15
+[p x BOREN=OFF ]
+"16
+[p x BORV=27 ]
+"19
+[p x WDTEN=ON ]
+"20
+[p x WDTPS=1024 ]
+"23
+[p x CCP2MX=PORTC ]
+"24
+[p x PBADEN=OFF ]
+"25
+[p x LPT1OSC=ON ]
+"26
+[p x HFOFST=ON ]
+"27
+[p x MCLRE=ON ]
+"30
+[p x STVREN=ON ]
+"31
+[p x LVP=OFF ]
+"32
+[p x XINST=OFF ]
+"35
+[p x CP0=OFF ]
+"36
+[p x CP1=OFF ]
+"37
+[p x CP2=OFF ]
+"38
+[p x CP3=OFF ]
+"41
+[p x CPB=OFF ]
+"42
+[p x CPD=OFF ]
+"45
+[p x WRT0=OFF ]
+"46
+[p x WRT1=OFF ]
+"47
+[p x WRT2=OFF ]
+"48
+[p x WRT3=OFF ]
+"51
+[p x WRTC=OFF ]
+"52
+[p x WRTB=OFF ]
+"53
+[p x WRTD=OFF ]
+"56
+[p x EBTR0=OFF ]
+"57
+[p x EBTR1=OFF ]
+"58
+[p x EBTR2=OFF ]
+"59
+[p x EBTR3=OFF ]
+"62
+[p x EBTRB=OFF ]
 [; ;modules\rd_buffer.h: 11: typedef struct {
 [; ;modules\rd_buffer.h: 12: struct {
 [; ;modules\rd_buffer.h: 14: INT16 last;
 [; ;modules\rd_buffer.h: 16: INT16 first;
 [; ;modules\rd_buffer.h: 17: SIZE size;
-[; ;modules\rd_buffer.h: 18: CHAR stream;
-[; ;modules\rd_buffer.h: 19: } head;
-[; ;modules\rd_buffer.h: 20: RdBufferRecord list[(200u)];
-[; ;modules\rd_buffer.h: 21: } RdBuffer;
-[; ;modules\rd_buffer.h: 24: SIZE rd_buffer_capacity(RdBuffer *pbuffer);
-[; ;modules\rd_buffer.h: 26: CHAR rd_buffer_init(RdBuffer *pbuffer, SIZE size, CHAR stream);
-[; ;modules\rd_buffer.h: 29: SIZE rd_buffer_cnt(RdBuffer *pbuffer);
-[; ;modules\rd_buffer.h: 31: void rd_buffer_reset(RdBuffer *pbuffer);
-[; ;modules\rd_buffer.h: 34: CHAR rd_buffer_is_empty(RdBuffer *pbuffer);
-[; ;modules\rd_buffer.h: 37: CHAR rd_buffer_is_full(RdBuffer *pbuffer);
-[; ;modules\rd_buffer.h: 41: CHAR rd_buffer_get(RdBuffer *pbuffer,RdBufferRecord *prec);
-[; ;modules\rd_buffer.h: 44: CHAR rd_buffer_put(RdBuffer *pbuffer,RdBufferRecord *prec);
-[; ;modules\rd_buffer.h: 48: CHAR rd_buffer_getn(RdBuffer *pbuffer, RdBufferRecord prec[], SIZE rec_count);
-[; ;modules\rd_buffer.h: 50: CHAR rd_buffer_first(RdBuffer *pbuffer, RdBufferRecord *prec);
-[; ;modules\rd_buffer.h: 52: CHAR rd_buffer_last(RdBuffer *pbuffer, RdBufferRecord *prec);
+[; ;modules\rd_buffer.h: 18: } head;
+[; ;modules\rd_buffer.h: 19: UINT8 list[((100))+1];
+[; ;modules\rd_buffer.h: 20: } RdBuffer;
+[; ;modules\rd_buffer.h: 24: CHAR rd_buffer_init(RdBuffer *pbuffer, SIZE size);
+[; ;modules\rd_buffer.h: 26: CHAR rd_buffer_readline(RdBuffer *pbuffer, CHAR *pdata, SIZE *psize);
+[; ;modules\rd_buffer.h: 28: SIZE rd_buffer_cnt(RdBuffer *pbuffer);
+[; ;modules\rd_buffer.h: 30: void rd_buffer_reset(RdBuffer *pbuffer);
+[; ;modules\rd_buffer.h: 33: CHAR rd_buffer_is_empty(RdBuffer *pbuffer);
+[; ;modules\rd_buffer.h: 36: CHAR rd_buffer_is_full(RdBuffer *pbuffer);
+[; ;modules\rd_buffer.h: 40: CHAR rd_buffer_get(RdBuffer *pbuffer,UINT8 *prec);
+[; ;modules\rd_buffer.h: 43: CHAR rd_buffer_put(RdBuffer *pbuffer,UINT8 *prec);
+[; ;modules\rd_buffer.h: 47: CHAR rd_buffer_getn(RdBuffer *pbuffer, UINT8 prec[], SIZE rec_count);
+[; ;modules\rd_buffer.h: 49: CHAR rd_buffer_first(RdBuffer *pbuffer, UINT8 *prec);
+[; ;modules\rd_buffer.h: 51: CHAR rd_buffer_last(RdBuffer *pbuffer, UINT8 *prec);
 [; ;memory_register_map.h: 16: typedef enum {
 [; ;memory_register_map.h: 17: PROFILE_DIS=0,
 [; ;memory_register_map.h: 18: PROFILE1,
@@ -3958,15 +4020,11 @@ Version 3.2 HI-TECH Software Intermediate Code
 "53
 [v _g_analog2 `Vui ~T0 @X0 1 e ]
 [; ;memory_register_map.h: 53: volatile UINT16 g_analog2;
-"54
-[v _g_rx_buffer `S395 ~T0 @X0 1 e ]
-[; ;memory_register_map.h: 54: RdBuffer g_rx_buffer;
 [; ;memory_register_map.h: 60: extern volatile Config_t g_CONFIG;
 [; ;memory_register_map.h: 61: extern volatile UINT16 g_STATUS;
 [; ;memory_register_map.h: 62: extern volatile UINT16 g_analog0;
 [; ;memory_register_map.h: 63: extern volatile UINT16 g_analog1;
 [; ;memory_register_map.h: 64: extern volatile UINT16 g_analog2;
-[; ;memory_register_map.h: 65: extern RdBuffer g_rx_buffer;
 "20 src/modules/detection.c
 [v _this_warning `Vuc ~T0 @X0 1 e ]
 [; ;detection.c: 20: volatile CHAR this_warning;
@@ -4045,9 +4103,9 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e :U _detection_detect ]
 [f ]
 "90
-[v F4362 `uc ~T0 @X0 1 s alarm_cla ]
+[v F4360 `uc ~T0 @X0 1 s alarm_cla ]
 "91
-[v F4363 `uc ~T0 @X0 1 s alarm_wav ]
+[v F4361 `uc ~T0 @X0 1 s alarm_wav ]
 "92
 [v _zero `m ~T0 @X0 1 a ]
 [; ;detection.c: 90: static CHAR alarm_cla;
@@ -4055,13 +4113,13 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;detection.c: 92: INT24 zero;
 [; ;detection.c: 94: alarm_wav = (CHAR)pd_add_value(&pd_detector, (INT24)g_analog0);
 "94
-[e = F4363 ( _pd_add_value (2 , &U _pd_detector -> _g_analog0 `m ]
+[e = F4361 ( _pd_add_value (2 , &U _pd_detector -> _g_analog0 `m ]
 [; ;detection.c: 95: zero = pd_detector.ref_v;
 "95
 [e = _zero . _pd_detector 5 ]
 [; ;detection.c: 96: alarm_cla = (CHAR)cla_add_value(&cla_detector, (INT24)g_analog0, zero);
 "96
-[e = F4362 ( _cla_add_value (3 , , &U _cla_detector -> _g_analog0 `m _zero ]
+[e = F4360 ( _cla_add_value (3 , , &U _cla_detector -> _g_analog0 `m _zero ]
 [; ;detection.c: 97: this_warning = cla_detector.status.over_trig;
 "97
 [e = _this_warning . . _cla_detector 7 2 ]
@@ -4085,7 +4143,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e :U 407 ]
 [; ;detection.c: 110: this_alarm = alarm_cla;
 "110
-[e = _this_alarm F4362 ]
+[e = _this_alarm F4360 ]
 [; ;detection.c: 111: break;
 "111
 [e $U 404  ]
@@ -4094,7 +4152,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e :U 408 ]
 [; ;detection.c: 118: this_alarm= alarm_wav;
 "118
-[e = _this_alarm F4363 ]
+[e = _this_alarm F4361 ]
 [; ;detection.c: 119: break;
 "119
 [e $U 404  ]

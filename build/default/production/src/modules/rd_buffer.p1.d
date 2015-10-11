@@ -6,4 +6,5 @@ src/drivers/adc.h  \
 src/compiler.h  \
 src/typedef_global.h  \
 src/modules/timers.h  \
+src/config.h  \
 src/drivers/sw_i2c.h 

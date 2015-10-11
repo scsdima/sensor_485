@@ -1,7 +1,7 @@
 3h
 1h
-init
-uart
+uart-2h
+init-2h
 interrupt
 roundbuf
 analog

@@ -2,6 +2,7 @@
  build/default/production/src/interrupts.p1:  \
  src/interrupts.c  \
 src/compiler.h  \
+src/modules/serialport.h  \
 src/drivers/adc.h  \
 src/drivers/delay.h  \
 src/compiler.h  \
