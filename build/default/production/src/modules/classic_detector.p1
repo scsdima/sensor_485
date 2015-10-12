@@ -1,9 +1,9 @@
 Version 3.2 HI-TECH Software Intermediate Code
 [s S391 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
 [n S391 . alarm warning over_trig ]
-[s S389 `m 1 `m 1 `m 1 ]
+[s S389 `i 1 `i 1 `i 1 ]
 [n S389 . sig_max_count sig_sum_trig sig_trig ]
-[s S390 `m 1 `m 1 `m 1 `m 1 `m 1 `m 1 `m 1 `S391 1 `S389 1 ]
+[s S390 `i 1 `i 1 `i 1 `i 1 `i 1 `i 1 `i 1 `S391 1 `S389 1 ]
 [n S390 . cur_v zero over_trig_value sig_sum sig_count last_sig_sum last_sig_count status config ]
 [c E3585 0 1 .. ]
 [n E3585 _BOOL FALSE TRUE  ]
@@ -3810,18 +3810,18 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;pic18.h: 146: extern void _delaywdt(unsigned long);
 [; ;pic18.h: 148: extern void _delay3(unsigned char);
 [; ;classic_detector.h: 11: typedef struct {
-[; ;classic_detector.h: 12: INT24 sig_max_count;
-[; ;classic_detector.h: 13: INT24 sig_sum_trig;
-[; ;classic_detector.h: 14: INT24 sig_trig;
+[; ;classic_detector.h: 12: INT16 sig_max_count;
+[; ;classic_detector.h: 13: INT16 sig_sum_trig;
+[; ;classic_detector.h: 14: INT16 sig_trig;
 [; ;classic_detector.h: 15: } ClassicDetectorConfig_t;
 [; ;classic_detector.h: 17: typedef volatile struct {
-[; ;classic_detector.h: 18: INT24 cur_v;
-[; ;classic_detector.h: 19: INT24 zero;
-[; ;classic_detector.h: 20: INT24 over_trig_value;
-[; ;classic_detector.h: 21: INT24 sig_sum;
-[; ;classic_detector.h: 22: INT24 sig_count;
-[; ;classic_detector.h: 23: INT24 last_sig_sum;
-[; ;classic_detector.h: 24: INT24 last_sig_count;
+[; ;classic_detector.h: 18: INT16 cur_v;
+[; ;classic_detector.h: 19: INT16 zero;
+[; ;classic_detector.h: 20: INT16 over_trig_value;
+[; ;classic_detector.h: 21: INT16 sig_sum;
+[; ;classic_detector.h: 22: INT16 sig_count;
+[; ;classic_detector.h: 23: INT16 last_sig_sum;
+[; ;classic_detector.h: 24: INT16 last_sig_count;
 [; ;classic_detector.h: 25: struct {
 [; ;classic_detector.h: 26: unsigned alarm : 1;
 [; ;classic_detector.h: 27: unsigned warning : 1;
@@ -3830,9 +3830,9 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;classic_detector.h: 30: ClassicDetectorConfig_t config;
 [; ;classic_detector.h: 32: } ClassicDetector_t;
 [; ;classic_detector.h: 35: void cla_init(ClassicDetector_t *d);
-[; ;classic_detector.h: 37: CHAR cla_add_value(ClassicDetector_t *d,INT24 val,INT24 zero);
-[; ;classic_detector.h: 39: void cla_setup(ClassicDetector_t *d,INT24 trig, INT24 trig_sum, INT24 trig_window);
-[; ;classic_detector.h: 41: void cla_result(ClassicDetector_t *d, INT24 *value, INT24 *time);
+[; ;classic_detector.h: 37: CHAR cla_add_value(ClassicDetector_t *d,INT16 val,INT16 zero);
+[; ;classic_detector.h: 39: void cla_setup(ClassicDetector_t *d,INT16 trig, INT16 trig_sum, INT16 trig_window);
+[; ;classic_detector.h: 41: void cla_result(ClassicDetector_t *d, INT16 *value, INT16 *time);
 "15 src/modules/classic_detector.c
 [v _cla_init `(v ~T0 @X0 1 ef1`*VS390 ]
 {
@@ -3843,10 +3843,10 @@ Version 3.2 HI-TECH Software Intermediate Code
 [f ]
 [; ;classic_detector.c: 16: d->sig_count=0;
 "16
-[e = . *U _d 4 -> -> 0 `i `m ]
+[e = . *U _d 4 -> 0 `i ]
 [; ;classic_detector.c: 17: d->sig_sum=0;
 "17
-[e = . *U _d 3 -> -> 0 `i `m ]
+[e = . *U _d 3 -> 0 `i ]
 [; ;classic_detector.c: 18: d->status.over_trig=0;
 "18
 [e = . . *U _d 7 2 -> -> 0 `i `uc ]
@@ -3858,21 +3858,21 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e :UE 392 ]
 }
 "33
-[v _cla_add_value `(uc ~T0 @X0 1 ef3`*VS390`m`m ]
+[v _cla_add_value `(uc ~T0 @X0 1 ef3`*VS390`i`i ]
 {
-[; ;classic_detector.c: 32: CHAR cla_add_value(ClassicDetector_t *d,INT24 val,INT24 zero)
+[; ;classic_detector.c: 32: CHAR cla_add_value(ClassicDetector_t *d,INT16 val,INT16 zero)
 [; ;classic_detector.c: 33: {
 [e :U _cla_add_value ]
 [v _d `*VS390 ~T0 @X0 1 r1 ]
-[v _val `m ~T0 @X0 1 r2 ]
-[v _zero `m ~T0 @X0 1 r3 ]
+[v _val `i ~T0 @X0 1 r2 ]
+[v _zero `i ~T0 @X0 1 r3 ]
 [f ]
 [; ;classic_detector.c: 34: d->cur_v = ((val- zero)<0?(-(val- zero)):(val- zero));
 "34
-[e = . *U _d 0 ? < - _val _zero -> -> 0 `i `m : -U - _val _zero - _val _zero ]
+[e = . *U _d 0 ? < - _val _zero -> 0 `i : -U - _val _zero - _val _zero ]
 [; ;classic_detector.c: 35: d->over_trig_value = (d->cur_v > d->config.sig_trig) ? (d->cur_v - d->config.sig_trig):0;
 "35
-[e = . *U _d 2 ? > . *U _d 0 . . *U _d 8 2 : - . *U _d 0 . . *U _d 8 2 -> -> 0 `i `m ]
+[e = . *U _d 2 ? > . *U _d 0 . . *U _d 8 2 : - . *U _d 0 . . *U _d 8 2 -> 0 `i ]
 [; ;classic_detector.c: 36: if (d->status.over_trig)
 "36
 [e $ ! != -> . . *U _d 7 2 `i -> -> -> 0 `i `Vuc `i 394  ]
@@ -3881,7 +3881,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 {
 [; ;classic_detector.c: 38: d->sig_count++;
 "38
-[e ++ . *U _d 4 -> -> 1 `i `m ]
+[e ++ . *U _d 4 -> 1 `i ]
 [; ;classic_detector.c: 39: d->sig_sum += d->over_trig_value;
 "39
 [e =+ . *U _d 3 . *U _d 2 ]
@@ -3905,10 +3905,10 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e = . *U _d 5 . *U _d 3 ]
 [; ;classic_detector.c: 46: d->sig_count = 0;
 "46
-[e = . *U _d 4 -> -> 0 `i `m ]
+[e = . *U _d 4 -> 0 `i ]
 [; ;classic_detector.c: 47: d->sig_sum = 0;
 "47
-[e = . *U _d 3 -> -> 0 `i `m ]
+[e = . *U _d 3 -> 0 `i ]
 [; ;classic_detector.c: 48: return TRUE;
 "48
 [e ) -> . `E3585 1 `uc ]
@@ -3952,16 +3952,16 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e = . . *U _d 7 0 -> . `E3585 0 `uc ]
 [; ;classic_detector.c: 63: d->last_sig_count = 0;
 "63
-[e = . *U _d 6 -> -> 0 `i `m ]
+[e = . *U _d 6 -> 0 `i ]
 [; ;classic_detector.c: 64: d->last_sig_sum = 0;
 "64
-[e = . *U _d 5 -> -> 0 `i `m ]
+[e = . *U _d 5 -> 0 `i ]
 [; ;classic_detector.c: 65: d->sig_count = 0;
 "65
-[e = . *U _d 4 -> -> 0 `i `m ]
+[e = . *U _d 4 -> 0 `i ]
 [; ;classic_detector.c: 66: d->sig_sum = 0;
 "66
-[e = . *U _d 3 -> -> 0 `i `m ]
+[e = . *U _d 3 -> 0 `i ]
 "67
 }
 [e :U 398 ]
@@ -3976,15 +3976,15 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e :UE 393 ]
 }
 "84
-[v _cla_setup `(v ~T0 @X0 1 ef4`*VS390`m`m`m ]
+[v _cla_setup `(v ~T0 @X0 1 ef4`*VS390`i`i`i ]
 {
-[; ;classic_detector.c: 83: void cla_setup(ClassicDetector_t *d,INT24 trig,INT24 trig_sum,INT24 trig_window)
+[; ;classic_detector.c: 83: void cla_setup(ClassicDetector_t *d,INT16 trig,INT16 trig_sum,INT16 trig_window)
 [; ;classic_detector.c: 84: {
 [e :U _cla_setup ]
 [v _d `*VS390 ~T0 @X0 1 r1 ]
-[v _trig `m ~T0 @X0 1 r2 ]
-[v _trig_sum `m ~T0 @X0 1 r3 ]
-[v _trig_window `m ~T0 @X0 1 r4 ]
+[v _trig `i ~T0 @X0 1 r2 ]
+[v _trig_sum `i ~T0 @X0 1 r3 ]
+[v _trig_window `i ~T0 @X0 1 r4 ]
 [f ]
 [; ;classic_detector.c: 85: d->config.sig_trig = trig;
 "85
@@ -3993,25 +3993,25 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;classic_detector.c: 87: trig_sum
 [; ;classic_detector.c: 88: :(100);
 "88
-[e = . . *U _d 8 1 ? > _trig_sum -> -> 100 `i `m : _trig_sum -> -> 100 `i `m ]
+[e = . . *U _d 8 1 ? > _trig_sum -> 100 `i : _trig_sum -> 100 `i ]
 [; ;classic_detector.c: 89: d->config.sig_max_count = (trig_window > (5)) ?
 [; ;classic_detector.c: 90: trig_window
 [; ;classic_detector.c: 91: :(5);
 "91
-[e = . . *U _d 8 0 ? > _trig_window -> -> 5 `i `m : _trig_window -> -> 5 `i `m ]
+[e = . . *U _d 8 0 ? > _trig_window -> 5 `i : _trig_window -> 5 `i ]
 [; ;classic_detector.c: 92: }
 "92
 [e :UE 399 ]
 }
 "106
-[v _cla_result `(v ~T0 @X0 1 ef3`*VS390`*m`*m ]
+[v _cla_result `(v ~T0 @X0 1 ef3`*VS390`*i`*i ]
 {
-[; ;classic_detector.c: 105: void cla_result(ClassicDetector_t*d,INT24 *pvalue,INT24 *ptime)
+[; ;classic_detector.c: 105: void cla_result(ClassicDetector_t*d,INT16 *pvalue,INT16 *ptime)
 [; ;classic_detector.c: 106: {
 [e :U _cla_result ]
 [v _d `*VS390 ~T0 @X0 1 r1 ]
-[v _pvalue `*m ~T0 @X0 1 r2 ]
-[v _ptime `*m ~T0 @X0 1 r3 ]
+[v _pvalue `*i ~T0 @X0 1 r2 ]
+[v _ptime `*i ~T0 @X0 1 r3 ]
 [f ]
 [; ;classic_detector.c: 107: *pvalue=d->sig_sum;
 "107

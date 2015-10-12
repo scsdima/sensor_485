@@ -5252,7 +5252,97 @@ void serialport_task();
 
 void serialport_write(const CHAR *pstr);
 
-# 13 "src/interrupts.c"
+# 14 "src/modules\peak_detector.h"
+typedef struct {
+INT16 wtrigger;
+INT16 tolerance;
+UINT8 lval_cnt;
+UINT8 rval_cnt;
+} PeakDetectorConfig_t;
+
+typedef volatile struct {
+
+INT16 last_v_buf[(20)];
+UINT8 last_v_idx;
+UINT16 last_v;
+
+INT16 ref_v_buf[(20)];
+UINT8 ref_v_idx;
+INT16 ref_v;
+
+INT16 avlv;
+INT16 cur_v;
+INT16 next_v;
+INT16 wval;
+
+struct {
+unsigned alarm : 1;
+unsigned warning : 1;
+unsigned firststart : 1;
+} status;
+
+PeakDetectorConfig_t config;
+} PeakDetector_t;
+
+
+void pd_init(PeakDetector_t *d);
+
+CHAR pd_add_value(PeakDetector_t *d, INT16 val);
+
+void pd_result(PeakDetector_t *d, INT16 *pvalue, INT16 *ptime);
+
+# 11 "src/modules\classic_detector.h"
+typedef struct {
+INT16 sig_max_count;
+INT16 sig_sum_trig;
+INT16 sig_trig;
+} ClassicDetectorConfig_t;
+
+typedef volatile struct {
+INT16 cur_v;
+INT16 zero;
+INT16 over_trig_value;
+INT16 sig_sum;
+INT16 sig_count;
+INT16 last_sig_sum;
+INT16 last_sig_count;
+struct {
+unsigned alarm : 1;
+unsigned warning : 1;
+unsigned over_trig : 1;
+} status;
+ClassicDetectorConfig_t config;
+
+} ClassicDetector_t;
+
+
+void cla_init(ClassicDetector_t *d);
+
+CHAR cla_add_value(ClassicDetector_t *d,INT16 val,INT16 zero);
+
+void cla_setup(ClassicDetector_t *d,INT16 trig, INT16 trig_sum, INT16 trig_window);
+
+void cla_result(ClassicDetector_t *d, INT16 *value, INT16 *time);
+
+# 11 "src/modules\detection.h"
+typedef enum {
+DETECTION_MODE_OFF = (UINT8)0,
+DETECTION_MODE_CLA = 1,
+DETECTION_MODE_PEAK = 2,
+DETECTION_MODE_COUNT
+
+} DetectionMode_t;
+
+
+void detection_init(void);
+CHAR detection_config_apply(void);
+CHAR detection_is_warning(void);
+CHAR detection_is_alarm(void) ;
+INT24 detection_get_zero(void) ;
+void detection_task(void);
+void detection_obtain_analog_service(void);
+
+# 15 "src/interrupts.c"
 interrupt static void isr_high(void)
 {
 
@@ -5270,21 +5360,27 @@ serialport_service();
 PIR1bits.RCIF = 0;
 }
 
-# 38
+# 35
+if(PIR1bits.ADIF)
+{
+
+detection_obtain_analog_service();
+PIR1bits.ADIF = 0;
+}
+
 }
 
 # 8 "src/modules\scheduler.h"
 typedef void (*PEVENT)(void);
 
 
-extern volatile UINT8 pool;
+extern volatile UINT8 pool[8];
 extern volatile PEVENT events[8];
-extern volatile UINT8 current_event;
+extern volatile UINT8 event_miss[8];
 
-
-volatile UINT8 pool;
+volatile UINT8 pool[8];
 volatile PEVENT events[8];
-volatile UINT8 current_event;
+volatile UINT8 event_miss[8];
 
 # 24 "src/main.c"
 int main(void)
@@ -5296,7 +5392,7 @@ delay_ms(1000);
 do{INTCONbits.GIEH=(1); INTCONbits.GIEL=(1);}while(0);;
 while(1)
 {
-do{if(pool&(1<<current_event) && events[current_event]!= (0)){ events[current_event](); } pool &= ~(1<<current_event); current_event++; current_event %= 8;}while(0);;
+do{ INT8 event_old=-1; INT8 event_priority=-1; UINT8 i; for(i=0;i<8;i++) { if(pool[i]==1) { if(event_miss[i] == 0 ) event_old=i; else event_miss[i]--; if(event_priority<0) event_priority=i; } } if(event_old >= 0) { events[event_old](); pool[event_old]=0;; } else if(event_priority >= 0) { events[event_priority](); pool[event_priority]=0;; }}while(0);;
 asm(" clrwdt");
 }
 }

@@ -5,8 +5,11 @@ src/compiler.h  \
 src/modules/serialport.h  \
 src/drivers/adc.h  \
 src/drivers/delay.h  \
+src/modules/classic_detector.h  \
 src/compiler.h  \
 src/typedef_global.h  \
 src/modules/timers.h  \
 src/config.h  \
-src/drivers/sw_i2c.h 
+src/drivers/sw_i2c.h  \
+src/modules/peak_detector.h  \
+src/modules/detection.h 

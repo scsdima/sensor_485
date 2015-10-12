@@ -1,22 +1,26 @@
 Version 3.2 HI-TECH Software Intermediate Code
-[c E4321 0 1 2 3 4 5 6 7 .. ]
-[n E4321 . PROFILE_DIS PROFILE1 PROFILE2 PROFILE3 PROFILE4 PROFILE5 PROFILE6 PROFILES_COUNT  ]
+[c E4323 0 1 2 3 4 5 6 7 .. ]
+[n E4323 . PROFILE_DIS PROFILE1 PROFILE2 PROFILE3 PROFILE4 PROFILE5 PROFILE6 PROFILES_COUNT  ]
 [c E4263 0 1 2 3 .. ]
 [n E4263 . DETECTION_MODE_OFF DETECTION_MODE_CLA DETECTION_MODE_PEAK DETECTION_MODE_COUNT  ]
-[s S392 `m 1 `m 1 `m 1 ]
+[s S392 `i 1 `i 1 `i 1 ]
 [n S392 . sig_max_count sig_sum_trig sig_trig ]
-[s S389 `m 1 `m 1 `uc 1 `uc 1 ]
+[s S389 `i 1 `i 1 `uc 1 `uc 1 ]
 [n S389 . wtrigger tolerance lval_cnt rval_cnt ]
-[s S397 `uc 1 `E4321 1 `uc 1 `uc 1 `uc 1 `ui 1 `E4263 1 `S392 1 `S389 1 ]
+[s S397 `uc 1 `E4323 1 `uc 1 `uc 1 `uc 1 `ui 1 `E4263 1 `S392 1 `S389 1 ]
 [n S397 . checksum profile_number address potentiometer acc_sensitivity power_trig det_mode cla_config pd_config ]
 [s S391 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
 [n S391 . alarm warning firststart ]
-[s S390 `m -> 20 `i `uc 1 `um 1 `m -> 20 `i `uc 1 `m 1 `m 1 `m 1 `m 1 `m 1 `S391 1 `S389 1 ]
+[s S390 `i -> 20 `i `uc 1 `ui 1 `i -> 20 `i `uc 1 `i 1 `i 1 `i 1 `i 1 `i 1 `S391 1 `S389 1 ]
 [n S390 . last_v_buf last_v_idx last_v ref_v_buf ref_v_idx ref_v avlv cur_v next_v wval status config ]
 [s S394 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
 [n S394 . alarm warning over_trig ]
-[s S393 `m 1 `m 1 `m 1 `m 1 `m 1 `m 1 `m 1 `S394 1 `S392 1 ]
+[s S393 `i 1 `i 1 `i 1 `i 1 `i 1 `i 1 `i 1 `S394 1 `S392 1 ]
 [n S393 . cur_v zero over_trig_value sig_sum sig_count last_sig_sum last_sig_count status config ]
+[s S396 `i 1 `i 1 `i 1 ]
+[n S396 . last first size ]
+[s S395 `S396 1 `uc + -> 100 `i -> 1 `i ]
+[n S395 . head list ]
 "46 src/modules/peak_detector.h
 [v _pd_init `(v ~T0 @X0 0 ef1`*VS390 ]
 "35 src/modules/classic_detector.h
@@ -24,9 +28,15 @@ Version 3.2 HI-TECH Software Intermediate Code
 [c E3585 0 1 .. ]
 [n E3585 _BOOL FALSE TRUE  ]
 "48 src/modules/peak_detector.h
-[v _pd_add_value `(uc ~T0 @X0 0 ef2`*VS390`m ]
+[v _pd_add_value `(uc ~T0 @X0 0 ef2`*VS390`i ]
 "37 src/modules/classic_detector.h
-[v _cla_add_value `(uc ~T0 @X0 0 ef3`*VS393`m`m ]
+[v _cla_add_value `(uc ~T0 @X0 0 ef3`*VS393`i`i ]
+"6640 C:\Program Files\Microchip\xc8\v1.12\include\pic18f45k20.h
+[v _STATUS `Vuc ~T0 @X0 0 e@4056 ]
+"8 src/drivers\adc.h
+[v _adc_read `(ui ~T0 @X0 0 ef1`uc ]
+"43 src/modules\rd_buffer.h
+[v _rd_buffer_put `(uc ~T0 @X0 0 ef2`*S395`*uc ]
 [; ;pic18f45k20.h: 44: extern volatile unsigned char SSPMSK @ 0xF77;
 "46 C:\Program Files\Microchip\xc8\v1.12\include\pic18f45k20.h
 [; ;pic18f45k20.h: 46: asm("SSPMSK equ 0F77h");
@@ -3830,22 +3840,22 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;pic18.h: 146: extern void _delaywdt(unsigned long);
 [; ;pic18.h: 148: extern void _delay3(unsigned char);
 [; ;peak_detector.h: 14: typedef struct {
-[; ;peak_detector.h: 15: INT24 wtrigger;
-[; ;peak_detector.h: 16: INT24 tolerance;
+[; ;peak_detector.h: 15: INT16 wtrigger;
+[; ;peak_detector.h: 16: INT16 tolerance;
 [; ;peak_detector.h: 17: UINT8 lval_cnt;
 [; ;peak_detector.h: 18: UINT8 rval_cnt;
 [; ;peak_detector.h: 19: } PeakDetectorConfig_t;
 [; ;peak_detector.h: 21: typedef volatile struct {
-[; ;peak_detector.h: 23: INT24 last_v_buf[(20)];
+[; ;peak_detector.h: 23: INT16 last_v_buf[(20)];
 [; ;peak_detector.h: 24: UINT8 last_v_idx;
-[; ;peak_detector.h: 25: UINT24 last_v;
-[; ;peak_detector.h: 27: INT24 ref_v_buf[(20)];
+[; ;peak_detector.h: 25: UINT16 last_v;
+[; ;peak_detector.h: 27: INT16 ref_v_buf[(20)];
 [; ;peak_detector.h: 28: UINT8 ref_v_idx;
-[; ;peak_detector.h: 29: INT24 ref_v;
-[; ;peak_detector.h: 31: INT24 avlv;
-[; ;peak_detector.h: 32: INT24 cur_v;
-[; ;peak_detector.h: 33: INT24 next_v;
-[; ;peak_detector.h: 34: INT24 wval;
+[; ;peak_detector.h: 29: INT16 ref_v;
+[; ;peak_detector.h: 31: INT16 avlv;
+[; ;peak_detector.h: 32: INT16 cur_v;
+[; ;peak_detector.h: 33: INT16 next_v;
+[; ;peak_detector.h: 34: INT16 wval;
 [; ;peak_detector.h: 36: struct {
 [; ;peak_detector.h: 37: unsigned alarm : 1;
 [; ;peak_detector.h: 38: unsigned warning : 1;
@@ -3854,21 +3864,21 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;peak_detector.h: 42: PeakDetectorConfig_t config;
 [; ;peak_detector.h: 43: } PeakDetector_t;
 [; ;peak_detector.h: 46: void pd_init(PeakDetector_t *d);
-[; ;peak_detector.h: 48: CHAR pd_add_value(PeakDetector_t *d, INT24 val);
-[; ;peak_detector.h: 50: void pd_result(PeakDetector_t *d, INT24 *pvalue, INT24 *ptime);
+[; ;peak_detector.h: 48: CHAR pd_add_value(PeakDetector_t *d, INT16 val);
+[; ;peak_detector.h: 50: void pd_result(PeakDetector_t *d, INT16 *pvalue, INT16 *ptime);
 [; ;classic_detector.h: 11: typedef struct {
-[; ;classic_detector.h: 12: INT24 sig_max_count;
-[; ;classic_detector.h: 13: INT24 sig_sum_trig;
-[; ;classic_detector.h: 14: INT24 sig_trig;
+[; ;classic_detector.h: 12: INT16 sig_max_count;
+[; ;classic_detector.h: 13: INT16 sig_sum_trig;
+[; ;classic_detector.h: 14: INT16 sig_trig;
 [; ;classic_detector.h: 15: } ClassicDetectorConfig_t;
 [; ;classic_detector.h: 17: typedef volatile struct {
-[; ;classic_detector.h: 18: INT24 cur_v;
-[; ;classic_detector.h: 19: INT24 zero;
-[; ;classic_detector.h: 20: INT24 over_trig_value;
-[; ;classic_detector.h: 21: INT24 sig_sum;
-[; ;classic_detector.h: 22: INT24 sig_count;
-[; ;classic_detector.h: 23: INT24 last_sig_sum;
-[; ;classic_detector.h: 24: INT24 last_sig_count;
+[; ;classic_detector.h: 18: INT16 cur_v;
+[; ;classic_detector.h: 19: INT16 zero;
+[; ;classic_detector.h: 20: INT16 over_trig_value;
+[; ;classic_detector.h: 21: INT16 sig_sum;
+[; ;classic_detector.h: 22: INT16 sig_count;
+[; ;classic_detector.h: 23: INT16 last_sig_sum;
+[; ;classic_detector.h: 24: INT16 last_sig_count;
 [; ;classic_detector.h: 25: struct {
 [; ;classic_detector.h: 26: unsigned alarm : 1;
 [; ;classic_detector.h: 27: unsigned warning : 1;
@@ -3877,9 +3887,9 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;classic_detector.h: 30: ClassicDetectorConfig_t config;
 [; ;classic_detector.h: 32: } ClassicDetector_t;
 [; ;classic_detector.h: 35: void cla_init(ClassicDetector_t *d);
-[; ;classic_detector.h: 37: CHAR cla_add_value(ClassicDetector_t *d,INT24 val,INT24 zero);
-[; ;classic_detector.h: 39: void cla_setup(ClassicDetector_t *d,INT24 trig, INT24 trig_sum, INT24 trig_window);
-[; ;classic_detector.h: 41: void cla_result(ClassicDetector_t *d, INT24 *value, INT24 *time);
+[; ;classic_detector.h: 37: CHAR cla_add_value(ClassicDetector_t *d,INT16 val,INT16 zero);
+[; ;classic_detector.h: 39: void cla_setup(ClassicDetector_t *d,INT16 trig, INT16 trig_sum, INT16 trig_window);
+[; ;classic_detector.h: 41: void cla_result(ClassicDetector_t *d, INT16 *value, INT16 *time);
 [; ;detection.h: 11: typedef enum {
 [; ;detection.h: 12: DETECTION_MODE_OFF = (UINT8)0,
 [; ;detection.h: 13: DETECTION_MODE_CLA = 1,
@@ -3888,10 +3898,11 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;detection.h: 17: } DetectionMode_t;
 [; ;detection.h: 20: void detection_init(void);
 [; ;detection.h: 21: CHAR detection_config_apply(void);
-[; ;detection.h: 22: CHAR detection_detect(void);
-[; ;detection.h: 23: CHAR detection_is_warning(void);
-[; ;detection.h: 24: CHAR detection_is_alarm(void) ;
-[; ;detection.h: 25: INT24 detection_get_zero(void) ;
+[; ;detection.h: 22: CHAR detection_is_warning(void);
+[; ;detection.h: 23: CHAR detection_is_alarm(void) ;
+[; ;detection.h: 24: INT24 detection_get_zero(void) ;
+[; ;detection.h: 25: void detection_task(void);
+[; ;detection.h: 26: void detection_obtain_analog_service(void);
 "9 src\config.h
 [p x FOSC=INTIO67 ]
 "10
@@ -4025,177 +4036,206 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;memory_register_map.h: 62: extern volatile UINT16 g_analog0;
 [; ;memory_register_map.h: 63: extern volatile UINT16 g_analog1;
 [; ;memory_register_map.h: 64: extern volatile UINT16 g_analog2;
-"20 src/modules/detection.c
+"12 src/modules/detection.c
 [v _this_warning `Vuc ~T0 @X0 1 e ]
-[; ;detection.c: 20: volatile CHAR this_warning;
-"21
+[; ;detection.c: 12: volatile CHAR this_warning;
+"13
 [v _this_alarm `Vuc ~T0 @X0 1 e ]
-[; ;detection.c: 21: volatile CHAR this_alarm;
-"24
+[; ;detection.c: 13: volatile CHAR this_alarm;
+"15
 [v _pd_detector `VS390 ~T0 @X0 1 e ]
-[; ;detection.c: 24: PeakDetector_t pd_detector;
-"25
+[; ;detection.c: 15: PeakDetector_t pd_detector;
+"16
 [v _cla_detector `VS393 ~T0 @X0 1 e ]
-[; ;detection.c: 25: ClassicDetector_t cla_detector;
-"36
+[; ;detection.c: 16: ClassicDetector_t cla_detector;
+"17
+[v _meas_buffer `S395 ~T0 @X0 1 e ]
+[; ;detection.c: 17: RdBuffer meas_buffer;
+"28
 [v _detection_is_warning `(uc ~T0 @X0 1 ef ]
 {
-[; ;detection.c: 36: CHAR detection_is_warning(void){
+[; ;detection.c: 28: CHAR detection_is_warning(void){
 [e :U _detection_is_warning ]
 [f ]
-[; ;detection.c: 37: return this_warning;
-"37
+[; ;detection.c: 29: return this_warning;
+"29
 [e ) _this_warning ]
 [e $UE 399  ]
-[; ;detection.c: 38: }
-"38
+[; ;detection.c: 30: }
+"30
 [e :UE 399 ]
 }
-"48
+"40
 [v _detection_is_alarm `(uc ~T0 @X0 1 ef ]
 {
-[; ;detection.c: 48: CHAR detection_is_alarm(void) {
+[; ;detection.c: 40: CHAR detection_is_alarm(void) {
 [e :U _detection_is_alarm ]
 [f ]
-[; ;detection.c: 49: return this_alarm;
-"49
+[; ;detection.c: 41: return this_alarm;
+"41
 [e ) _this_alarm ]
 [e $UE 400  ]
-[; ;detection.c: 50: }
-"50
+[; ;detection.c: 42: }
+"42
 [e :UE 400 ]
 }
-"60
+"52
 [v _detection_init `(v ~T0 @X0 1 ef ]
 {
-[; ;detection.c: 60: void detection_init(void) {
+[; ;detection.c: 52: void detection_init(void) {
 [e :U _detection_init ]
 [f ]
-[; ;detection.c: 61: pd_init(&pd_detector);
-"61
+[; ;detection.c: 53: pd_init(&pd_detector);
+"53
 [e ( _pd_init (1 &U _pd_detector ]
-[; ;detection.c: 62: cla_init(&cla_detector);
-"62
+[; ;detection.c: 54: cla_init(&cla_detector);
+"54
 [e ( _cla_init (1 &U _cla_detector ]
-[; ;detection.c: 63: }
-"63
+[; ;detection.c: 55: }
+"55
 [e :UE 401 ]
 }
-"73
+"65
 [v _detection_config_apply `(uc ~T0 @X0 1 ef ]
 {
-[; ;detection.c: 73: CHAR detection_config_apply(void) {
+[; ;detection.c: 65: CHAR detection_config_apply(void) {
 [e :U _detection_config_apply ]
 [f ]
-[; ;detection.c: 76: return TRUE;
-"76
+[; ;detection.c: 68: return TRUE;
+"68
 [e ) -> . `E3585 1 `uc ]
 [e $UE 402  ]
-[; ;detection.c: 77: }
-"77
+[; ;detection.c: 69: }
+"69
 [e :UE 402 ]
 }
-"89
-[v _detection_detect `(uc ~T0 @X0 1 ef ]
+"81
+[v _detection_task `(v ~T0 @X0 1 ef ]
 {
-[; ;detection.c: 88: CHAR detection_detect(void)
-[; ;detection.c: 89: {
-[e :U _detection_detect ]
+[; ;detection.c: 80: void detection_task(void)
+[; ;detection.c: 81: {
+[e :U _detection_task ]
 [f ]
-"90
-[v F4360 `uc ~T0 @X0 1 s alarm_cla ]
-"91
-[v F4361 `uc ~T0 @X0 1 s alarm_wav ]
-"92
+"82
+[v F4363 `uc ~T0 @X0 1 s alarm_cla ]
+"83
+[v F4364 `uc ~T0 @X0 1 s alarm_wav ]
+"84
 [v _zero `m ~T0 @X0 1 a ]
-[; ;detection.c: 90: static CHAR alarm_cla;
-[; ;detection.c: 91: static CHAR alarm_wav;
-[; ;detection.c: 92: INT24 zero;
-[; ;detection.c: 94: alarm_wav = (CHAR)pd_add_value(&pd_detector, (INT24)g_analog0);
-"94
-[e = F4361 ( _pd_add_value (2 , &U _pd_detector -> _g_analog0 `m ]
-[; ;detection.c: 95: zero = pd_detector.ref_v;
-"95
-[e = _zero . _pd_detector 5 ]
-[; ;detection.c: 96: alarm_cla = (CHAR)cla_add_value(&cla_detector, (INT24)g_analog0, zero);
-"96
-[e = F4360 ( _cla_add_value (3 , , &U _cla_detector -> _g_analog0 `m _zero ]
-[; ;detection.c: 97: this_warning = cla_detector.status.over_trig;
-"97
+[; ;detection.c: 82: static CHAR alarm_cla;
+[; ;detection.c: 83: static CHAR alarm_wav;
+[; ;detection.c: 84: INT24 zero;
+[; ;detection.c: 86: alarm_wav = (CHAR)pd_add_value(&pd_detector, (INT24)g_analog0);
+"86
+[e = F4364 ( _pd_add_value (2 , &U _pd_detector -> -> _g_analog0 `m `i ]
+[; ;detection.c: 87: zero = pd_detector.ref_v;
+"87
+[e = _zero -> . _pd_detector 5 `m ]
+[; ;detection.c: 88: alarm_cla = (CHAR)cla_add_value(&cla_detector, (INT24)g_analog0, zero);
+"88
+[e = F4363 ( _cla_add_value (3 , , &U _cla_detector -> -> _g_analog0 `m `i -> _zero `i ]
+[; ;detection.c: 89: this_warning = cla_detector.status.over_trig;
+"89
 [e = _this_warning . . _cla_detector 7 2 ]
-[; ;detection.c: 99: switch (g_CONFIG.det_mode)
-"99
+[; ;detection.c: 91: switch (g_CONFIG.det_mode)
+"91
 [e $U 405  ]
-[; ;detection.c: 100: {
-"100
+[; ;detection.c: 92: {
+"92
 {
-[; ;detection.c: 104: case DETECTION_MODE_OFF :
-"104
+[; ;detection.c: 96: case DETECTION_MODE_OFF :
+"96
 [e :U 406 ]
-[; ;detection.c: 105: this_alarm = FALSE;
-"105
+[; ;detection.c: 97: this_alarm = FALSE;
+"97
 [e = _this_alarm -> . `E3585 0 `uc ]
-[; ;detection.c: 106: break;
-"106
+[; ;detection.c: 98: break;
+"98
 [e $U 404  ]
-[; ;detection.c: 108: case DETECTION_MODE_CLA:
-"108
+[; ;detection.c: 100: case DETECTION_MODE_CLA:
+"100
 [e :U 407 ]
-[; ;detection.c: 110: this_alarm = alarm_cla;
+[; ;detection.c: 102: this_alarm = alarm_cla;
+"102
+[e = _this_alarm F4363 ]
+[; ;detection.c: 103: break;
+"103
+[e $U 404  ]
+[; ;detection.c: 108: case DETECTION_MODE_PEAK:
+"108
+[e :U 408 ]
+[; ;detection.c: 110: this_alarm= alarm_wav;
 "110
-[e = _this_alarm F4360 ]
+[e = _this_alarm F4364 ]
 [; ;detection.c: 111: break;
 "111
 [e $U 404  ]
-[; ;detection.c: 116: case DETECTION_MODE_PEAK:
-"116
-[e :U 408 ]
-[; ;detection.c: 118: this_alarm= alarm_wav;
-"118
-[e = _this_alarm F4361 ]
-[; ;detection.c: 119: break;
-"119
-[e $U 404  ]
-[; ;detection.c: 121: default:
-"121
+[; ;detection.c: 113: default:
+"113
 [e :U 409 ]
-[; ;detection.c: 122: this_alarm = FALSE;
-"122
+[; ;detection.c: 114: this_alarm = FALSE;
+"114
 [e = _this_alarm -> . `E3585 0 `uc ]
-[; ;detection.c: 123: break;
-"123
+[; ;detection.c: 115: break;
+"115
 [e $U 404  ]
-"125
+"117
 }
-[; ;detection.c: 125: }
+[; ;detection.c: 117: }
 [e $U 404  ]
-"99
+"91
 [e :U 405 ]
 [e [\ . _g_CONFIG 6 , $ -> . `E4263 0 `VE4263 406
  , $ -> . `E4263 1 `VE4263 407
  , $ -> . `E4263 2 `VE4263 408
  409 ]
-"125
+"117
 [e :U 404 ]
-[; ;detection.c: 126: return this_alarm;
-"126
-[e ) _this_alarm ]
-[e $UE 403  ]
-[; ;detection.c: 127: }
-"127
+[; ;detection.c: 119: if(this_alarm) STATUS |= (1<<0);
+"119
+[e $ ! != -> _this_alarm `i -> -> -> 0 `i `Vuc `i 410  ]
+[e =| _STATUS -> << -> 1 `i -> 0 `i `uc ]
+[e :U 410 ]
+[; ;detection.c: 120: if(this_warning) STATUS |= (1<<1);
+"120
+[e $ ! != -> _this_warning `i -> -> -> 0 `i `Vuc `i 411  ]
+[e =| _STATUS -> << -> 1 `i -> 1 `i `uc ]
+[e :U 411 ]
+[; ;detection.c: 121: }
+"121
 [e :UE 403 ]
 }
-"138
+"132
 [v _detection_get_zero `(m ~T0 @X0 1 ef ]
 {
-[; ;detection.c: 138: INT24 detection_get_zero(void){
+[; ;detection.c: 132: INT24 detection_get_zero(void){
 [e :U _detection_get_zero ]
 [f ]
-[; ;detection.c: 139: return pd_detector.ref_v;
+[; ;detection.c: 133: return pd_detector.ref_v;
+"133
+[e ) -> . _pd_detector 5 `m ]
+[e $UE 412  ]
+[; ;detection.c: 134: }
+"134
+[e :UE 412 ]
+}
+"137
+[v _detection_obtain_analog_service `(v ~T0 @X0 1 ef ]
+{
+[; ;detection.c: 136: void detection_obtain_analog_service(void)
+[; ;detection.c: 137: {
+[e :U _detection_obtain_analog_service ]
+[f ]
+"138
+[v _adc_data `uc ~T0 @X0 1 a ]
+[; ;detection.c: 138: UINT8 adc_data;
+[; ;detection.c: 139: adc_data = adc_read(0);
 "139
-[e ) . _pd_detector 5 ]
-[e $UE 410  ]
-[; ;detection.c: 140: }
+[e = _adc_data -> ( _adc_read (1 -> -> 0 `i `uc `uc ]
+[; ;detection.c: 140: rd_buffer_put(&meas_buffer, &adc_data);
 "140
-[e :UE 410 ]
+[e ( _rd_buffer_put (2 , &U _meas_buffer &U _adc_data ]
+[; ;detection.c: 141: }
+"141
+[e :UE 413 ]
 }

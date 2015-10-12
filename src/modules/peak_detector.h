@@ -12,26 +12,26 @@
 #define NORMAL_SIGNAL_WLEV  (1000)
 
 typedef struct {
-    INT24 wtrigger; //acceleration trigger
-    INT24 tolerance;
+    INT16 wtrigger; //acceleration trigger
+    INT16 tolerance;
     UINT8 lval_cnt;
     UINT8 rval_cnt;
 } PeakDetectorConfig_t;
 
 typedef volatile struct {
     //dynamic values
-    INT24 last_v_buf[MAXIMUM_LVAL]; //last values buffer
+    INT16 last_v_buf[MAXIMUM_LVAL]; //last values buffer
     UINT8 last_v_idx; //last value index
-    UINT24 last_v; //last value
+    UINT16 last_v; //last value
 
-    INT24 ref_v_buf[MAXIMUM_RVAL]; //color values for refference color
+    INT16 ref_v_buf[MAXIMUM_RVAL]; //color values for refference color
     UINT8 ref_v_idx; //last average color index
-    INT24 ref_v; //ref color value
+    INT16 ref_v; //ref color value
 
-    INT24 avlv; //average value
-    INT24 cur_v; //curent value
-    INT24 next_v; //next value
-    INT24 wval; //acceleration value
+    INT16 avlv; //average value
+    INT16 cur_v; //curent value
+    INT16 next_v; //next value
+    INT16 wval; //acceleration value
 
     struct {
         unsigned alarm : 1;
@@ -45,9 +45,9 @@ typedef volatile struct {
 
 void    pd_init(PeakDetector_t *d);
 
-BOOL   pd_add_value(PeakDetector_t *d, INT24 val);
+BOOL   pd_add_value(PeakDetector_t *d, INT16 val);
 
-void    pd_result(PeakDetector_t *d, INT24 *pvalue, INT24 *ptime);
+void    pd_result(PeakDetector_t *d, INT16 *pvalue, INT16 *ptime);
 
 #endif
 

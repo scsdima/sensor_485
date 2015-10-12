@@ -5506,14 +5506,13 @@ void on_parameter_found(ParserOperation_t operation ,INT8 cmd_id
 typedef void (*PEVENT)(void);
 
 
-extern volatile UINT8 pool;
+extern volatile UINT8 pool[8];
 extern volatile PEVENT events[8];
-extern volatile UINT8 current_event;
+extern volatile UINT8 event_miss[8];
 
-
-volatile UINT8 pool;
+volatile UINT8 pool[8];
 volatile PEVENT events[8];
-volatile UINT8 current_event;
+volatile UINT8 event_miss[8];
 
 # 11 "src/modules/serialport.c"
 static CHAR serialport_buffer[100];
@@ -5534,7 +5533,7 @@ UINT8 byte;
 if (uart_byte_available()) {
 if (uart_getc(&byte) == RESULT_SUCCESS) {
 rd_buffer_put(&g_rx_buffer, &byte);
-pool |= 1<<(5);
+do{pool[(5)] = 1;event_miss[(5)]= (10);}while(0);
 }
 }
 }

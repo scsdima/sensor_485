@@ -26,16 +26,16 @@ void pd_init(PeakDetector_t *d) {
   @Return: (    BOOL) - alarm = 1 
   @Parameters:
         PeakDetector_t*d
-         INT24 val
+         INT16 val
   @Description: adds new value to detect aarm or warning
 
  ********************************************************************* */
-BOOL pd_add_value(PeakDetector_t*d, INT24 val) {
+BOOL pd_add_value(PeakDetector_t*d, INT16 val) {
     IDX8 i;
-    INT24 tmp;
+    INT16 tmp;
 
     d->last_v_idx %= d->config.lval_cnt;
-    d->last_v_buf[d->last_v_idx] = (INT24) val;
+    d->last_v_buf[d->last_v_idx] = (INT16) val;
     d->last_v_idx++;
     d->last_v = d->cur_v;
     d->cur_v = d->next_v; //current_value = new_value
@@ -98,7 +98,7 @@ BOOL pd_add_value(PeakDetector_t*d, INT24 val) {
   @Description: gets result from algoritm
 
  ********************************************************************* */
-void pd_result(PeakDetector_t *d, INT24 *pvalue, INT24 *ptime) {
+void pd_result(PeakDetector_t *d, INT16 *pvalue, INT16 *ptime) {
     /*allways return 0*/
     *pvalue = 0;
     *ptime = 0;

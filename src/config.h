@@ -96,6 +96,7 @@
 
 
 //scheduler tasks
+#define TASK_DETECTION      (2)
 #define TASK_COMMUNICATION	(5)
 #define COMMUNICATION_BUFFER_SIZE (100)
 

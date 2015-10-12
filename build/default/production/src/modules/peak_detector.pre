@@ -5089,26 +5089,26 @@ extern void _delay3(unsigned char);
 
 # 14 "src/modules/peak_detector.h"
 typedef struct {
-INT24 wtrigger;
-INT24 tolerance;
+INT16 wtrigger;
+INT16 tolerance;
 UINT8 lval_cnt;
 UINT8 rval_cnt;
 } PeakDetectorConfig_t;
 
 typedef volatile struct {
 
-INT24 last_v_buf[(20)];
+INT16 last_v_buf[(20)];
 UINT8 last_v_idx;
-UINT24 last_v;
+UINT16 last_v;
 
-INT24 ref_v_buf[(20)];
+INT16 ref_v_buf[(20)];
 UINT8 ref_v_idx;
-INT24 ref_v;
+INT16 ref_v;
 
-INT24 avlv;
-INT24 cur_v;
-INT24 next_v;
-INT24 wval;
+INT16 avlv;
+INT16 cur_v;
+INT16 next_v;
+INT16 wval;
 
 struct {
 unsigned alarm : 1;
@@ -5122,9 +5122,9 @@ PeakDetectorConfig_t config;
 
 void pd_init(PeakDetector_t *d);
 
-CHAR pd_add_value(PeakDetector_t *d, INT24 val);
+CHAR pd_add_value(PeakDetector_t *d, INT16 val);
 
-void pd_result(PeakDetector_t *d, INT24 *pvalue, INT24 *ptime);
+void pd_result(PeakDetector_t *d, INT16 *pvalue, INT16 *ptime);
 
 # 13 "src/modules/peak_detector.c"
 void pd_init(PeakDetector_t *d) {
@@ -5139,12 +5139,12 @@ d->status.firststart = TRUE;
 }
 
 # 33
-CHAR pd_add_value(PeakDetector_t*d, INT24 val) {
+CHAR pd_add_value(PeakDetector_t*d, INT16 val) {
 IDX8 i;
-INT24 tmp;
+INT16 tmp;
 
 d->last_v_idx %= d->config.lval_cnt;
-d->last_v_buf[d->last_v_idx] = (INT24) val;
+d->last_v_buf[d->last_v_idx] = (INT16) val;
 d->last_v_idx++;
 d->last_v = d->cur_v;
 d->cur_v = d->next_v;
@@ -5197,7 +5197,7 @@ return FALSE;
 }
 
 # 101
-void pd_result(PeakDetector_t *d, INT24 *pvalue, INT24 *ptime) {
+void pd_result(PeakDetector_t *d, INT16 *pvalue, INT16 *ptime) {
 
 *pvalue = 0;
 *ptime = 0;

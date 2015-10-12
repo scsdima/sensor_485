@@ -1,9 +1,9 @@
 Version 3.2 HI-TECH Software Intermediate Code
 [s S391 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
 [n S391 . alarm warning firststart ]
-[s S389 `m 1 `m 1 `uc 1 `uc 1 ]
+[s S389 `i 1 `i 1 `uc 1 `uc 1 ]
 [n S389 . wtrigger tolerance lval_cnt rval_cnt ]
-[s S390 `m -> 20 `i `uc 1 `um 1 `m -> 20 `i `uc 1 `m 1 `m 1 `m 1 `m 1 `m 1 `S391 1 `S389 1 ]
+[s S390 `i -> 20 `i `uc 1 `ui 1 `i -> 20 `i `uc 1 `i 1 `i 1 `i 1 `i 1 `i 1 `S391 1 `S389 1 ]
 [n S390 . last_v_buf last_v_idx last_v ref_v_buf ref_v_idx ref_v avlv cur_v next_v wval status config ]
 [c E3585 0 1 .. ]
 [n E3585 _BOOL FALSE TRUE  ]
@@ -3810,22 +3810,22 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;pic18.h: 146: extern void _delaywdt(unsigned long);
 [; ;pic18.h: 148: extern void _delay3(unsigned char);
 [; ;peak_detector.h: 14: typedef struct {
-[; ;peak_detector.h: 15: INT24 wtrigger;
-[; ;peak_detector.h: 16: INT24 tolerance;
+[; ;peak_detector.h: 15: INT16 wtrigger;
+[; ;peak_detector.h: 16: INT16 tolerance;
 [; ;peak_detector.h: 17: UINT8 lval_cnt;
 [; ;peak_detector.h: 18: UINT8 rval_cnt;
 [; ;peak_detector.h: 19: } PeakDetectorConfig_t;
 [; ;peak_detector.h: 21: typedef volatile struct {
-[; ;peak_detector.h: 23: INT24 last_v_buf[(20)];
+[; ;peak_detector.h: 23: INT16 last_v_buf[(20)];
 [; ;peak_detector.h: 24: UINT8 last_v_idx;
-[; ;peak_detector.h: 25: UINT24 last_v;
-[; ;peak_detector.h: 27: INT24 ref_v_buf[(20)];
+[; ;peak_detector.h: 25: UINT16 last_v;
+[; ;peak_detector.h: 27: INT16 ref_v_buf[(20)];
 [; ;peak_detector.h: 28: UINT8 ref_v_idx;
-[; ;peak_detector.h: 29: INT24 ref_v;
-[; ;peak_detector.h: 31: INT24 avlv;
-[; ;peak_detector.h: 32: INT24 cur_v;
-[; ;peak_detector.h: 33: INT24 next_v;
-[; ;peak_detector.h: 34: INT24 wval;
+[; ;peak_detector.h: 29: INT16 ref_v;
+[; ;peak_detector.h: 31: INT16 avlv;
+[; ;peak_detector.h: 32: INT16 cur_v;
+[; ;peak_detector.h: 33: INT16 next_v;
+[; ;peak_detector.h: 34: INT16 wval;
 [; ;peak_detector.h: 36: struct {
 [; ;peak_detector.h: 37: unsigned alarm : 1;
 [; ;peak_detector.h: 38: unsigned warning : 1;
@@ -3834,8 +3834,8 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;peak_detector.h: 42: PeakDetectorConfig_t config;
 [; ;peak_detector.h: 43: } PeakDetector_t;
 [; ;peak_detector.h: 46: void pd_init(PeakDetector_t *d);
-[; ;peak_detector.h: 48: CHAR pd_add_value(PeakDetector_t *d, INT24 val);
-[; ;peak_detector.h: 50: void pd_result(PeakDetector_t *d, INT24 *pvalue, INT24 *ptime);
+[; ;peak_detector.h: 48: CHAR pd_add_value(PeakDetector_t *d, INT16 val);
+[; ;peak_detector.h: 50: void pd_result(PeakDetector_t *d, INT16 *pvalue, INT16 *ptime);
 "13 src/modules/peak_detector.c
 [v _pd_init `(v ~T0 @X0 1 ef1`*VS390 ]
 {
@@ -3855,7 +3855,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 {
 [; ;peak_detector.c: 16: d->last_v_buf[i] = 0;
 "16
-[e = *U + &U . *U _d 0 * -> _i `ux -> -> # *U &U . *U _d 0 `ui `ux -> -> 0 `i `m ]
+[e = *U + &U . *U _d 0 * -> _i `ux -> -> # *U &U . *U _d 0 `ui `ux -> 0 `i ]
 "17
 }
 "15
@@ -3868,7 +3868,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;peak_detector.c: 17: }
 [; ;peak_detector.c: 18: d->last_v = 0;
 "18
-[e = . *U _d 2 -> -> -> 0 `i `m `um ]
+[e = . *U _d 2 -> -> 0 `i `ui ]
 [; ;peak_detector.c: 19: d->last_v_idx = 0;
 "19
 [e = . *U _d 1 -> -> 0 `i `uc ]
@@ -3883,23 +3883,23 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e :UE 392 ]
 }
 "33
-[v _pd_add_value `(uc ~T0 @X0 1 ef2`*VS390`m ]
+[v _pd_add_value `(uc ~T0 @X0 1 ef2`*VS390`i ]
 {
-[; ;peak_detector.c: 33: CHAR pd_add_value(PeakDetector_t*d, INT24 val) {
+[; ;peak_detector.c: 33: CHAR pd_add_value(PeakDetector_t*d, INT16 val) {
 [e :U _pd_add_value ]
 [v _d `*VS390 ~T0 @X0 1 r1 ]
-[v _val `m ~T0 @X0 1 r2 ]
+[v _val `i ~T0 @X0 1 r2 ]
 [f ]
 "34
 [v _i `uc ~T0 @X0 1 a ]
 "35
-[v _tmp `m ~T0 @X0 1 a ]
+[v _tmp `i ~T0 @X0 1 a ]
 [; ;peak_detector.c: 34: IDX8 i;
-[; ;peak_detector.c: 35: INT24 tmp;
+[; ;peak_detector.c: 35: INT16 tmp;
 [; ;peak_detector.c: 37: d->last_v_idx %= d->config.lval_cnt;
 "37
 [e =% . *U _d 1 . . *U _d 11 2 ]
-[; ;peak_detector.c: 38: d->last_v_buf[d->last_v_idx] = (INT24) val;
+[; ;peak_detector.c: 38: d->last_v_buf[d->last_v_idx] = (INT16) val;
 "38
 [e = *U + &U . *U _d 0 * -> . *U _d 1 `ux -> -> # *U &U . *U _d 0 `ui `ux _val ]
 [; ;peak_detector.c: 39: d->last_v_idx++;
@@ -3907,7 +3907,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e ++ . *U _d 1 -> -> 1 `i `uc ]
 [; ;peak_detector.c: 40: d->last_v = d->cur_v;
 "40
-[e = . *U _d 2 -> . *U _d 7 `um ]
+[e = . *U _d 2 -> . *U _d 7 `ui ]
 [; ;peak_detector.c: 41: d->cur_v = d->next_v;
 "41
 [e = . *U _d 7 . *U _d 8 ]
@@ -3916,7 +3916,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e = . *U _d 8 _val ]
 [; ;peak_detector.c: 44: tmp = 0;
 "44
-[e = _tmp -> -> 0 `i `m ]
+[e = _tmp -> 0 `i ]
 [; ;peak_detector.c: 45: for (i = 0; i < d->config.lval_cnt; i++) {
 "45
 {
@@ -3939,13 +3939,13 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;peak_detector.c: 47: }
 [; ;peak_detector.c: 48: d->avlv = tmp/d->config.lval_cnt;
 "48
-[e = . *U _d 6 / _tmp -> . . *U _d 11 2 `m ]
+[e = . *U _d 6 / _tmp -> . . *U _d 11 2 `i ]
 [; ;peak_detector.c: 50: d->wval = d->cur_v * d->cur_v - d->avlv * d->next_v;
 "50
 [e = . *U _d 9 - * . *U _d 7 . *U _d 7 * . *U _d 6 . *U _d 8 ]
 [; ;peak_detector.c: 52: if ((((d->wval)<0?(-(d->wval)):(d->wval))) > d->config.wtrigger) {
 "52
-[e $ ! > ? < . *U _d 9 -> -> 0 `i `m : -U . *U _d 9 . *U _d 9 . . *U _d 11 0 402  ]
+[e $ ! > ? < . *U _d 9 -> 0 `i : -U . *U _d 9 . *U _d 9 . . *U _d 11 0 402  ]
 {
 [; ;peak_detector.c: 53: if (!d->status.alarm && !d->status.firststart) {
 "53
@@ -3970,7 +3970,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;peak_detector.c: 59: && ((d->cur_v - d->ref_v)<0?(-(d->cur_v - d->ref_v)):(d->cur_v - d->ref_v)) < d->config.tolerance
 [; ;peak_detector.c: 60: && ((d->next_v - d->ref_v)<0?(-(d->next_v - d->ref_v)):(d->next_v - d->ref_v)) < d->config.tolerance) {
 "60
-[e $ ! && && && != -> . . *U _d 10 0 `i -> -> -> 0 `i `Vuc `i < ? < . *U _d 9 -> -> 0 `i `m : -U . *U _d 9 . *U _d 9 -> -> 1000 `i `m < ? < - . *U _d 7 . *U _d 5 -> -> 0 `i `m : -U - . *U _d 7 . *U _d 5 - . *U _d 7 . *U _d 5 . . *U _d 11 1 < ? < - . *U _d 8 . *U _d 5 -> -> 0 `i `m : -U - . *U _d 8 . *U _d 5 - . *U _d 8 . *U _d 5 . . *U _d 11 1 404  ]
+[e $ ! && && && != -> . . *U _d 10 0 `i -> -> -> 0 `i `Vuc `i < ? < . *U _d 9 -> 0 `i : -U . *U _d 9 . *U _d 9 -> 1000 `i < ? < - . *U _d 7 . *U _d 5 -> 0 `i : -U - . *U _d 7 . *U _d 5 - . *U _d 7 . *U _d 5 . . *U _d 11 1 < ? < - . *U _d 8 . *U _d 5 -> 0 `i : -U - . *U _d 8 . *U _d 5 - . *U _d 8 . *U _d 5 . . *U _d 11 1 404  ]
 {
 [; ;peak_detector.c: 62: for (i = 0; i < d->config.lval_cnt; i++) {
 "62
@@ -4001,7 +4001,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;peak_detector.c: 66: }
 [; ;peak_detector.c: 69: if (((d->wval)<0?(-(d->wval)):(d->wval)) < (10)) {
 "69
-[e $ ! < ? < . *U _d 9 -> -> 0 `i `m : -U . *U _d 9 . *U _d 9 -> -> 10 `i `m 409  ]
+[e $ ! < ? < . *U _d 9 -> 0 `i : -U . *U _d 9 . *U _d 9 -> 10 `i 409  ]
 {
 [; ;peak_detector.c: 70: if (d->ref_v_idx == 9) {
 "70
@@ -4022,7 +4022,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e = . *U _d 4 -> % + -> . *U _d 4 `i -> 1 `i -> . . *U _d 11 3 `i `uc ]
 [; ;peak_detector.c: 79: tmp = 0;
 "79
-[e = _tmp -> -> 0 `i `m ]
+[e = _tmp -> 0 `i ]
 [; ;peak_detector.c: 80: for (i = 0; i < d->config.rval_cnt; i++) {
 "80
 {
@@ -4045,7 +4045,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;peak_detector.c: 82: }
 [; ;peak_detector.c: 84: d->ref_v = tmp/d->config.rval_cnt;
 "84
-[e = . *U _d 5 / _tmp -> . . *U _d 11 3 `m ]
+[e = . *U _d 5 / _tmp -> . . *U _d 11 3 `i ]
 "85
 }
 [e :U 409 ]
@@ -4059,20 +4059,20 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e :UE 397 ]
 }
 "101
-[v _pd_result `(v ~T0 @X0 1 ef3`*VS390`*m`*m ]
+[v _pd_result `(v ~T0 @X0 1 ef3`*VS390`*i`*i ]
 {
-[; ;peak_detector.c: 101: void pd_result(PeakDetector_t *d, INT24 *pvalue, INT24 *ptime) {
+[; ;peak_detector.c: 101: void pd_result(PeakDetector_t *d, INT16 *pvalue, INT16 *ptime) {
 [e :U _pd_result ]
 [v _d `*VS390 ~T0 @X0 1 r1 ]
-[v _pvalue `*m ~T0 @X0 1 r2 ]
-[v _ptime `*m ~T0 @X0 1 r3 ]
+[v _pvalue `*i ~T0 @X0 1 r2 ]
+[v _ptime `*i ~T0 @X0 1 r3 ]
 [f ]
 [; ;peak_detector.c: 103: *pvalue = 0;
 "103
-[e = *U _pvalue -> -> 0 `i `m ]
+[e = *U _pvalue -> 0 `i ]
 [; ;peak_detector.c: 104: *ptime = 0;
 "104
-[e = *U _ptime -> -> 0 `i `m ]
+[e = *U _ptime -> 0 `i ]
 [; ;peak_detector.c: 105: }
 "105
 [e :UE 415 ]

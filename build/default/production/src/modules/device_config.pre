@@ -5215,26 +5215,26 @@ CHAR rd_buffer_last(RdBuffer *pbuffer, UINT8 *prec);
 
 # 14 "src/modules\peak_detector.h"
 typedef struct {
-INT24 wtrigger;
-INT24 tolerance;
+INT16 wtrigger;
+INT16 tolerance;
 UINT8 lval_cnt;
 UINT8 rval_cnt;
 } PeakDetectorConfig_t;
 
 typedef volatile struct {
 
-INT24 last_v_buf[(20)];
+INT16 last_v_buf[(20)];
 UINT8 last_v_idx;
-UINT24 last_v;
+UINT16 last_v;
 
-INT24 ref_v_buf[(20)];
+INT16 ref_v_buf[(20)];
 UINT8 ref_v_idx;
-INT24 ref_v;
+INT16 ref_v;
 
-INT24 avlv;
-INT24 cur_v;
-INT24 next_v;
-INT24 wval;
+INT16 avlv;
+INT16 cur_v;
+INT16 next_v;
+INT16 wval;
 
 struct {
 unsigned alarm : 1;
@@ -5248,25 +5248,25 @@ PeakDetectorConfig_t config;
 
 void pd_init(PeakDetector_t *d);
 
-CHAR pd_add_value(PeakDetector_t *d, INT24 val);
+CHAR pd_add_value(PeakDetector_t *d, INT16 val);
 
-void pd_result(PeakDetector_t *d, INT24 *pvalue, INT24 *ptime);
+void pd_result(PeakDetector_t *d, INT16 *pvalue, INT16 *ptime);
 
 # 11 "src/modules\classic_detector.h"
 typedef struct {
-INT24 sig_max_count;
-INT24 sig_sum_trig;
-INT24 sig_trig;
+INT16 sig_max_count;
+INT16 sig_sum_trig;
+INT16 sig_trig;
 } ClassicDetectorConfig_t;
 
 typedef volatile struct {
-INT24 cur_v;
-INT24 zero;
-INT24 over_trig_value;
-INT24 sig_sum;
-INT24 sig_count;
-INT24 last_sig_sum;
-INT24 last_sig_count;
+INT16 cur_v;
+INT16 zero;
+INT16 over_trig_value;
+INT16 sig_sum;
+INT16 sig_count;
+INT16 last_sig_sum;
+INT16 last_sig_count;
 struct {
 unsigned alarm : 1;
 unsigned warning : 1;
@@ -5279,11 +5279,11 @@ ClassicDetectorConfig_t config;
 
 void cla_init(ClassicDetector_t *d);
 
-CHAR cla_add_value(ClassicDetector_t *d,INT24 val,INT24 zero);
+CHAR cla_add_value(ClassicDetector_t *d,INT16 val,INT16 zero);
 
-void cla_setup(ClassicDetector_t *d,INT24 trig, INT24 trig_sum, INT24 trig_window);
+void cla_setup(ClassicDetector_t *d,INT16 trig, INT16 trig_sum, INT16 trig_window);
 
-void cla_result(ClassicDetector_t *d, INT24 *value, INT24 *time);
+void cla_result(ClassicDetector_t *d, INT16 *value, INT16 *time);
 
 # 11 "src/modules\detection.h"
 typedef enum {
@@ -5297,10 +5297,11 @@ DETECTION_MODE_COUNT
 
 void detection_init(void);
 CHAR detection_config_apply(void);
-CHAR detection_detect(void);
 CHAR detection_is_warning(void);
 CHAR detection_is_alarm(void) ;
 INT24 detection_get_zero(void) ;
+void detection_task(void);
+void detection_obtain_analog_service(void);
 
 # 16 "src\memory_register_map.h"
 typedef enum {

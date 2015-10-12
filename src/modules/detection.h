@@ -5,7 +5,7 @@
 #include "compiler.h"
 #include "peak_detector.h"
 #include "classic_detector.h"
- 
+
 
 
 typedef enum {
@@ -19,10 +19,11 @@ typedef enum {
 
 void detection_init(void);
 BOOL detection_config_apply(void);
-BOOL detection_detect(void);
 BOOL detection_is_warning(void);
 BOOL  detection_is_alarm(void) ;
-INT24    detection_get_zero(void) ;
+INT24 detection_get_zero(void) ;
+void detection_task(void);
+void detection_obtain_analog_service(void);
 
 #endif	/* DETECTION_H */
 

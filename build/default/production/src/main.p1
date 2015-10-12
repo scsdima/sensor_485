@@ -29,8 +29,10 @@ Version 3.2 HI-TECH Software Intermediate Code
 [v _PIR1bits `VS169 ~T0 @X0 0 e@3998 ]
 "10 src/modules\serialport.h
 [v _serialport_service `(v ~T0 @X0 0 ef ]
+"26 src/modules\detection.h
+[v _detection_obtain_analog_service `(v ~T0 @X0 0 ef ]
 "8 src/modules\scheduler.h
-[v F4240 `(v ~T0 @X0 0 tf ]
+[v F4329 `(v ~T0 @X0 0 tf ]
 [p mainexit ]
 "23 src/drivers\delay.h
 [v _delay_ms `(v ~T0 @X0 0 ef1`ui ]
@@ -3929,70 +3931,150 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;modules\serialport.h: 10: void serialport_service(void);
 [; ;modules\serialport.h: 13: void serialport_task();
 [; ;modules\serialport.h: 15: void serialport_write(const CHAR *pstr);
-"14 src/interrupts.c
-[v F4238 `(v ~T0 @X0 1 tf ]
-[v _isr_high `IF4238 ~T0 @X0 1 s ]
+[; ;modules\peak_detector.h: 14: typedef struct {
+[; ;modules\peak_detector.h: 15: INT16 wtrigger;
+[; ;modules\peak_detector.h: 16: INT16 tolerance;
+[; ;modules\peak_detector.h: 17: UINT8 lval_cnt;
+[; ;modules\peak_detector.h: 18: UINT8 rval_cnt;
+[; ;modules\peak_detector.h: 19: } PeakDetectorConfig_t;
+[; ;modules\peak_detector.h: 21: typedef volatile struct {
+[; ;modules\peak_detector.h: 23: INT16 last_v_buf[(20)];
+[; ;modules\peak_detector.h: 24: UINT8 last_v_idx;
+[; ;modules\peak_detector.h: 25: UINT16 last_v;
+[; ;modules\peak_detector.h: 27: INT16 ref_v_buf[(20)];
+[; ;modules\peak_detector.h: 28: UINT8 ref_v_idx;
+[; ;modules\peak_detector.h: 29: INT16 ref_v;
+[; ;modules\peak_detector.h: 31: INT16 avlv;
+[; ;modules\peak_detector.h: 32: INT16 cur_v;
+[; ;modules\peak_detector.h: 33: INT16 next_v;
+[; ;modules\peak_detector.h: 34: INT16 wval;
+[; ;modules\peak_detector.h: 36: struct {
+[; ;modules\peak_detector.h: 37: unsigned alarm : 1;
+[; ;modules\peak_detector.h: 38: unsigned warning : 1;
+[; ;modules\peak_detector.h: 39: unsigned firststart : 1;
+[; ;modules\peak_detector.h: 40: } status;
+[; ;modules\peak_detector.h: 42: PeakDetectorConfig_t config;
+[; ;modules\peak_detector.h: 43: } PeakDetector_t;
+[; ;modules\peak_detector.h: 46: void pd_init(PeakDetector_t *d);
+[; ;modules\peak_detector.h: 48: CHAR pd_add_value(PeakDetector_t *d, INT16 val);
+[; ;modules\peak_detector.h: 50: void pd_result(PeakDetector_t *d, INT16 *pvalue, INT16 *ptime);
+[; ;modules\classic_detector.h: 11: typedef struct {
+[; ;modules\classic_detector.h: 12: INT16 sig_max_count;
+[; ;modules\classic_detector.h: 13: INT16 sig_sum_trig;
+[; ;modules\classic_detector.h: 14: INT16 sig_trig;
+[; ;modules\classic_detector.h: 15: } ClassicDetectorConfig_t;
+[; ;modules\classic_detector.h: 17: typedef volatile struct {
+[; ;modules\classic_detector.h: 18: INT16 cur_v;
+[; ;modules\classic_detector.h: 19: INT16 zero;
+[; ;modules\classic_detector.h: 20: INT16 over_trig_value;
+[; ;modules\classic_detector.h: 21: INT16 sig_sum;
+[; ;modules\classic_detector.h: 22: INT16 sig_count;
+[; ;modules\classic_detector.h: 23: INT16 last_sig_sum;
+[; ;modules\classic_detector.h: 24: INT16 last_sig_count;
+[; ;modules\classic_detector.h: 25: struct {
+[; ;modules\classic_detector.h: 26: unsigned alarm : 1;
+[; ;modules\classic_detector.h: 27: unsigned warning : 1;
+[; ;modules\classic_detector.h: 28: unsigned over_trig : 1;
+[; ;modules\classic_detector.h: 29: } status;
+[; ;modules\classic_detector.h: 30: ClassicDetectorConfig_t config;
+[; ;modules\classic_detector.h: 32: } ClassicDetector_t;
+[; ;modules\classic_detector.h: 35: void cla_init(ClassicDetector_t *d);
+[; ;modules\classic_detector.h: 37: CHAR cla_add_value(ClassicDetector_t *d,INT16 val,INT16 zero);
+[; ;modules\classic_detector.h: 39: void cla_setup(ClassicDetector_t *d,INT16 trig, INT16 trig_sum, INT16 trig_window);
+[; ;modules\classic_detector.h: 41: void cla_result(ClassicDetector_t *d, INT16 *value, INT16 *time);
+[; ;modules\detection.h: 11: typedef enum {
+[; ;modules\detection.h: 12: DETECTION_MODE_OFF = (UINT8)0,
+[; ;modules\detection.h: 13: DETECTION_MODE_CLA = 1,
+[; ;modules\detection.h: 14: DETECTION_MODE_PEAK = 2,
+[; ;modules\detection.h: 15: DETECTION_MODE_COUNT
+[; ;modules\detection.h: 17: } DetectionMode_t;
+[; ;modules\detection.h: 20: void detection_init(void);
+[; ;modules\detection.h: 21: CHAR detection_config_apply(void);
+[; ;modules\detection.h: 22: CHAR detection_is_warning(void);
+[; ;modules\detection.h: 23: CHAR detection_is_alarm(void) ;
+[; ;modules\detection.h: 24: INT24 detection_get_zero(void) ;
+[; ;modules\detection.h: 25: void detection_task(void);
+[; ;modules\detection.h: 26: void detection_obtain_analog_service(void);
+"16 src/interrupts.c
+[v F4327 `(v ~T0 @X0 1 tf ]
+[v _isr_high `IF4327 ~T0 @X0 1 s ]
 {
-[; ;interrupts.c: 13: interrupt static void isr_high(void)
-[; ;interrupts.c: 14: {
+[; ;interrupts.c: 15: interrupt static void isr_high(void)
+[; ;interrupts.c: 16: {
 [e :U _isr_high ]
 [f ]
-[; ;interrupts.c: 16: if ((INTCONbits.TMR0IF) )
-"16
-[e $ ! != -> . . _INTCONbits 0 2 `i -> -> -> 0 `i `Vuc `i 390  ]
-[; ;interrupts.c: 17: {
-"17
-{
-[; ;interrupts.c: 18: delay_interrupt_service();
+[; ;interrupts.c: 18: if ((INTCONbits.TMR0IF) )
 "18
-[e ( _delay_interrupt_service ..  ]
-[; ;interrupts.c: 20: do{INTCONbits.TMR0IF=0;TMR0 = -500; }while(0);;
+[e $ ! != -> . . _INTCONbits 0 2 `i -> -> -> 0 `i `Vuc `i 396  ]
+[; ;interrupts.c: 19: {
+"19
+{
+[; ;interrupts.c: 20: delay_interrupt_service();
 "20
-[e :U 393 ]
+[e ( _delay_interrupt_service ..  ]
+[; ;interrupts.c: 22: do{INTCONbits.TMR0IF=0;TMR0 = -500; }while(0);;
+"22
+[e :U 399 ]
 {
 [e = . . _INTCONbits 0 2 -> -> 0 `i `uc ]
 [e = _TMR0 -> -U -> 500 `i `us ]
 }
-[e :U 392 ]
-"21
-}
-[e :U 390 ]
-[; ;interrupts.c: 21: }
-[; ;interrupts.c: 23: if(PIR1bits.RCIF)
+[e :U 398 ]
 "23
-[e $ ! != -> . . _PIR1bits 0 5 `i -> -> -> 0 `i `Vuc `i 394  ]
-[; ;interrupts.c: 24: {
-"24
-{
-[; ;interrupts.c: 26: serialport_service();
-"26
-[e ( _serialport_service ..  ]
-[; ;interrupts.c: 27: PIR1bits.RCIF = 0;
-"27
-[e = . . _PIR1bits 0 5 -> -> 0 `i `uc ]
-"28
 }
-[e :U 394 ]
-[; ;interrupts.c: 28: }
-[; ;interrupts.c: 38: }
+[e :U 396 ]
+[; ;interrupts.c: 23: }
+[; ;interrupts.c: 25: if(PIR1bits.RCIF)
+"25
+[e $ ! != -> . . _PIR1bits 0 5 `i -> -> -> 0 `i `Vuc `i 400  ]
+[; ;interrupts.c: 26: {
+"26
+{
+[; ;interrupts.c: 28: serialport_service();
+"28
+[e ( _serialport_service ..  ]
+[; ;interrupts.c: 29: PIR1bits.RCIF = 0;
+"29
+[e = . . _PIR1bits 0 5 -> -> 0 `i `uc ]
+"30
+}
+[e :U 400 ]
+[; ;interrupts.c: 30: }
+[; ;interrupts.c: 35: if(PIR1bits.ADIF)
+"35
+[e $ ! != -> . . _PIR1bits 0 6 `i -> -> -> 0 `i `Vuc `i 401  ]
+[; ;interrupts.c: 36: {
+"36
+{
+[; ;interrupts.c: 38: detection_obtain_analog_service();
 "38
-[e :UE 389 ]
+[e ( _detection_obtain_analog_service ..  ]
+[; ;interrupts.c: 39: PIR1bits.ADIF = 0;
+"39
+[e = . . _PIR1bits 0 6 -> -> 0 `i `uc ]
+"40
+}
+[e :U 401 ]
+[; ;interrupts.c: 40: }
+[; ;interrupts.c: 42: }
+"42
+[e :UE 395 ]
 }
 [; ;modules\scheduler.h: 8: typedef void (*PEVENT)(void);
-[; ;modules\scheduler.h: 11: extern volatile UINT8 pool;
+[; ;modules\scheduler.h: 11: extern volatile UINT8 pool[8];
 [; ;modules\scheduler.h: 12: extern volatile PEVENT events[8];
-[; ;modules\scheduler.h: 13: extern volatile UINT8 current_event;
-"16 src/modules\scheduler.h
-[v _pool `Vuc ~T0 @X0 1 e ]
-[; ;modules\scheduler.h: 16: volatile UINT8 pool;
+[; ;modules\scheduler.h: 13: extern volatile UINT8 event_miss[8];
+"15 src/modules\scheduler.h
+[v _pool `Vuc ~T0 @X0 -> 8 `i e ]
+[; ;modules\scheduler.h: 15: volatile UINT8 pool[8];
 "8
-[v _PEVENT `*F4240 ~T0 @X0 1 t ]
+[v _PEVENT `*F4329 ~T0 @X0 1 t ]
+"16
+[v _events `V*F4329 ~T0 @X0 -> 8 `i e ]
+[; ;modules\scheduler.h: 16: volatile PEVENT events[8];
 "17
-[v _events `V*F4240 ~T0 @X0 -> 8 `i e ]
-[; ;modules\scheduler.h: 17: volatile PEVENT events[8];
-"18
-[v _current_event `Vuc ~T0 @X0 1 e ]
-[; ;modules\scheduler.h: 18: volatile UINT8 current_event;
+[v _event_miss `Vuc ~T0 @X0 -> 8 `i e ]
+[; ;modules\scheduler.h: 17: volatile UINT8 event_miss[8];
 "25 src/main.c
 [v _main `(i ~T0 @X0 1 ef ]
 {
@@ -4002,8 +4084,8 @@ Version 3.2 HI-TECH Software Intermediate Code
 [f ]
 [; ;main.c: 26: while(startup() != RESULT_SUCCESS)
 "26
-[e $U 396  ]
-[e :U 397 ]
+[e $U 403  ]
+[e :U 404 ]
 [; ;main.c: 27: {
 "27
 {
@@ -4012,50 +4094,85 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e ( _delay_ms (1 -> -> 1000 `i `ui ]
 "29
 }
-[e :U 396 ]
+[e :U 403 ]
 "26
-[e $ != -> ( _startup ..  `i -> . `E3388 0 `i 397  ]
-[e :U 398 ]
+[e $ != -> ( _startup ..  `i -> . `E3388 0 `i 404  ]
+[e :U 405 ]
 [; ;main.c: 29: };
 [; ;main.c: 30: do{INTCONbits.GIEH=(1); INTCONbits.GIEL=(1);}while(0);;
 "30
-[e :U 401 ]
+[e :U 408 ]
 {
 [e = . . _INTCONbits 2 7 -> -> 1 `i `uc ]
 [e = . . _INTCONbits 2 6 -> -> 1 `i `uc ]
 }
-[e :U 400 ]
+[e :U 407 ]
 [; ;main.c: 31: while(1)
 "31
-[e :U 403 ]
+[e :U 410 ]
 [; ;main.c: 32: {
 "32
 {
-[; ;main.c: 33: do{if(pool&(1<<current_event) && events[current_event]!= (0)){ events[current_event](); } pool &= ~(1<<current_event); current_event++; current_event %= 8;}while(0);;
+[; ;main.c: 33: do{ INT8 event_old=-1; INT8 event_priority=-1; UINT8 i; for(i=0;i<8;i++) { if(pool[i]==1) { if(event_miss[i] == 0 ) event_old=i; else event_miss[i]--; if(event_priority<0) event_priority=i; } } if(event_old >= 0) { events[event_old](); pool[event_old
 "33
-[e :U 407 ]
+[e :U 414 ]
 {
-[e $ ! && != & -> _pool `i << -> 1 `i _current_event -> 0 `i != *U + &U _events * -> _current_event `ux -> -> # *U &U _events `ui `ux -> -> 0 `i `V*F4240 408  ]
+[v _event_old `c ~T0 @X0 1 a ]
+[e = _event_old -> -U -> 1 `i `c ]
+[v _event_priority `c ~T0 @X0 1 a ]
+[e = _event_priority -> -U -> 1 `i `c ]
+[v _i `uc ~T0 @X0 1 a ]
 {
-[e ( *U *U + &U _events * -> _current_event `ux -> -> # *U &U _events `ui `ux ..  ]
+[e = _i -> -> 0 `i `uc ]
+[e $ < -> _i `i -> 8 `i 415  ]
+[e $U 416  ]
+[e :U 415 ]
+{
+[e $ ! == -> *U + &U _pool * -> _i `ux -> -> # *U &U _pool `ui `ux `i -> 1 `i 418  ]
+{
+[e $ ! == -> *U + &U _event_miss * -> _i `ux -> -> # *U &U _event_miss `ui `ux `i -> 0 `i 419  ]
+[e = _event_old -> _i `c ]
+[e $U 420  ]
+[e :U 419 ]
+[e -- *U + &U _event_miss * -> _i `ux -> -> # *U &U _event_miss `ui `ux -> -> 1 `i `uc ]
+[e :U 420 ]
+[e $ ! < -> _event_priority `i -> 0 `i 421  ]
+[e = _event_priority -> _i `c ]
+[e :U 421 ]
 }
-[e :U 408 ]
-[e =& _pool -> ~ << -> 1 `i _current_event `uc ]
-[e ++ _current_event -> -> 1 `i `uc ]
-[e =% _current_event -> 8 `uc ]
+[e :U 418 ]
 }
-[e :U 406 ]
+[e ++ _i -> -> 1 `i `uc ]
+[e $ < -> _i `i -> 8 `i 415  ]
+[e :U 416 ]
+}
+[e $ ! >= -> _event_old `i -> 0 `i 422  ]
+{
+[e ( *U *U + &U _events * -> -> _event_old `uc `ux -> -> # *U &U _events `ui `ux ..  ]
+[e = *U + &U _pool * -> -> _event_old `uc `ux -> -> # *U &U _pool `ui `ux -> -> 0 `i `uc ]
+}
+[e $U 423  ]
+[e :U 422 ]
+[e $ ! >= -> _event_priority `i -> 0 `i 424  ]
+{
+[e ( *U *U + &U _events * -> -> _event_priority `uc `ux -> -> # *U &U _events `ui `ux ..  ]
+[e = *U + &U _pool * -> -> _event_priority `uc `ux -> -> # *U &U _pool `ui `ux -> -> 0 `i `uc ]
+}
+[e :U 424 ]
+[e :U 423 ]
+}
+[e :U 413 ]
 [; ;main.c: 34: asm(" clrwdt");
 "34
 [; <"  clrwdt ;# ">
 "35
 }
-[e :U 402 ]
+[e :U 409 ]
 "31
-[e $U 403  ]
-[e :U 404 ]
+[e $U 410  ]
+[e :U 411 ]
 [; ;main.c: 35: }
 [; ;main.c: 36: }
 "36
-[e :UE 395 ]
+[e :UE 402 ]
 }

@@ -1,16 +1,16 @@
 Version 3.2 HI-TECH Software Intermediate Code
-[c E4323 0 1 2 3 4 5 6 7 .. ]
-[n E4323 . PROFILE_DIS PROFILE1 PROFILE2 PROFILE3 PROFILE4 PROFILE5 PROFILE6 PROFILES_COUNT  ]
+[c E4325 0 1 2 3 4 5 6 7 .. ]
+[n E4325 . PROFILE_DIS PROFILE1 PROFILE2 PROFILE3 PROFILE4 PROFILE5 PROFILE6 PROFILES_COUNT  ]
 [c E4304 0 1 2 3 .. ]
 [n E4304 . DETECTION_MODE_OFF DETECTION_MODE_CLA DETECTION_MODE_PEAK DETECTION_MODE_COUNT  ]
-[s S394 `m 1 `m 1 `m 1 ]
+[s S394 `i 1 `i 1 `i 1 ]
 [n S394 . sig_max_count sig_sum_trig sig_trig ]
-[s S391 `m 1 `m 1 `uc 1 `uc 1 ]
+[s S391 `i 1 `i 1 `uc 1 `uc 1 ]
 [n S391 . wtrigger tolerance lval_cnt rval_cnt ]
-[s S397 `uc 1 `E4323 1 `uc 1 `uc 1 `uc 1 `ui 1 `E4304 1 `S394 1 `S391 1 ]
+[s S397 `uc 1 `E4325 1 `uc 1 `uc 1 `uc 1 `ui 1 `E4304 1 `S394 1 `S391 1 ]
 [n S397 . checksum profile_number address potentiometer acc_sensitivity power_trig det_mode cla_config pd_config ]
 "8 src/modules\scheduler.h
-[v F4424 `(v ~T0 @X0 0 tf ]
+[v F4426 `(v ~T0 @X0 0 tf ]
 [c E3388 1 0 .. ]
 [n E3388 . RESULT_SUCCESS RESULT_FAIL  ]
 "5 src/drivers\gpio.h
@@ -23,6 +23,8 @@ Version 3.2 HI-TECH Software Intermediate Code
 [v _uart_init `(v ~T0 @X0 0 ef ]
 "13 src/modules\serialport.h
 [v _serialport_task `(v ~T0 @X0 0 ef ]
+"25 src/modules\detection.h
+[v _detection_task `(v ~T0 @X0 0 ef ]
 "13 src/drivers\uart.h
 [v _uart_puts `(v ~T0 @X0 0 ef2`*Cuc`i ]
 "7 src/modules\serialport.h
@@ -3918,22 +3920,22 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;modules\rd_buffer.h: 49: CHAR rd_buffer_first(RdBuffer *pbuffer, UINT8 *prec);
 [; ;modules\rd_buffer.h: 51: CHAR rd_buffer_last(RdBuffer *pbuffer, UINT8 *prec);
 [; ;modules\peak_detector.h: 14: typedef struct {
-[; ;modules\peak_detector.h: 15: INT24 wtrigger;
-[; ;modules\peak_detector.h: 16: INT24 tolerance;
+[; ;modules\peak_detector.h: 15: INT16 wtrigger;
+[; ;modules\peak_detector.h: 16: INT16 tolerance;
 [; ;modules\peak_detector.h: 17: UINT8 lval_cnt;
 [; ;modules\peak_detector.h: 18: UINT8 rval_cnt;
 [; ;modules\peak_detector.h: 19: } PeakDetectorConfig_t;
 [; ;modules\peak_detector.h: 21: typedef volatile struct {
-[; ;modules\peak_detector.h: 23: INT24 last_v_buf[(20)];
+[; ;modules\peak_detector.h: 23: INT16 last_v_buf[(20)];
 [; ;modules\peak_detector.h: 24: UINT8 last_v_idx;
-[; ;modules\peak_detector.h: 25: UINT24 last_v;
-[; ;modules\peak_detector.h: 27: INT24 ref_v_buf[(20)];
+[; ;modules\peak_detector.h: 25: UINT16 last_v;
+[; ;modules\peak_detector.h: 27: INT16 ref_v_buf[(20)];
 [; ;modules\peak_detector.h: 28: UINT8 ref_v_idx;
-[; ;modules\peak_detector.h: 29: INT24 ref_v;
-[; ;modules\peak_detector.h: 31: INT24 avlv;
-[; ;modules\peak_detector.h: 32: INT24 cur_v;
-[; ;modules\peak_detector.h: 33: INT24 next_v;
-[; ;modules\peak_detector.h: 34: INT24 wval;
+[; ;modules\peak_detector.h: 29: INT16 ref_v;
+[; ;modules\peak_detector.h: 31: INT16 avlv;
+[; ;modules\peak_detector.h: 32: INT16 cur_v;
+[; ;modules\peak_detector.h: 33: INT16 next_v;
+[; ;modules\peak_detector.h: 34: INT16 wval;
 [; ;modules\peak_detector.h: 36: struct {
 [; ;modules\peak_detector.h: 37: unsigned alarm : 1;
 [; ;modules\peak_detector.h: 38: unsigned warning : 1;
@@ -3942,21 +3944,21 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;modules\peak_detector.h: 42: PeakDetectorConfig_t config;
 [; ;modules\peak_detector.h: 43: } PeakDetector_t;
 [; ;modules\peak_detector.h: 46: void pd_init(PeakDetector_t *d);
-[; ;modules\peak_detector.h: 48: CHAR pd_add_value(PeakDetector_t *d, INT24 val);
-[; ;modules\peak_detector.h: 50: void pd_result(PeakDetector_t *d, INT24 *pvalue, INT24 *ptime);
+[; ;modules\peak_detector.h: 48: CHAR pd_add_value(PeakDetector_t *d, INT16 val);
+[; ;modules\peak_detector.h: 50: void pd_result(PeakDetector_t *d, INT16 *pvalue, INT16 *ptime);
 [; ;modules\classic_detector.h: 11: typedef struct {
-[; ;modules\classic_detector.h: 12: INT24 sig_max_count;
-[; ;modules\classic_detector.h: 13: INT24 sig_sum_trig;
-[; ;modules\classic_detector.h: 14: INT24 sig_trig;
+[; ;modules\classic_detector.h: 12: INT16 sig_max_count;
+[; ;modules\classic_detector.h: 13: INT16 sig_sum_trig;
+[; ;modules\classic_detector.h: 14: INT16 sig_trig;
 [; ;modules\classic_detector.h: 15: } ClassicDetectorConfig_t;
 [; ;modules\classic_detector.h: 17: typedef volatile struct {
-[; ;modules\classic_detector.h: 18: INT24 cur_v;
-[; ;modules\classic_detector.h: 19: INT24 zero;
-[; ;modules\classic_detector.h: 20: INT24 over_trig_value;
-[; ;modules\classic_detector.h: 21: INT24 sig_sum;
-[; ;modules\classic_detector.h: 22: INT24 sig_count;
-[; ;modules\classic_detector.h: 23: INT24 last_sig_sum;
-[; ;modules\classic_detector.h: 24: INT24 last_sig_count;
+[; ;modules\classic_detector.h: 18: INT16 cur_v;
+[; ;modules\classic_detector.h: 19: INT16 zero;
+[; ;modules\classic_detector.h: 20: INT16 over_trig_value;
+[; ;modules\classic_detector.h: 21: INT16 sig_sum;
+[; ;modules\classic_detector.h: 22: INT16 sig_count;
+[; ;modules\classic_detector.h: 23: INT16 last_sig_sum;
+[; ;modules\classic_detector.h: 24: INT16 last_sig_count;
 [; ;modules\classic_detector.h: 25: struct {
 [; ;modules\classic_detector.h: 26: unsigned alarm : 1;
 [; ;modules\classic_detector.h: 27: unsigned warning : 1;
@@ -3965,9 +3967,9 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;modules\classic_detector.h: 30: ClassicDetectorConfig_t config;
 [; ;modules\classic_detector.h: 32: } ClassicDetector_t;
 [; ;modules\classic_detector.h: 35: void cla_init(ClassicDetector_t *d);
-[; ;modules\classic_detector.h: 37: CHAR cla_add_value(ClassicDetector_t *d,INT24 val,INT24 zero);
-[; ;modules\classic_detector.h: 39: void cla_setup(ClassicDetector_t *d,INT24 trig, INT24 trig_sum, INT24 trig_window);
-[; ;modules\classic_detector.h: 41: void cla_result(ClassicDetector_t *d, INT24 *value, INT24 *time);
+[; ;modules\classic_detector.h: 37: CHAR cla_add_value(ClassicDetector_t *d,INT16 val,INT16 zero);
+[; ;modules\classic_detector.h: 39: void cla_setup(ClassicDetector_t *d,INT16 trig, INT16 trig_sum, INT16 trig_window);
+[; ;modules\classic_detector.h: 41: void cla_result(ClassicDetector_t *d, INT16 *value, INT16 *time);
 [; ;modules\detection.h: 11: typedef enum {
 [; ;modules\detection.h: 12: DETECTION_MODE_OFF = (UINT8)0,
 [; ;modules\detection.h: 13: DETECTION_MODE_CLA = 1,
@@ -3976,10 +3978,11 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;modules\detection.h: 17: } DetectionMode_t;
 [; ;modules\detection.h: 20: void detection_init(void);
 [; ;modules\detection.h: 21: CHAR detection_config_apply(void);
-[; ;modules\detection.h: 22: CHAR detection_detect(void);
-[; ;modules\detection.h: 23: CHAR detection_is_warning(void);
-[; ;modules\detection.h: 24: CHAR detection_is_alarm(void) ;
-[; ;modules\detection.h: 25: INT24 detection_get_zero(void) ;
+[; ;modules\detection.h: 22: CHAR detection_is_warning(void);
+[; ;modules\detection.h: 23: CHAR detection_is_alarm(void) ;
+[; ;modules\detection.h: 24: INT24 detection_get_zero(void) ;
+[; ;modules\detection.h: 25: void detection_task(void);
+[; ;modules\detection.h: 26: void detection_obtain_analog_service(void);
 [; ;memory_register_map.h: 16: typedef enum {
 [; ;memory_register_map.h: 17: PROFILE_DIS=0,
 [; ;memory_register_map.h: 18: PROFILE1,
@@ -4064,20 +4067,20 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;modules\serialport.h: 13: void serialport_task();
 [; ;modules\serialport.h: 15: void serialport_write(const CHAR *pstr);
 [; ;modules\scheduler.h: 8: typedef void (*PEVENT)(void);
-[; ;modules\scheduler.h: 11: extern volatile UINT8 pool;
+[; ;modules\scheduler.h: 11: extern volatile UINT8 pool[8];
 [; ;modules\scheduler.h: 12: extern volatile PEVENT events[8];
-[; ;modules\scheduler.h: 13: extern volatile UINT8 current_event;
-"16 src/modules\scheduler.h
-[v _pool `Vuc ~T0 @X0 1 e ]
-[; ;modules\scheduler.h: 16: volatile UINT8 pool;
+[; ;modules\scheduler.h: 13: extern volatile UINT8 event_miss[8];
+"15 src/modules\scheduler.h
+[v _pool `Vuc ~T0 @X0 -> 8 `i e ]
+[; ;modules\scheduler.h: 15: volatile UINT8 pool[8];
 "8
-[v _PEVENT `*F4424 ~T0 @X0 1 t ]
+[v _PEVENT `*F4426 ~T0 @X0 1 t ]
+"16
+[v _events `V*F4426 ~T0 @X0 -> 8 `i e ]
+[; ;modules\scheduler.h: 16: volatile PEVENT events[8];
 "17
-[v _events `V*F4424 ~T0 @X0 -> 8 `i e ]
-[; ;modules\scheduler.h: 17: volatile PEVENT events[8];
-"18
-[v _current_event `Vuc ~T0 @X0 1 e ]
-[; ;modules\scheduler.h: 18: volatile UINT8 current_event;
+[v _event_miss `Vuc ~T0 @X0 -> 8 `i e ]
+[; ;modules\scheduler.h: 17: volatile UINT8 event_miss[8];
 "16 src/startup/startup.c
 [v _startup `(E3388 ~T0 @X0 1 ef ]
 {
@@ -4103,44 +4106,36 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e ( _uart_init ..  ]
 [; ;startup.c: 22: events[(5)] = (PEVENT)serialport_task;
 "22
-[e = *U + &U _events * -> -> -> 5 `i `ui `ux -> -> # *U &U _events `ui `ux -> -> &U _serialport_task `*F4424 `V*F4424 ]
-[; ;startup.c: 23: uart_puts("[1]",100);
+[e = *U + &U _events * -> -> -> 5 `i `ui `ux -> -> # *U &U _events `ui `ux -> -> &U _serialport_task `*F4426 `V*F4426 ]
+[; ;startup.c: 23: events[(2)] = (PEVENT)detection_task;
 "23
+[e = *U + &U _events * -> -> -> 2 `i `ui `ux -> -> # *U &U _events `ui `ux -> &U _detection_task `V*F4426 ]
+[; ;startup.c: 25: uart_puts("hello",100);
+"25
 [e ( _uart_puts (2 , :s 1C -> 100 `i ]
-[; ;startup.c: 24: do{
-"24
+[; ;startup.c: 26: do{
+"26
 [e :U 402 ]
 {
-[; ;startup.c: 25: uart_puts("[2]",100);
-"25
-[e ( _uart_puts (2 , :s 2C -> 100 `i ]
-[; ;startup.c: 26: if(!serialport_startup()) break;
-"26
+[; ;startup.c: 27: if(!serialport_startup()) break;
+"27
 [e $ ! ! != -> ( _serialport_startup ..  `i -> -> -> 0 `i `E3388 `i 403  ]
 [e $U 401  ]
 [e :U 403 ]
-[; ;startup.c: 27: uart_puts("[3]",100);
-"27
-[e ( _uart_puts (2 , :s 3C -> 100 `i ]
-[; ;startup.c: 32: result = RESULT_SUCCESS;
-"32
+[; ;startup.c: 31: result = RESULT_SUCCESS;
+"31
 [e = _result -> . `E3388 0 `E3388 ]
-"33
+"32
 }
 [e :U 401 ]
-[; ;startup.c: 33: }while(0);
-[; ;startup.c: 34: uart_puts("[4]",100);
-"34
-[e ( _uart_puts (2 , :s 4C -> 100 `i ]
-[; ;startup.c: 35: return result;
-"35
+[; ;startup.c: 32: }while(0);
+[; ;startup.c: 33: return result;
+"33
 [e ) _result ]
 [e $UE 399  ]
-[; ;startup.c: 36: }
-"36
+[; ;startup.c: 34: }
+"34
 [e :UE 399 ]
 }
-[a 4C 91 52 93 0 ]
-[a 3C 91 51 93 0 ]
-[a 2C 91 50 93 0 ]
-[a 1C 91 49 93 0 ]
+[a 1C 104 101 108 108 111 0 ]
+

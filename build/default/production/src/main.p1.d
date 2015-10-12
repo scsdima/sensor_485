@@ -10,9 +10,12 @@ src/drivers/uart.h  \
 src/modules/scheduler.h  \
 src/drivers/delay.h  \
 src/startup/startup.h  \
+src/modules/classic_detector.h  \
 src/compiler.h  \
 src/typedef_global.h  \
 src/modules/timers.h  \
 src/config.h  \
 src/drivers/sw_i2c.h  \
+src/modules/peak_detector.h  \
+src/modules/detection.h  \
 src/typedef_global.h 

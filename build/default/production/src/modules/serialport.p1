@@ -4037,20 +4037,20 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;syntax.h: 59: void on_parameter_found(ParserOperation_t operation ,INT8 cmd_id
 [; ;syntax.h: 60: , INT8 p_id ,const void* p, ParserType_t type);
 [; ;scheduler.h: 8: typedef void (*PEVENT)(void);
-[; ;scheduler.h: 11: extern volatile UINT8 pool;
+[; ;scheduler.h: 11: extern volatile UINT8 pool[8];
 [; ;scheduler.h: 12: extern volatile PEVENT events[8];
-[; ;scheduler.h: 13: extern volatile UINT8 current_event;
-"16 src/modules/scheduler.h
-[v _pool `Vuc ~T0 @X0 1 e ]
-[; ;scheduler.h: 16: volatile UINT8 pool;
+[; ;scheduler.h: 13: extern volatile UINT8 event_miss[8];
+"15 src/modules/scheduler.h
+[v _pool `Vuc ~T0 @X0 -> 8 `i e ]
+[; ;scheduler.h: 15: volatile UINT8 pool[8];
 "8
 [v _PEVENT `*F4498 ~T0 @X0 1 t ]
-"17
+"16
 [v _events `V*F4498 ~T0 @X0 -> 8 `i e ]
-[; ;scheduler.h: 17: volatile PEVENT events[8];
-"18
-[v _current_event `Vuc ~T0 @X0 1 e ]
-[; ;scheduler.h: 18: volatile UINT8 current_event;
+[; ;scheduler.h: 16: volatile PEVENT events[8];
+"17
+[v _event_miss `Vuc ~T0 @X0 -> 8 `i e ]
+[; ;scheduler.h: 17: volatile UINT8 event_miss[8];
 "11 src/modules/serialport.c
 [v _serialport_buffer `uc ~T0 @X0 -> 100 `i s ]
 [; ;serialport.c: 11: static CHAR serialport_buffer[100];
@@ -4104,9 +4104,14 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;serialport.c: 28: rd_buffer_put(&g_rx_buffer, &byte);
 "28
 [e ( _rd_buffer_put (2 , &U _g_rx_buffer &U _byte ]
-[; ;serialport.c: 29: pool |= 1<<(5);
+[; ;serialport.c: 29: do{pool[(5)] = 1;event_miss[(5)]= (10);}while(0);
 "29
-[e =| _pool -> << -> 1 `i -> 5 `i `uc ]
+[e :U 400 ]
+{
+[e = *U + &U _pool * -> -> -> 5 `i `ui `ux -> -> # *U &U _pool `ui `ux -> -> 1 `i `uc ]
+[e = *U + &U _event_miss * -> -> -> 5 `i `ui `ux -> -> # *U &U _event_miss `ui `ux -> -> 10 `i `uc ]
+}
+[e :U 399 ]
 "30
 }
 [e :U 397 ]
@@ -4131,21 +4136,21 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;serialport.c: 36: SIZE size;
 [; ;serialport.c: 37: if (rd_buffer_readline(&g_rx_buffer, &serialport_buffer, &size)) {
 "37
-[e $ ! != -> ( _rd_buffer_readline (3 , , &U _g_rx_buffer &U _serialport_buffer &U _size `i -> -> -> 0 `i `uc `i 399  ]
+[e $ ! != -> ( _rd_buffer_readline (3 , , &U _g_rx_buffer &U _serialport_buffer &U _size `i -> -> -> 0 `i `uc `i 402  ]
 {
 [; ;serialport.c: 38: syntax_string(serialport_buffer, FALSE);
 "38
 [e ( _syntax_string (2 , -> &U _serialport_buffer `*Cuc -> . `E3585 0 `uc ]
 "39
 }
-[e :U 399 ]
+[e :U 402 ]
 [; ;serialport.c: 39: }
 [; ;serialport.c: 40: size = rd_buffer_cnt(&g_tx_buffer);
 "40
 [e = _size ( _rd_buffer_cnt (1 &U _g_tx_buffer ]
 [; ;serialport.c: 41: if (size > 0) {
 "41
-[e $ ! > _size -> 0 `i 400  ]
+[e $ ! > _size -> 0 `i 403  ]
 {
 [; ;serialport.c: 42: rd_buffer_getn(&g_tx_buffer, &serialport_buffer, size);
 "42
@@ -4155,11 +4160,11 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e ( _uart_puts (2 , -> &U _serialport_buffer `*Cuc _size ]
 "44
 }
-[e :U 400 ]
+[e :U 403 ]
 [; ;serialport.c: 44: }
 [; ;serialport.c: 45: }
 "45
-[e :UE 398 ]
+[e :UE 401 ]
 }
 "48
 [v _serialport_write `(v ~T0 @X0 1 ef1`*Cuc ]
@@ -4171,8 +4176,8 @@ Version 3.2 HI-TECH Software Intermediate Code
 [f ]
 [; ;serialport.c: 49: while (pstr && *pstr)
 "49
-[e $U 402  ]
-[e :U 403 ]
+[e $U 405  ]
+[e :U 406 ]
 [; ;serialport.c: 50: {
 "50
 {
@@ -4184,14 +4189,14 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e ++ _pstr * -> -> 1 `i `x -> -> # *U _pstr `i `x ]
 "53
 }
-[e :U 402 ]
+[e :U 405 ]
 "49
-[e $ && != _pstr -> -> 0 `i `*Cuc != -> *U _pstr `i -> -> -> 0 `i `Cuc `i 403  ]
-[e :U 404 ]
+[e $ && != _pstr -> -> 0 `i `*Cuc != -> *U _pstr `i -> -> -> 0 `i `Cuc `i 406  ]
+[e :U 407 ]
 [; ;serialport.c: 53: }
 [; ;serialport.c: 54: }
 "54
-[e :UE 401 ]
+[e :UE 404 ]
 }
 "56
 [v _putch `(v ~T0 @X0 1 ef1`uc ]
@@ -4205,5 +4210,5 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e ( _rd_buffer_put (2 , &U _g_tx_buffer &U _byte ]
 [; ;serialport.c: 58: }
 "58
-[e :UE 405 ]
+[e :UE 408 ]
 }

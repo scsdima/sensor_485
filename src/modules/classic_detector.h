@@ -9,19 +9,19 @@
 
 
 typedef struct {
-    INT24 sig_max_count; //window
-    INT24 sig_sum_trig; //trigger 2 summa
-    INT24 sig_trig; //trigger 1 value
+    INT16 sig_max_count; //window
+    INT16 sig_sum_trig; //trigger 2 summa
+    INT16 sig_trig; //trigger 1 value
 } ClassicDetectorConfig_t;
 
 typedef volatile struct {
-    INT24 cur_v;
-    INT24 zero;
-    INT24 over_trig_value;
-    INT24 sig_sum;
-    INT24 sig_count;
-    INT24 last_sig_sum;
-    INT24 last_sig_count;
+    INT16 cur_v;
+    INT16 zero;
+    INT16 over_trig_value;
+    INT16 sig_sum;
+    INT16 sig_count;
+    INT16 last_sig_sum;
+    INT16 last_sig_count;
     struct {
         unsigned alarm      : 1;
         unsigned warning    : 1;
@@ -34,11 +34,11 @@ typedef volatile struct {
 
 void cla_init(ClassicDetector_t *d);
 
-BOOL cla_add_value(ClassicDetector_t *d,INT24 val,INT24 zero);
+BOOL cla_add_value(ClassicDetector_t *d,INT16 val,INT16 zero);
 
-void cla_setup(ClassicDetector_t *d,INT24 trig, INT24 trig_sum, INT24 trig_window);
+void cla_setup(ClassicDetector_t *d,INT16 trig, INT16 trig_sum, INT16 trig_window);
   
-void cla_result(ClassicDetector_t *d, INT24 *value, INT24 *time);
+void cla_result(ClassicDetector_t *d, INT16 *value, INT16 *time);
 
 #endif	/* CLASSIC_DETECTOR_H */
 

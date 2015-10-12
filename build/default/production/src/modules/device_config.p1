@@ -1,13 +1,13 @@
 Version 3.2 HI-TECH Software Intermediate Code
-[c E4362 0 1 2 3 4 5 6 7 .. ]
-[n E4362 . PROFILE_DIS PROFILE1 PROFILE2 PROFILE3 PROFILE4 PROFILE5 PROFILE6 PROFILES_COUNT  ]
+[c E4364 0 1 2 3 4 5 6 7 .. ]
+[n E4364 . PROFILE_DIS PROFILE1 PROFILE2 PROFILE3 PROFILE4 PROFILE5 PROFILE6 PROFILES_COUNT  ]
 [c E4343 0 1 2 3 .. ]
 [n E4343 . DETECTION_MODE_OFF DETECTION_MODE_CLA DETECTION_MODE_PEAK DETECTION_MODE_COUNT  ]
-[s S394 `m 1 `m 1 `m 1 ]
+[s S394 `i 1 `i 1 `i 1 ]
 [n S394 . sig_max_count sig_sum_trig sig_trig ]
-[s S391 `m 1 `m 1 `uc 1 `uc 1 ]
+[s S391 `i 1 `i 1 `uc 1 `uc 1 ]
 [n S391 . wtrigger tolerance lval_cnt rval_cnt ]
-[s S397 `uc 1 `E4362 1 `uc 1 `uc 1 `uc 1 `ui 1 `E4343 1 `S394 1 `S391 1 ]
+[s S397 `uc 1 `E4364 1 `uc 1 `uc 1 `uc 1 `ui 1 `E4343 1 `S394 1 `S391 1 ]
 [n S397 . checksum profile_number address potentiometer acc_sensitivity power_trig det_mode cla_config pd_config ]
 [c E3585 0 1 .. ]
 [n E3585 _BOOL FALSE TRUE  ]
@@ -3928,22 +3928,22 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;modules\rd_buffer.h: 49: CHAR rd_buffer_first(RdBuffer *pbuffer, UINT8 *prec);
 [; ;modules\rd_buffer.h: 51: CHAR rd_buffer_last(RdBuffer *pbuffer, UINT8 *prec);
 [; ;modules\peak_detector.h: 14: typedef struct {
-[; ;modules\peak_detector.h: 15: INT24 wtrigger;
-[; ;modules\peak_detector.h: 16: INT24 tolerance;
+[; ;modules\peak_detector.h: 15: INT16 wtrigger;
+[; ;modules\peak_detector.h: 16: INT16 tolerance;
 [; ;modules\peak_detector.h: 17: UINT8 lval_cnt;
 [; ;modules\peak_detector.h: 18: UINT8 rval_cnt;
 [; ;modules\peak_detector.h: 19: } PeakDetectorConfig_t;
 [; ;modules\peak_detector.h: 21: typedef volatile struct {
-[; ;modules\peak_detector.h: 23: INT24 last_v_buf[(20)];
+[; ;modules\peak_detector.h: 23: INT16 last_v_buf[(20)];
 [; ;modules\peak_detector.h: 24: UINT8 last_v_idx;
-[; ;modules\peak_detector.h: 25: UINT24 last_v;
-[; ;modules\peak_detector.h: 27: INT24 ref_v_buf[(20)];
+[; ;modules\peak_detector.h: 25: UINT16 last_v;
+[; ;modules\peak_detector.h: 27: INT16 ref_v_buf[(20)];
 [; ;modules\peak_detector.h: 28: UINT8 ref_v_idx;
-[; ;modules\peak_detector.h: 29: INT24 ref_v;
-[; ;modules\peak_detector.h: 31: INT24 avlv;
-[; ;modules\peak_detector.h: 32: INT24 cur_v;
-[; ;modules\peak_detector.h: 33: INT24 next_v;
-[; ;modules\peak_detector.h: 34: INT24 wval;
+[; ;modules\peak_detector.h: 29: INT16 ref_v;
+[; ;modules\peak_detector.h: 31: INT16 avlv;
+[; ;modules\peak_detector.h: 32: INT16 cur_v;
+[; ;modules\peak_detector.h: 33: INT16 next_v;
+[; ;modules\peak_detector.h: 34: INT16 wval;
 [; ;modules\peak_detector.h: 36: struct {
 [; ;modules\peak_detector.h: 37: unsigned alarm : 1;
 [; ;modules\peak_detector.h: 38: unsigned warning : 1;
@@ -3952,21 +3952,21 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;modules\peak_detector.h: 42: PeakDetectorConfig_t config;
 [; ;modules\peak_detector.h: 43: } PeakDetector_t;
 [; ;modules\peak_detector.h: 46: void pd_init(PeakDetector_t *d);
-[; ;modules\peak_detector.h: 48: CHAR pd_add_value(PeakDetector_t *d, INT24 val);
-[; ;modules\peak_detector.h: 50: void pd_result(PeakDetector_t *d, INT24 *pvalue, INT24 *ptime);
+[; ;modules\peak_detector.h: 48: CHAR pd_add_value(PeakDetector_t *d, INT16 val);
+[; ;modules\peak_detector.h: 50: void pd_result(PeakDetector_t *d, INT16 *pvalue, INT16 *ptime);
 [; ;modules\classic_detector.h: 11: typedef struct {
-[; ;modules\classic_detector.h: 12: INT24 sig_max_count;
-[; ;modules\classic_detector.h: 13: INT24 sig_sum_trig;
-[; ;modules\classic_detector.h: 14: INT24 sig_trig;
+[; ;modules\classic_detector.h: 12: INT16 sig_max_count;
+[; ;modules\classic_detector.h: 13: INT16 sig_sum_trig;
+[; ;modules\classic_detector.h: 14: INT16 sig_trig;
 [; ;modules\classic_detector.h: 15: } ClassicDetectorConfig_t;
 [; ;modules\classic_detector.h: 17: typedef volatile struct {
-[; ;modules\classic_detector.h: 18: INT24 cur_v;
-[; ;modules\classic_detector.h: 19: INT24 zero;
-[; ;modules\classic_detector.h: 20: INT24 over_trig_value;
-[; ;modules\classic_detector.h: 21: INT24 sig_sum;
-[; ;modules\classic_detector.h: 22: INT24 sig_count;
-[; ;modules\classic_detector.h: 23: INT24 last_sig_sum;
-[; ;modules\classic_detector.h: 24: INT24 last_sig_count;
+[; ;modules\classic_detector.h: 18: INT16 cur_v;
+[; ;modules\classic_detector.h: 19: INT16 zero;
+[; ;modules\classic_detector.h: 20: INT16 over_trig_value;
+[; ;modules\classic_detector.h: 21: INT16 sig_sum;
+[; ;modules\classic_detector.h: 22: INT16 sig_count;
+[; ;modules\classic_detector.h: 23: INT16 last_sig_sum;
+[; ;modules\classic_detector.h: 24: INT16 last_sig_count;
 [; ;modules\classic_detector.h: 25: struct {
 [; ;modules\classic_detector.h: 26: unsigned alarm : 1;
 [; ;modules\classic_detector.h: 27: unsigned warning : 1;
@@ -3975,9 +3975,9 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;modules\classic_detector.h: 30: ClassicDetectorConfig_t config;
 [; ;modules\classic_detector.h: 32: } ClassicDetector_t;
 [; ;modules\classic_detector.h: 35: void cla_init(ClassicDetector_t *d);
-[; ;modules\classic_detector.h: 37: CHAR cla_add_value(ClassicDetector_t *d,INT24 val,INT24 zero);
-[; ;modules\classic_detector.h: 39: void cla_setup(ClassicDetector_t *d,INT24 trig, INT24 trig_sum, INT24 trig_window);
-[; ;modules\classic_detector.h: 41: void cla_result(ClassicDetector_t *d, INT24 *value, INT24 *time);
+[; ;modules\classic_detector.h: 37: CHAR cla_add_value(ClassicDetector_t *d,INT16 val,INT16 zero);
+[; ;modules\classic_detector.h: 39: void cla_setup(ClassicDetector_t *d,INT16 trig, INT16 trig_sum, INT16 trig_window);
+[; ;modules\classic_detector.h: 41: void cla_result(ClassicDetector_t *d, INT16 *value, INT16 *time);
 [; ;modules\detection.h: 11: typedef enum {
 [; ;modules\detection.h: 12: DETECTION_MODE_OFF = (UINT8)0,
 [; ;modules\detection.h: 13: DETECTION_MODE_CLA = 1,
@@ -3986,10 +3986,11 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;modules\detection.h: 17: } DetectionMode_t;
 [; ;modules\detection.h: 20: void detection_init(void);
 [; ;modules\detection.h: 21: CHAR detection_config_apply(void);
-[; ;modules\detection.h: 22: CHAR detection_detect(void);
-[; ;modules\detection.h: 23: CHAR detection_is_warning(void);
-[; ;modules\detection.h: 24: CHAR detection_is_alarm(void) ;
-[; ;modules\detection.h: 25: INT24 detection_get_zero(void) ;
+[; ;modules\detection.h: 22: CHAR detection_is_warning(void);
+[; ;modules\detection.h: 23: CHAR detection_is_alarm(void) ;
+[; ;modules\detection.h: 24: INT24 detection_get_zero(void) ;
+[; ;modules\detection.h: 25: void detection_task(void);
+[; ;modules\detection.h: 26: void detection_obtain_analog_service(void);
 [; ;memory_register_map.h: 16: typedef enum {
 [; ;memory_register_map.h: 17: PROFILE_DIS=0,
 [; ;memory_register_map.h: 18: PROFILE1,

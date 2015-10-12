@@ -3,6 +3,8 @@
 #include "timers.h"
 #include "delay.h"
 #include "serialport.h"
+#include "detection.h"
+
 
 #define int_enable(V) do{INTCONbits.GIEH=(V); INTCONbits.GIEL=(V);}while(0);
 
@@ -30,9 +32,11 @@ interrupt static void isr_high(void)
     /* 
      * ADC
      */
-     // if(ADC)
-     // {
-     // 	// TODO ADC measure	
-     // }
+      if(PIR1bits.ADIF)
+      {
+      	// TODO ADC measure	
+	detection_obtain_analog_service();
+	PIR1bits.ADIF = 0;
+      }
 
  }

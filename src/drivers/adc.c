@@ -5,10 +5,11 @@ void adc_init(void)
 {
 	ADCON0	=	0b00000001;// enabled
 	ADCON1	=	0b00000000;// reference vdd ,vss
-	ADCON2	=	0b10010000;
+	ADCON2	=	0b00010110;// left aligned , Fosc/64,4Tad
     ANSEL   =   0b01100011; //analog ports ANS5 ANS6 ANS0 ANS1
     ANSELH  = 0;
-}
+    PIE1bits.ADIE = 1;
+   // IPR1bits.ADIP =1;
 
 void adc_enable(BOOL on)
 {

@@ -2,6 +2,7 @@
  build/default/production/src/modules/detection.p1:  \
  src/modules/detection.c  \
 src/modules/peak_detector.h  \
+src/modules/rd_buffer.h  \
 src/drivers/adc.h  \
 src/modules/rd_buffer.h  \
 src/modules/classic_detector.h  \

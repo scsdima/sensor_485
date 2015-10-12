@@ -3852,9 +3852,9 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;adc.c: 7: ADCON1 = 0b00000000;
 "7
 [e = _ADCON1 -> -> 0 `i `uc ]
-[; ;adc.c: 8: ADCON2 = 0b10010000;
+[; ;adc.c: 8: ADCON2 = 0b00010000;
 "8
-[e = _ADCON2 -> -> 144 `i `uc ]
+[e = _ADCON2 -> -> 16 `i `uc ]
 [; ;adc.c: 9: ANSEL = 0b01100011;
 "9
 [e = _ANSEL -> -> 99 `i `uc ]

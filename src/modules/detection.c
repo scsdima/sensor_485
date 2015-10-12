@@ -1,28 +1,20 @@
-/* *********************************************************************
-
-
-  @File:detection.c
-
-  @Project: MAMBA2
-  @Date: 2013\06\26 09-52-27
-  @Description: detection module
-
-
- 
- ********************************************************************* */
-
 
 #include "detection.h"
 #include "peak_detector.h"
 #include "classic_detector.h"
 #include "memory_register_map.h"
+#include "rd_buffer.h"
+#include "adc.h"
+
+
+
 
 volatile BOOL   this_warning;
 volatile BOOL   this_alarm;
 
-
 PeakDetector_t    pd_detector;
 ClassicDetector_t   cla_detector;
+RdBuffer meas_buffer;
 
 
 /* *********************************************************************
@@ -85,7 +77,7 @@ BOOL detection_config_apply(void) {
   @Description: Detction processing function
  
  ********************************************************************* */
-BOOL detection_detect(void)
+void detection_task(void)
 {
     static BOOL alarm_cla;
     static BOOL alarm_wav;
@@ -123,7 +115,9 @@ BOOL detection_detect(void)
        break;
 
    }//switch    
-    return this_alarm;
+  
+   if(this_alarm) STATUS |=   STATUS_ALARM; 
+   if(this_warning) STATUS |= STATUS_WARNING;
 }
 
 /* *********************************************************************
@@ -139,3 +133,9 @@ BOOL detection_detect(void)
     return pd_detector.ref_v;
 }
 
+ void detection_obtain_analog_service(void)
+ {
+	 UINT8 adc_data;
+	adc_data = adc_read(ANALOG_SIGNAL); 
+	rd_buffer_put(&meas_buffer, &adc_data);
+ }

@@ -29,7 +29,7 @@
   @Description: adds new value to algoritm
  
  ********************************************************************* */
-  BOOL cla_add_value(ClassicDetector_t *d,INT24 val,INT24 zero)
+  BOOL cla_add_value(ClassicDetector_t *d,INT16 val,INT16 zero)
   {
         d->cur_v = ABS(val- zero); //making from - to +        
         d->over_trig_value = (d->cur_v > d->config.sig_trig) ? (d->cur_v - d->config.sig_trig):0;
@@ -80,7 +80,7 @@
   @Description: classic detection setup
  
  ********************************************************************* */
-  void cla_setup(ClassicDetector_t *d,INT24 trig,INT24 trig_sum,INT24 trig_window)
+  void cla_setup(ClassicDetector_t *d,INT16 trig,INT16 trig_sum,INT16 trig_window)
   {
     d->config.sig_trig = trig;
     d->config.sig_sum_trig = (trig_sum > SIGNAL_SUM_MINIMUM)? 
@@ -102,7 +102,7 @@
   @Description: returns result data from detection algoritm
  
  ********************************************************************* */
-void cla_result(ClassicDetector_t*d,INT24 *pvalue,INT24 *ptime)
+void cla_result(ClassicDetector_t*d,INT16 *pvalue,INT16 *ptime)
   {
     *pvalue=d->sig_sum;
     *ptime=d->sig_count;
