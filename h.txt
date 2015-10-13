@@ -1,14 +1,20 @@
-3h
-1h
-uart-3h
-init-3h
+3h  -ok 
+1h -ok
+uart-3h    -ok
+init-3h -ok
+1h - detection, adc, aacheduler -ok
+textprotocol -1h
+
+define normal mode protocol
+make detection - 5h
+text protocol -2h
 
 interrupts -1h
 analog -2h
 acc-3h
-detection - 5h
 detection_config -5h
 config/eeprom -3h
+normal mode protocol
 startup -3h
 tasks - 1h
 test-lab

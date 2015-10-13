@@ -4,6 +4,22 @@
 		"selected_items":
 		[
 			[
+				"PARSER",
+				"PARSER_TYPE_NO_TYPE"
+			],
+			[
+				"syntax",
+				"syntax_data"
+			],
+			[
+				"para",
+				"parameter_id"
+			],
+			[
+				"comm",
+				"command_id"
+			],
+			[
 				"event",
 				"event_priority	int"
 			],
@@ -16,43 +32,38 @@
 	"buffers":
 	[
 		{
-			"file": "src/interrupts.c",
+			"contents": " #ifndef __COMMAND_LIST\n #define __COMMAND_LIST\n\n\n\n\n\n\n#define ITEMS_LIST \\\n/*Command*/     SYNTAX_ITEM(\"set\"           , Command_set               ,PARSER_TYPE_NO_TYPE),\\\n                SYNTAX_ITEM(\"get\"           , Command_get               ,PARSER_TYPE_NO_TYPE),\\\n                SYNTAX_ITEM(\"run\"           , Command_run               ,PARSER_TYPE_NO_TYPE),\\\n                SYNTAX_ITEM( \"reset\"        , Command_reset              ,PARSER_TYPE_NO_TYPE),\\\n                SYNTAX_ITEM( \"help\"         , Command_help               ,PARSER_TYPE_NO_TYPE),\\\n                SYNTAX_ITEM( \"wait\"         , Command_wait               ,PARSER_TYPE_NO_TYPE),\\\n                SYNTAX_ITEM( \"delay\"         , Command_delay              ,PARSER_TYPE_NO_TYPE),\\\n                SYNTAX_ITEM( \"if\"            , Command_if               ,PARSER_TYPE_NO_TYPE),\\\n                SYNTAX_ITEM( \"else\"         , Command_else               ,PARSER_TYPE_NO_TYPE),\\\n/*---------------------------------------------------------------------------------------------*/\\\n/* dio */       SYNTAX_ITEM(\"dio??\"         ,Parameter_dio2               ,PARSER_TYPE_INTEGER ),\\\n                SYNTAX_ITEM(\"dio?\"          ,Parameter_dio1               ,PARSER_TYPE_INTEGER ),\\\n                SYNTAX_ITEM(\"dioseq?\"       ,Parameter_dioseq1           ,PARSER_TYPE_BYTEARRAY),\\\n                SYNTAX_ITEM(\"dioseq??\"      ,Parameter_dioseq2           ,PARSER_TYPE_BYTEARRAY),\\\n                SYNTAX_ITEM(\"dio?conf\"      ,Parameter_dioconf           ,PARSER_TYPE_INTEGER ),\\\n                SYNTAX_ITEM(\"dio??conf\"     ,Parameter_dioconf2           ,PARSER_TYPE_INTEGER ),\\\n/*---------------------------------------------------------------------------------------------*/\\\n/* rel */       SYNTAX_ITEM(\"rel?\"           ,Parameter_rel1             ,PARSER_TYPE_INTEGER ),\\\n                SYNTAX_ITEM(\"rel??\"          ,Parameter_rel2             ,PARSER_TYPE_INTEGER ),\\\n                SYNTAX_ITEM(\"relconf\"       ,Parameter_relconf           ,PARSER_TYPE_INTEGER),\\\n/*---------------------------------------------------------------------------------------------*/\\\n/* pwm */       SYNTAX_ITEM(\"pwm?freq\"      ,Parameter_pwmfreq             ,PARSER_TYPE_INTEGER ),\\\n                SYNTAX_ITEM(\"pwm?duty\"      ,Parameter_pwmduty           ,PARSER_TYPE_INTEGER ),\\\n                SYNTAX_ITEM(\"pwm?conf\"      ,Parameter_pwmconf           ,PARSER_TYPE_INTEGER ),\\\n                SYNTAX_ITEM(\"pwm?start\"     ,Parameter_pwmstart          ,PARSER_TYPE_INTEGER ),\\\n                SYNTAX_ITEM(\"pwm?stop\"      ,Parameter_pwmstop           ,PARSER_TYPE_INTEGER ),\\\n/*---------------------------------------------------------------------------------------------*/\\\n/* ain */       SYNTAX_ITEM(\"ain?\"          ,Parameter_ain               ,PARSER_TYPE_INTEGER ),\\\n                SYNTAX_ITEM(\"ain??\"         ,Parameter_ain2              ,PARSER_TYPE_INTEGER ),\\\n                SYNTAX_ITEM(\"ain?conf\"      ,Parameter_ainconf           ,PARSER_TYPE_INTEGER ),\\\n                SYNTAX_ITEM(\"ain?ref\"       ,Parameter_ainref            ,PARSER_TYPE_INTEGER ),\\\n/*---------------------------------------------------------------------------------------------*/\\\n/* spi */       SYNTAX_ITEM(\"spi?cs?data\"   ,Parameter_spidata           ,PARSER_TYPE_HEXARRAY),\\\n                SYNTAX_ITEM(\"spi?cs?dlybct\" ,Parameter_spidlybct         ,PARSER_TYPE_INTEGER ),\\\n                SYNTAX_ITEM(\"spi?cs?dlybs\"  ,Parameter_spidlybs          ,PARSER_TYPE_INTEGER ),\\\n                SYNTAX_ITEM(\"spi?cs?speed\"  ,Parameter_spispeed          ,PARSER_TYPE_INTEGER ),\\\n                SYNTAX_ITEM(\"spi?cs?cpol\"   ,Parameter_spicpol           ,PARSER_TYPE_INTEGER ),\\\n                SYNTAX_ITEM(\"spi?cs?ncpha\"  ,Parameter_spicpha           ,PARSER_TYPE_INTEGER ),\\\n                SYNTAX_ITEM(\"spi?cs?conf\"     ,Parameter_spics           ,PARSER_TYPE_INTEGER ),\\\n                SYNTAX_ITEM(\"spi?conf\"      ,Parameter_spiconf           ,PARSER_TYPE_INTEGER ),\\\n/*---------------------------------------------------------------------------------------------*/\\\n/* ser */       SYNTAX_ITEM(\"ser?data\"      ,Parameter_serdata             ,PARSER_TYPE_HEXARRAY),\\\n                SYNTAX_ITEM(\"ser?conf\"      ,Parameter_serconf           ,PARSER_TYPE_INTEGER ),\\\n                SYNTAX_ITEM(\"ser?baud\"      ,Parameter_serbaud           ,PARSER_TYPE_INTEGER ),\\\n                SYNTAX_ITEM(\"ser?mode\"      ,Parameter_sermode           ,PARSER_TYPE_INTEGER ),\\\n/*---------------------------------------------------------------------------------------------*/\\\n/* can */       SYNTAX_ITEM(\"can?data\"      ,Parameter_candata           ,PARSER_TYPE_HEXARRAY),\\\n                SYNTAX_ITEM(\"can?conf\"      ,Parameter_canconf           ,PARSER_TYPE_INTEGER ),\\\n/*---------------------------------------------------------------------------------------------*/\\\n/* aout */      SYNTAX_ITEM(\"aout?\"         ,Parameter_aout              ,PARSER_TYPE_INTEGER ),\\\n                SYNTAX_ITEM(\"aout?conf\"     ,Parameter_aoutconf          ,PARSER_TYPE_INTEGER ),\\\n                SYNTAX_ITEM(\"aoutref\"       ,Parameter_aoutref           ,PARSER_TYPE_INTEGER ),\\\n                SYNTAX_ITEM(\"aout?sign?freq\",Parameter_aoutfreq          ,PARSER_TYPE_INTEGER ),\\\n                SYNTAX_ITEM(\"aout?phase\"    ,Parameter_aoutphase         ,PARSER_TYPE_INTEGER ),\\\n                SYNTAX_ITEM(\"aout?start\"    ,Parameter_aoutstart         ,PARSER_TYPE_INTEGER ),\\\n                SYNTAX_ITEM(\"aout?stop\"     ,Parameter_aoutstop          ,PARSER_TYPE_INTEGER ),\\\n/*---------------------------------------------------------------------------------------------*/\\\n/*dds*/         SYNTAX_ITEM(\"dds\"           ,Parameter_dds               ,PARSER_TYPE_INTEGER ),\\\n                SYNTAX_ITEM(\"ddsconf\"       ,Parameter_ddsconf           ,PARSER_TYPE_INTEGER ),\\\n/*---------------------------------------------------------------------------------------------*/\\\n/* fin */       SYNTAX_ITEM(\"fin?per\"       ,Parameter_finperiod         ,PARSER_TYPE_INTEGER ),\\\n                SYNTAX_ITEM(\"fin?duty\"      ,Parameter_finduty           ,PARSER_TYPE_INTEGER ),\\\n                SYNTAX_ITEM(\"fin?conf\"      ,Parameter_finconf           ,PARSER_TYPE_INTEGER ),\\\n/*---------------------------------------------------------------------------------------------*/\\\n/* fout */      SYNTAX_ITEM(\"fout?to\"       ,Parameter_foutto            ,PARSER_TYPE_BYTEARRAY),\\\n                SYNTAX_ITEM(\"fout?freq\"     ,Parameter_foutfreq          ,PARSER_TYPE_BYTEARRAY),\\\n                SYNTAX_ITEM(\"fout?conf\"     ,Parameter_foutconf          ,PARSER_TYPE_BYTEARRAY),\\\n/*---------------------------------------------------------------------------------------------*/\\\n/* i2c */       SYNTAX_ITEM(\"i2c?data\"      ,Parameter_i2cdata           ,PARSER_TYPE_HEXARRAY),\\\n                SYNTAX_ITEM(\"i2c?conf\"      ,Parameter_i2cconf           ,PARSER_TYPE_BYTEARRAY),\\\n                SYNTAX_ITEM(\"i2c?speed\"     ,Parameter_i2cspeed          ,PARSER_TYPE_INTEGER),\\\n/*---------------------------------------------------------------------------------------------*/\\\n/* exint*/      SYNTAX_ITEM(\"extint?conf\"   ,Parameter_extintconf        ,PARSER_TYPE_BYTEARRAY),\\\n                SYNTAX_ITEM(\"extint?level\"  ,Parameter_extintlevel       ,PARSER_TYPE_INTEGER),\\\n                SYNTAX_ITEM(\"extint?edge\"   ,Parameter_extintedge        ,PARSER_TYPE_INTEGER),\\\n/*---------------------------------------------------------------------------------------------*/\\\n/* flash*/      SYNTAX_ITEM(\"flash\"         ,Parameter_flash           ,PARSER_TYPE_HEXARRAY),\\\n/*---------------------------------------------------------------------------------------------*/\\\n/* operators*/  SYNTAX_ITEM(\"<\"              ,Parameter_lt              ,PARSER_TYPE_NO_TYPE),\\\n                SYNTAX_ITEM(\">\"              ,Parameter_gt              ,PARSER_TYPE_NO_TYPE),\\\n                SYNTAX_ITEM(\"<=\"             ,Parameter_le              ,PARSER_TYPE_NO_TYPE),\\\n                SYNTAX_ITEM(\">=\"             ,Parameter_ge              ,PARSER_TYPE_NO_TYPE),\\\n                SYNTAX_ITEM(\"!\"              ,Parameter_not             ,PARSER_TYPE_NO_TYPE),\\\n/*---------------------------------------------------------------------------------------------*/\\\n/* misc */      SYNTAX_ITEM(\"sysfreq\"       ,Parameter_sysfreq           ,PARSER_TYPE_BYTEARRAY),\\\n                SYNTAX_ITEM(\"eeprom\"        ,Parameter_eeprom            ,PARSER_TYPE_BYTEARRAY),\\\n                SYNTAX_ITEM(\"err\"           ,Parameter_errors            ,PARSER_TYPE_INTEGER  ),\\\n                SYNTAX_ITEM(\"ver\"           ,Parameter_version           ,PARSER_TYPE_INTEGER  )\n\n\n\n\n\n#endif\n\n",
+			"file": "/C/Users/Lenovo/Projects/text_protocol/cmd_data.h",
+			"file_size": 8822,
+			"file_write_time": 130892389912423819,
 			"settings":
 			{
-				"buffer_size": 796,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "src/modules/serialport.h",
-			"settings":
-			{
-				"buffer_size": 277,
+				"buffer_size": 8716,
 				"line_ending": "Windows"
 			}
 		},
 		{
-			"file": "src/modules/scheduler.h",
+			"file": "/C/Users/Lenovo/Projects/text_protocol/syntax.h",
 			"settings":
 			{
-				"buffer_size": 984,
+				"buffer_size": 3175,
 				"line_ending": "Windows"
 			}
 		},
 		{
-			"file": "src/modules/rd_buffer.h",
+			"file": "/C/Users/Lenovo/Projects/text_protocol/syntax.c",
 			"settings":
 			{
-				"buffer_size": 1174,
+				"buffer_size": 7719,
 				"line_ending": "Windows"
 			}
 		},
 		{
-			"file": "project.sublime-project",
+			"file": "/C/Users/Lenovo/Projects/text_protocol/test/main.c",
 			"settings":
 			{
-				"buffer_size": 102,
-				"line_ending": "Unix"
+				"buffer_size": 4532,
+				"line_ending": "Windows"
 			}
 		}
 	],
@@ -96,12 +107,16 @@
 	},
 	"file_history":
 	[
+		"/C/Users/Lenovo/Dropbox/workspaces/mamba3_project/mamba3.X/src/interrupts.c",
+		"/C/Users/Lenovo/Dropbox/workspaces/mamba3_project/mamba3.X/src/modules/serialport.h",
+		"/C/Users/Lenovo/Dropbox/workspaces/mamba3_project/mamba3.X/src/modules/scheduler.h",
+		"/C/Users/Lenovo/Dropbox/workspaces/mamba3_project/mamba3.X/src/modules/rd_buffer.h",
+		"/C/Users/Lenovo/Dropbox/workspaces/mamba3_project/mamba3.X/project.sublime-project",
 		"/C/Users/Lenovo/Dropbox/workspaces/mamba3_project/mamba3.X/src/drivers/uart.c",
 		"/C/Users/Lenovo/Dropbox/workspaces/mamba3_project/mamba3.X/src/modules/rd_buffer.c",
 		"/C/Users/Lenovo/AppData/Roaming/Sublime Text 2/Packages/User/SublimeClang.sublime-settings",
 		"/C/Users/Lenovo/Dropbox/workspaces/mamba3_project/mamba3.X/src/main.c",
 		"/C/Users/Lenovo/AppData/Roaming/Sublime Text 2/Packages/Default/Preferences.sublime-settings",
-		"/C/Users/Lenovo/Dropbox/workspaces/mamba3_project/mamba3.X/project.sublime-project",
 		"/C/Users/Lenovo/Dropbox/workspaces/mamba3_project/mamba3.X/src/drivers/adc.h",
 		"/C/Users/Lenovo/Dropbox/workspaces/mamba3_project/mamba3.X/src/drivers/gpio.c",
 		"/C/Users/Lenovo/Dropbox/workspaces/mamba3_project/mamba3.X/src/drivers/adc.c",
@@ -133,11 +148,14 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"parameter_text",
+			"this_parse_item",
+			"PARSER_TYPE_COMMAND",
 			"stream",
 			"RdBufferRecord"
 		],
 		"highlight": true,
-		"in_selection": true,
+		"in_selection": false,
 		"preserve_case": false,
 		"regex": false,
 		"replace_history":
@@ -153,82 +171,90 @@
 	"groups":
 	[
 		{
-			"selected": 2,
+			"selected": 0,
 			"sheets":
 			[
 				{
 					"buffer": 0,
-					"file": "src/interrupts.c",
+					"file": "/C/Users/Lenovo/Projects/text_protocol/cmd_data.h",
 					"settings":
 					{
-						"buffer_size": 796,
+						"buffer_size": 8716,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								660,
-								660
+								7763,
+								7763
 							]
 						],
 						"settings":
 						{
-							"syntax": "Packages/C++/C.tmLanguage",
-							"tab_size": 4,
+							"syntax": "Packages/C++/C++.tmLanguage",
+							"tab_size": 8,
 							"translate_tabs_to_spaces": true
 						},
-						"translation.x": 0.0,
-						"translation.y": 57.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 1,
-					"file": "src/modules/serialport.h",
-					"settings":
-					{
-						"buffer_size": 277,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								0,
-								0
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/C++/C++.tmLanguage"
-						},
-						"translation.x": 0.0,
+						"translation.x": 387.0,
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
 				},
 				{
-					"buffer": 2,
-					"file": "src/modules/scheduler.h",
+					"buffer": 1,
+					"file": "/C/Users/Lenovo/Projects/text_protocol/syntax.h",
 					"settings":
 					{
-						"buffer_size": 984,
+						"buffer_size": 3175,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								380,
-								380
+								3166,
+								3166
 							]
 						],
 						"settings":
 						{
 							"syntax": "Packages/C++/C++.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 1596.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				}
+			]
+		},
+		{
+			"selected": 0,
+			"sheets":
+			[
+				{
+					"buffer": 2,
+					"file": "/C/Users/Lenovo/Projects/text_protocol/syntax.c",
+					"settings":
+					{
+						"buffer_size": 7719,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								271,
+								271
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
@@ -238,52 +264,28 @@
 				},
 				{
 					"buffer": 3,
-					"file": "src/modules/rd_buffer.h",
+					"file": "/C/Users/Lenovo/Projects/text_protocol/test/main.c",
 					"settings":
 					{
-						"buffer_size": 1174,
+						"buffer_size": 4532,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								208,
-								208
+								2360,
+								2360
 							]
 						],
 						"settings":
 						{
-							"syntax": "Packages/C++/C++.tmLanguage"
+							"syntax": "Packages/C++/C.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 4,
-					"file": "project.sublime-project",
-					"settings":
-					{
-						"buffer_size": 102,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								32,
-								32
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/JavaScript/JSON.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 912.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
@@ -308,11 +310,18 @@
 				0,
 				1,
 				1
+			],
+			[
+				1,
+				0,
+				2,
+				1
 			]
 		],
 		"cols":
 		[
 			0.0,
+			0.373927525956,
 			1.0
 		],
 		"rows":
@@ -324,7 +333,7 @@
 	"menu_visible": true,
 	"output.clang":
 	{
-		"height": 29.0
+		"height": 45.0
 	},
 	"output.textarea":
 	{
@@ -355,6 +364,6 @@
 	"show_open_files": false,
 	"show_tabs": true,
 	"side_bar_visible": true,
-	"side_bar_width": 219.0,
+	"side_bar_width": 156.0,
 	"status_bar_visible": true
 }

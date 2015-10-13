@@ -75,6 +75,7 @@
 #define PIN_TRIM1			LATDbits.LATD1
 #define PIN_TRIM2			LATDbits.LATD2
 #define PIN_TRIM3			LATDbits.LATD3
+#define SET_TRIMMER(V)			LATD = V&0x0f
 #define PIN_DET_INHIBIT		LATDbits.LATD4
 #define PIN_DET_CONTROL     LATDbits.LATD5
 #define PIN_LED_TAMPER 		LATDbits.LATD6

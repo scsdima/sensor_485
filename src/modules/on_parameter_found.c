@@ -30,21 +30,10 @@ void on_parameter_found(ParserOperation_t operation, INT8 cmd_id
 		}
 	}
 	else if (operation == PARSER_STOP) {
-//		switch (cmd_id) {
-////		case Command_reset:
-////		{
-////			// TODO reset();
-////		}
-////			break;
-//
-////		case Command_help:
-////		{
-////			serial_comm_puts(help);
-////			ok = true;
-////		}
-////			break;
-//		}
-//		serial_comm_puts("\n");
+		if(cmd_id==Command_reset)
+		{
+			// TODO reset();
+		}
 	} else if (operation == PARSER_ERROR) {
 		serialport_write("err\n");
 	}
@@ -53,13 +42,64 @@ void on_parameter_found(ParserOperation_t operation, INT8 cmd_id
 
 BOOL set_parameter(INT8 p_id ) {
   BOOL ok  = FALSE;
-//  switch (p_id ) 
-//  {
-//  
-//  case Parameter_signal:
-//  break;
-//	  
-//  }
+  switch (p_id ) 
+  {
+  
+  case Parameter_signal:
+  break;
+
+  case Parameter_pot:
+    SET_TRIMMER(syntax_as_integer());
+  break;
+
+  case Parameter_mod:
+  break;
+
+  case Parameter_mod:         
+  break;
+
+  case  Parameter_profile:     
+  break;
+
+  case  Parameter_pwrtrig:     
+  break;
+
+   case Parameter_acctrig:     
+  break;
+
+   case Parameter_triglev:     
+  break;
+
+   case Parameter_trigsum:     
+  break;
+
+   case Parameter_trigcnt:     
+  break;
+
+   case Parameter_wavtole:     
+  break;
+
+   case Parameter_wavtrig:     
+  break;
+
+   case Parameter_wavlcnt:     
+  break;
+
+   case Parameter_wavrcnt:
+  break;
+
+   case Parameter_defaults:
+  break;
+
+   case Parameter_id:          
+  break;
+
+   case Parameter_psw:
+  break;
+
+
+	  
+  }
   serialport_write( syntax_get_text() );
   
   if( ok )
@@ -76,13 +116,56 @@ BOOL set_parameter(INT8 p_id ) {
 BOOL get_parameter(INT8 p_id) {
   BOOL  ok = FALSE;
       
-//serial_comm_puts(syntax_get_text());
-//	parameter_out[0] = '=';
-//  switch (p_id ) {
-//
-//  case Parameter_signal:
-//break;
-//  }
+  switch (p_id ) {
+
+case Parameter_signal :
+break;
+case  Parameter_imp     :    
+break;
+case  Parameter_pwr     :    
+break;
+case  Parameter_pot     :    
+break;
+case  Parameter_ver     :    
+break;
+case  Parameter_status  :    
+break;
+case  Parameter_acc     :    
+break;
+case  Parameter_adr     :    
+break;
+case  Parameter_error   :    
+break;
+case  Parameter_defaults : 
+break;
+case  Parameter_mod   :      
+break;
+case  Parameter_profile :    
+break;
+case  Parameter_pwrtrig :    
+break;
+case  Parameter_acctrig :    
+break;
+case  Parameter_triglev :    
+break;
+case  Parameter_trigsum :    
+break;
+case  Parameter_trigcnt :    
+break;
+case  Parameter_wavtole :    
+break;
+case  Parameter_wavtrig :    
+break;
+case  Parameter_wavlcnt :    
+break;
+case  Parameter_wavrcnt :
+break;
+case  Parameter_id:          
+break;
+case  Parameter_psw:
+break;
+}
+
   
   if(ok) 
     {
