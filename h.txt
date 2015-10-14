@@ -3,7 +3,7 @@
 uart-3h    -ok
 init-3h -ok
 1h - detection, adc, aacheduler -ok
-textprotocol -1h
+textprotocol -1h -ok
 
 define normal mode protocol
 make detection - 5h
