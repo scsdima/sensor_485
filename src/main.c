@@ -1,14 +1,3 @@
-/* *********************************************************************
-
-
-  @File:main.c
-
-  @Project: MAMBA3
-  @Date: 2013\06\26 10-13-11
-
- ********************************************************************* */
-
-
 
 #include "config.h"
 #include "compiler.h"
@@ -27,10 +16,10 @@ int main(void)
     {    
       delay_ms(1000);
     };
-	int_enable(1);
+	  int_enable(1);
     while(1) 
-    {        
+    {        	    ;
 	   PROCESS_EVENTS();
-           CLRWDT();
+     CLRWDT();
     }    
 }

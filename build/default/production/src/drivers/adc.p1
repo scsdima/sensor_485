@@ -9,6 +9,16 @@ Version 3.2 HI-TECH Software Intermediate Code
 [v _ANSEL `Vuc ~T0 @X0 0 e@3966 ]
 "484
 [v _ANSELH `Vuc ~T0 @X0 0 e@3967 ]
+[s S166 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
+[n S166 . TMR1IE TMR2IE CCP1IE SSPIE TXIE RCIE ADIE PSPIE ]
+[s S167 :5 `uc 1 :1 `uc 1 ]
+[n S167 . . RC1IE ]
+[s S168 :4 `uc 1 :1 `uc 1 ]
+[n S168 . . TX1IE ]
+[u S165 `S166 1 `S167 1 `S168 1 ]
+[n S165 . . . . ]
+"3392
+[v _PIE1bits `VS165 ~T0 @X0 0 e@3997 ]
 [s S268 :1 `uc 1 :1 `uc 1 ]
 [n S268 . . GO_NOT_DONE ]
 [s S269 :1 `uc 1 :1 `uc 1 :4 `uc 1 ]
@@ -3852,72 +3862,75 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;adc.c: 7: ADCON1 = 0b00000000;
 "7
 [e = _ADCON1 -> -> 0 `i `uc ]
-[; ;adc.c: 8: ADCON2 = 0b00010000;
+[; ;adc.c: 8: ADCON2 = 0b00010110;
 "8
-[e = _ADCON2 -> -> 16 `i `uc ]
+[e = _ADCON2 -> -> 22 `i `uc ]
 [; ;adc.c: 9: ANSEL = 0b01100011;
 "9
 [e = _ANSEL -> -> 99 `i `uc ]
 [; ;adc.c: 10: ANSELH = 0;
 "10
 [e = _ANSELH -> -> 0 `i `uc ]
-[; ;adc.c: 11: }
+[; ;adc.c: 11: PIE1bits.ADIE = 1;
 "11
+[e = . . _PIE1bits 0 6 -> -> 1 `i `uc ]
+[; ;adc.c: 13: }
+"13
 [e :UE 389 ]
 }
-"14
+"16
 [v _adc_enable `(v ~T0 @X0 1 ef1`c ]
 {
-[; ;adc.c: 13: void adc_enable(CHAR on)
-[; ;adc.c: 14: {
+[; ;adc.c: 15: void adc_enable(CHAR on)
+[; ;adc.c: 16: {
 [e :U _adc_enable ]
 [v _on `c ~T0 @X0 1 r1 ]
 [f ]
-[; ;adc.c: 15: ADCON0 &= ~1;
-"15
-[e =& _ADCON0 -> ~ -> 1 `i `uc ]
-[; ;adc.c: 16: ADCON0 |= (UINT8)on;
-"16
-[e =| _ADCON0 -> _on `uc ]
-[; ;adc.c: 17: }
+[; ;adc.c: 17: ADCON0 &= ~1;
 "17
+[e =& _ADCON0 -> ~ -> 1 `i `uc ]
+[; ;adc.c: 18: ADCON0 |= (UINT8)on;
+"18
+[e =| _ADCON0 -> _on `uc ]
+[; ;adc.c: 19: }
+"19
 [e :UE 390 ]
 }
-"20
+"22
 [v _adc_read `(us ~T0 @X0 1 ef1`uc ]
 {
-[; ;adc.c: 19: UINT16 adc_read(UINT8 adc_number )
-[; ;adc.c: 20: {
+[; ;adc.c: 21: UINT16 adc_read(UINT8 adc_number )
+[; ;adc.c: 22: {
 [e :U _adc_read ]
 [v _adc_number `uc ~T0 @X0 1 r1 ]
 [f ]
-[; ;adc.c: 21: if(ADCON0bits.CHS != adc_number)
-"21
-[e $ ! != -> . . _ADCON0bits 1 2 `i -> _adc_number `i 392  ]
-[; ;adc.c: 22: {
-"22
-{
-[; ;adc.c: 23: ADCON0bits.CHS = adc_number;
+[; ;adc.c: 23: if(ADCON0bits.CHS != adc_number)
 "23
-[e = . . _ADCON0bits 1 2 _adc_number ]
-[; ;adc.c: 24: asm(" nop");asm(" nop");asm(" nop");asm(" nop");asm(" nop");asm(" nop");asm(" nop");
+[e $ ! != -> . . _ADCON0bits 1 2 `i -> _adc_number `i 392  ]
+[; ;adc.c: 24: {
 "24
-[; <"  nop ;# ">
-[; <"  nop ;# ">
-[; <"  nop ;# ">
-[; <"  nop ;# ">
-[; <"  nop ;# ">
-[; <"  nop ;# ">
-[; <"  nop ;# ">
+{
+[; ;adc.c: 25: ADCON0bits.CHS = adc_number;
 "25
+[e = . . _ADCON0bits 1 2 _adc_number ]
+[; ;adc.c: 26: asm(" nop");asm(" nop");asm(" nop");asm(" nop");asm(" nop");asm(" nop");asm(" nop");
+"26
+[; <"  nop ;# ">
+[; <"  nop ;# ">
+[; <"  nop ;# ">
+[; <"  nop ;# ">
+[; <"  nop ;# ">
+[; <"  nop ;# ">
+[; <"  nop ;# ">
+"27
 }
 [e :U 392 ]
-[; ;adc.c: 25: }
-[; ;adc.c: 26: ADCON0bits.GO_nDONE = TRUE;
-"26
+[; ;adc.c: 27: }
+[; ;adc.c: 28: ADCON0bits.GO_nDONE = TRUE;
+"28
 [e = . . _ADCON0bits 1 1 -> . `E3557 1 `uc ]
-[; ;adc.c: 27: while (GODONE) {asm(" nop");asm(" nop");}
-"27
+[; ;adc.c: 29: while (GODONE) {asm(" nop");asm(" nop");}
+"29
 [e $U 393  ]
 [e :U 394 ]
 {
@@ -3927,14 +3940,14 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e :U 393 ]
 [e $ _GODONE 394  ]
 [e :U 395 ]
-[; ;adc.c: 28: ADIF = FALSE;
-"28
+[; ;adc.c: 30: ADIF = FALSE;
+"30
 [e = _ADIF -> . `E3557 0 `b ]
-[; ;adc.c: 29: return ADRES;
-"29
+[; ;adc.c: 31: return ADRES;
+"31
 [e ) _ADRES ]
 [e $UE 391  ]
-[; ;adc.c: 30: }
-"30
+[; ;adc.c: 32: }
+"32
 [e :UE 391 ]
 }

@@ -25,8 +25,11 @@ void serialport_service(void)
 	UINT8 byte;
 	if (uart_byte_available()) {
 		if (uart_getc(&byte) == RESULT_SUCCESS) {
-			rd_buffer_put(&g_rx_buffer, &byte);
-			issue_event(TASK_COMMUNICATION);
+			rd_buffer_put(&g_rx_buffer, &byte);			
+		}
+		if(byte=='\n' || byte=='\r') 
+		{			
+			/*D*/issue_event(TASK_COMMUNICATION);
 		}
 	}
 }
@@ -34,13 +37,14 @@ void serialport_service(void)
 void serialport_task()
 {
 	SIZE size;
-	if (rd_buffer_readline(&g_rx_buffer, &serialport_buffer, &size)) {
-		syntax_string(serialport_buffer, FALSE);
-	}
-	size = rd_buffer_cnt(&g_tx_buffer);
-	if (size > 0) {
-		rd_buffer_getn(&g_tx_buffer, &serialport_buffer, size);
-		uart_puts(serialport_buffer, size);
+	UINT8 byte;	
+	while (rd_buffer_readline(&g_rx_buffer, &serialport_buffer, &size)) {						
+		syntax_string(serialport_buffer, size,FALSE);
+	}		
+	while (rd_buffer_cnt(&g_tx_buffer)> 0) {		
+			
+		rd_buffer_get(&g_tx_buffer, &byte);
+		uart_putc(byte);		
 	}
 }
 

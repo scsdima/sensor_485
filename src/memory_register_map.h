@@ -1,10 +1,3 @@
-/* 
- * File:   memory_register_map.h
- * Author: dmitry
- *
- * Created on July 24, 2013, 8:54 PM
- */
-
 
 #ifndef MEMORY_REGISTER_MAP_H
 #define	MEMORY_REGISTER_MAP_H

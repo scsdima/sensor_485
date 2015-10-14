@@ -37,15 +37,20 @@ BOOL rd_buffer_init(RdBuffer *pbuffer ,SIZE size)
 ********************************************************************* */
 BOOL rd_buffer_readline(RdBuffer *pbuffer, CHAR *pdata, SIZE *psize)
 {
-  if(this_contains_crlf && pdata && psize)
+  *psize=0;
+  if(this_contains_crlf && pdata )
   {
     CHAR ch;
     while(rd_buffer_get(pbuffer,(UINT8*)&ch)) 
     {
-      *pdata = ch;
-      pdata++;
-      *psize++;
-    }
+	    if(ch=='\n' || ch=='\r') 
+		{
+			*(++pdata) = '\0';
+			break;
+		}     
+      *pdata++ = ch;      
+      (*psize)++;
+    }    
     this_contains_crlf = FALSE;
     return TRUE;
   }

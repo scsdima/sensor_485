@@ -5,29 +5,26 @@
 
 
 
-#define SYNTAX_SEPARATOR        ('$')
+#define SYNTAX_SEPARATOR        ('\0')
 
 //last options
 BOOL this_case_sensitive;
 //last parsed command id
-INT16 command_id;
+INT8 command_id;
 //last parsed parameter  id
-INT16 parameter_id;
+INT8 parameter_id;
+ParserType_t  parameter_type;
 //last parsed paramter value
 UINT8 parameter_value[SYNTAX_STRING_MAX_LEN];
 //last parsed parameter text name
 UINT8 parameter_text[SYNTAX_STRING_MAX_LEN];
-//last parsed parmater type
-ParserType_t parameter_type;
 //temporary buffer for string
 char this_buf[SYNTAX_STRING_MAX_LEN];
 
 //parse parameter
-BOOL this_parse_parameter(char par_str[]);
-//parse command
- BOOL this_parse_command(char pbuf[]);
+BOOL this_parse_item(const char *pstr, INT8 *pitem);
 //
-void this_variable_load_from_text(const char *pval, ParserType_t var_type);
+void this_variable_load_from_text(const char *pval);
 
 
 /* *********************************************************************
@@ -39,15 +36,16 @@ void this_variable_load_from_text(const char *pval, ParserType_t var_type);
 @Description: - this fill parameter value buffer with data according to
 type
 ********************************************************************* */
-void this_variable_load_from_text(const char *pval, ParserType_t var_type)
+void this_variable_load_from_text(const char *pval)
 {
+         
   if (pval != NULL ) {
     INT16 len = string_utils_strchr(pval, SYNTAX_SEPARATOR);
     string_utils_copy(parameter_value , pval, len);
     parameter_value[len] = '\0';
     //remove quotations ::
    //len = string_utils_remove_symbol(parameter_value , parameter_value , '\"');
-    parameter_type = var_type;
+    parameter_type = parameter_type;
     switch (parameter_type) {
     // bytearray here means don't care about contens
     case PARSER_TYPE_BYTEARRAY:
@@ -85,32 +83,6 @@ void this_variable_load_from_text(const char *pval, ParserType_t var_type)
 
 
 /* *********************************************************************
-@Function name: this_parse_command
-@Return: (BOOL)
-@Parameters:
-    const char pbuf[] - parse command
-@Description:- finding command
-
-********************************************************************* */
-BOOL  this_parse_command(char pbuf[]) {
-  BOOL found = FALSE;
-  INT16 i = 0;
-  INT16 len = string_utils_strchr(pbuf, SYNTAX_SEPARATOR);
-  while(syx_cmd_list[i].name[0] != 0x1D)    {
-    const char *pname  = syx_cmd_list[i].name;
-    BOOL is_equal = string_utils_strncmp(pbuf, pname, len, this_case_sensitive);
-    if ( is_equal ) {
-      command_id = syx_cmd_list[i].id;
-      found = TRUE;
-      break;
-    }
-    i++;
-  }
-  return found;
-}
-
-
-/* *********************************************************************
 @Function name: this_parse_parameter
 @Return: (BOOL) - 0 - not ok
 @Parameters:
@@ -118,14 +90,14 @@ BOOL  this_parse_command(char pbuf[]) {
 @Description: This function parses parameter string
 in format "parameter=value"
 ********************************************************************* */
-BOOL this_parse_parameter(char pstr[]) {
+BOOL this_parse_item(const char *pstr, INT8 *pitem) {
   BOOL result = FALSE;
   if (pstr != NULL) {
     const char *pvar =  pstr;//pointer to variable name
     const char *pval = NULL;//pointer to variable value
-    INT16 var_len;
-    INT16 i = 0;
-    INT16 str_len = string_utils_strchr(pstr, SYNTAX_SEPARATOR);
+    SIZE var_len;
+    INT8 i = 0;
+    SIZE str_len = string_utils_strlen(pstr);
     /* parameter has = so will be evaluated as set type*/
     var_len = string_utils_strchr(pstr, '=');
     if (var_len >= 0  && var_len < str_len) {
@@ -137,19 +109,18 @@ BOOL this_parse_parameter(char pstr[]) {
     /* find parameter in list */
     string_utils_copy(parameter_text, pvar, var_len);
     parameter_text[var_len] = '\0';
-      while( syx_param_list[i].name[0] != 0x1D ) {
-        if (string_utils_strlen( syx_param_list[i].name ) == var_len){
-          BOOL is_equal = string_utils_strncmp(syx_param_list[i].name, pvar, var_len, this_case_sensitive);
-          if ( is_equal ) {
-            parameter_id =  syx_param_list[i].id;
-            parameter_type = syx_param_list[i].type;            
-            if (pval)
-              this_variable_load_from_text(pval, parameter_type);
+      for(i=0;i<SYNTAX_COUNT;i++) {
+        if (syntax_data[i].name_len == var_len)
+	{		
+          BOOL is_equal = string_utils_strncmp(syntax_data[i].name, pvar, var_len, this_case_sensitive);	  
+          if ( is_equal ) 
+	  {
+            if(pitem) *pitem = syntax_data[i].id;
+            if (pval) this_variable_load_from_text(pval);
             result = TRUE;
             break;
           }	
-        }
-        i++;
+        }        
       }
     }
   return result;
@@ -164,31 +135,31 @@ BOOL this_parse_parameter(char pstr[]) {
 @Description:
  This function parses string on parameters and commands
 ********************************************************************* */
-INT16 syntax_string(const char pstr[], BOOL case_sensitive) {
-  INT16 chains ;
-  INT16 result =0;
-  INT16 str_len = string_utils_strlen(pstr);
+INT8 syntax_string(const char *pstr, SIZE str_len, BOOL case_sensitive) {
+  INT8 chains ;
+  INT8 result =0;
   this_case_sensitive = case_sensitive;
-  chains = string_utils_split(this_buf, pstr, str_len, SYNTAX_SEPARATOR);
+  chains = (INT8)string_utils_split(this_buf, pstr, str_len, '\0');
   command_id = -1;
   parameter_id = -1;
   parameter_value[0] = '\0';
-  parameter_text[0] = '\0';
+  parameter_text[0] = '\0';    
   if (chains >= 1 ) {
-    INT16 pos = 0;
+    INT8 pos = 0;
     char *pchain;
     result = chains -1;
     while ( chains-- ) {
       pchain = &this_buf[pos];
       if (pos == 0 ) {
         /* parse command*/
-        if ( !this_parse_command( pchain ) ) {result =0;break;}
+        if ( !this_parse_item( pchain, &command_id ) ) {result =0;break;}
         on_parameter_found(PARSER_START, command_id, -1, (void*)NULL, PARSER_TYPE_NO_TYPE);
       }
       else {
         /* parse parameter*/
-        if (this_parse_parameter( pchain ) == TRUE) {
-          on_parameter_found(PARSER_PARAMETER, command_id, parameter_id, (void*)parameter_value, parameter_type);					
+        if (this_parse_item( pchain, &parameter_id ) == TRUE) {
+	   parameter_type= syntax_data[parameter_id].type;  		
+          on_parameter_found(PARSER_PARAMETER, command_id, parameter_id, (void*)parameter_value, parameter_type);						  
         }
         /* parameter not found*/
         else {          
@@ -196,7 +167,7 @@ INT16 syntax_string(const char pstr[], BOOL case_sensitive) {
         }
       }
       /* switch to next parameter */
-      pos += string_utils_strchr(pchain, SYNTAX_SEPARATOR) + 1;
+      pos += string_utils_strlen(pchain) + 1;
     }
   }
     if (result>0 )

@@ -5222,111 +5222,40 @@ PARSER_ERROR
 }ParserOperation_t;
 
 
-
-
 typedef struct {
 char name[(20)];
+INT8 name_len;
 INT8 id;
-} SyntaxCommand_t;
-
-typedef struct {
-char name[(20)];
-INT8 id;
-ParserType_t type;
-} SyntaxParameter_t;
+INT8 type;
+} SyntaxItem_t;
 
 
 
-INT16 syntax_string(const char pstr[], CHAR case_sensitive);
+INT8 syntax_string(const char *pstr,SIZE str_len, CHAR case_sensitive);
+
 
 const char* syntax_get_text(void);
-
 INT16 syntax_as_integer(void);
 double syntax_as_double(void);
 CHAR syntax_as_bool(void);
 UINT8 * syntax_as_bytearray(void);
 
+# 54
+enum {
+Command_set, Command_get, Command_init, Command_selftest, Parameter_signal, Parameter_imp, Parameter_pwr, Parameter_pot, Parameter_ver, Parameter_status, Parameter_acc, Parameter_adr, Parameter_error, Parameter_defaults, Parameter_mod, Parameter_profile, Parameter_pwrtrig, Parameter_acctrig, Parameter_triglev, Parameter_trigsum, Parameter_trigcnt, Parameter_wavtole, Parameter_wavtrig, Parameter_wavlcnt, Parameter_wavrcnt, Parameter_id, Parameter_psw,
+SYNTAX_COUNT
+};
+
+
+
+static const SyntaxItem_t syntax_data[SYNTAX_COUNT] = {
+{"set",sizeof("set")-1,Command_set,PARSER_TYPE_NO_TYPE}, {"get",sizeof("get")-1,Command_get,PARSER_TYPE_NO_TYPE}, {"init",sizeof("init")-1,Command_init,PARSER_TYPE_NO_TYPE}, {"selftest",sizeof("selftest")-1,Command_selftest,PARSER_TYPE_NO_TYPE}, {"signal",sizeof("signal")-1,Parameter_signal,PARSER_TYPE_INTEGER}, {"imp",sizeof("imp")-1,Parameter_imp,PARSER_TYPE_INTEGER}, {"pwr",sizeof("pwr")-1,Parameter_pwr,PARSER_TYPE_INTEGER}, {"pot",sizeof("pot")-1,Parameter_pot,PARSER_TYPE_INTEGER}, {"ver",sizeof("ver")-1,Parameter_ver,PARSER_TYPE_INTEGER}, {"status",sizeof("status")-1,Parameter_status,PARSER_TYPE_INTEGER}, {"acc",sizeof("acc")-1,Parameter_acc,PARSER_TYPE_INTEGER}, {"adr",sizeof("adr")-1,Parameter_adr,PARSER_TYPE_INTEGER}, {"error",sizeof("error")-1,Parameter_error,PARSER_TYPE_INTEGER}, {"defaults",sizeof("defaults")-1,Parameter_defaults,PARSER_TYPE_INTEGER}, {"mod",sizeof("mod")-1,Parameter_mod,PARSER_TYPE_BYTEARRAY}, {"profile",sizeof("profile")-1,Parameter_profile,PARSER_TYPE_INTEGER}, {"pwrtrig",sizeof("pwrtrig")-1,Parameter_pwrtrig,PARSER_TYPE_INTEGER}, {"acctrig",sizeof("acctrig")-1,Parameter_acctrig,PARSER_TYPE_INTEGER}, {"triglev",sizeof("triglev")-1,Parameter_triglev,PARSER_TYPE_INTEGER}, {"trigsum",sizeof("trigsum")-1,Parameter_trigsum,PARSER_TYPE_INTEGER}, {"trigcnt",sizeof("trigcnt")-1,Parameter_trigcnt,PARSER_TYPE_INTEGER}, {"wavtole",sizeof("wavtole")-1,Parameter_wavtole,PARSER_TYPE_INTEGER}, {"wavtrig",sizeof("wavtrig")-1,Parameter_wavtrig,PARSER_TYPE_INTEGER}, {"wavlcnt",sizeof("wavlcnt")-1,Parameter_wavlcnt,PARSER_TYPE_INTEGER}, {"wavrcnt",sizeof("wavrcnt")-1,Parameter_wavrcnt,PARSER_TYPE_INTEGER}, {"idid",sizeof("idid")-1,Parameter_id,PARSER_TYPE_INTEGER}, {"pswpsw",sizeof("pswpsw")-1,Parameter_psw,PARSER_TYPE_INTEGER}
+};
 
 
 
 void on_parameter_found(ParserOperation_t operation ,INT8 cmd_id
 , INT8 p_id ,const void* p, ParserType_t type);
-
-# 8 "src/modules/cmd_data.h"
-typedef enum {
-Command_set,
-Command_get,
-Command_init,
-Command_selftest,
-COMMAND_COUNT
-}SyntaxCommandId_t;
-
-typedef enum {
-Parameter_signal,
-Parameter_imp,
-Parameter_pwr,
-Parameter_pot,
-Parameter_ver,
-Parameter_status,
-Parameter_error,
-Parameter_acc,
-Parameter_adr,
-Parameter_defaults,
-Parameter_mod,
-Parameter_profile,
-Parameter_pwrtrig,
-Parameter_acctrig,
-Parameter_triglev,
-Parameter_trigsum,
-Parameter_trigcnt,
-Parameter_wavtole,
-Parameter_wavtrig,
-Parameter_wavlcnt,
-Parameter_wavrcnt,
-Parameter_id,
-Parameter_psw,
-PARAMETERS_COUNT
-}SyntaxParameterId_t;
-
-# 58
-static const SyntaxCommand_t syx_cmd_list[] =
-{
-{"set", Command_set },
-{"get", Command_get },
-{"init", Command_init },
-{"selftest", Command_selftest },
-{"\x1d\x1d" , 0 }
-};
-
-
-static const SyntaxParameter_t syx_param_list[] = {
-
-{"signal" , Parameter_signal , PARSER_TYPE_INTEGER},
-{"imp" , Parameter_imp , PARSER_TYPE_INTEGER},
-{"pwr" , Parameter_pwr , PARSER_TYPE_INTEGER},
-{"pot" , Parameter_pot , PARSER_TYPE_INTEGER},
-{"ver" , Parameter_ver , PARSER_TYPE_INTEGER},
-{"status" , Parameter_status , PARSER_TYPE_INTEGER},
-{"acc" , Parameter_acc , PARSER_TYPE_INTEGER},
-{"adr" , Parameter_adr , PARSER_TYPE_INTEGER},
-{"error" , Parameter_error , PARSER_TYPE_INTEGER},
-{"defaults" , Parameter_defaults , PARSER_TYPE_INTEGER},
-{"mod" , Parameter_mod , PARSER_TYPE_BYTEARRAY},
-{"profile" , Parameter_profile , PARSER_TYPE_INTEGER},
-{"pwrtrig" , Parameter_pwrtrig , PARSER_TYPE_INTEGER},
-{"acctrig" , Parameter_acctrig , PARSER_TYPE_INTEGER},
-{"triglev" , Parameter_triglev , PARSER_TYPE_INTEGER},
-{"trigsum" , Parameter_trigsum , PARSER_TYPE_INTEGER},
-{"trigcnt" , Parameter_trigcnt , PARSER_TYPE_INTEGER},
-{"wavtole" , Parameter_wavtole , PARSER_TYPE_INTEGER},
-{"wavtrig" , Parameter_wavtrig , PARSER_TYPE_INTEGER},
-{"wavlcnt" , Parameter_wavlcnt , PARSER_TYPE_INTEGER},
-{"wavrcnt" , Parameter_wavrcnt , PARSER_TYPE_INTEGER},
-{"idid" , Parameter_id , PARSER_TYPE_INTEGER},
-{"pswpsw" , Parameter_psw , PARSER_TYPE_INTEGER},
-{"\x1d\x1d" ,-1 , PARSER_TYPE_NO_TYPE }
-
-};
 
 # 7 "src/modules/serialport.h"
 ResultSuccess_t serialport_startup(void);
@@ -5339,7 +5268,64 @@ void serialport_task();
 
 void serialport_write(const CHAR *pstr);
 
-# 5 "src/modules/on_parameter_found.c"
+
+# 9 "src\config.h"
+#pragma config FOSC = INTIO67
+#pragma config FCMEN = OFF
+#pragma config IESO = OFF
+
+
+#pragma config PWRT = ON
+#pragma config BOREN = OFF
+#pragma config BORV = 27
+
+
+#pragma config WDTEN = ON
+#pragma config WDTPS = 1024
+
+
+#pragma config CCP2MX = PORTC
+#pragma config PBADEN = OFF
+#pragma config LPT1OSC = ON
+#pragma config HFOFST = ON
+#pragma config MCLRE = ON
+
+
+#pragma config STVREN = ON
+#pragma config LVP = OFF
+#pragma config XINST = OFF
+
+
+#pragma config CP0 = OFF
+#pragma config CP1 = OFF
+#pragma config CP2 = OFF
+#pragma config CP3 = OFF
+
+
+#pragma config CPB = OFF
+#pragma config CPD = OFF
+
+
+#pragma config WRT0 = OFF
+#pragma config WRT1 = OFF
+#pragma config WRT2 = OFF
+#pragma config WRT3 = OFF
+
+
+#pragma config WRTC = OFF
+#pragma config WRTB = OFF
+#pragma config WRTD = OFF
+
+
+#pragma config EBTR0 = OFF
+#pragma config EBTR1 = OFF
+#pragma config EBTR2 = OFF
+#pragma config EBTR3 = OFF
+
+
+#pragma config EBTRB = OFF
+
+# 7 "src/modules/on_parameter_found.c"
 CHAR set_parameter(INT8 p_id);
 CHAR get_parameter(INT8 p_id);
 CHAR run_command(void);
@@ -5359,15 +5345,18 @@ case Command_get:
 ok = get_parameter(p_id);
 break;
 
-# 28
 default:
 break;
 }
 }
+
 else if (operation == PARSER_STOP) {
 
-# 48
-} else if (operation == PARSER_ERROR) {
+
+
+
+}
+else if (operation == PARSER_ERROR) {
 serialport_write("err\n");
 }
 }
@@ -5375,10 +5364,66 @@ serialport_write("err\n");
 
 CHAR set_parameter(INT8 p_id ) {
 CHAR ok = FALSE;
+switch (p_id )
+{
 
-# 63
+case Parameter_signal:
+break;
+
+case Parameter_pot:
+LATD = syntax_as_integer()&0x0f;
+ok = TRUE;
+break;
+
+case Parameter_mod:
+break;
+
+case Parameter_mod:
+break;
+
+case Parameter_profile:
+break;
+
+case Parameter_pwrtrig:
+break;
+
+case Parameter_acctrig:
+break;
+
+case Parameter_triglev:
+break;
+
+case Parameter_trigsum:
+break;
+
+case Parameter_trigcnt:
+break;
+
+case Parameter_wavtole:
+break;
+
+case Parameter_wavtrig:
+break;
+
+case Parameter_wavlcnt:
+break;
+
+case Parameter_wavrcnt:
+break;
+
+case Parameter_defaults:
+break;
+
+case Parameter_id:
+break;
+
+case Parameter_psw:
+break;
+
+
+
+}
 serialport_write( syntax_get_text() );
-
 if( ok )
 {
 serialport_write( ":ok " );
@@ -5393,7 +5438,59 @@ return ok;
 CHAR get_parameter(INT8 p_id) {
 CHAR ok = FALSE;
 
-# 87
+serialport_write( syntax_get_text() );
+
+switch (p_id ) {
+
+case Parameter_signal :
+break;
+case Parameter_imp :
+break;
+case Parameter_pwr :
+break;
+case Parameter_pot :
+break;
+case Parameter_ver :
+break;
+case Parameter_status :
+break;
+case Parameter_acc :
+break;
+case Parameter_adr :
+break;
+case Parameter_error :
+break;
+case Parameter_defaults :
+break;
+case Parameter_mod :
+break;
+case Parameter_profile :
+break;
+case Parameter_pwrtrig :
+break;
+case Parameter_acctrig :
+break;
+case Parameter_triglev :
+break;
+case Parameter_trigsum :
+break;
+case Parameter_trigcnt :
+break;
+case Parameter_wavtole :
+break;
+case Parameter_wavtrig :
+break;
+case Parameter_wavlcnt :
+break;
+case Parameter_wavrcnt :
+break;
+case Parameter_id:
+break;
+case Parameter_psw:
+break;
+}
+
+
 if(ok)
 {
 

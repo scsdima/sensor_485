@@ -1,0 +1,1706 @@
+[p PRO_MODE GLOBOPT AUTOSTATIC LFSROK SPACEOPT EMI_WORD ]
+[d version 1.1 ]
+[d edition pro ]
+[d chip 18F45K20 ]
+"25 src/drivers/delay.h
+[v F4203 `(uc  1 t 1 ]
+"74 src/drivers/delay.c
+[e E1 . `uc
+INTOSC_32KHZ 0
+INTOSC_250KHZ 1
+INTOSC_500KHZ 2
+INTOSC_1MHZ 3
+INTOSC_2MHZ 4
+INTOSC_4MHZ 5
+INTOSC_8MHZ 6
+INTOSC_16MHZ 7
+INTOSC_COUNT 8
+]
+"20 src/drivers/sysclk.c
+[e E3382 . `c
+RESULT_NO_ERROR 0
+RESULT_ERROR -1
+RESULT_NULL -2
+RESULT_EMPTY -3
+]
+"9 src/drivers/uart.h
+[s S84 . 1 `uc 1 TMR1IE 1 0 :1:0 
+`uc 1 TMR2IE 1 0 :1:1 
+`uc 1 CCP1IE 1 0 :1:2 
+`uc 1 SSPIE 1 0 :1:3 
+`uc 1 TXIE 1 0 :1:4 
+`uc 1 RCIE 1 0 :1:5 
+`uc 1 ADIE 1 0 :1:6 
+`uc 1 PSPIE 1 0 :1:7 
+]
+[s S93 . 1 `uc 1 . 1 0 :5:0 
+`uc 1 RC1IE 1 0 :1:5 
+]
+[s S96 . 1 `uc 1 . 1 0 :4:0 
+`uc 1 TX1IE 1 0 :1:4 
+]
+[u S99 . 1 `S84 1 . 1 0 `S93 1 . 1 0 `S96 1 . 1 0 ]
+"3392 C:\Program Files\Microchip\xc8\v1.12\include\pic18f45k20.h
+[s S119 . 1 `uc 1 TMR1IF 1 0 :1:0 
+`uc 1 TMR2IF 1 0 :1:1 
+`uc 1 CCP1IF 1 0 :1:2 
+`uc 1 SSPIF 1 0 :1:3 
+`uc 1 TXIF 1 0 :1:4 
+`uc 1 RCIF 1 0 :1:5 
+`uc 1 ADIF 1 0 :1:6 
+`uc 1 PSPIF 1 0 :1:7 
+]
+[s S128 . 1 `uc 1 . 1 0 :5:0 
+`uc 1 RC1IF 1 0 :1:5 
+]
+[s S131 . 1 `uc 1 . 1 0 :4:0 
+`uc 1 TX1IF 1 0 :1:4 
+]
+[u S134 . 1 `S119 1 . 1 0 `S128 1 . 1 0 `S131 1 . 1 0 ]
+"8219
+[e E3388 . `uc
+RESULT_SUCCESS 1
+RESULT_FAIL 0
+]
+"7605
+[s S181 . 1 `uc 1 RX9D 1 0 :1:0 
+`uc 1 OERR 1 0 :1:1 
+`uc 1 FERR 1 0 :1:2 
+`uc 1 ADDEN 1 0 :1:3 
+`uc 1 CREN 1 0 :1:4 
+`uc 1 SREN 1 0 :1:5 
+`uc 1 RX9 1 0 :1:6 
+`uc 1 SPEN 1 0 :1:7 
+]
+[s S190 . 1 `uc 1 . 1 0 :3:0 
+`uc 1 ADEN 1 0 :1:3 
+]
+[s S193 . 1 `uc 1 . 1 0 :5:0 
+`uc 1 SRENA 1 0 :1:5 
+]
+[u S196 . 1 `S181 1 . 1 0 `S190 1 . 1 0 `S193 1 . 1 0 ]
+"87 src/drivers/uart.c
+[e E3382 . `c
+RESULT_NO_ERROR 0
+RESULT_ERROR -1
+RESULT_NULL -2
+RESULT_EMPTY -3
+]
+[e E4195 . `uc
+EEPROM_BY_BLOCK 0
+EEPROM_BY_BYTE 1
+]
+"484 C:\Program Files\Microchip\xc8\v1.12\include\pic18f45k20.h
+[s S293 . 1 `uc 1 TMR1IE 1 0 :1:0 
+`uc 1 TMR2IE 1 0 :1:1 
+`uc 1 CCP1IE 1 0 :1:2 
+`uc 1 SSPIE 1 0 :1:3 
+`uc 1 TXIE 1 0 :1:4 
+`uc 1 RCIE 1 0 :1:5 
+`uc 1 ADIE 1 0 :1:6 
+`uc 1 PSPIE 1 0 :1:7 
+]
+[s S302 . 1 `uc 1 . 1 0 :5:0 
+`uc 1 RC1IE 1 0 :1:5 
+]
+[s S305 . 1 `uc 1 . 1 0 :4:0 
+`uc 1 TX1IE 1 0 :1:4 
+]
+[u S308 . 1 `S84 1 . 1 0 `S93 1 . 1 0 `S96 1 . 1 0 ]
+"3392
+[s S313 . 1 `uc 1 . 1 0 :1:0 
+`uc 1 GO_NOT_DONE 1 0 :1:1 
+]
+[s S316 . 1 `uc 1 ADON 1 0 :1:0 
+`uc 1 GO_nDONE 1 0 :1:1 
+`uc 1 CHS 1 0 :4:2 
+]
+[s S320 . 1 `uc 1 . 1 0 :1:0 
+`uc 1 DONE 1 0 :1:1 
+`uc 1 CHS0 1 0 :1:2 
+`uc 1 CHS1 1 0 :1:3 
+`uc 1 CHS2 1 0 :1:4 
+`uc 1 CHS3 1 0 :1:5 
+]
+[s S327 . 1 `uc 1 . 1 0 :1:0 
+`uc 1 NOT_DONE 1 0 :1:1 
+]
+[s S330 . 1 `uc 1 . 1 0 :1:0 
+`uc 1 nDONE 1 0 :1:1 
+]
+[s S333 . 1 `uc 1 . 1 0 :1:0 
+`uc 1 GO_DONE 1 0 :1:1 
+]
+[s S336 . 1 `uc 1 . 1 0 :1:0 
+`uc 1 GO 1 0 :1:1 
+]
+[s S339 . 1 `uc 1 . 1 0 :1:0 
+`uc 1 GODONE 1 0 :1:1 
+]
+[u S342 . 1 `S313 1 . 1 0 `S316 1 . 1 0 `S320 1 . 1 0 `S327 1 . 1 0 `S330 1 . 1 0 `S333 1 . 1 0 `S336 1 . 1 0 `S339 1 . 1 0 ]
+"5378
+[e E3557 _BOOL `uc
+FALSE 0
+TRUE 1
+]
+"14 src/drivers/gpio.c
+[s S403 . 6 `i 1 last 2 0 `i 1 first 2 2 `i 1 size 2 4 ]
+[s S407 . 107 `S403 1 head 6 0 `[101]uc 1 list 101 6 ]
+[e E3585 _BOOL `uc
+FALSE 0
+TRUE 1
+]
+"18 src/modules/timers.h
+[v F4175 `(v  1 t 0 ]
+[s S514 . 8 `uc 1 shot 1 0 `ui 1 timer 2 1 `uc 1 option 1 3 `ui 1 interval 2 4 `*.M(v 1 callback_function 2 6 ]
+[e E4177 . `uc
+TIMER_RUN 1
+TIMER_SINGLESHOT 3
+]
+[e E3585 _BOOL `uc
+FALSE 0
+TRUE 1
+]
+"62 src/modules/timers.c
+[v F4208 `*.M(v  1 t 2 ]
+"89
+[v F4213 `*.M(v  1 t 2 ]
+"109
+[e E4364 . `uc
+PROFILE_DIS 0
+PROFILE1 1
+PROFILE2 2
+PROFILE3 3
+PROFILE4 4
+PROFILE5 5
+PROFILE6 6
+PROFILES_COUNT 7
+]
+[e E4343 . `uc
+DETECTION_MODE_OFF 0
+DETECTION_MODE_CLA 1
+DETECTION_MODE_PEAK 2
+DETECTION_MODE_COUNT 3
+]
+[s S565 . 6 `i 1 sig_max_count 2 0 `i 1 sig_sum_trig 2 2 `i 1 sig_trig 2 4 ]
+[s S569 . 6 `i 1 wtrigger 2 0 `i 1 tolerance 2 2 `uc 1 lval_cnt 1 4 `uc 1 rval_cnt 1 5 ]
+[s S574 . 20 `uc 1 checksum 1 0 `E4364 1 profile_number 1 1 `uc 1 address 1 2 `uc 1 potentiometer 1 3 `uc 1 acc_sensitivity 1 4 `ui 1 power_trig 2 5 `E4343 1 det_mode 1 7 `S565 1 cla_config 6 8 `S569 1 pd_config 6 14 ]
+[e E3585 _BOOL `uc
+FALSE 0
+TRUE 1
+]
+[e E3388 . `uc
+RESULT_SUCCESS 1
+RESULT_FAIL 0
+]
+[e E3382 . `c
+RESULT_NO_ERROR 0
+RESULT_ERROR -1
+RESULT_NULL -2
+RESULT_EMPTY -3
+]
+"20 src/modules/device_config.h
+[e E4195 . `uc
+EEPROM_BY_BLOCK 0
+EEPROM_BY_BYTE 1
+]
+"8 src/modules/scheduler.h
+[v F4498 `(v  1 t 0 ]
+[s S649 . 6 `i 1 last 2 0 `i 1 first 2 2 `i 1 size 2 4 ]
+[s S653 . 107 `S403 1 head 6 0 `[101]uc 1 list 101 6 ]
+[e E3388 . `uc
+RESULT_SUCCESS 1
+RESULT_FAIL 0
+]
+"47 src/modules/syntax.h
+[e E3585 _BOOL `uc
+FALSE 0
+TRUE 1
+]
+"8 src/modules/scheduler.h
+[v _PEVENT `*.M(v  1 t 2 ]
+"25 src/modules/string_utils.h
+[e E3585 _BOOL `uc
+FALSE 0
+TRUE 1
+]
+"411 src/modules/string_utils.c
+[s S798 . 21 `[20]uc 1 name 20 0 `c 1 id 1 20 ]
+[e E4430 . `uc
+Command_set 0
+Command_get 1
+Command_init 2
+Command_selftest 3
+COMMAND_COUNT 4
+]
+[e E4387 . `uc
+PARSER_TYPE_NO_TYPE 0
+PARSER_TYPE_BYTEARRAY 1
+PARSER_TYPE_HEXARRAY 2
+PARSER_TYPE_INTEGER 3
+PARSER_TYPE_REAL 4
+PARSER_TYPE_BOOL 5
+PARSER_TYPE_DOUBLE 6
+]
+[s S815 . 22 `[20]uc 1 name 20 0 `c 1 id 1 20 `E4387 1 type 1 21 ]
+[e E4437 . `uc
+Parameter_signal 0
+Parameter_imp 1
+Parameter_pwr 2
+Parameter_pot 3
+Parameter_ver 4
+Parameter_status 5
+Parameter_error 6
+Parameter_acc 7
+Parameter_adr 8
+Parameter_defaults 9
+Parameter_mod 10
+Parameter_profile 11
+Parameter_pwrtrig 12
+Parameter_acctrig 13
+Parameter_triglev 14
+Parameter_trigsum 15
+Parameter_trigcnt 16
+Parameter_wavtole 17
+Parameter_wavtrig 18
+Parameter_wavlcnt 19
+Parameter_wavrcnt 20
+Parameter_id 21
+Parameter_psw 22
+PARAMETERS_COUNT 23
+]
+"28 src/modules/string_utils.h
+[e E3585 _BOOL `uc
+FALSE 0
+TRUE 1
+]
+"21
+[e E4396 . `uc
+PARSER_PARAMETER 0
+PARSER_START 1
+PARSER_STOP 2
+PARSER_ERROR 3
+]
+"217 src/modules/syntax.c
+[s S909 . 1 `uc 1 alarm 1 0 :1:0 
+`uc 1 warning 1 0 :1:1 
+`uc 1 over_trig 1 0 :1:2 
+]
+[s S913 . 6 `i 1 sig_max_count 2 0 `i 1 sig_sum_trig 2 2 `i 1 sig_trig 2 4 ]
+[s S917 . 21 `i 1 cur_v 2 0 `i 1 zero 2 2 `i 1 over_trig_value 2 4 `i 1 sig_sum 2 6 `i 1 sig_count 2 8 `i 1 last_sig_sum 2 10 `i 1 last_sig_count 2 12 `S909 1 status 1 14 `S565 1 config 6 15 ]
+[e E3585 _BOOL `uc
+FALSE 0
+TRUE 1
+]
+"109 src/modules/classic_detector.c
+[s S1009 . 1 `uc 1 alarm 1 0 :1:0 
+`uc 1 warning 1 0 :1:1 
+`uc 1 firststart 1 0 :1:2 
+]
+[s S1013 . 6 `i 1 wtrigger 2 0 `i 1 tolerance 2 2 `uc 1 lval_cnt 1 4 `uc 1 rval_cnt 1 5 ]
+[s S1018 . 101 `[20]i 1 last_v_buf 40 0 `uc 1 last_v_idx 1 40 `ui 1 last_v 2 41 `[20]i 1 ref_v_buf 40 43 `uc 1 ref_v_idx 1 83 `i 1 ref_v 2 84 `i 1 avlv 2 86 `i 1 cur_v 2 88 `i 1 next_v 2 90 `i 1 wval 2 92 `S1009 1 status 1 94 `S569 1 config 6 95 ]
+[e E3585 _BOOL `uc
+FALSE 0
+TRUE 1
+]
+"105 src/modules/peak_detector.c
+[e E4323 . `uc
+PROFILE_DIS 0
+PROFILE1 1
+PROFILE2 2
+PROFILE3 3
+PROFILE4 4
+PROFILE5 5
+PROFILE6 6
+PROFILES_COUNT 7
+]
+[e E4263 . `uc
+DETECTION_MODE_OFF 0
+DETECTION_MODE_CLA 1
+DETECTION_MODE_PEAK 2
+DETECTION_MODE_COUNT 3
+]
+[s S1103 . 6 `i 1 sig_max_count 2 0 `i 1 sig_sum_trig 2 2 `i 1 sig_trig 2 4 ]
+[s S1107 . 6 `i 1 wtrigger 2 0 `i 1 tolerance 2 2 `uc 1 lval_cnt 1 4 `uc 1 rval_cnt 1 5 ]
+[s S1112 . 20 `uc 1 checksum 1 0 `E4323 1 profile_number 1 1 `uc 1 address 1 2 `uc 1 potentiometer 1 3 `uc 1 acc_sensitivity 1 4 `ui 1 power_trig 2 5 `E4263 1 det_mode 1 7 `S565 1 cla_config 6 8 `S569 1 pd_config 6 14 ]
+[s S1122 . 1 `uc 1 alarm 1 0 :1:0 
+`uc 1 warning 1 0 :1:1 
+`uc 1 firststart 1 0 :1:2 
+]
+[s S1126 . 101 `[20]i 1 last_v_buf 40 0 `uc 1 last_v_idx 1 40 `ui 1 last_v 2 41 `[20]i 1 ref_v_buf 40 43 `uc 1 ref_v_idx 1 83 `i 1 ref_v 2 84 `i 1 avlv 2 86 `i 1 cur_v 2 88 `i 1 next_v 2 90 `i 1 wval 2 92 `S1009 1 status 1 94 `S569 1 config 6 95 ]
+[s S1139 . 1 `uc 1 alarm 1 0 :1:0 
+`uc 1 warning 1 0 :1:1 
+`uc 1 over_trig 1 0 :1:2 
+]
+[s S1143 . 21 `i 1 cur_v 2 0 `i 1 zero 2 2 `i 1 over_trig_value 2 4 `i 1 sig_sum 2 6 `i 1 sig_count 2 8 `i 1 last_sig_sum 2 10 `i 1 last_sig_count 2 12 `S909 1 status 1 14 `S565 1 config 6 15 ]
+[s S1153 . 6 `i 1 last 2 0 `i 1 first 2 2 `i 1 size 2 4 ]
+[s S1157 . 107 `S403 1 head 6 0 `[101]uc 1 list 101 6 ]
+"35 src/modules/classic_detector.h
+[e E3585 _BOOL `uc
+FALSE 0
+TRUE 1
+]
+"141 src/modules/detection.c
+[s S1230 . 21 `[20]uc 1 name 20 0 `c 1 id 1 20 ]
+[e E4430 . `uc
+Command_set 0
+Command_get 1
+Command_init 2
+Command_selftest 3
+COMMAND_COUNT 4
+]
+[e E4387 . `uc
+PARSER_TYPE_NO_TYPE 0
+PARSER_TYPE_BYTEARRAY 1
+PARSER_TYPE_HEXARRAY 2
+PARSER_TYPE_INTEGER 3
+PARSER_TYPE_REAL 4
+PARSER_TYPE_BOOL 5
+PARSER_TYPE_DOUBLE 6
+]
+[s S1247 . 22 `[20]uc 1 name 20 0 `c 1 id 1 20 `E4387 1 type 1 21 ]
+[e E4437 . `uc
+Parameter_signal 0
+Parameter_imp 1
+Parameter_pwr 2
+Parameter_pot 3
+Parameter_ver 4
+Parameter_status 5
+Parameter_error 6
+Parameter_acc 7
+Parameter_adr 8
+Parameter_defaults 9
+Parameter_mod 10
+Parameter_profile 11
+Parameter_pwrtrig 12
+Parameter_acctrig 13
+Parameter_triglev 14
+Parameter_trigsum 15
+Parameter_trigcnt 16
+Parameter_wavtole 17
+Parameter_wavtrig 18
+Parameter_wavlcnt 19
+Parameter_wavrcnt 20
+Parameter_id 21
+Parameter_psw 22
+PARAMETERS_COUNT 23
+]
+[e E4396 . `uc
+PARSER_PARAMETER 0
+PARSER_START 1
+PARSER_STOP 2
+PARSER_ERROR 3
+]
+"15 src/modules/serialport.h
+[e E3585 _BOOL `uc
+FALSE 0
+TRUE 1
+]
+"182 src/modules/on_parameter_found.c
+[e E4325 . `uc
+PROFILE_DIS 0
+PROFILE1 1
+PROFILE2 2
+PROFILE3 3
+PROFILE4 4
+PROFILE5 5
+PROFILE6 6
+PROFILES_COUNT 7
+]
+[e E4304 . `uc
+DETECTION_MODE_OFF 0
+DETECTION_MODE_CLA 1
+DETECTION_MODE_PEAK 2
+DETECTION_MODE_COUNT 3
+]
+[s S1342 . 6 `i 1 sig_max_count 2 0 `i 1 sig_sum_trig 2 2 `i 1 sig_trig 2 4 ]
+[s S1346 . 6 `i 1 wtrigger 2 0 `i 1 tolerance 2 2 `uc 1 lval_cnt 1 4 `uc 1 rval_cnt 1 5 ]
+[s S1351 . 20 `uc 1 checksum 1 0 `E4325 1 profile_number 1 1 `uc 1 address 1 2 `uc 1 potentiometer 1 3 `uc 1 acc_sensitivity 1 4 `ui 1 power_trig 2 5 `E4304 1 det_mode 1 7 `S565 1 cla_config 6 8 `S569 1 pd_config 6 14 ]
+"8 src/modules\scheduler.h
+[v F4426 `(v  1 t 0 ]
+[e E3388 . `uc
+RESULT_SUCCESS 1
+RESULT_FAIL 0
+]
+[v scheduler@PEVENT `*.M(v  1 t 2 ]
+"34 src/startup/startup.c
+[s S1385 . 1 `uc 1 RBIF 1 0 :1:0 
+`uc 1 INT0IF 1 0 :1:1 
+`uc 1 TMR0IF 1 0 :1:2 
+`uc 1 RBIE 1 0 :1:3 
+`uc 1 INT0IE 1 0 :1:4 
+`uc 1 TMR0IE 1 0 :1:5 
+`uc 1 PEIE_GIEL 1 0 :1:6 
+`uc 1 GIE_GIEH 1 0 :1:7 
+]
+[s S1394 . 1 `uc 1 RBIF 1 0 :1:0 
+`uc 1 INT0IF 1 0 :1:1 
+`uc 1 TMR0IF 1 0 :1:2 
+`uc 1 RBIE 1 0 :1:3 
+`uc 1 INT0IE 1 0 :1:4 
+`uc 1 TMR0IE 1 0 :1:5 
+`uc 1 PEIE 1 0 :1:6 
+`uc 1 GIE 1 0 :1:7 
+]
+[s S1403 . 1 `uc 1 RBIF 1 0 :1:0 
+`uc 1 INT0IF 1 0 :1:1 
+`uc 1 TMR0IF 1 0 :1:2 
+`uc 1 RBIE 1 0 :1:3 
+`uc 1 INT0IE 1 0 :1:4 
+`uc 1 TMR0IE 1 0 :1:5 
+`uc 1 GIEL 1 0 :1:6 
+`uc 1 GIEH 1 0 :1:7 
+]
+[s S1412 . 1 `uc 1 . 1 0 :1:0 
+`uc 1 INT0F 1 0 :1:1 
+`uc 1 T0IF 1 0 :1:2 
+`uc 1 . 1 0 :1:3 
+`uc 1 INT0E 1 0 :1:4 
+`uc 1 T0IE 1 0 :1:5 
+`uc 1 PEIE 1 0 :1:6 
+`uc 1 GIE 1 0 :1:7 
+]
+[s S1421 . 1 `uc 1 . 1 0 :6:0 
+`uc 1 GIEL 1 0 :1:6 
+`uc 1 GIEH 1 0 :1:7 
+]
+[u S1425 . 1 `S1385 1 . 1 0 `S1394 1 . 1 0 `S1403 1 . 1 0 `S1412 1 . 1 0 `S1421 1 . 1 0 ]
+"6622 C:\Program Files\Microchip\xc8\v1.12\include\pic18f45k20.h
+[s S1474 . 1 `uc 1 TMR1IF 1 0 :1:0 
+`uc 1 TMR2IF 1 0 :1:1 
+`uc 1 CCP1IF 1 0 :1:2 
+`uc 1 SSPIF 1 0 :1:3 
+`uc 1 TXIF 1 0 :1:4 
+`uc 1 RCIF 1 0 :1:5 
+`uc 1 ADIF 1 0 :1:6 
+`uc 1 PSPIF 1 0 :1:7 
+]
+[s S1483 . 1 `uc 1 . 1 0 :5:0 
+`uc 1 RC1IF 1 0 :1:5 
+]
+[s S1486 . 1 `uc 1 . 1 0 :4:0 
+`uc 1 TX1IF 1 0 :1:4 
+]
+[u S1489 . 1 `S119 1 . 1 0 `S128 1 . 1 0 `S131 1 . 1 0 ]
+"16 src/interrupts.c
+[v F4304 `(v  1 t 0 ]
+"42
+[s S1506 . 1 `uc 1 RBIF 1 0 :1:0 
+`uc 1 INT0IF 1 0 :1:1 
+`uc 1 TMR0IF 1 0 :1:2 
+`uc 1 RBIE 1 0 :1:3 
+`uc 1 INT0IE 1 0 :1:4 
+`uc 1 TMR0IE 1 0 :1:5 
+`uc 1 PEIE_GIEL 1 0 :1:6 
+`uc 1 GIE_GIEH 1 0 :1:7 
+]
+[s S1515 . 1 `uc 1 RBIF 1 0 :1:0 
+`uc 1 INT0IF 1 0 :1:1 
+`uc 1 TMR0IF 1 0 :1:2 
+`uc 1 RBIE 1 0 :1:3 
+`uc 1 INT0IE 1 0 :1:4 
+`uc 1 TMR0IE 1 0 :1:5 
+`uc 1 PEIE 1 0 :1:6 
+`uc 1 GIE 1 0 :1:7 
+]
+[s S1524 . 1 `uc 1 RBIF 1 0 :1:0 
+`uc 1 INT0IF 1 0 :1:1 
+`uc 1 TMR0IF 1 0 :1:2 
+`uc 1 RBIE 1 0 :1:3 
+`uc 1 INT0IE 1 0 :1:4 
+`uc 1 TMR0IE 1 0 :1:5 
+`uc 1 GIEL 1 0 :1:6 
+`uc 1 GIEH 1 0 :1:7 
+]
+[s S1533 . 1 `uc 1 . 1 0 :1:0 
+`uc 1 INT0F 1 0 :1:1 
+`uc 1 T0IF 1 0 :1:2 
+`uc 1 . 1 0 :1:3 
+`uc 1 INT0E 1 0 :1:4 
+`uc 1 T0IE 1 0 :1:5 
+`uc 1 PEIE 1 0 :1:6 
+`uc 1 GIE 1 0 :1:7 
+]
+[s S1542 . 1 `uc 1 . 1 0 :6:0 
+`uc 1 GIEL 1 0 :1:6 
+`uc 1 GIEH 1 0 :1:7 
+]
+[u S1546 . 1 `S1385 1 . 1 0 `S1394 1 . 1 0 `S1403 1 . 1 0 `S1412 1 . 1 0 `S1421 1 . 1 0 ]
+"6622 C:\Program Files\Microchip\xc8\v1.12\include\pic18f45k20.h
+[s S1555 . 1 `uc 1 TMR1IF 1 0 :1:0 
+`uc 1 TMR2IF 1 0 :1:1 
+`uc 1 CCP1IF 1 0 :1:2 
+`uc 1 SSPIF 1 0 :1:3 
+`uc 1 TXIF 1 0 :1:4 
+`uc 1 RCIF 1 0 :1:5 
+`uc 1 ADIF 1 0 :1:6 
+`uc 1 PSPIF 1 0 :1:7 
+]
+[s S1564 . 1 `uc 1 . 1 0 :5:0 
+`uc 1 RC1IF 1 0 :1:5 
+]
+[s S1567 . 1 `uc 1 . 1 0 :4:0 
+`uc 1 TX1IF 1 0 :1:4 
+]
+[u S1570 . 1 `S119 1 . 1 0 `S128 1 . 1 0 `S131 1 . 1 0 ]
+"8 src/modules\scheduler.h
+[v F4329 `(v  1 t 0 ]
+"23 src/drivers\delay.h
+[e E3388 . `uc
+RESULT_SUCCESS 1
+RESULT_FAIL 0
+]
+"16 src/interrupts.c
+[v F4327 `(v  1 t 0 ]
+"8 src/modules\scheduler.h
+[v scheduler@PEVENT `*.M(v  1 t 2 ]
+"533 C:\Program Files\Microchip\xc8\v1.12\sources\doprnt.c
+[s S1618 . 5 `*.MCuc 1 _cp 3 0 `ui 1 _len 2 3 ]
+[u S1621 . 5 `ui 1 _val 2 0 `S1618 1 _str 5 0 ]
+"5 ../common/asfladd.c
+[v ___asfladd `(d  1 e 3 0 ]
+"5 ../common/asfldiv.c
+[v ___asfldiv `(d  1 e 3 0 ]
+"5 ../common/asflmul.c
+[v ___asflmul `(d  1 e 3 0 ]
+"5 ../common/asflsub.c
+[v ___asflsub `(d  1 e 3 0 ]
+"5 ../common/asftadd.c
+[v ___asftadd `(f  1 e 3 0 ]
+"5 ../common/asftdiv.c
+[v ___asftdiv `(f  1 e 3 0 ]
+"5 ../common/asftmul.c
+[v ___asftmul `(f  1 e 3 0 ]
+"5 ../common/asftsub.c
+[v ___asftsub `(f  1 e 3 0 ]
+"5 ../common/aslmul.c
+[v ___aslmul `(ul  1 e 4 0 ]
+"5 C:\Program Files\Microchip\xc8\v1.12\sources\abdiv.c
+[v ___abdiv `(c  1 e 1 0 ]
+"5 C:\Program Files\Microchip\xc8\v1.12\sources\abmod.c
+[v ___abmod `(c  1 e 1 0 ]
+"32 C:\Program Files\Microchip\xc8\v1.12\sources\abtofl.c
+[v ___abtofl `(d  1 e 3 0 ]
+"34 C:\Program Files\Microchip\xc8\v1.12\sources\abtoft.c
+[v ___abtoft `(f  1 e 3 0 ]
+"10 C:\Program Files\Microchip\xc8\v1.12\sources\aldiv.c
+[v ___aldiv `(l  1 e 4 0 ]
+"10 C:\Program Files\Microchip\xc8\v1.12\sources\almod.c
+[v ___almod `(l  1 e 4 0 ]
+"37 C:\Program Files\Microchip\xc8\v1.12\sources\altofl.c
+[v ___altofl `(d  1 e 3 0 ]
+"43 C:\Program Files\Microchip\xc8\v1.12\sources\altoft.c
+[v ___altoft `(f  1 e 3 0 ]
+"10 C:\Program Files\Microchip\xc8\v1.12\sources\atdiv.c
+[v ___atdiv `(m  1 e 3 0 ]
+"10 C:\Program Files\Microchip\xc8\v1.12\sources\atmod.c
+[v ___atmod `(m  1 e 3 0 ]
+"38 C:\Program Files\Microchip\xc8\v1.12\sources\attofl.c
+[v ___attofl `(d  1 e 3 0 ]
+"38 C:\Program Files\Microchip\xc8\v1.12\sources\attoft.c
+[v ___attoft `(f  1 e 3 0 ]
+"10 C:\Program Files\Microchip\xc8\v1.12\sources\awdiv.c
+[v ___awdiv `(i  1 e 2 0 ]
+"10 C:\Program Files\Microchip\xc8\v1.12\sources\awmod.c
+[v ___awmod `(i  1 e 2 0 ]
+"32 C:\Program Files\Microchip\xc8\v1.12\sources\awtofl.c
+[v ___awtofl `(d  1 e 3 0 ]
+"33 C:\Program Files\Microchip\xc8\v1.12\sources\awtoft.c
+[v ___awtoft `(f  1 e 3 0 ]
+"3 C:\Program Files\Microchip\xc8\v1.12\sources\bmul.c
+[v ___bmul `(uc  1 e 1 0 ]
+"465 C:\Program Files\Microchip\xc8\v1.12\sources\doprnt.c
+[v _printf `(i  1 e 2 0 ]
+"64 C:\Program Files\Microchip\xc8\v1.12\sources\double.c
+[v ___flpack `(d  1 e 3 0 ]
+"89 C:\Program Files\Microchip\xc8\v1.12\sources\fladd.c
+[v ___fladd `(d  1 e 3 0 ]
+"50 C:\Program Files\Microchip\xc8\v1.12\sources\fldiv.c
+[v ___fldiv `(d  1 e 3 0 ]
+"5 C:\Program Files\Microchip\xc8\v1.12\sources\flge.c
+[v ___flge `(b  1 e 0 0 ]
+"51 C:\Program Files\Microchip\xc8\v1.12\sources\flmul.c
+[v ___flmul `(d  1 e 3 0 ]
+"16 C:\Program Files\Microchip\xc8\v1.12\sources\flneg.c
+[v ___flneg `(d  1 e 3 0 ]
+"63 C:\Program Files\Microchip\xc8\v1.12\sources\float.c
+[v ___ftpack `(f  1 e 3 0 ]
+"22 C:\Program Files\Microchip\xc8\v1.12\sources\flsub.c
+[v ___flsub `(d  1 e 3 0 ]
+"44 C:\Program Files\Microchip\xc8\v1.12\sources\fltol.c
+[v ___fltol `(l  1 e 4 0 ]
+"87 C:\Program Files\Microchip\xc8\v1.12\sources\ftadd.c
+[v ___ftadd `(f  1 e 3 0 ]
+"50 C:\Program Files\Microchip\xc8\v1.12\sources\ftdiv.c
+[v ___ftdiv `(f  1 e 3 0 ]
+"5 C:\Program Files\Microchip\xc8\v1.12\sources\ftge.c
+[v ___ftge `(b  1 e 0 0 ]
+"52 C:\Program Files\Microchip\xc8\v1.12\sources\ftmul.c
+[v ___ftmul `(f  1 e 3 0 ]
+"16 C:\Program Files\Microchip\xc8\v1.12\sources\ftneg.c
+[v ___ftneg `(f  1 e 3 0 ]
+"22 C:\Program Files\Microchip\xc8\v1.12\sources\ftsub.c
+[v ___ftsub `(f  1 e 3 0 ]
+"45 C:\Program Files\Microchip\xc8\v1.12\sources\fttol.c
+[v ___fttol `(l  1 e 4 0 ]
+"5 C:\Program Files\Microchip\xc8\v1.12\sources\lbdiv.c
+[v ___lbdiv `(uc  1 e 1 0 ]
+"5 C:\Program Files\Microchip\xc8\v1.12\sources\lbmod.c
+[v ___lbmod `(uc  1 e 1 0 ]
+"28 C:\Program Files\Microchip\xc8\v1.12\sources\lbtofl.c
+[v ___lbtofl `(d  1 e 3 0 ]
+"28 C:\Program Files\Microchip\xc8\v1.12\sources\lbtoft.c
+[v ___lbtoft `(f  1 e 3 0 ]
+"10 C:\Program Files\Microchip\xc8\v1.12\sources\lldiv.c
+[v ___lldiv `(ul  1 e 4 0 ]
+"10 C:\Program Files\Microchip\xc8\v1.12\sources\llmod.c
+[v ___llmod `(ul  1 e 4 0 ]
+"31 C:\Program Files\Microchip\xc8\v1.12\sources\lltofl.c
+[v ___lltofl `(d  1 e 3 0 ]
+"36 C:\Program Files\Microchip\xc8\v1.12\sources\lltoft.c
+[v ___lltoft `(f  1 e 3 0 ]
+"3 C:\Program Files\Microchip\xc8\v1.12\sources\lmul.c
+[v ___lmul `(ul  1 e 4 0 ]
+"10 C:\Program Files\Microchip\xc8\v1.12\sources\ltdiv.c
+[v ___ltdiv `(um  1 e 3 0 ]
+"10 C:\Program Files\Microchip\xc8\v1.12\sources\ltmod.c
+[v ___ltmod `(um  1 e 3 0 ]
+"31 C:\Program Files\Microchip\xc8\v1.12\sources\lttofl.c
+[v ___lttofl `(d  1 e 3 0 ]
+"31 C:\Program Files\Microchip\xc8\v1.12\sources\lttoft.c
+[v ___lttoft `(f  1 e 3 0 ]
+"10 C:\Program Files\Microchip\xc8\v1.12\sources\lwdiv.c
+[v ___lwdiv `(ui  1 e 2 0 ]
+"10 C:\Program Files\Microchip\xc8\v1.12\sources\lwmod.c
+[v ___lwmod `(ui  1 e 2 0 ]
+"29 C:\Program Files\Microchip\xc8\v1.12\sources\lwtofl.c
+[v ___lwtofl `(d  1 e 3 0 ]
+"29 C:\Program Files\Microchip\xc8\v1.12\sources\lwtoft.c
+[v ___lwtoft `(f  1 e 3 0 ]
+"3 C:\Program Files\Microchip\xc8\v1.12\sources\tmul.c
+[v ___tmul `(um  1 e 3 0 ]
+"3 C:\Program Files\Microchip\xc8\v1.12\sources\wmul.c
+[v ___wmul `(ui  1 e 2 0 ]
+"5 src/drivers/adc.c
+[v _adc_init `(v  1 e 0 0 ]
+"16
+[v _adc_enable `(v  1 e 0 0 ]
+"22
+[v _adc_read `(us  1 e 2 0 ]
+"28 src/drivers/delay.c
+[v _delay_ms `(v  1 e 0 0 ]
+"43
+[v _delay_timeout_set `(v  1 e 0 0 ]
+"57
+[v _delay_timeout `T(uc  1 e 1 0 ]
+"70
+[v _delay_interrupt_service `(v  1 e 0 0 ]
+"15 src/drivers/eeprom.c
+[v _eeprom_lock `(v  1 e 0 0 ]
+"31
+[v _eeprom_unlock `(v  1 e 0 0 ]
+"48
+[v _eeprom_write_byte `(E3382  1 e 1 0 ]
+"70
+[v _eeprom_write_data `(E3382  1 e 1 0 ]
+"130
+[v _eeprom_read_byte `(E3382  1 e 1 0 ]
+"153
+[v _eeprom_read_data `(E3382  1 e 1 0 ]
+"4 src/drivers/gpio.c
+[v _gpio_init `(v  1 e 0 0 ]
+"34 src/drivers/sw_i2c.c
+[v _this_delay_i2c `(v  1 s 0 this_delay_i2c ]
+"66
+[v _sw_i2c_switch `(v  1 e 0 0 ]
+"81
+[v _sw_i2c_write_nak `(v  1 e 0 0 ]
+"99
+[v _sw_i2c_write_ack `(v  1 e 0 0 ]
+"116
+[v _sw_i2c_start `(v  1 e 0 0 ]
+"134
+[v _sw_i2c_restart `(v  1 e 0 0 ]
+"155
+[v _sw_i2c_stop `(v  1 e 0 0 ]
+"177
+[v _sw_i2c_read_ack `(E3382  1 e 1 0 ]
+"199
+[v _this_clock_test1 `(E3382  1 e 1 0 ]
+"217
+[v _sw_i2c_read_byte `(E3382  1 e 1 0 ]
+"254
+[v _sw_i2c_write_byte `(E3382  1 e 1 0 ]
+"7 src/drivers/sysclk.c
+[v _sysclk_init `(v  1 e 0 0 ]
+"12
+[v _sysclk_setup_intosc `(v  1 e 0 0 ]
+"18
+[v _sysclk_intosc `(E1  1 e 1 0 ]
+"5 src/drivers/uart.c
+[v _uart_init `(v  1 e 0 0 ]
+"17
+[v _uart_set_baudrate `(v  1 e 0 0 ]
+"24
+[v _uart_enable `(v  1 e 0 0 ]
+"31
+[v _uart_puts `(v  1 e 0 0 ]
+"40
+[v _uart_putc `(v  1 e 0 0 ]
+"46
+[v _uart_byte_sent `(uc  1 e 1 0 ]
+"52
+[v _uart_byte_available `(uc  1 e 1 0 ]
+"56
+[v _uart_getc `(E3388  1 e 1 0 ]
+"73
+[v _uart_reset `(v  1 e 0 0 ]
+"85
+[v _uart_error `(uc  1 e 1 0 ]
+"16 src/interrupts.c
+[v _isr_high `II(v  1 s 0 isr_high ]
+[v interrupts@isr_high `II(v  1 s 0 isr_high ]
+"14 src/main.c
+[v _main `(i  1 e 2 0 ]
+"15 src/modules/classic_detector.c
+[v _cla_init `(v  1 e 0 0 ]
+"33
+[v _cla_add_value `(uc  1 e 1 0 ]
+"84
+[v _cla_setup `(v  1 e 0 0 ]
+"106
+[v _cla_result `(v  1 e 0 0 ]
+"28 src/modules/detection.c
+[v _detection_is_warning `(uc  1 e 1 0 ]
+"40
+[v _detection_is_alarm `(uc  1 e 1 0 ]
+"52
+[v _detection_init `(v  1 e 0 0 ]
+"65
+[v _detection_config_apply `(uc  1 e 1 0 ]
+"81
+[v _detection_task `(v  1 e 0 0 ]
+"132
+[v _detection_get_zero `(m  1 e 3 0 ]
+"137
+[v _detection_obtain_analog_service `(v  1 e 0 0 ]
+"52 src/modules/device_config.c
+[v _device_config_save `(E3388  1 e 1 0 ]
+"80
+[v _device_config_load `(E3388  1 e 1 0 ]
+"104
+[v _device_config_set_default `(v  1 e 0 0 ]
+"118
+[v _device_config_is_locked `(uc  1 e 1 0 ]
+"136
+[v _device_config_lock `(v  1 e 0 0 ]
+"150
+[v _device_config_unlock `(v  1 e 0 0 ]
+"170
+[v _device_config_apply `(E3388  1 e 1 0 ]
+"185
+[v _device_config_checksum `(uc  1 e 1 0 ]
+"14 src/modules/on_parameter_found.c
+[v _on_parameter_found `(v  1 e 0 0 ]
+"44
+[v _set_parameter `(uc  1 e 1 0 ]
+"117
+[v _get_parameter `(uc  1 e 1 0 ]
+"13 src/modules/peak_detector.c
+[v _pd_init `(v  1 e 0 0 ]
+"33
+[v _pd_add_value `(uc  1 e 1 0 ]
+"101
+[v _pd_result `(v  1 e 0 0 ]
+"16 src/modules/rd_buffer.c
+[v _rd_buffer_init `(uc  1 e 1 0 ]
+"39
+[v _rd_buffer_readline `(uc  1 e 1 0 ]
+"63
+[v _rd_buffer_cnt `(i  1 e 2 0 ]
+"80
+[v _rd_buffer_reset `(v  1 e 0 0 ]
+"93
+[v _rd_buffer_is_empty `(uc  1 e 1 0 ]
+"107
+[v _rd_buffer_is_full `(uc  1 e 1 0 ]
+"122
+[v _rd_buffer_get `(uc  1 e 1 0 ]
+"148
+[v _rd_buffer_put `(uc  1 e 1 0 ]
+[v i2_rd_buffer_put `(uc  1 e 1 0 ]
+[v i2_rd_buffer_put `(uc  1 e 1 0 ]
+"185
+[v _rd_buffer_getn `(uc  1 e 1 0 ]
+"208
+[v _rd_buffer_first `(uc  1 e 1 0 ]
+"228
+[v _rd_buffer_last `(uc  1 e 1 0 ]
+"16 src/modules/serialport.c
+[v _serialport_startup `(E3388  1 e 1 0 ]
+"24
+[v _serialport_service `(v  1 e 0 0 ]
+"35
+[v _serialport_task `(v  1 e 0 0 ]
+"48
+[v _serialport_write `(v  1 e 0 0 ]
+"56
+[v _putch `(v  1 e 0 0 ]
+"12 src/modules/string_utils.c
+[v _string_utils_strlen `(i  1 e 2 0 ]
+"39
+[v _string_utils_remove_symbol `(i  1 e 2 0 ]
+"67
+[v _string_utils_copy `(i  1 e 2 0 ]
+"94
+[v _string_utils_split `(i  1 e 2 0 ]
+"140
+[v _string_utils_strchr `(i  1 e 2 0 ]
+"167
+[v _string_utils_is_upper_case `(uc  1 e 1 0 ]
+"180
+[v _string_utils_is_lower_case `(uc  1 e 1 0 ]
+"194
+[v _string_utils_is_symbol `(uc  1 e 1 0 ]
+"207
+[v _string_utils_is_letter `(uc  1 e 1 0 ]
+"220
+[v _string_utils_to_lower_case `(v  1 e 0 0 ]
+"243
+[v _string_utils_to_upper_case `(v  1 e 0 0 ]
+"267
+[v _string_utils_strcmp `(uc  1 e 1 0 ]
+"292
+[v _string_utils_strncmp `(uc  1 e 1 0 ]
+"329
+[v _string_utils_is_digit `(uc  1 e 1 0 ]
+"334
+[v _symb_from_hex_to_bin `(uc  1 e 1 0 ]
+"367
+[v _string_utils_toHex `(uc  1 e 1 0 ]
+"400
+[v _string_utils_from_hex `(i  1 e 2 0 ]
+"40 src/modules/syntax.c
+[v _this_variable_load_from_text `(v  1 e 0 0 ]
+"93
+[v _this_parse_item `(uc  1 e 1 0 ]
+"137
+[v _syntax_string `(c  1 e 1 0 ]
+"194
+[v _syntax_get_text `(*.MCuc  1 e 1 0 ]
+"200
+[v _syntax_as_integer `(i  1 e 2 0 ]
+"205
+[v _syntax_as_double `(d  1 e 3 0 ]
+"210
+[v _syntax_as_BOOL `(uc  1 e 1 0 ]
+"215
+[v _syntax_as_bytearray `(*.Muc  1 e 1 0 ]
+"30 src/modules/timers.c
+[v _timers_init `(v  1 e 0 0 ]
+"36
+[v _timers_start `(v  1 e 0 0 ]
+"52
+[v _timers_interrupt_service `(v  1 e 0 0 ]
+"86
+[v _timers_setup `(uc  1 e 1 0 ]
+"107
+[v _timers_change_interval `(v  1 e 0 0 ]
+"16 src/startup/startup.c
+[v _startup `(E3388  1 e 1 0 ]
+"423 C:\Program Files\Microchip\xc8\v1.12\include\pic18f45k20.h
+[v _ANSEL `VEuc  1 e 1 @3966 ]
+"484
+[v _ANSELH `VEuc  1 e 1 @3967 ]
+"1897
+[v _LATC `VEuc  1 e 1 @3979 ]
+"2029
+[v _LATD `VEuc  1 e 1 @3980 ]
+"2263
+[v _TRISA `VEuc  1 e 1 @3986 ]
+"2484
+[v _TRISB `VEuc  1 e 1 @3987 ]
+"2705
+[v _TRISC `VEuc  1 e 1 @3988 ]
+"2926
+[v _TRISD `VEuc  1 e 1 @3989 ]
+[s S84 . 1 `uc 1 TMR1IE 1 0 :1:0 
+`uc 1 TMR2IE 1 0 :1:1 
+`uc 1 CCP1IE 1 0 :1:2 
+`uc 1 SSPIE 1 0 :1:3 
+`uc 1 TXIE 1 0 :1:4 
+`uc 1 RCIE 1 0 :1:5 
+`uc 1 ADIE 1 0 :1:6 
+`uc 1 PSPIE 1 0 :1:7 
+]
+"3392
+[s S93 . 1 `uc 1 . 1 0 :5:0 
+`uc 1 RC1IE 1 0 :1:5 
+]
+[s S96 . 1 `uc 1 . 1 0 :4:0 
+`uc 1 TX1IE 1 0 :1:4 
+]
+[u S99 . 1 `S84 1 . 1 0 `S93 1 . 1 0 `S96 1 . 1 0 ]
+[v _PIE1bits `VES99  1 e 1 @3997 ]
+"3471
+[v _PIR1bits `VES99  1 e 1 @3998 ]
+"3979
+[v _RCSTA `VEuc  1 e 1 @4011 ]
+[s S181 . 1 `uc 1 RX9D 1 0 :1:0 
+`uc 1 OERR 1 0 :1:1 
+`uc 1 FERR 1 0 :1:2 
+`uc 1 ADDEN 1 0 :1:3 
+`uc 1 CREN 1 0 :1:4 
+`uc 1 SREN 1 0 :1:5 
+`uc 1 RX9 1 0 :1:6 
+`uc 1 SPEN 1 0 :1:7 
+]
+"4009
+[s S190 . 1 `uc 1 . 1 0 :3:0 
+`uc 1 ADEN 1 0 :1:3 
+]
+[s S193 . 1 `uc 1 . 1 0 :5:0 
+`uc 1 SRENA 1 0 :1:5 
+]
+[u S196 . 1 `S181 1 . 1 0 `S190 1 . 1 0 `S193 1 . 1 0 ]
+[v _RCSTAbits `VES196  1 e 1 @4011 ]
+"4136
+[v _TXSTA `VEuc  1 e 1 @4012 ]
+"4399
+[v _TXREG `VEuc  1 e 1 @4013 ]
+"4410
+[v _RCREG `VEuc  1 e 1 @4014 ]
+"4421
+[v _SPBRG `VEuc  1 e 1 @4015 ]
+"4823
+[v _BAUDCON `VEuc  1 e 1 @4024 ]
+"4828
+[v _BAUDCTL `VEuc  1 e 1 @4024 ]
+"5211
+[v _ADCON2 `VEuc  1 e 1 @4032 ]
+"5281
+[v _ADCON1 `VEuc  1 e 1 @4033 ]
+"5334
+[v _ADCON0 `VEuc  1 e 1 @4034 ]
+[s S313 . 1 `uc 1 . 1 0 :1:0 
+`uc 1 GO_NOT_DONE 1 0 :1:1 
+]
+"5378
+[s S316 . 1 `uc 1 ADON 1 0 :1:0 
+`uc 1 GO_nDONE 1 0 :1:1 
+`uc 1 CHS 1 0 :4:2 
+]
+[s S320 . 1 `uc 1 . 1 0 :1:0 
+`uc 1 DONE 1 0 :1:1 
+`uc 1 CHS0 1 0 :1:2 
+`uc 1 CHS1 1 0 :1:3 
+`uc 1 CHS2 1 0 :1:4 
+`uc 1 CHS3 1 0 :1:5 
+]
+[s S327 . 1 `uc 1 . 1 0 :1:0 
+`uc 1 NOT_DONE 1 0 :1:1 
+]
+[s S330 . 1 `uc 1 . 1 0 :1:0 
+`uc 1 nDONE 1 0 :1:1 
+]
+[s S333 . 1 `uc 1 . 1 0 :1:0 
+`uc 1 GO_DONE 1 0 :1:1 
+]
+[s S336 . 1 `uc 1 . 1 0 :1:0 
+`uc 1 GO 1 0 :1:1 
+]
+[s S339 . 1 `uc 1 . 1 0 :1:0 
+`uc 1 GODONE 1 0 :1:1 
+]
+[u S342 . 1 `S313 1 . 1 0 `S316 1 . 1 0 `S320 1 . 1 0 `S327 1 . 1 0 `S330 1 . 1 0 `S333 1 . 1 0 `S336 1 . 1 0 `S339 1 . 1 0 ]
+[v _ADCON0bits `VES342  1 e 1 @4034 ]
+"5452
+[v _ADRES `VEus  1 e 2 @4035 ]
+"6477
+[v _OSCCON `VEuc  1 e 1 @4051 ]
+"6622
+[v _TMR0 `VEus  1 e 2 @4054 ]
+"6640
+[v _STATUS `VEuc  1 e 1 @4056 ]
+[s S1385 . 1 `uc 1 RBIF 1 0 :1:0 
+`uc 1 INT0IF 1 0 :1:1 
+`uc 1 TMR0IF 1 0 :1:2 
+`uc 1 RBIE 1 0 :1:3 
+`uc 1 INT0IE 1 0 :1:4 
+`uc 1 TMR0IE 1 0 :1:5 
+`uc 1 PEIE_GIEL 1 0 :1:6 
+`uc 1 GIE_GIEH 1 0 :1:7 
+]
+"7091
+[s S1394 . 1 `uc 1 RBIF 1 0 :1:0 
+`uc 1 INT0IF 1 0 :1:1 
+`uc 1 TMR0IF 1 0 :1:2 
+`uc 1 RBIE 1 0 :1:3 
+`uc 1 INT0IE 1 0 :1:4 
+`uc 1 TMR0IE 1 0 :1:5 
+`uc 1 PEIE 1 0 :1:6 
+`uc 1 GIE 1 0 :1:7 
+]
+[s S1403 . 1 `uc 1 RBIF 1 0 :1:0 
+`uc 1 INT0IF 1 0 :1:1 
+`uc 1 TMR0IF 1 0 :1:2 
+`uc 1 RBIE 1 0 :1:3 
+`uc 1 INT0IE 1 0 :1:4 
+`uc 1 TMR0IE 1 0 :1:5 
+`uc 1 GIEL 1 0 :1:6 
+`uc 1 GIEH 1 0 :1:7 
+]
+[s S1412 . 1 `uc 1 . 1 0 :1:0 
+`uc 1 INT0F 1 0 :1:1 
+`uc 1 T0IF 1 0 :1:2 
+`uc 1 . 1 0 :1:3 
+`uc 1 INT0E 1 0 :1:4 
+`uc 1 T0IE 1 0 :1:5 
+`uc 1 PEIE 1 0 :1:6 
+`uc 1 GIE 1 0 :1:7 
+]
+[s S1421 . 1 `uc 1 . 1 0 :6:0 
+`uc 1 GIEL 1 0 :1:6 
+`uc 1 GIEH 1 0 :1:7 
+]
+[u S1425 . 1 `S1385 1 . 1 0 `S1394 1 . 1 0 `S1403 1 . 1 0 `S1412 1 . 1 0 `S1421 1 . 1 0 ]
+[v _INTCONbits `VES1425  1 e 1 @4082 ]
+"7391
+[v _ADIF `VEb  1 e 0 @31990 ]
+"7605
+[v _CREN `VEb  1 e 0 @32092 ]
+"7713
+[v _GODONE `VEb  1 e 0 @32273 ]
+"8219
+[v _RC1IF `VEb  1 e 0 @31989 ]
+"8241
+[v _RCIF `VEb  1 e 0 @31989 ]
+"8621
+[v _TXIF `VEb  1 e 0 @31988 ]
+"354 C:\Program Files\Microchip\xc8\v1.12\sources\doprnt.c
+[v _dpowers `C[5]ui  1 s 10 dpowers ]
+"14 src/drivers/delay.c
+[v _this_delay_timer_ms `VEui  1 e 2 0 ]
+"10 src/drivers/sw_i2c.c
+[v _i2c_buff `VEuc  1 e 1 0 ]
+"11
+[v _bitcount `VEuc  1 e 1 0 ]
+"68 src/modules/cmd_data.h
+[v _syx_param_list `C[24]S815  1 s 528 syx_param_list ]
+"12 src/modules/detection.c
+[v _this_warning `VEuc  1 e 1 0 ]
+"13
+[v _this_alarm `VEuc  1 e 1 0 ]
+[s S1009 . 1 `uc 1 alarm 1 0 :1:0 
+`uc 1 warning 1 0 :1:1 
+`uc 1 firststart 1 0 :1:2 
+]
+"15
+[s S569 . 6 `i 1 wtrigger 2 0 `i 1 tolerance 2 2 `uc 1 lval_cnt 1 4 `uc 1 rval_cnt 1 5 ]
+[s S1018 . 101 `[20]i 1 last_v_buf 40 0 `uc 1 last_v_idx 1 40 `ui 1 last_v 2 41 `[20]i 1 ref_v_buf 40 43 `uc 1 ref_v_idx 1 83 `i 1 ref_v 2 84 `i 1 avlv 2 86 `i 1 cur_v 2 88 `i 1 next_v 2 90 `i 1 wval 2 92 `S1009 1 status 1 94 `S569 1 config 6 95 ]
+[v _pd_detector `VES1018  1 e 101 0 ]
+[s S909 . 1 `uc 1 alarm 1 0 :1:0 
+`uc 1 warning 1 0 :1:1 
+`uc 1 over_trig 1 0 :1:2 
+]
+"16
+[s S565 . 6 `i 1 sig_max_count 2 0 `i 1 sig_sum_trig 2 2 `i 1 sig_trig 2 4 ]
+[s S917 . 21 `i 1 cur_v 2 0 `i 1 zero 2 2 `i 1 over_trig_value 2 4 `i 1 sig_sum 2 6 `i 1 sig_count 2 8 `i 1 last_sig_sum 2 10 `i 1 last_sig_count 2 12 `S909 1 status 1 14 `S565 1 config 6 15 ]
+[v _cla_detector `VES917  1 e 21 0 ]
+[s S403 . 6 `i 1 last 2 0 `i 1 first 2 2 `i 1 size 2 4 ]
+"17
+[s S407 . 107 `S403 1 head 6 0 `[101]uc 1 list 101 6 ]
+[v _meas_buffer `S407  1 e 107 0 ]
+"3 src/modules/rd_buffer.c
+[v _this_contains_crlf `uc  1 e 1 0 ]
+"11 src/modules/serialport.c
+[v _serialport_buffer `[100]uc  1 s 100 serialport_buffer ]
+"12
+[v _g_rx_buffer `S407  1 s 107 g_rx_buffer ]
+"13
+[v _g_tx_buffer `S407  1 s 107 g_tx_buffer ]
+"11 src/modules/syntax.c
+[v _this_case_sensitive `uc  1 e 1 0 ]
+"13
+[v _command_id `c  1 e 1 0 ]
+"15
+[v _parameter_id `c  1 e 1 0 ]
+"16
+[v _parameter_type `E4387  1 e 1 0 ]
+"18
+[v _parameter_value `[127]uc  1 e 127 0 ]
+"20
+[v _parameter_text `[127]uc  1 e 127 0 ]
+"22
+[v _this_buf `[127]uc  1 e 127 0 ]
+"26 src/modules/timers.c
+[v _timers_list `VE[10]S514  1 s 80 timers_list ]
+"15 src/modules\scheduler.h
+[v _pool `VE[8]uc  1 e 8 0 ]
+"16
+[v _events `VE[8]*.M(v  1 e 16 0 ]
+"17
+[v _event_miss `VE[8]uc  1 e 8 0 ]
+[s S574 . 20 `uc 1 checksum 1 0 `E4364 1 profile_number 1 1 `uc 1 address 1 2 `uc 1 potentiometer 1 3 `uc 1 acc_sensitivity 1 4 `ui 1 power_trig 2 5 `E4343 1 det_mode 1 7 `S565 1 cla_config 6 8 `S569 1 pd_config 6 14 ]
+"42 src\memory_register_map.h
+[v _g_CONFIG `VES574  1 e 20 0 ]
+"43
+[v _g_STATUS `VEui  1 e 2 0 ]
+"44
+[v _g_analog0 `VEui  1 e 2 0 ]
+"45
+[v _g_analog1 `VEui  1 e 2 0 ]
+"46
+[v _g_analog2 `VEui  1 e 2 0 ]
+"14 src/main.c
+[v _main `(i  1 e 2 0 ]
+{
+"22
+[v main@i `uc  1 a 1 72 ]
+[v main@event_priority `c  1 a 1 71 ]
+[v main@event_old `c  1 a 1 70 ]
+"25
+} 0
+"28 src/drivers/delay.c
+[v _delay_ms `(v  1 e 0 0 ]
+{
+[v delay_ms@delay `ui  1 p 2 12 ]
+"31
+} 0
+"81 src/modules/detection.c
+[v _detection_task `(v  1 e 0 0 ]
+{
+"84
+[v detection_task@zero `m  1 a 3 43 ]
+"82
+[v detection_task@alarm_cla `uc  1 s 1 alarm_cla ]
+"83
+[v detection_task@alarm_wav `uc  1 s 1 alarm_wav ]
+"121
+} 0
+"35 src/modules/serialport.c
+[v _serialport_task `(v  1 e 0 0 ]
+{
+"36
+[v serialport_task@size `i  1 a 2 67 ]
+"45
+} 0
+"39 src/modules/rd_buffer.c
+[v _rd_buffer_readline `(uc  1 e 1 0 ]
+{
+"42
+[v rd_buffer_readline@ch `uc  1 a 1 28 ]
+"39
+[v rd_buffer_readline@pbuffer `*.bS407  1 p 2 23 ]
+[v rd_buffer_readline@pdata `*.buc  1 p 2 25 ]
+[v rd_buffer_readline@psize `*.0i  1 p 1 27 ]
+"53
+} 0
+"63
+[v _rd_buffer_cnt `(i  1 e 2 0 ]
+{
+"64
+[v rd_buffer_cnt@sz `i  1 a 2 18 ]
+"63
+[v rd_buffer_cnt@pbuffer `*.bS407  1 p 2 12 ]
+"70
+} 0
+"185
+[v _rd_buffer_getn `(uc  1 e 1 0 ]
+{
+"186
+[v rd_buffer_getn@i `i  1 a 2 30 ]
+"185
+[v rd_buffer_getn@pbuffer `*.bS407  1 p 2 23 ]
+[v rd_buffer_getn@prec `*.buc  1 p 2 25 ]
+[v rd_buffer_getn@rec_count `i  1 p 2 27 ]
+"196
+} 0
+"122
+[v _rd_buffer_get `(uc  1 e 1 0 ]
+{
+"124
+[v rd_buffer_get@first `i  1 a 2 21 ]
+"125
+[v rd_buffer_get@last `i  1 a 2 18 ]
+"123
+[v rd_buffer_get@result `uc  1 a 1 20 ]
+"122
+[v rd_buffer_get@pbuffer `*.bS407  1 p 2 12 ]
+[v rd_buffer_get@prec `*.buc  1 p 2 14 ]
+"136
+} 0
+"137 src/modules/syntax.c
+[v _syntax_string `(c  1 e 1 0 ]
+{
+"149
+[v syntax_string@pchain `*.buc  1 a 2 64 ]
+"148
+[v syntax_string@pos `c  1 a 1 63 ]
+"140
+[v syntax_string@str_len `i  1 a 2 60 ]
+"138
+[v syntax_string@chains `c  1 a 1 66 ]
+"139
+[v syntax_string@result `c  1 a 1 62 ]
+"137
+[v syntax_string@pstr `*.bCuc  1 p 2 56 ]
+[v syntax_string@case_sensitive `uc  1 p 1 58 ]
+"182
+} 0
+"94 src/modules/string_utils.c
+[v _string_utils_split `(i  1 e 2 0 ]
+{
+"100
+[v string_utils_split@symb `uc  1 a 1 24 ]
+"96
+[v string_utils_split@chains `i  1 a 2 21 ]
+"95
+[v string_utils_split@i `i  1 a 2 19 ]
+"97
+[v string_utils_split@prev `uc  1 a 1 23 ]
+"94
+[v string_utils_split@pbuf `*.buc  1 p 2 12 ]
+[v string_utils_split@pstr `*.bCuc  1 p 2 14 ]
+[v string_utils_split@len `i  1 p 2 16 ]
+[v string_utils_split@delimeter `uc  1 p 1 18 ]
+"127
+} 0
+"93 src/modules/syntax.c
+[v _this_parse_item `(uc  1 e 1 0 ]
+{
+"114
+[v this_parse_item@is_equal `uc  1 a 1 43 ]
+"97
+[v this_parse_item@pval `*.mCuc  1 a 3 49 ]
+"98
+[v this_parse_item@var_len `i  1 a 2 53 ]
+"100
+[v this_parse_item@str_len `i  1 a 2 47 ]
+"96
+[v this_parse_item@pvar `*.bCuc  1 a 2 45 ]
+"99
+[v this_parse_item@i `c  1 a 1 52 ]
+"94
+[v this_parse_item@result `uc  1 a 1 44 ]
+"93
+[v this_parse_item@pstr `*.bCuc  1 p 2 38 ]
+[v this_parse_item@pitem `*.0c  1 p 1 40 ]
+"126
+} 0
+"292 src/modules/string_utils.c
+[v _string_utils_strncmp `(uc  1 e 1 0 ]
+{
+"300
+[v string_utils_strncmp@symb2 `uc  1 a 1 27 ]
+"299
+[v string_utils_strncmp@symb1 `uc  1 a 1 26 ]
+"296
+[v string_utils_strncmp@pos `i  1 a 2 24 ]
+"293
+[v string_utils_strncmp@result `uc  1 a 1 23 ]
+"292
+[v string_utils_strncmp@pstr1 `*.dCuc  1 p 2 14 ]
+[v string_utils_strncmp@pstr2 `*.bCuc  1 p 2 16 ]
+[v string_utils_strncmp@len `i  1 p 2 18 ]
+[v string_utils_strncmp@case_sensitive `uc  1 p 1 20 ]
+"326
+} 0
+"167
+[v _string_utils_is_upper_case `(uc  1 e 1 0 ]
+{
+[v string_utils_is_upper_case@symb `uc  1 a 1 wreg ]
+[v string_utils_is_upper_case@symb `uc  1 a 1 wreg ]
+"169
+} 0
+"40 src/modules/syntax.c
+[v _this_variable_load_from_text `(v  1 e 0 0 ]
+{
+"43
+[v this_variable_load_from_text@len `i  1 a 2 36 ]
+"40
+[v this_variable_load_from_text@pval `*.mCuc  1 p 3 33 ]
+"82
+} 0
+"67 src/modules/string_utils.c
+[v _string_utils_copy `(i  1 e 2 0 ]
+{
+"68
+[v string_utils_copy@result `i  1 a 2 19 ]
+"67
+[v string_utils_copy@pdst `*.buc  1 p 2 12 ]
+[v string_utils_copy@psrc `*.mCuc  1 p 3 14 ]
+[v string_utils_copy@maxlen `i  1 p 2 17 ]
+"79
+} 0
+"140
+[v _string_utils_strchr `(i  1 e 2 0 ]
+{
+"144
+[v string_utils_strchr@pos `i  1 a 2 21 ]
+"141
+[v string_utils_strchr@result `i  1 a 2 19 ]
+"140
+[v string_utils_strchr@pbuf `*.mCuc  1 p 3 12 ]
+[v string_utils_strchr@delimeter `uc  1 p 1 15 ]
+"155
+} 0
+"400
+[v _string_utils_from_hex `(i  1 e 2 0 ]
+{
+"401
+[v string_utils_from_hex@i `i  1 a 2 31 ]
+"402
+[v string_utils_from_hex@j `i  1 a 2 29 ]
+"403
+[v string_utils_from_hex@len `i  1 a 2 27 ]
+"400
+[v string_utils_from_hex@pdata `*.buc  1 p 2 20 ]
+[v string_utils_from_hex@phex_str `*.bCuc  1 p 2 22 ]
+"411
+} 0
+"12
+[v _string_utils_strlen `(i  1 e 2 0 ]
+{
+"13
+[v string_utils_strlen@i `i  1 a 2 18 ]
+"12
+[v string_utils_strlen@pstr `*.mCuc  1 p 2 14 ]
+"25
+} 0
+"194
+[v _string_utils_is_symbol `(uc  1 e 1 0 ]
+{
+[v string_utils_is_symbol@symb `uc  1 a 1 wreg ]
+[v string_utils_is_symbol@symb `uc  1 a 1 wreg ]
+"196
+} 0
+"334
+[v _symb_from_hex_to_bin `(uc  1 e 1 0 ]
+{
+[v symb_from_hex_to_bin@symb `uc  1 a 1 wreg ]
+[v symb_from_hex_to_bin@symb `uc  1 a 1 wreg ]
+"364
+} 0
+"14 src/modules/on_parameter_found.c
+[v _on_parameter_found `(v  1 e 0 0 ]
+{
+[v on_parameter_found@operation `E4396  1 a 1 wreg ]
+[v on_parameter_found@operation `E4396  1 a 1 wreg ]
+[v on_parameter_found@cmd_id `c  1 p 1 49 ]
+[v on_parameter_found@p_id `c  1 p 1 50 ]
+[v on_parameter_found@p `*.mCv  1 p 3 51 ]
+[v on_parameter_found@type `E4387  1 p 1 54 ]
+"41
+} 0
+"33 src/modules/classic_detector.c
+[v _cla_add_value `(uc  1 e 1 0 ]
+{
+[v cla_add_value@d `*.0VES917  1 a 1 wreg ]
+[v cla_add_value@d `*.0VES917  1 a 1 wreg ]
+[v cla_add_value@val `i  1 p 2 12 ]
+[v cla_add_value@zero `i  1 p 2 14 ]
+"69
+} 0
+"33 src/modules/peak_detector.c
+[v _pd_add_value `(uc  1 e 1 0 ]
+{
+"35
+[v pd_add_value@tmp `i  1 a 2 40 ]
+"34
+[v pd_add_value@i `uc  1 a 1 42 ]
+"33
+[v pd_add_value@d `*.bVES1018  1 p 2 20 ]
+[v pd_add_value@val `i  1 p 2 22 ]
+"88
+} 0
+"465 C:\Program Files\Microchip\xc8\v1.12\sources\doprnt.c
+[v _printf `(i  1 e 2 0 ]
+{
+[s S1618 . 5 `*.mCuc 1 _cp 3 0 `ui 1 _len 2 3 ]
+"533
+[u S1621 . 5 `ui 1 _val 2 0 `S1618 1 _str 5 0 ]
+[v printf@_val `S1621  1 a 5 43 ]
+"499
+[v printf@c `c  1 a 1 48 ]
+"506
+[v printf@prec `c  1 a 1 42 ]
+"508
+[v printf@flag `uc  1 a 1 41 ]
+"466
+[v printf@ap `[1]*.mv  1 a 1 40 ]
+"465
+[v printf@f `*.dCuc  1 p 2 30 ]
+"1548
+} 0
+"56 src/modules/serialport.c
+[v _putch `(v  1 e 0 0 ]
+{
+[v putch@byte `uc  1 a 1 wreg ]
+[v putch@byte `uc  1 a 1 wreg ]
+"58
+} 0
+"44 src/modules/on_parameter_found.c
+[v _set_parameter `(uc  1 e 1 0 ]
+{
+[v set_parameter@p_id `c  1 a 1 wreg ]
+"45
+[v set_parameter@ok `uc  1 a 1 32 ]
+"44
+[v set_parameter@p_id `c  1 a 1 wreg ]
+"115
+} 0
+"200 src/modules/syntax.c
+[v _syntax_as_integer `(i  1 e 2 0 ]
+{
+"202
+} 0
+"117 src/modules/on_parameter_found.c
+[v _get_parameter `(uc  1 e 1 0 ]
+{
+[v get_parameter@p_id `c  1 a 1 wreg ]
+[v get_parameter@p_id `c  1 a 1 wreg ]
+"182
+} 0
+"48 src/modules/serialport.c
+[v _serialport_write `(v  1 e 0 0 ]
+{
+[v serialport_write@pstr `*.mCuc  1 p 2 29 ]
+"54
+} 0
+"148 src/modules/rd_buffer.c
+[v _rd_buffer_put `(uc  1 e 1 0 ]
+{
+"159
+[v rd_buffer_put@ind `i  1 a 2 27 ]
+"160
+[v rd_buffer_put@mes_rec `*.bVEuc  1 a 2 22 ]
+"150
+[v rd_buffer_put@sz `i  1 a 2 25 ]
+"148
+[v rd_buffer_put@pbuffer `*.bS407  1 p 2 12 ]
+[v rd_buffer_put@prec `*.muc  1 p 2 14 ]
+"171
+} 0
+"194 src/modules/syntax.c
+[v _syntax_get_text `(*.MCuc  1 e 1 0 ]
+{
+"196
+} 0
+"16 src/startup/startup.c
+[v _startup `(E3388  1 e 1 0 ]
+{
+"17
+[v startup@result `E3388  1 a 1 19 ]
+"34
+} 0
+"7 src/drivers/sysclk.c
+[v _sysclk_init `(v  1 e 0 0 ]
+{
+"9
+} 0
+"12
+[v _sysclk_setup_intosc `(v  1 e 0 0 ]
+{
+[v sysclk_setup_intosc@frequency `E1  1 a 1 wreg ]
+[v sysclk_setup_intosc@frequency `E1  1 a 1 wreg ]
+"15
+} 0
+"5 src/drivers/uart.c
+[v _uart_init `(v  1 e 0 0 ]
+{
+"14
+} 0
+"17
+[v _uart_set_baudrate `(v  1 e 0 0 ]
+{
+[v uart_set_baudrate@baudrate `um  1 p 3 12 ]
+"21
+} 0
+"31
+[v _uart_puts `(v  1 e 0 0 ]
+{
+[v uart_puts@pstr `*.mCuc  1 p 2 13 ]
+[v uart_puts@size `i  1 p 2 15 ]
+"37
+} 0
+"40
+[v _uart_putc `(v  1 e 0 0 ]
+{
+[v uart_putc@byte `uc  1 a 1 wreg ]
+[v uart_putc@byte `uc  1 a 1 wreg ]
+"43
+} 0
+"46
+[v _uart_byte_sent `(uc  1 e 1 0 ]
+{
+"48
+} 0
+"5 src/drivers/adc.c
+[v _adc_init `(v  1 e 0 0 ]
+{
+"13
+} 0
+"4 src/drivers/gpio.c
+[v _gpio_init `(v  1 e 0 0 ]
+{
+"14
+} 0
+"16 src/modules/serialport.c
+[v _serialport_startup `(E3388  1 e 1 0 ]
+{
+"17
+[v serialport_startup@result `E3388  1 a 1 18 ]
+"21
+} 0
+"16 src/modules/rd_buffer.c
+[v _rd_buffer_init `(uc  1 e 1 0 ]
+{
+"17
+[v rd_buffer_init@result `uc  1 a 1 16 ]
+"16
+[v rd_buffer_init@pbuffer `*.bS407  1 p 2 12 ]
+[v rd_buffer_init@size `i  1 p 2 14 ]
+"26
+} 0
+"10 C:\Program Files\Microchip\xc8\v1.12\sources\awdiv.c
+[v ___awdiv `(i  1 e 2 0 ]
+{
+"11
+[v ___awdiv@quotient `i  1 a 2 18 ]
+"12
+[v ___awdiv@sign `uc  1 a 1 17 ]
+[v ___awdiv@counter `uc  1 a 1 16 ]
+"10
+[v ___awdiv@dividend `i  1 p 2 12 ]
+[v ___awdiv@divisor `i  1 p 2 14 ]
+"42
+} 0
+"10 C:\Program Files\Microchip\xc8\v1.12\sources\awmod.c
+[v ___awmod `(i  1 e 2 0 ]
+{
+"11
+[v ___awmod@sign `uc  1 a 1 17 ]
+[v ___awmod@counter `uc  1 a 1 16 ]
+"10
+[v ___awmod@dividend `i  1 p 2 12 ]
+[v ___awmod@divisor `i  1 p 2 14 ]
+"35
+} 0
+"5 C:\Program Files\Microchip\xc8\v1.12\sources\lbmod.c
+[v ___lbmod `(uc  1 e 1 0 ]
+{
+[v ___lbmod@dividend `uc  1 a 1 wreg ]
+"6
+[v ___lbmod@rem `uc  1 a 1 15 ]
+"7
+[v ___lbmod@counter `uc  1 a 1 14 ]
+"5
+[v ___lbmod@dividend `uc  1 a 1 wreg ]
+[v ___lbmod@divisor `uc  1 p 1 12 ]
+"18
+} 0
+"10 C:\Program Files\Microchip\xc8\v1.12\sources\lwdiv.c
+[v ___lwdiv `(ui  1 e 2 0 ]
+{
+"11
+[v ___lwdiv@quotient `ui  1 a 2 16 ]
+"12
+[v ___lwdiv@counter `uc  1 a 1 18 ]
+"10
+[v ___lwdiv@dividend `ui  1 p 2 12 ]
+[v ___lwdiv@divisor `ui  1 p 2 14 ]
+"31
+} 0
+"10 C:\Program Files\Microchip\xc8\v1.12\sources\lwmod.c
+[v ___lwmod `(ui  1 e 2 0 ]
+{
+"11
+[v ___lwmod@counter `uc  1 a 1 23 ]
+"10
+[v ___lwmod@dividend `ui  1 p 2 19 ]
+[v ___lwmod@divisor `ui  1 p 2 21 ]
+"26
+} 0
+"3 C:\Program Files\Microchip\xc8\v1.12\sources\wmul.c
+[v ___wmul `(ui  1 e 2 0 ]
+{
+"4
+[v ___wmul@product `ui  1 a 2 16 ]
+"3
+[v ___wmul@multiplier `ui  1 p 2 12 ]
+[v ___wmul@multiplicand `ui  1 p 2 14 ]
+"13
+} 0
+"16 src/interrupts.c
+[v _isr_high `II(v  1 s 0 isr_high ]
+{
+"42
+} 0
+"70 src/drivers/delay.c
+[v _delay_interrupt_service `(v  1 e 0 0 ]
+{
+"74
+} 0
+"24 src/modules/serialport.c
+[v _serialport_service `(v  1 e 0 0 ]
+{
+"25
+[v serialport_service@byte `uc  1 a 1 3 ]
+"32
+} 0
+"56 src/drivers/uart.c
+[v _uart_getc `(E3388  1 e 1 0 ]
+{
+[v uart_getc@pbyte `*.0uc  1 a 1 wreg ]
+"57
+[v uart_getc@result `E3388  1 a 1 27 ]
+"56
+[v uart_getc@pbyte `*.0uc  1 a 1 wreg ]
+"70
+} 0
+"73
+[v _uart_reset `(v  1 e 0 0 ]
+{
+"82
+} 0
+"52
+[v _uart_byte_available `(uc  1 e 1 0 ]
+{
+"54
+} 0
+"85
+[v _uart_error `(uc  1 e 1 0 ]
+{
+"87
+} 0
+"137 src/modules/detection.c
+[v _detection_obtain_analog_service `(v  1 e 0 0 ]
+{
+"138
+[v detection_obtain_analog_service@adc_data `uc  1 a 1 2 ]
+"141
+} 0
+"22 src/drivers/adc.c
+[v _adc_read `(us  1 e 2 0 ]
+{
+[v adc_read@adc_number `uc  1 a 1 wreg ]
+[v adc_read@adc_number `uc  1 a 1 wreg ]
+"32
+} 0
+"148 src/modules/rd_buffer.c
+[v i2_rd_buffer_put `(uc  1 e 1 0 ]
+{
+[v i2rd_buffer_put@ind `i  1 a 2 40 ]
+[v i2rd_buffer_put@sz `i  1 a 2 38 ]
+[v i2rd_buffer_put@mes_rec `*.bVEuc  1 a 2 35 ]
+[v i2_rd_buffer_put$482 `uc  1 a 1 37 ]
+[v i2rd_buffer_put@pbuffer `*.bS407  1 p 2 25 ]
+[v i2rd_buffer_put@prec `*.muc  1 p 2 27 ]
+"171
+} 0
+"16 src/interrupts.c
+[v interrupts@isr_high `II(v  1 s 0 isr_high ]
+{
+"42
+} 0

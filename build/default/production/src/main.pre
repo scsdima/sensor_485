@@ -5382,7 +5382,7 @@ volatile UINT8 pool[8];
 volatile PEVENT events[8];
 volatile UINT8 event_miss[8];
 
-# 24 "src/main.c"
+# 13 "src/main.c"
 int main(void)
 {
 while(startup() != RESULT_SUCCESS)
@@ -5391,7 +5391,7 @@ delay_ms(1000);
 };
 do{INTCONbits.GIEH=(1); INTCONbits.GIEL=(1);}while(0);;
 while(1)
-{
+{ ;
 do{ INT8 event_old=-1; INT8 event_priority=-1; UINT8 i; for(i=0;i<8;i++) { if(pool[i]==1) { if(event_miss[i] == 0 ) event_old=i; else event_miss[i]--; if(event_priority<0) event_priority=i; } } if(event_old >= 0) { events[event_old](); pool[event_old]=0;; } else if(event_priority >= 0) { events[event_priority](); pool[event_priority]=0;; }}while(0);;
 asm(" clrwdt");
 }

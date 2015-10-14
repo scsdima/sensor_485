@@ -5207,14 +5207,19 @@ return result;
 # 38
 CHAR rd_buffer_readline(RdBuffer *pbuffer, CHAR *pdata, SIZE *psize)
 {
-if(this_contains_crlf && pdata && psize)
+*psize=0;
+if(this_contains_crlf && pdata )
 {
 CHAR ch;
 while(rd_buffer_get(pbuffer,(UINT8*)&ch))
 {
-*pdata = ch;
-pdata++;
-*psize++;
+if(ch=='\n' || ch=='\r')
+{
+*(++pdata) = '\0';
+break;
+}
+*pdata++ = ch;
+(*psize)++;
 }
 this_contains_crlf = FALSE;
 return TRUE;
@@ -5222,7 +5227,7 @@ return TRUE;
 return FALSE;
 }
 
-# 63
+# 68
 SIZE rd_buffer_cnt(RdBuffer *pbuffer){
 SIZE sz;
 sz = pbuffer->head.last - pbuffer->head.first;
@@ -5232,28 +5237,28 @@ sz += pbuffer->head.size;
 return sz;
 }
 
-# 80
+# 85
 void rd_buffer_reset(RdBuffer *pbuffer){
 
 pbuffer->head.first=0;
 pbuffer->head.last =0;
 }
 
-# 93
+# 98
 CHAR rd_buffer_is_empty(RdBuffer *pbuffer){
 CHAR result;
 result = (CHAR)(rd_buffer_cnt(pbuffer) == 0);
 return result;
 }
 
-# 107
+# 112
 CHAR rd_buffer_is_full(RdBuffer *pbuffer){
 CHAR result;
 result = (CHAR)(rd_buffer_cnt(pbuffer) == (SIZE)pbuffer->head.size);
 return result;
 }
 
-# 122
+# 127
 CHAR rd_buffer_get(RdBuffer *pbuffer, UINT8 *prec){
 CHAR result = FALSE;
 INT16 first = pbuffer->head.first;
@@ -5270,7 +5275,7 @@ result = TRUE;
 return result;
 }
 
-# 148
+# 153
 CHAR rd_buffer_put(RdBuffer *pbuffer, UINT8 *prec){
 CHAR result = FALSE;
 SIZE sz ;
@@ -5296,7 +5301,7 @@ result = TRUE;
 return result;
 }
 
-# 185
+# 190
 CHAR rd_buffer_getn(RdBuffer *pbuffer, UINT8 prec[], SIZE rec_count){
 SIZE i=0;
 CHAR result = TRUE;
@@ -5310,7 +5315,7 @@ i++;
 return result;
 }
 
-# 208
+# 213
 CHAR rd_buffer_first(RdBuffer *pbuffer, UINT8 *prec){
 CHAR result = FALSE;
 if(rd_buffer_cnt(pbuffer) > 0){
@@ -5322,7 +5327,7 @@ result = TRUE;
 return result;
 }
 
-# 228
+# 233
 CHAR rd_buffer_last(RdBuffer *pbuffer, UINT8 *prec){
 CHAR result = FALSE;
 if(rd_buffer_cnt(pbuffer) > 0){

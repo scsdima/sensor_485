@@ -5358,30 +5358,35 @@ PARSER_ERROR
 }ParserOperation_t;
 
 
-
-
 typedef struct {
 char name[(20)];
+INT8 name_len;
 INT8 id;
-} SyntaxCommand_t;
-
-typedef struct {
-char name[(20)];
-INT8 id;
-ParserType_t type;
-} SyntaxParameter_t;
+INT8 type;
+} SyntaxItem_t;
 
 
 
-INT16 syntax_string(const char pstr[], CHAR case_sensitive);
+INT8 syntax_string(const char *pstr,SIZE str_len, CHAR case_sensitive);
+
 
 const char* syntax_get_text(void);
-
 INT16 syntax_as_integer(void);
 double syntax_as_double(void);
 CHAR syntax_as_bool(void);
 UINT8 * syntax_as_bytearray(void);
 
+# 54
+enum {
+Command_set, Command_get, Command_init, Command_selftest, Parameter_signal, Parameter_imp, Parameter_pwr, Parameter_pot, Parameter_ver, Parameter_status, Parameter_acc, Parameter_adr, Parameter_error, Parameter_defaults, Parameter_mod, Parameter_profile, Parameter_pwrtrig, Parameter_acctrig, Parameter_triglev, Parameter_trigsum, Parameter_trigcnt, Parameter_wavtole, Parameter_wavtrig, Parameter_wavlcnt, Parameter_wavrcnt, Parameter_id, Parameter_psw,
+SYNTAX_COUNT
+};
+
+
+
+static const SyntaxItem_t syntax_data[SYNTAX_COUNT] = {
+{"set",sizeof("set")-1,Command_set,PARSER_TYPE_NO_TYPE}, {"get",sizeof("get")-1,Command_get,PARSER_TYPE_NO_TYPE}, {"init",sizeof("init")-1,Command_init,PARSER_TYPE_NO_TYPE}, {"selftest",sizeof("selftest")-1,Command_selftest,PARSER_TYPE_NO_TYPE}, {"signal",sizeof("signal")-1,Parameter_signal,PARSER_TYPE_INTEGER}, {"imp",sizeof("imp")-1,Parameter_imp,PARSER_TYPE_INTEGER}, {"pwr",sizeof("pwr")-1,Parameter_pwr,PARSER_TYPE_INTEGER}, {"pot",sizeof("pot")-1,Parameter_pot,PARSER_TYPE_INTEGER}, {"ver",sizeof("ver")-1,Parameter_ver,PARSER_TYPE_INTEGER}, {"status",sizeof("status")-1,Parameter_status,PARSER_TYPE_INTEGER}, {"acc",sizeof("acc")-1,Parameter_acc,PARSER_TYPE_INTEGER}, {"adr",sizeof("adr")-1,Parameter_adr,PARSER_TYPE_INTEGER}, {"error",sizeof("error")-1,Parameter_error,PARSER_TYPE_INTEGER}, {"defaults",sizeof("defaults")-1,Parameter_defaults,PARSER_TYPE_INTEGER}, {"mod",sizeof("mod")-1,Parameter_mod,PARSER_TYPE_BYTEARRAY}, {"profile",sizeof("profile")-1,Parameter_profile,PARSER_TYPE_INTEGER}, {"pwrtrig",sizeof("pwrtrig")-1,Parameter_pwrtrig,PARSER_TYPE_INTEGER}, {"acctrig",sizeof("acctrig")-1,Parameter_acctrig,PARSER_TYPE_INTEGER}, {"triglev",sizeof("triglev")-1,Parameter_triglev,PARSER_TYPE_INTEGER}, {"trigsum",sizeof("trigsum")-1,Parameter_trigsum,PARSER_TYPE_INTEGER}, {"trigcnt",sizeof("trigcnt")-1,Parameter_trigcnt,PARSER_TYPE_INTEGER}, {"wavtole",sizeof("wavtole")-1,Parameter_wavtole,PARSER_TYPE_INTEGER}, {"wavtrig",sizeof("wavtrig")-1,Parameter_wavtrig,PARSER_TYPE_INTEGER}, {"wavlcnt",sizeof("wavlcnt")-1,Parameter_wavlcnt,PARSER_TYPE_INTEGER}, {"wavrcnt",sizeof("wavrcnt")-1,Parameter_wavrcnt,PARSER_TYPE_INTEGER}, {"idid",sizeof("idid")-1,Parameter_id,PARSER_TYPE_INTEGER}, {"pswpsw",sizeof("pswpsw")-1,Parameter_psw,PARSER_TYPE_INTEGER}
+};
 
 
 
@@ -5533,6 +5538,9 @@ UINT8 byte;
 if (uart_byte_available()) {
 if (uart_getc(&byte) == RESULT_SUCCESS) {
 rd_buffer_put(&g_rx_buffer, &byte);
+}
+if(byte=='\n' || byte=='\r')
+{
 do{pool[(5)] = 1;event_miss[(5)]= (10);}while(0);
 }
 }
@@ -5541,13 +5549,14 @@ do{pool[(5)] = 1;event_miss[(5)]= (10);}while(0);
 void serialport_task()
 {
 SIZE size;
-if (rd_buffer_readline(&g_rx_buffer, &serialport_buffer, &size)) {
-syntax_string(serialport_buffer, FALSE);
+UINT8 byte;
+while (rd_buffer_readline(&g_rx_buffer, &serialport_buffer, &size)) {
+syntax_string(serialport_buffer, size,FALSE);
 }
-size = rd_buffer_cnt(&g_tx_buffer);
-if (size > 0) {
-rd_buffer_getn(&g_tx_buffer, &serialport_buffer, size);
-uart_puts(serialport_buffer, size);
+while (rd_buffer_cnt(&g_tx_buffer)> 0) {
+
+rd_buffer_get(&g_tx_buffer, &byte);
+uart_putc(byte);
 }
 }
 

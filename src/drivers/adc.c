@@ -10,6 +10,7 @@ void adc_init(void)
     ANSELH  = 0;
     PIE1bits.ADIE = 1;
    // IPR1bits.ADIP =1;
+}
 
 void adc_enable(BOOL on)
 {

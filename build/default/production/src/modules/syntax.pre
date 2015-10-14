@@ -5222,144 +5222,71 @@ PARSER_ERROR
 }ParserOperation_t;
 
 
-
-
 typedef struct {
 char name[(20)];
+INT8 name_len;
 INT8 id;
-} SyntaxCommand_t;
-
-typedef struct {
-char name[(20)];
-INT8 id;
-ParserType_t type;
-} SyntaxParameter_t;
+INT8 type;
+} SyntaxItem_t;
 
 
 
-INT16 syntax_string(const char pstr[], CHAR case_sensitive);
+INT8 syntax_string(const char *pstr,SIZE str_len, CHAR case_sensitive);
+
 
 const char* syntax_get_text(void);
-
 INT16 syntax_as_integer(void);
 double syntax_as_double(void);
 CHAR syntax_as_bool(void);
 UINT8 * syntax_as_bytearray(void);
 
+# 54
+enum {
+Command_set, Command_get, Command_init, Command_selftest, Parameter_signal, Parameter_imp, Parameter_pwr, Parameter_pot, Parameter_ver, Parameter_status, Parameter_acc, Parameter_adr, Parameter_error, Parameter_defaults, Parameter_mod, Parameter_profile, Parameter_pwrtrig, Parameter_acctrig, Parameter_triglev, Parameter_trigsum, Parameter_trigcnt, Parameter_wavtole, Parameter_wavtrig, Parameter_wavlcnt, Parameter_wavrcnt, Parameter_id, Parameter_psw,
+SYNTAX_COUNT
+};
+
+
+
+static const SyntaxItem_t syntax_data[SYNTAX_COUNT] = {
+{"set",sizeof("set")-1,Command_set,PARSER_TYPE_NO_TYPE}, {"get",sizeof("get")-1,Command_get,PARSER_TYPE_NO_TYPE}, {"init",sizeof("init")-1,Command_init,PARSER_TYPE_NO_TYPE}, {"selftest",sizeof("selftest")-1,Command_selftest,PARSER_TYPE_NO_TYPE}, {"signal",sizeof("signal")-1,Parameter_signal,PARSER_TYPE_INTEGER}, {"imp",sizeof("imp")-1,Parameter_imp,PARSER_TYPE_INTEGER}, {"pwr",sizeof("pwr")-1,Parameter_pwr,PARSER_TYPE_INTEGER}, {"pot",sizeof("pot")-1,Parameter_pot,PARSER_TYPE_INTEGER}, {"ver",sizeof("ver")-1,Parameter_ver,PARSER_TYPE_INTEGER}, {"status",sizeof("status")-1,Parameter_status,PARSER_TYPE_INTEGER}, {"acc",sizeof("acc")-1,Parameter_acc,PARSER_TYPE_INTEGER}, {"adr",sizeof("adr")-1,Parameter_adr,PARSER_TYPE_INTEGER}, {"error",sizeof("error")-1,Parameter_error,PARSER_TYPE_INTEGER}, {"defaults",sizeof("defaults")-1,Parameter_defaults,PARSER_TYPE_INTEGER}, {"mod",sizeof("mod")-1,Parameter_mod,PARSER_TYPE_BYTEARRAY}, {"profile",sizeof("profile")-1,Parameter_profile,PARSER_TYPE_INTEGER}, {"pwrtrig",sizeof("pwrtrig")-1,Parameter_pwrtrig,PARSER_TYPE_INTEGER}, {"acctrig",sizeof("acctrig")-1,Parameter_acctrig,PARSER_TYPE_INTEGER}, {"triglev",sizeof("triglev")-1,Parameter_triglev,PARSER_TYPE_INTEGER}, {"trigsum",sizeof("trigsum")-1,Parameter_trigsum,PARSER_TYPE_INTEGER}, {"trigcnt",sizeof("trigcnt")-1,Parameter_trigcnt,PARSER_TYPE_INTEGER}, {"wavtole",sizeof("wavtole")-1,Parameter_wavtole,PARSER_TYPE_INTEGER}, {"wavtrig",sizeof("wavtrig")-1,Parameter_wavtrig,PARSER_TYPE_INTEGER}, {"wavlcnt",sizeof("wavlcnt")-1,Parameter_wavlcnt,PARSER_TYPE_INTEGER}, {"wavrcnt",sizeof("wavrcnt")-1,Parameter_wavrcnt,PARSER_TYPE_INTEGER}, {"idid",sizeof("idid")-1,Parameter_id,PARSER_TYPE_INTEGER}, {"pswpsw",sizeof("pswpsw")-1,Parameter_psw,PARSER_TYPE_INTEGER}
+};
 
 
 
 void on_parameter_found(ParserOperation_t operation ,INT8 cmd_id
 , INT8 p_id ,const void* p, ParserType_t type);
 
-# 8 "src/modules/cmd_data.h"
-typedef enum {
-Command_set,
-Command_get,
-Command_init,
-Command_selftest,
-COMMAND_COUNT
-}SyntaxCommandId_t;
-
-typedef enum {
-Parameter_signal,
-Parameter_imp,
-Parameter_pwr,
-Parameter_pot,
-Parameter_ver,
-Parameter_status,
-Parameter_error,
-Parameter_acc,
-Parameter_adr,
-Parameter_defaults,
-Parameter_mod,
-Parameter_profile,
-Parameter_pwrtrig,
-Parameter_acctrig,
-Parameter_triglev,
-Parameter_trigsum,
-Parameter_trigcnt,
-Parameter_wavtole,
-Parameter_wavtrig,
-Parameter_wavlcnt,
-Parameter_wavrcnt,
-Parameter_id,
-Parameter_psw,
-PARAMETERS_COUNT
-}SyntaxParameterId_t;
-
-# 58
-static const SyntaxCommand_t syx_cmd_list[] =
-{
-{"set", Command_set },
-{"get", Command_get },
-{"init", Command_init },
-{"selftest", Command_selftest },
-{"\x1d\x1d" , 0 }
-};
-
-
-static const SyntaxParameter_t syx_param_list[] = {
-
-{"signal" , Parameter_signal , PARSER_TYPE_INTEGER},
-{"imp" , Parameter_imp , PARSER_TYPE_INTEGER},
-{"pwr" , Parameter_pwr , PARSER_TYPE_INTEGER},
-{"pot" , Parameter_pot , PARSER_TYPE_INTEGER},
-{"ver" , Parameter_ver , PARSER_TYPE_INTEGER},
-{"status" , Parameter_status , PARSER_TYPE_INTEGER},
-{"acc" , Parameter_acc , PARSER_TYPE_INTEGER},
-{"adr" , Parameter_adr , PARSER_TYPE_INTEGER},
-{"error" , Parameter_error , PARSER_TYPE_INTEGER},
-{"defaults" , Parameter_defaults , PARSER_TYPE_INTEGER},
-{"mod" , Parameter_mod , PARSER_TYPE_BYTEARRAY},
-{"profile" , Parameter_profile , PARSER_TYPE_INTEGER},
-{"pwrtrig" , Parameter_pwrtrig , PARSER_TYPE_INTEGER},
-{"acctrig" , Parameter_acctrig , PARSER_TYPE_INTEGER},
-{"triglev" , Parameter_triglev , PARSER_TYPE_INTEGER},
-{"trigsum" , Parameter_trigsum , PARSER_TYPE_INTEGER},
-{"trigcnt" , Parameter_trigcnt , PARSER_TYPE_INTEGER},
-{"wavtole" , Parameter_wavtole , PARSER_TYPE_INTEGER},
-{"wavtrig" , Parameter_wavtrig , PARSER_TYPE_INTEGER},
-{"wavlcnt" , Parameter_wavlcnt , PARSER_TYPE_INTEGER},
-{"wavrcnt" , Parameter_wavrcnt , PARSER_TYPE_INTEGER},
-{"idid" , Parameter_id , PARSER_TYPE_INTEGER},
-{"pswpsw" , Parameter_psw , PARSER_TYPE_INTEGER},
-{"\x1d\x1d" ,-1 , PARSER_TYPE_NO_TYPE }
-
-};
-
 # 11 "src/modules/syntax.c"
 CHAR this_case_sensitive;
 
-INT16 command_id;
+INT8 command_id;
 
-INT16 parameter_id;
+INT8 parameter_id;
+ParserType_t parameter_type;
 
 UINT8 parameter_value[(127u)];
 
 UINT8 parameter_text[(127u)];
 
-ParserType_t parameter_type;
-
 char this_buf[(127u)];
 
 
-CHAR this_parse_parameter(char par_str[]);
+CHAR this_parse_item(const char *pstr, INT8 *pitem);
 
-CHAR this_parse_command(char pbuf[]);
+void this_variable_load_from_text(const char *pval);
 
-void this_variable_load_from_text(const char *pval, ParserType_t var_type);
-
-# 42
-void this_variable_load_from_text(const char *pval, ParserType_t var_type)
+# 39
+void this_variable_load_from_text(const char *pval)
 {
+
 if (pval != (0) ) {
-INT16 len = string_utils_strchr(pval, ('$'));
+INT16 len = string_utils_strchr(pval, ('\0'));
 string_utils_copy(parameter_value , pval, len);
 parameter_value[len] = '\0';
 
 
-parameter_type = var_type;
+parameter_type = parameter_type;
 switch (parameter_type) {
 
 case PARSER_TYPE_BYTEARRAY:
@@ -5373,7 +5300,7 @@ case PARSER_TYPE_INTEGER:
 
 break;
 
-# 73
+# 71
 case PARSER_TYPE_HEXARRAY:
 {
 string_utils_from_hex(parameter_value, parameter_value );
@@ -5387,33 +5314,15 @@ break;
 }
 }
 
-# 95
-CHAR this_parse_command(char pbuf[]) {
-CHAR found = FALSE;
-INT16 i = 0;
-INT16 len = string_utils_strchr(pbuf, ('$'));
-while(syx_cmd_list[i].name[0] != 0x1D) {
-const char *pname = syx_cmd_list[i].name;
-CHAR is_equal = string_utils_strncmp(pbuf, pname, len, this_case_sensitive);
-if ( is_equal ) {
-command_id = syx_cmd_list[i].id;
-found = TRUE;
-break;
-}
-i++;
-}
-return found;
-}
-
-# 121
-CHAR this_parse_parameter(char pstr[]) {
+# 93
+CHAR this_parse_item(const char *pstr, INT8 *pitem) {
 CHAR result = FALSE;
 if (pstr != (0)) {
 const char *pvar = pstr;
 const char *pval = (0);
-INT16 var_len;
-INT16 i = 0;
-INT16 str_len = string_utils_strchr(pstr, ('$'));
+SIZE var_len;
+INT8 i = 0;
+SIZE str_len = string_utils_strlen(pstr);
 
 var_len = string_utils_strchr(pstr, '=');
 if (var_len >= 0 && var_len < str_len) {
@@ -5425,49 +5334,48 @@ var_len = str_len;
 
 string_utils_copy(parameter_text, pvar, var_len);
 parameter_text[var_len] = '\0';
-while( syx_param_list[i].name[0] != 0x1D ) {
-if (string_utils_strlen( syx_param_list[i].name ) == var_len){
-CHAR is_equal = string_utils_strncmp(syx_param_list[i].name, pvar, var_len, this_case_sensitive);
-if ( is_equal ) {
-parameter_id = syx_param_list[i].id;
-parameter_type = syx_param_list[i].type;
-if (pval)
-this_variable_load_from_text(pval, parameter_type);
+for(i=0;i<SYNTAX_COUNT;i++) {
+if (syntax_data[i].name_len == var_len)
+{
+CHAR is_equal = string_utils_strncmp(syntax_data[i].name, pvar, var_len, this_case_sensitive);
+if ( is_equal )
+{
+if(pitem) *pitem = syntax_data[i].id;
+if (pval) this_variable_load_from_text(pval);
 result = TRUE;
 break;
 }
 }
-i++;
 }
 }
 return result;
 }
 
-# 167
-INT16 syntax_string(const char pstr[], CHAR case_sensitive) {
-INT16 chains ;
-INT16 result =0;
-INT16 str_len = string_utils_strlen(pstr);
+# 138
+INT8 syntax_string(const char *pstr, SIZE str_len, CHAR case_sensitive) {
+INT8 chains ;
+INT8 result =0;
 this_case_sensitive = case_sensitive;
-chains = string_utils_split(this_buf, pstr, str_len, ('$'));
+chains = (INT8)string_utils_split(this_buf, pstr, str_len, '\0');
 command_id = -1;
 parameter_id = -1;
 parameter_value[0] = '\0';
 parameter_text[0] = '\0';
 if (chains >= 1 ) {
-INT16 pos = 0;
+INT8 pos = 0;
 char *pchain;
 result = chains -1;
 while ( chains-- ) {
 pchain = &this_buf[pos];
 if (pos == 0 ) {
 
-if ( !this_parse_command( pchain ) ) {result =0;break;}
+if ( !this_parse_item( pchain, &command_id ) ) {result =0;break;}
 on_parameter_found(PARSER_START, command_id, -1, (void*)(0), PARSER_TYPE_NO_TYPE);
 }
 else {
 
-if (this_parse_parameter( pchain ) == TRUE) {
+if (this_parse_item( pchain, &parameter_id ) == TRUE) {
+parameter_type= syntax_data[parameter_id].type;
 on_parameter_found(PARSER_PARAMETER, command_id, parameter_id, (void*)parameter_value, parameter_type);
 }
 
@@ -5476,7 +5384,7 @@ on_parameter_found(PARSER_PARAMETER, command_id, -1 , (void*)parameter_text, PAR
 }
 }
 
-pos += string_utils_strchr(pchain, ('$')) + 1;
+pos += string_utils_strlen(pchain) + 1;
 }
 }
 if (result>0 )
@@ -5490,7 +5398,7 @@ on_parameter_found(PARSER_ERROR,-1, -1, (void*)(0), PARSER_TYPE_NO_TYPE);
 return result;
 }
 
-# 223
+# 194
 const char* syntax_get_text(void) {
 return parameter_text;
 }

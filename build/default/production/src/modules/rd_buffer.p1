@@ -3950,434 +3950,450 @@ Version 3.2 HI-TECH Software Intermediate Code
 [v _pdata `*uc ~T0 @X0 1 r2 ]
 [v _psize `*i ~T0 @X0 1 r3 ]
 [f ]
-[; ;rd_buffer.c: 40: if(this_contains_crlf && pdata && psize)
+[; ;rd_buffer.c: 40: *psize=0;
 "40
-[e $ ! && && != -> _this_contains_crlf `i -> -> -> 0 `i `uc `i != _pdata -> -> 0 `i `*uc != _psize -> -> 0 `i `*i 394  ]
-[; ;rd_buffer.c: 41: {
+[e = *U _psize -> 0 `i ]
+[; ;rd_buffer.c: 41: if(this_contains_crlf && pdata )
 "41
-{
+[e $ ! && != -> _this_contains_crlf `i -> -> -> 0 `i `uc `i != _pdata -> -> 0 `i `*uc 394  ]
+[; ;rd_buffer.c: 42: {
 "42
-[v _ch `uc ~T0 @X0 1 a ]
-[; ;rd_buffer.c: 42: CHAR ch;
-[; ;rd_buffer.c: 43: while(rd_buffer_get(pbuffer,(UINT8*)&ch))
+{
 "43
+[v _ch `uc ~T0 @X0 1 a ]
+[; ;rd_buffer.c: 43: CHAR ch;
+[; ;rd_buffer.c: 44: while(rd_buffer_get(pbuffer,(UINT8*)&ch))
+"44
 [e $U 395  ]
 [e :U 396 ]
-[; ;rd_buffer.c: 44: {
-"44
-{
-[; ;rd_buffer.c: 45: *pdata = ch;
+[; ;rd_buffer.c: 45: {
 "45
-[e = *U _pdata _ch ]
-[; ;rd_buffer.c: 46: pdata++;
+{
+[; ;rd_buffer.c: 46: if(ch=='\n' || ch=='\r')
 "46
-[e ++ _pdata * -> -> 1 `i `x -> -> # *U _pdata `i `x ]
-[; ;rd_buffer.c: 47: *psize++;
+[e $ ! || == -> _ch `ui -> 10 `ui == -> _ch `ui -> 13 `ui 398  ]
+[; ;rd_buffer.c: 47: {
 "47
-[e *U ++ _psize * -> -> 1 `i `x -> -> # *U _psize `i `x ]
+{
+[; ;rd_buffer.c: 48: *(++pdata) = '\0';
 "48
+[e = *U =+ _pdata * -> -> 1 `i `x -> -> # *U _pdata `i `x -> -> 0 `ui `uc ]
+[; ;rd_buffer.c: 49: break;
+"49
+[e $U 397  ]
+"50
+}
+[e :U 398 ]
+[; ;rd_buffer.c: 50: }
+[; ;rd_buffer.c: 51: *pdata++ = ch;
+"51
+[e = *U ++ _pdata * -> -> 1 `i `x -> -> # *U _pdata `i `x _ch ]
+[; ;rd_buffer.c: 52: (*psize)++;
+"52
+[e ++ *U _psize -> 1 `i ]
+"53
 }
 [e :U 395 ]
-"43
+"44
 [e $ != -> ( _rd_buffer_get (2 , _pbuffer &U _ch `i -> -> -> 0 `i `uc `i 396  ]
 [e :U 397 ]
-[; ;rd_buffer.c: 48: }
-[; ;rd_buffer.c: 49: this_contains_crlf = FALSE;
-"49
+[; ;rd_buffer.c: 53: }
+[; ;rd_buffer.c: 54: this_contains_crlf = FALSE;
+"54
 [e = _this_contains_crlf -> . `E3585 0 `uc ]
-[; ;rd_buffer.c: 50: return TRUE;
-"50
+[; ;rd_buffer.c: 55: return TRUE;
+"55
 [e ) -> . `E3585 1 `uc ]
 [e $UE 393  ]
-"51
+"56
 }
 [e :U 394 ]
-[; ;rd_buffer.c: 51: }
-[; ;rd_buffer.c: 52: return FALSE;
-"52
+[; ;rd_buffer.c: 56: }
+[; ;rd_buffer.c: 57: return FALSE;
+"57
 [e ) -> . `E3585 0 `uc ]
 [e $UE 393  ]
-[; ;rd_buffer.c: 53: }
-"53
+[; ;rd_buffer.c: 58: }
+"58
 [e :UE 393 ]
 }
-"63
+"68
 [v _rd_buffer_cnt `(i ~T0 @X0 1 ef1`*S389 ]
 {
-[; ;rd_buffer.c: 63: SIZE rd_buffer_cnt(RdBuffer *pbuffer){
+[; ;rd_buffer.c: 68: SIZE rd_buffer_cnt(RdBuffer *pbuffer){
 [e :U _rd_buffer_cnt ]
 [v _pbuffer `*S389 ~T0 @X0 1 r1 ]
 [f ]
-"64
-[v _sz `i ~T0 @X0 1 a ]
-[; ;rd_buffer.c: 64: SIZE sz;
-[; ;rd_buffer.c: 65: sz = pbuffer->head.last - pbuffer->head.first;
-"65
-[e = _sz - . . *U _pbuffer 0 0 . . *U _pbuffer 0 1 ]
-[; ;rd_buffer.c: 66: if(sz < 0) {
-"66
-[e $ ! < _sz -> 0 `i 399  ]
-{
-[; ;rd_buffer.c: 67: sz += pbuffer->head.size;
-"67
-[e =+ _sz . . *U _pbuffer 0 2 ]
-"68
-}
-[e :U 399 ]
-[; ;rd_buffer.c: 68: }
-[; ;rd_buffer.c: 69: return sz;
 "69
-[e ) _sz ]
-[e $UE 398  ]
-[; ;rd_buffer.c: 70: }
+[v _sz `i ~T0 @X0 1 a ]
+[; ;rd_buffer.c: 69: SIZE sz;
+[; ;rd_buffer.c: 70: sz = pbuffer->head.last - pbuffer->head.first;
 "70
-[e :UE 398 ]
+[e = _sz - . . *U _pbuffer 0 0 . . *U _pbuffer 0 1 ]
+[; ;rd_buffer.c: 71: if(sz < 0) {
+"71
+[e $ ! < _sz -> 0 `i 400  ]
+{
+[; ;rd_buffer.c: 72: sz += pbuffer->head.size;
+"72
+[e =+ _sz . . *U _pbuffer 0 2 ]
+"73
 }
-"80
+[e :U 400 ]
+[; ;rd_buffer.c: 73: }
+[; ;rd_buffer.c: 74: return sz;
+"74
+[e ) _sz ]
+[e $UE 399  ]
+[; ;rd_buffer.c: 75: }
+"75
+[e :UE 399 ]
+}
+"85
 [v _rd_buffer_reset `(v ~T0 @X0 1 ef1`*S389 ]
 {
-[; ;rd_buffer.c: 80: void rd_buffer_reset(RdBuffer *pbuffer){
+[; ;rd_buffer.c: 85: void rd_buffer_reset(RdBuffer *pbuffer){
 [e :U _rd_buffer_reset ]
 [v _pbuffer `*S389 ~T0 @X0 1 r1 ]
 [f ]
-[; ;rd_buffer.c: 82: pbuffer->head.first=0;
-"82
+[; ;rd_buffer.c: 87: pbuffer->head.first=0;
+"87
 [e = . . *U _pbuffer 0 1 -> 0 `i ]
-[; ;rd_buffer.c: 83: pbuffer->head.last =0;
-"83
+[; ;rd_buffer.c: 88: pbuffer->head.last =0;
+"88
 [e = . . *U _pbuffer 0 0 -> 0 `i ]
-[; ;rd_buffer.c: 84: }
-"84
-[e :UE 400 ]
+[; ;rd_buffer.c: 89: }
+"89
+[e :UE 401 ]
 }
-"93
+"98
 [v _rd_buffer_is_empty `(uc ~T0 @X0 1 ef1`*S389 ]
 {
-[; ;rd_buffer.c: 93: CHAR rd_buffer_is_empty(RdBuffer *pbuffer){
+[; ;rd_buffer.c: 98: CHAR rd_buffer_is_empty(RdBuffer *pbuffer){
 [e :U _rd_buffer_is_empty ]
 [v _pbuffer `*S389 ~T0 @X0 1 r1 ]
 [f ]
-"94
+"99
 [v _result `uc ~T0 @X0 1 a ]
-[; ;rd_buffer.c: 94: CHAR result;
-[; ;rd_buffer.c: 95: result = (CHAR)(rd_buffer_cnt(pbuffer) == 0);
-"95
+[; ;rd_buffer.c: 99: CHAR result;
+[; ;rd_buffer.c: 100: result = (CHAR)(rd_buffer_cnt(pbuffer) == 0);
+"100
 [e = _result -> -> == ( _rd_buffer_cnt (1 _pbuffer -> 0 `i `i `uc ]
-[; ;rd_buffer.c: 96: return result;
-"96
+[; ;rd_buffer.c: 101: return result;
+"101
 [e ) _result ]
-[e $UE 401  ]
-[; ;rd_buffer.c: 97: }
-"97
-[e :UE 401 ]
+[e $UE 402  ]
+[; ;rd_buffer.c: 102: }
+"102
+[e :UE 402 ]
 }
-"107
+"112
 [v _rd_buffer_is_full `(uc ~T0 @X0 1 ef1`*S389 ]
 {
-[; ;rd_buffer.c: 107: CHAR rd_buffer_is_full(RdBuffer *pbuffer){
+[; ;rd_buffer.c: 112: CHAR rd_buffer_is_full(RdBuffer *pbuffer){
 [e :U _rd_buffer_is_full ]
 [v _pbuffer `*S389 ~T0 @X0 1 r1 ]
 [f ]
-"108
+"113
 [v _result `uc ~T0 @X0 1 a ]
-[; ;rd_buffer.c: 108: CHAR result;
-[; ;rd_buffer.c: 109: result = (CHAR)(rd_buffer_cnt(pbuffer) == (SIZE)pbuffer->head.size);
-"109
+[; ;rd_buffer.c: 113: CHAR result;
+[; ;rd_buffer.c: 114: result = (CHAR)(rd_buffer_cnt(pbuffer) == (SIZE)pbuffer->head.size);
+"114
 [e = _result -> -> == ( _rd_buffer_cnt (1 _pbuffer . . *U _pbuffer 0 2 `i `uc ]
-[; ;rd_buffer.c: 110: return result;
-"110
+[; ;rd_buffer.c: 115: return result;
+"115
 [e ) _result ]
-[e $UE 402  ]
-[; ;rd_buffer.c: 111: }
-"111
-[e :UE 402 ]
+[e $UE 403  ]
+[; ;rd_buffer.c: 116: }
+"116
+[e :UE 403 ]
 }
-"122
+"127
 [v _rd_buffer_get `(uc ~T0 @X0 1 ef2`*S389`*uc ]
 {
-[; ;rd_buffer.c: 122: CHAR rd_buffer_get(RdBuffer *pbuffer, UINT8 *prec){
+[; ;rd_buffer.c: 127: CHAR rd_buffer_get(RdBuffer *pbuffer, UINT8 *prec){
 [e :U _rd_buffer_get ]
 [v _pbuffer `*S389 ~T0 @X0 1 r1 ]
 [v _prec `*uc ~T0 @X0 1 r2 ]
 [f ]
-"123
-[v _result `uc ~T0 @X0 1 a ]
-[; ;rd_buffer.c: 123: CHAR result = FALSE;
-[e = _result -> . `E3585 0 `uc ]
-"124
-[v _first `i ~T0 @X0 1 a ]
-[; ;rd_buffer.c: 124: INT16 first = pbuffer->head.first;
-[e = _first . . *U _pbuffer 0 1 ]
-"125
-[v _last `i ~T0 @X0 1 a ]
-[; ;rd_buffer.c: 125: INT16 last = pbuffer->head.last;
-[e = _last . . *U _pbuffer 0 0 ]
-[; ;rd_buffer.c: 126: if(first != last) {
-"126
-[e $ ! != _first _last 404  ]
-{
-[; ;rd_buffer.c: 127: (*prec) = pbuffer->list[first ];
-"127
-[e = *U _prec *U + &U . *U _pbuffer 1 * -> -> _first `ui `ux -> -> # *U &U . *U _pbuffer 1 `ui `ux ]
-[; ;rd_buffer.c: 128: first ++;
 "128
-[e ++ _first -> 1 `i ]
-[; ;rd_buffer.c: 129: pbuffer->head.first = first ;
+[v _result `uc ~T0 @X0 1 a ]
+[; ;rd_buffer.c: 128: CHAR result = FALSE;
+[e = _result -> . `E3585 0 `uc ]
 "129
-[e = . . *U _pbuffer 0 1 _first ]
-[; ;rd_buffer.c: 130: if(first == pbuffer->head.size){
+[v _first `i ~T0 @X0 1 a ]
+[; ;rd_buffer.c: 129: INT16 first = pbuffer->head.first;
+[e = _first . . *U _pbuffer 0 1 ]
 "130
-[e $ ! == _first . . *U _pbuffer 0 2 405  ]
-{
-[; ;rd_buffer.c: 131: pbuffer->head.first = 0;
+[v _last `i ~T0 @X0 1 a ]
+[; ;rd_buffer.c: 130: INT16 last = pbuffer->head.last;
+[e = _last . . *U _pbuffer 0 0 ]
+[; ;rd_buffer.c: 131: if(first != last) {
 "131
-[e = . . *U _pbuffer 0 1 -> 0 `i ]
+[e $ ! != _first _last 405  ]
+{
+[; ;rd_buffer.c: 132: (*prec) = pbuffer->list[first ];
 "132
+[e = *U _prec *U + &U . *U _pbuffer 1 * -> -> _first `ui `ux -> -> # *U &U . *U _pbuffer 1 `ui `ux ]
+[; ;rd_buffer.c: 133: first ++;
+"133
+[e ++ _first -> 1 `i ]
+[; ;rd_buffer.c: 134: pbuffer->head.first = first ;
+"134
+[e = . . *U _pbuffer 0 1 _first ]
+[; ;rd_buffer.c: 135: if(first == pbuffer->head.size){
+"135
+[e $ ! == _first . . *U _pbuffer 0 2 406  ]
+{
+[; ;rd_buffer.c: 136: pbuffer->head.first = 0;
+"136
+[e = . . *U _pbuffer 0 1 -> 0 `i ]
+"137
+}
+[e :U 406 ]
+[; ;rd_buffer.c: 137: }
+[; ;rd_buffer.c: 138: result = TRUE;
+"138
+[e = _result -> . `E3585 1 `uc ]
+"139
 }
 [e :U 405 ]
-[; ;rd_buffer.c: 132: }
-[; ;rd_buffer.c: 133: result = TRUE;
-"133
-[e = _result -> . `E3585 1 `uc ]
-"134
-}
-[e :U 404 ]
-[; ;rd_buffer.c: 134: }
-[; ;rd_buffer.c: 135: return result;
-"135
+[; ;rd_buffer.c: 139: }
+[; ;rd_buffer.c: 140: return result;
+"140
 [e ) _result ]
-[e $UE 403  ]
-[; ;rd_buffer.c: 136: }
-"136
-[e :UE 403 ]
+[e $UE 404  ]
+[; ;rd_buffer.c: 141: }
+"141
+[e :UE 404 ]
 }
-"148
+"153
 [v _rd_buffer_put `(uc ~T0 @X0 1 ef2`*S389`*uc ]
 {
-[; ;rd_buffer.c: 148: CHAR rd_buffer_put(RdBuffer *pbuffer, UINT8 *prec){
+[; ;rd_buffer.c: 153: CHAR rd_buffer_put(RdBuffer *pbuffer, UINT8 *prec){
 [e :U _rd_buffer_put ]
 [v _pbuffer `*S389 ~T0 @X0 1 r1 ]
 [v _prec `*uc ~T0 @X0 1 r2 ]
 [f ]
-"149
-[v _result `uc ~T0 @X0 1 a ]
-[; ;rd_buffer.c: 149: CHAR result = FALSE;
-[e = _result -> . `E3585 0 `uc ]
-"150
-[v _sz `i ~T0 @X0 1 a ]
-[; ;rd_buffer.c: 150: SIZE sz ;
-[; ;rd_buffer.c: 151: sz = pbuffer->head.last - pbuffer->head.first;
-"151
-[e = _sz - . . *U _pbuffer 0 0 . . *U _pbuffer 0 1 ]
-[; ;rd_buffer.c: 152: this_contains_crlf |= (((CHAR)*prec) == '\n') || (((CHAR)*prec) == '\r');
-"152
-[e =| _this_contains_crlf -> -> || == -> *U _prec `ui -> 10 `ui == -> *U _prec `ui -> 13 `ui `i `uc ]
-[; ;rd_buffer.c: 154: if(sz < 0 ) {
 "154
-[e $ ! < _sz -> 0 `i 407  ]
-{
-[; ;rd_buffer.c: 155: sz += pbuffer->head.size;
+[v _result `uc ~T0 @X0 1 a ]
+[; ;rd_buffer.c: 154: CHAR result = FALSE;
+[e = _result -> . `E3585 0 `uc ]
 "155
-[e =+ _sz . . *U _pbuffer 0 2 ]
+[v _sz `i ~T0 @X0 1 a ]
+[; ;rd_buffer.c: 155: SIZE sz ;
+[; ;rd_buffer.c: 156: sz = pbuffer->head.last - pbuffer->head.first;
 "156
-}
-[e :U 407 ]
-[; ;rd_buffer.c: 156: }
-[; ;rd_buffer.c: 157: if(sz < (pbuffer->head.size - 1))
+[e = _sz - . . *U _pbuffer 0 0 . . *U _pbuffer 0 1 ]
+[; ;rd_buffer.c: 157: this_contains_crlf |= (((CHAR)*prec) == '\n') || (((CHAR)*prec) == '\r');
 "157
-[e $ ! < _sz - . . *U _pbuffer 0 2 -> 1 `i 408  ]
-[; ;rd_buffer.c: 158: {
-"158
-{
+[e =| _this_contains_crlf -> -> || == -> *U _prec `ui -> 10 `ui == -> *U _prec `ui -> 13 `ui `i `uc ]
+[; ;rd_buffer.c: 159: if(sz < 0 ) {
 "159
-[v _ind `i ~T0 @X0 1 a ]
-[; ;rd_buffer.c: 159: INT ind = pbuffer->head.last;
-[e = _ind . . *U _pbuffer 0 0 ]
-"160
-[v _mes_rec `*Vuc ~T0 @X0 1 a ]
-[; ;rd_buffer.c: 160: volatile UINT8 *mes_rec=(volatile UINT8*)&pbuffer->list[ind];
-[e = _mes_rec -> &U *U + &U . *U _pbuffer 1 * -> -> _ind `ui `ux -> -> # *U &U . *U _pbuffer 1 `ui `ux `*Vuc ]
-[; ;rd_buffer.c: 161: (*mes_rec) = (*prec);
-"161
-[e = *U _mes_rec *U _prec ]
-[; ;rd_buffer.c: 162: ind++;
-"162
-[e ++ _ind -> 1 `i ]
-[; ;rd_buffer.c: 164: if(ind == pbuffer->head.size ) {
-"164
-[e $ ! == _ind . . *U _pbuffer 0 2 409  ]
+[e $ ! < _sz -> 0 `i 408  ]
 {
-[; ;rd_buffer.c: 165: ind = 0;
-"165
-[e = _ind -> 0 `i ]
-"166
-}
-[e :U 409 ]
-[; ;rd_buffer.c: 166: }
-[; ;rd_buffer.c: 167: pbuffer->head.last = ind;
-"167
-[e = . . *U _pbuffer 0 0 _ind ]
-[; ;rd_buffer.c: 168: result = TRUE;
-"168
-[e = _result -> . `E3585 1 `uc ]
-"169
+[; ;rd_buffer.c: 160: sz += pbuffer->head.size;
+"160
+[e =+ _sz . . *U _pbuffer 0 2 ]
+"161
 }
 [e :U 408 ]
-[; ;rd_buffer.c: 169: }
-[; ;rd_buffer.c: 170: return result;
+[; ;rd_buffer.c: 161: }
+[; ;rd_buffer.c: 162: if(sz < (pbuffer->head.size - 1))
+"162
+[e $ ! < _sz - . . *U _pbuffer 0 2 -> 1 `i 409  ]
+[; ;rd_buffer.c: 163: {
+"163
+{
+"164
+[v _ind `i ~T0 @X0 1 a ]
+[; ;rd_buffer.c: 164: INT ind = pbuffer->head.last;
+[e = _ind . . *U _pbuffer 0 0 ]
+"165
+[v _mes_rec `*Vuc ~T0 @X0 1 a ]
+[; ;rd_buffer.c: 165: volatile UINT8 *mes_rec=(volatile UINT8*)&pbuffer->list[ind];
+[e = _mes_rec -> &U *U + &U . *U _pbuffer 1 * -> -> _ind `ui `ux -> -> # *U &U . *U _pbuffer 1 `ui `ux `*Vuc ]
+[; ;rd_buffer.c: 166: (*mes_rec) = (*prec);
+"166
+[e = *U _mes_rec *U _prec ]
+[; ;rd_buffer.c: 167: ind++;
+"167
+[e ++ _ind -> 1 `i ]
+[; ;rd_buffer.c: 169: if(ind == pbuffer->head.size ) {
+"169
+[e $ ! == _ind . . *U _pbuffer 0 2 410  ]
+{
+[; ;rd_buffer.c: 170: ind = 0;
 "170
-[e ) _result ]
-[e $UE 406  ]
-[; ;rd_buffer.c: 171: }
+[e = _ind -> 0 `i ]
 "171
-[e :UE 406 ]
 }
-"185
+[e :U 410 ]
+[; ;rd_buffer.c: 171: }
+[; ;rd_buffer.c: 172: pbuffer->head.last = ind;
+"172
+[e = . . *U _pbuffer 0 0 _ind ]
+[; ;rd_buffer.c: 173: result = TRUE;
+"173
+[e = _result -> . `E3585 1 `uc ]
+"174
+}
+[e :U 409 ]
+[; ;rd_buffer.c: 174: }
+[; ;rd_buffer.c: 175: return result;
+"175
+[e ) _result ]
+[e $UE 407  ]
+[; ;rd_buffer.c: 176: }
+"176
+[e :UE 407 ]
+}
+"190
 [v _rd_buffer_getn `(uc ~T0 @X0 1 ef3`*S389`*uc`i ]
 {
-[; ;rd_buffer.c: 185: CHAR rd_buffer_getn(RdBuffer *pbuffer, UINT8 prec[], SIZE rec_count){
+[; ;rd_buffer.c: 190: CHAR rd_buffer_getn(RdBuffer *pbuffer, UINT8 prec[], SIZE rec_count){
 [e :U _rd_buffer_getn ]
 [v _pbuffer `*S389 ~T0 @X0 1 r1 ]
 [v _prec `*uc ~T0 @X0 1 r2 ]
 [v _rec_count `i ~T0 @X0 1 r3 ]
 [f ]
-"186
-[v _i `i ~T0 @X0 1 a ]
-[; ;rd_buffer.c: 186: SIZE i=0;
-[e = _i -> 0 `i ]
-"187
-[v _result `uc ~T0 @X0 1 a ]
-[; ;rd_buffer.c: 187: CHAR result = TRUE;
-[e = _result -> . `E3585 1 `uc ]
-[; ;rd_buffer.c: 188: while(rec_count--){
-"188
-[e $U 411  ]
-[e :U 412 ]
-{
-[; ;rd_buffer.c: 189: if(rd_buffer_get(pbuffer, &prec[i]) == FALSE ) {
-"189
-[e $ ! == -> ( _rd_buffer_get (2 , _pbuffer &U *U + _prec * -> _i `x -> -> # *U _prec `i `x `i -> . `E3585 0 `i 414  ]
-{
-[; ;rd_buffer.c: 190: result = FALSE;
-"190
-[e = _result -> . `E3585 0 `uc ]
-[; ;rd_buffer.c: 191: break;
 "191
-[e $U 413  ]
+[v _i `i ~T0 @X0 1 a ]
+[; ;rd_buffer.c: 191: SIZE i=0;
+[e = _i -> 0 `i ]
 "192
-}
-[e :U 414 ]
-[; ;rd_buffer.c: 192: }
-[; ;rd_buffer.c: 193: i++;
+[v _result `uc ~T0 @X0 1 a ]
+[; ;rd_buffer.c: 192: CHAR result = TRUE;
+[e = _result -> . `E3585 1 `uc ]
+[; ;rd_buffer.c: 193: while(rec_count--){
 "193
-[e ++ _i -> 1 `i ]
-"194
-}
-[e :U 411 ]
-"188
-[e $ != -- _rec_count -> 1 `i -> 0 `i 412  ]
+[e $U 412  ]
 [e :U 413 ]
-[; ;rd_buffer.c: 194: }
-[; ;rd_buffer.c: 195: return result;
+{
+[; ;rd_buffer.c: 194: if(rd_buffer_get(pbuffer, &prec[i]) == FALSE ) {
+"194
+[e $ ! == -> ( _rd_buffer_get (2 , _pbuffer &U *U + _prec * -> _i `x -> -> # *U _prec `i `x `i -> . `E3585 0 `i 415  ]
+{
+[; ;rd_buffer.c: 195: result = FALSE;
 "195
-[e ) _result ]
-[e $UE 410  ]
-[; ;rd_buffer.c: 196: }
+[e = _result -> . `E3585 0 `uc ]
+[; ;rd_buffer.c: 196: break;
 "196
-[e :UE 410 ]
+[e $U 414  ]
+"197
 }
-"208
+[e :U 415 ]
+[; ;rd_buffer.c: 197: }
+[; ;rd_buffer.c: 198: i++;
+"198
+[e ++ _i -> 1 `i ]
+"199
+}
+[e :U 412 ]
+"193
+[e $ != -- _rec_count -> 1 `i -> 0 `i 413  ]
+[e :U 414 ]
+[; ;rd_buffer.c: 199: }
+[; ;rd_buffer.c: 200: return result;
+"200
+[e ) _result ]
+[e $UE 411  ]
+[; ;rd_buffer.c: 201: }
+"201
+[e :UE 411 ]
+}
+"213
 [v _rd_buffer_first `(uc ~T0 @X0 1 ef2`*S389`*uc ]
 {
-[; ;rd_buffer.c: 208: CHAR rd_buffer_first(RdBuffer *pbuffer, UINT8 *prec){
+[; ;rd_buffer.c: 213: CHAR rd_buffer_first(RdBuffer *pbuffer, UINT8 *prec){
 [e :U _rd_buffer_first ]
 [v _pbuffer `*S389 ~T0 @X0 1 r1 ]
 [v _prec `*uc ~T0 @X0 1 r2 ]
 [f ]
-"209
-[v _result `uc ~T0 @X0 1 a ]
-[; ;rd_buffer.c: 209: CHAR result = FALSE;
-[e = _result -> . `E3585 0 `uc ]
-[; ;rd_buffer.c: 210: if(rd_buffer_cnt(pbuffer) > 0){
-"210
-[e $ ! > ( _rd_buffer_cnt (1 _pbuffer -> 0 `i 416  ]
-{
-"211
-[v _ind `i ~T0 @X0 1 a ]
-[; ;rd_buffer.c: 211: INT16 ind = pbuffer->head.first;
-[e = _ind . . *U _pbuffer 0 1 ]
-"212
-[v _mes_rec `*Vuc ~T0 @X0 1 a ]
-[; ;rd_buffer.c: 212: volatile UINT8 *mes_rec = (volatile UINT8*)&pbuffer->list[ind];
-[e = _mes_rec -> &U *U + &U . *U _pbuffer 1 * -> -> _ind `ui `ux -> -> # *U &U . *U _pbuffer 1 `ui `ux `*Vuc ]
-[; ;rd_buffer.c: 213: (*prec) = (*mes_rec);
-"213
-[e = *U _prec *U _mes_rec ]
-[; ;rd_buffer.c: 214: result = TRUE;
 "214
-[e = _result -> . `E3585 1 `uc ]
+[v _result `uc ~T0 @X0 1 a ]
+[; ;rd_buffer.c: 214: CHAR result = FALSE;
+[e = _result -> . `E3585 0 `uc ]
+[; ;rd_buffer.c: 215: if(rd_buffer_cnt(pbuffer) > 0){
 "215
-}
-[e :U 416 ]
-[; ;rd_buffer.c: 215: }
-[; ;rd_buffer.c: 216: return result;
+[e $ ! > ( _rd_buffer_cnt (1 _pbuffer -> 0 `i 417  ]
+{
 "216
-[e ) _result ]
-[e $UE 415  ]
-[; ;rd_buffer.c: 217: }
+[v _ind `i ~T0 @X0 1 a ]
+[; ;rd_buffer.c: 216: INT16 ind = pbuffer->head.first;
+[e = _ind . . *U _pbuffer 0 1 ]
 "217
-[e :UE 415 ]
+[v _mes_rec `*Vuc ~T0 @X0 1 a ]
+[; ;rd_buffer.c: 217: volatile UINT8 *mes_rec = (volatile UINT8*)&pbuffer->list[ind];
+[e = _mes_rec -> &U *U + &U . *U _pbuffer 1 * -> -> _ind `ui `ux -> -> # *U &U . *U _pbuffer 1 `ui `ux `*Vuc ]
+[; ;rd_buffer.c: 218: (*prec) = (*mes_rec);
+"218
+[e = *U _prec *U _mes_rec ]
+[; ;rd_buffer.c: 219: result = TRUE;
+"219
+[e = _result -> . `E3585 1 `uc ]
+"220
 }
-"228
+[e :U 417 ]
+[; ;rd_buffer.c: 220: }
+[; ;rd_buffer.c: 221: return result;
+"221
+[e ) _result ]
+[e $UE 416  ]
+[; ;rd_buffer.c: 222: }
+"222
+[e :UE 416 ]
+}
+"233
 [v _rd_buffer_last `(uc ~T0 @X0 1 ef2`*S389`*uc ]
 {
-[; ;rd_buffer.c: 228: CHAR rd_buffer_last(RdBuffer *pbuffer, UINT8 *prec){
+[; ;rd_buffer.c: 233: CHAR rd_buffer_last(RdBuffer *pbuffer, UINT8 *prec){
 [e :U _rd_buffer_last ]
 [v _pbuffer `*S389 ~T0 @X0 1 r1 ]
 [v _prec `*uc ~T0 @X0 1 r2 ]
 [f ]
-"229
-[v _result `uc ~T0 @X0 1 a ]
-[; ;rd_buffer.c: 229: CHAR result = FALSE;
-[e = _result -> . `E3585 0 `uc ]
-[; ;rd_buffer.c: 230: if(rd_buffer_cnt(pbuffer) > 0){
-"230
-[e $ ! > ( _rd_buffer_cnt (1 _pbuffer -> 0 `i 418  ]
-{
-"231
-[v _ind `i ~T0 @X0 1 a ]
-[; ;rd_buffer.c: 231: INT16 ind = pbuffer->head.last - 1;
-[e = _ind - . . *U _pbuffer 0 0 -> 1 `i ]
-[; ;rd_buffer.c: 232: if(ind < 0) {
-"232
-[e $ ! < _ind -> 0 `i 419  ]
-{
-[; ;rd_buffer.c: 233: ind = pbuffer->head.size;
-"233
-[e = _ind . . *U _pbuffer 0 2 ]
 "234
+[v _result `uc ~T0 @X0 1 a ]
+[; ;rd_buffer.c: 234: CHAR result = FALSE;
+[e = _result -> . `E3585 0 `uc ]
+[; ;rd_buffer.c: 235: if(rd_buffer_cnt(pbuffer) > 0){
+"235
+[e $ ! > ( _rd_buffer_cnt (1 _pbuffer -> 0 `i 419  ]
+{
+"236
+[v _ind `i ~T0 @X0 1 a ]
+[; ;rd_buffer.c: 236: INT16 ind = pbuffer->head.last - 1;
+[e = _ind - . . *U _pbuffer 0 0 -> 1 `i ]
+[; ;rd_buffer.c: 237: if(ind < 0) {
+"237
+[e $ ! < _ind -> 0 `i 420  ]
+{
+[; ;rd_buffer.c: 238: ind = pbuffer->head.size;
+"238
+[e = _ind . . *U _pbuffer 0 2 ]
+"239
+}
+[e :U 420 ]
+"240
+[v _mes_rec `*Vuc ~T0 @X0 1 a ]
+[; ;rd_buffer.c: 239: }
+[; ;rd_buffer.c: 240: volatile UINT8 *mes_rec = (volatile UINT8*)&pbuffer->list[ind];
+[e = _mes_rec -> &U *U + &U . *U _pbuffer 1 * -> -> _ind `ui `ux -> -> # *U &U . *U _pbuffer 1 `ui `ux `*Vuc ]
+[; ;rd_buffer.c: 241: (*prec) = (*mes_rec);
+"241
+[e = *U _prec *U _mes_rec ]
+[; ;rd_buffer.c: 242: result = TRUE;
+"242
+[e = _result -> . `E3585 1 `uc ]
+"243
 }
 [e :U 419 ]
-"235
-[v _mes_rec `*Vuc ~T0 @X0 1 a ]
-[; ;rd_buffer.c: 234: }
-[; ;rd_buffer.c: 235: volatile UINT8 *mes_rec = (volatile UINT8*)&pbuffer->list[ind];
-[e = _mes_rec -> &U *U + &U . *U _pbuffer 1 * -> -> _ind `ui `ux -> -> # *U &U . *U _pbuffer 1 `ui `ux `*Vuc ]
-[; ;rd_buffer.c: 236: (*prec) = (*mes_rec);
-"236
-[e = *U _prec *U _mes_rec ]
-[; ;rd_buffer.c: 237: result = TRUE;
-"237
-[e = _result -> . `E3585 1 `uc ]
-"238
-}
-[e :U 418 ]
-[; ;rd_buffer.c: 238: }
-[; ;rd_buffer.c: 239: return result;
-"239
+[; ;rd_buffer.c: 243: }
+[; ;rd_buffer.c: 244: return result;
+"244
 [e ) _result ]
-[e $UE 417  ]
-[; ;rd_buffer.c: 240: }
-"240
-[e :UE 417 ]
+[e $UE 418  ]
+[; ;rd_buffer.c: 245: }
+"245
+[e :UE 418 ]
 }

@@ -3991,52 +3991,52 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;modules\detection.h: 24: INT24 detection_get_zero(void) ;
 [; ;modules\detection.h: 25: void detection_task(void);
 [; ;modules\detection.h: 26: void detection_obtain_analog_service(void);
-[; ;memory_register_map.h: 16: typedef enum {
-[; ;memory_register_map.h: 17: PROFILE_DIS=0,
-[; ;memory_register_map.h: 18: PROFILE1,
-[; ;memory_register_map.h: 19: PROFILE2,
-[; ;memory_register_map.h: 20: PROFILE3,
-[; ;memory_register_map.h: 21: PROFILE4,
-[; ;memory_register_map.h: 22: PROFILE5,
-[; ;memory_register_map.h: 23: PROFILE6,
-[; ;memory_register_map.h: 24: PROFILES_COUNT
-[; ;memory_register_map.h: 25: } ProfileNumber_t;
-[; ;memory_register_map.h: 28: typedef struct
-[; ;memory_register_map.h: 29: {
-[; ;memory_register_map.h: 30: UINT8 checksum;
-[; ;memory_register_map.h: 31: ProfileNumber_t profile_number;
-[; ;memory_register_map.h: 32: UINT8 address;
-[; ;memory_register_map.h: 33: UINT8 potentiometer;
-[; ;memory_register_map.h: 34: UINT8 acc_sensitivity;
-[; ;memory_register_map.h: 35: UINT16 power_trig;
-[; ;memory_register_map.h: 36: DetectionMode_t det_mode;
-[; ;memory_register_map.h: 37: ClassicDetectorConfig_t cla_config;
-[; ;memory_register_map.h: 38: PeakDetectorConfig_t pd_config;
-[; ;memory_register_map.h: 39: } Config_t;
-[; ;memory_register_map.h: 43: typedef struct {
-[; ;memory_register_map.h: 44: UINT16 id;
-[; ;memory_register_map.h: 45: UINT16 psw;
-[; ;memory_register_map.h: 46: } DevInf_t;
-"49 src\memory_register_map.h
+[; ;memory_register_map.h: 9: typedef enum {
+[; ;memory_register_map.h: 10: PROFILE_DIS=0,
+[; ;memory_register_map.h: 11: PROFILE1,
+[; ;memory_register_map.h: 12: PROFILE2,
+[; ;memory_register_map.h: 13: PROFILE3,
+[; ;memory_register_map.h: 14: PROFILE4,
+[; ;memory_register_map.h: 15: PROFILE5,
+[; ;memory_register_map.h: 16: PROFILE6,
+[; ;memory_register_map.h: 17: PROFILES_COUNT
+[; ;memory_register_map.h: 18: } ProfileNumber_t;
+[; ;memory_register_map.h: 21: typedef struct
+[; ;memory_register_map.h: 22: {
+[; ;memory_register_map.h: 23: UINT8 checksum;
+[; ;memory_register_map.h: 24: ProfileNumber_t profile_number;
+[; ;memory_register_map.h: 25: UINT8 address;
+[; ;memory_register_map.h: 26: UINT8 potentiometer;
+[; ;memory_register_map.h: 27: UINT8 acc_sensitivity;
+[; ;memory_register_map.h: 28: UINT16 power_trig;
+[; ;memory_register_map.h: 29: DetectionMode_t det_mode;
+[; ;memory_register_map.h: 30: ClassicDetectorConfig_t cla_config;
+[; ;memory_register_map.h: 31: PeakDetectorConfig_t pd_config;
+[; ;memory_register_map.h: 32: } Config_t;
+[; ;memory_register_map.h: 36: typedef struct {
+[; ;memory_register_map.h: 37: UINT16 id;
+[; ;memory_register_map.h: 38: UINT16 psw;
+[; ;memory_register_map.h: 39: } DevInf_t;
+"42 src\memory_register_map.h
 [v _g_CONFIG `VS397 ~T0 @X0 1 e ]
-[; ;memory_register_map.h: 49: volatile Config_t g_CONFIG;
-"50
+[; ;memory_register_map.h: 42: volatile Config_t g_CONFIG;
+"43
 [v _g_STATUS `Vui ~T0 @X0 1 e ]
-[; ;memory_register_map.h: 50: volatile UINT16 g_STATUS;
-"51
+[; ;memory_register_map.h: 43: volatile UINT16 g_STATUS;
+"44
 [v _g_analog0 `Vui ~T0 @X0 1 e ]
-[; ;memory_register_map.h: 51: volatile UINT16 g_analog0;
-"52
+[; ;memory_register_map.h: 44: volatile UINT16 g_analog0;
+"45
 [v _g_analog1 `Vui ~T0 @X0 1 e ]
-[; ;memory_register_map.h: 52: volatile UINT16 g_analog1;
-"53
+[; ;memory_register_map.h: 45: volatile UINT16 g_analog1;
+"46
 [v _g_analog2 `Vui ~T0 @X0 1 e ]
-[; ;memory_register_map.h: 53: volatile UINT16 g_analog2;
-[; ;memory_register_map.h: 60: extern volatile Config_t g_CONFIG;
-[; ;memory_register_map.h: 61: extern volatile UINT16 g_STATUS;
-[; ;memory_register_map.h: 62: extern volatile UINT16 g_analog0;
-[; ;memory_register_map.h: 63: extern volatile UINT16 g_analog1;
-[; ;memory_register_map.h: 64: extern volatile UINT16 g_analog2;
+[; ;memory_register_map.h: 46: volatile UINT16 g_analog2;
+[; ;memory_register_map.h: 53: extern volatile Config_t g_CONFIG;
+[; ;memory_register_map.h: 54: extern volatile UINT16 g_STATUS;
+[; ;memory_register_map.h: 55: extern volatile UINT16 g_analog0;
+[; ;memory_register_map.h: 56: extern volatile UINT16 g_analog1;
+[; ;memory_register_map.h: 57: extern volatile UINT16 g_analog2;
 "40 src/modules/device_config.c
 [v _locked `uc ~T0 @X0 1 s ]
 [i _locked

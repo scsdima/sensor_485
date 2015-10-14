@@ -4075,46 +4075,46 @@ Version 3.2 HI-TECH Software Intermediate Code
 "17
 [v _event_miss `Vuc ~T0 @X0 -> 8 `i e ]
 [; ;modules\scheduler.h: 17: volatile UINT8 event_miss[8];
-"25 src/main.c
+"14 src/main.c
 [v _main `(i ~T0 @X0 1 ef ]
 {
-[; ;main.c: 24: int main(void)
-[; ;main.c: 25: {
+[; ;main.c: 13: int main(void)
+[; ;main.c: 14: {
 [e :U _main ]
 [f ]
-[; ;main.c: 26: while(startup() != RESULT_SUCCESS)
-"26
+[; ;main.c: 15: while(startup() != RESULT_SUCCESS)
+"15
 [e $U 403  ]
 [e :U 404 ]
-[; ;main.c: 27: {
-"27
+[; ;main.c: 16: {
+"16
 {
-[; ;main.c: 28: delay_ms(1000);
-"28
+[; ;main.c: 17: delay_ms(1000);
+"17
 [e ( _delay_ms (1 -> -> 1000 `i `ui ]
-"29
+"18
 }
 [e :U 403 ]
-"26
+"15
 [e $ != -> ( _startup ..  `i -> . `E3388 0 `i 404  ]
 [e :U 405 ]
-[; ;main.c: 29: };
-[; ;main.c: 30: do{INTCONbits.GIEH=(1); INTCONbits.GIEL=(1);}while(0);;
-"30
+[; ;main.c: 18: };
+[; ;main.c: 19: do{INTCONbits.GIEH=(1); INTCONbits.GIEL=(1);}while(0);;
+"19
 [e :U 408 ]
 {
 [e = . . _INTCONbits 2 7 -> -> 1 `i `uc ]
 [e = . . _INTCONbits 2 6 -> -> 1 `i `uc ]
 }
 [e :U 407 ]
-[; ;main.c: 31: while(1)
-"31
+[; ;main.c: 20: while(1)
+"20
 [e :U 410 ]
-[; ;main.c: 32: {
-"32
+[; ;main.c: 21: { ;
+"21
 {
-[; ;main.c: 33: do{ INT8 event_old=-1; INT8 event_priority=-1; UINT8 i; for(i=0;i<8;i++) { if(pool[i]==1) { if(event_miss[i] == 0 ) event_old=i; else event_miss[i]--; if(event_priority<0) event_priority=i; } } if(event_old >= 0) { events[event_old](); pool[event_old
-"33
+[; ;main.c: 22: do{ INT8 event_old=-1; INT8 event_priority=-1; UINT8 i; for(i=0;i<8;i++) { if(pool[i]==1) { if(event_miss[i] == 0 ) event_old=i; else event_miss[i]--; if(event_priority<0) event_priority=i; } } if(event_old >= 0) { events[event_old](); pool[event_old
+"22
 [e :U 414 ]
 {
 [v _event_old `c ~T0 @X0 1 a ]
@@ -4162,17 +4162,17 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e :U 423 ]
 }
 [e :U 413 ]
-[; ;main.c: 34: asm(" clrwdt");
-"34
+[; ;main.c: 23: asm(" clrwdt");
+"23
 [; <"  clrwdt ;# ">
-"35
+"24
 }
 [e :U 409 ]
-"31
+"20
 [e $U 410  ]
 [e :U 411 ]
-[; ;main.c: 35: }
-[; ;main.c: 36: }
-"36
+[; ;main.c: 24: }
+[; ;main.c: 25: }
+"25
 [e :UE 402 ]
 }

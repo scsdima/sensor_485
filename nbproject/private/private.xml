@@ -3,12 +3,12 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/Lenovo/Dropbox/workspaces/mamba3_project/mamba3.X/src/drivers/adc.c</file>
             <file>file:/C:/Users/Lenovo/Dropbox/workspaces/mamba3_project/mamba3.X/src/config.h</file>
-            <file>file:/C:/Users/Lenovo/Dropbox/workspaces/mamba3_project/mamba3.X/src/startup/startup.c</file>
             <file>file:/C:/Users/Lenovo/Dropbox/workspaces/mamba3_project/mamba3.X/src/interrupts.c</file>
-            <file>file:/C:/Users/Lenovo/Dropbox/workspaces/mamba3_project/mamba3.X/src/modules/classic_detector.c</file>
-            <file>file:/C:/Users/Lenovo/Dropbox/workspaces/mamba3_project/mamba3.X/src/modules/classic_detector.h</file>
+            <file>file:/C:/Users/Lenovo/Dropbox/workspaces/mamba3_project/mamba3.X/src/modules/on_parameter_found.c</file>
+            <file>file:/C:/Users/Lenovo/Dropbox/workspaces/mamba3_project/mamba3.X/src/modules/serialport.c</file>
+            <file>file:/C:/Users/Lenovo/Dropbox/workspaces/mamba3_project/mamba3.X/src/modules/rd_buffer.c</file>
+            <file>file:/C:/Users/Lenovo/Dropbox/workspaces/mamba3_project/mamba3.X/src/main.c</file>
         </group>
     </open-files>
 </project-private>

@@ -1,6 +1,12 @@
 Version 3.2 HI-TECH Software Intermediate Code
+[c E4489 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 .. ]
+[n E4489 . Command_set Command_get Command_init Command_selftest Parameter_signal Parameter_imp Parameter_pwr Parameter_pot Parameter_ver Parameter_status Parameter_acc Parameter_adr Parameter_error Parameter_defaults Parameter_mod Parameter_profile Parameter_pwrtrig Parameter_acctrig Parameter_triglev Parameter_trigsum Parameter_trigcnt Parameter_wavtole Parameter_wavtrig Parameter_wavlcnt Parameter_wavrcnt Parameter_id Parameter_psw SYNTAX_COUNT  ]
+[s S392 `uc -> 20 `i `c 1 `c 1 `c 1 ]
+[n S392 . name name_len id type ]
+[c E4454 0 1 2 3 4 5 6 .. ]
+[n E4454 . PARSER_TYPE_NO_TYPE PARSER_TYPE_BYTEARRAY PARSER_TYPE_HEXARRAY PARSER_TYPE_INTEGER PARSER_TYPE_REAL PARSER_TYPE_BOOL PARSER_TYPE_DOUBLE  ]
 "8 src/modules/scheduler.h
-[v F4498 `(v ~T0 @X0 0 tf ]
+[v F4526 `(v ~T0 @X0 0 tf ]
 [s S390 `i 1 `i 1 `i 1 ]
 [n S390 . last first size ]
 [s S389 `S390 1 `uc + -> 100 `i -> 1 `i ]
@@ -15,18 +21,18 @@ Version 3.2 HI-TECH Software Intermediate Code
 [v _uart_getc `(E3388 ~T0 @X0 0 ef1`*uc ]
 "43 src/modules/rd_buffer.h
 [v _rd_buffer_put `(uc ~T0 @X0 0 ef2`*S389`*uc ]
-"26
-[v _rd_buffer_readline `(uc ~T0 @X0 0 ef3`*S389`*uc`*i ]
-"47 src/modules/syntax.h
-[v _syntax_string `(i ~T0 @X0 0 ef2`*Cuc`uc ]
+"41 src/modules/syntax.h
+[v _syntax_string `(c ~T0 @X0 0 ef3`*Cuc`i`uc ]
 [c E3585 0 1 .. ]
 [n E3585 _BOOL FALSE TRUE  ]
+"26 src/modules/rd_buffer.h
+[v _rd_buffer_readline `(uc ~T0 @X0 0 ef3`*S389`*uc`*i ]
+"40
+[v _rd_buffer_get `(uc ~T0 @X0 0 ef2`*S389`*uc ]
+"18 src/drivers\uart.h
+[v _uart_putc `(v ~T0 @X0 0 ef1`uc ]
 "28 src/modules/rd_buffer.h
 [v _rd_buffer_cnt `(i ~T0 @X0 0 ef1`*S389 ]
-"47
-[v _rd_buffer_getn `(uc ~T0 @X0 0 ef3`*S389`*uc`i ]
-"13 src/drivers\uart.h
-[v _uart_puts `(v ~T0 @X0 0 ef2`*Cuc`i ]
 [; ;pic18f45k20.h: 44: extern volatile unsigned char SSPMSK @ 0xF77;
 "46 C:\Program Files\Microchip\xc8\v1.12\include\pic18f45k20.h
 [; ;pic18f45k20.h: 46: asm("SSPMSK equ 0F77h");
@@ -4019,23 +4025,394 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;syntax.h: 27: PARSER_STOP,
 [; ;syntax.h: 28: PARSER_ERROR
 [; ;syntax.h: 29: }ParserOperation_t;
-[; ;syntax.h: 34: typedef struct {
-[; ;syntax.h: 35: char name[(20)];
-[; ;syntax.h: 36: INT8 id;
-[; ;syntax.h: 37: } SyntaxCommand_t;
-[; ;syntax.h: 39: typedef struct {
-[; ;syntax.h: 40: char name[(20)];
-[; ;syntax.h: 41: INT8 id;
-[; ;syntax.h: 42: ParserType_t type;
-[; ;syntax.h: 43: } SyntaxParameter_t;
-[; ;syntax.h: 47: INT16 syntax_string(const char pstr[], CHAR case_sensitive);
-[; ;syntax.h: 49: const char* syntax_get_text(void);
-[; ;syntax.h: 51: INT16 syntax_as_integer(void);
-[; ;syntax.h: 52: double syntax_as_double(void);
-[; ;syntax.h: 53: CHAR syntax_as_bool(void);
-[; ;syntax.h: 54: UINT8 * syntax_as_bytearray(void);
-[; ;syntax.h: 59: void on_parameter_found(ParserOperation_t operation ,INT8 cmd_id
-[; ;syntax.h: 60: , INT8 p_id ,const void* p, ParserType_t type);
+[; ;syntax.h: 32: typedef struct {
+[; ;syntax.h: 33: char name[(20)];
+[; ;syntax.h: 34: INT8 name_len;
+[; ;syntax.h: 35: INT8 id;
+[; ;syntax.h: 36: INT8 type;
+[; ;syntax.h: 37: } SyntaxItem_t;
+[; ;syntax.h: 41: INT8 syntax_string(const char *pstr,SIZE str_len, CHAR case_sensitive);
+[; ;syntax.h: 44: const char* syntax_get_text(void);
+[; ;syntax.h: 45: INT16 syntax_as_integer(void);
+[; ;syntax.h: 46: double syntax_as_double(void);
+[; ;syntax.h: 47: CHAR syntax_as_bool(void);
+[; ;syntax.h: 48: UINT8 * syntax_as_bytearray(void);
+[; ;syntax.h: 54: enum {
+[; ;syntax.h: 55: Command_set, Command_get, Command_init, Command_selftest, Parameter_signal, Parameter_imp, Parameter_pwr, Parameter_pot, Parameter_ver, Parameter_status, Parameter_acc, Parameter_adr, Parameter_error, Parameter_defaults, Parameter_mod, Parameter_prof
+[; ;syntax.h: 56: SYNTAX_COUNT
+[; ;syntax.h: 57: };
+"61 src/modules/syntax.h
+[v _syntax_data `CS392 ~T0 @X0 . `E4489 27 s ]
+[i _syntax_data
+:U ..
+:U ..
+:U ..
+-> 115 `c
+-> 101 `c
+-> 116 `c
+-> 0 `c
+..
+"62
+-> - -> 4 `ui -> -> 1 `i `ui `c
+-> . `E4489 0 `c
+-> . `E4454 0 `c
+..
+:U ..
+:U ..
+-> 103 `c
+-> 101 `c
+-> 116 `c
+-> 0 `c
+..
+-> - -> 4 `ui -> -> 1 `i `ui `c
+-> . `E4489 1 `c
+-> . `E4454 0 `c
+..
+:U ..
+:U ..
+-> 105 `c
+-> 110 `c
+-> 105 `c
+-> 116 `c
+-> 0 `c
+..
+-> - -> 5 `ui -> -> 1 `i `ui `c
+-> . `E4489 2 `c
+-> . `E4454 0 `c
+..
+:U ..
+:U ..
+-> 115 `c
+-> 101 `c
+-> 108 `c
+-> 102 `c
+-> 116 `c
+-> 101 `c
+-> 115 `c
+-> 116 `c
+-> 0 `c
+..
+-> - -> 9 `ui -> -> 1 `i `ui `c
+-> . `E4489 3 `c
+-> . `E4454 0 `c
+..
+:U ..
+:U ..
+-> 115 `c
+-> 105 `c
+-> 103 `c
+-> 110 `c
+-> 97 `c
+-> 108 `c
+-> 0 `c
+..
+-> - -> 7 `ui -> -> 1 `i `ui `c
+-> . `E4489 4 `c
+-> . `E4454 3 `c
+..
+:U ..
+:U ..
+-> 105 `c
+-> 109 `c
+-> 112 `c
+-> 0 `c
+..
+-> - -> 4 `ui -> -> 1 `i `ui `c
+-> . `E4489 5 `c
+-> . `E4454 3 `c
+..
+:U ..
+:U ..
+-> 112 `c
+-> 119 `c
+-> 114 `c
+-> 0 `c
+..
+-> - -> 4 `ui -> -> 1 `i `ui `c
+-> . `E4489 6 `c
+-> . `E4454 3 `c
+..
+:U ..
+:U ..
+-> 112 `c
+-> 111 `c
+-> 116 `c
+-> 0 `c
+..
+-> - -> 4 `ui -> -> 1 `i `ui `c
+-> . `E4489 7 `c
+-> . `E4454 3 `c
+..
+:U ..
+:U ..
+-> 118 `c
+-> 101 `c
+-> 114 `c
+-> 0 `c
+..
+-> - -> 4 `ui -> -> 1 `i `ui `c
+-> . `E4489 8 `c
+-> . `E4454 3 `c
+..
+:U ..
+:U ..
+-> 115 `c
+-> 116 `c
+-> 97 `c
+-> 116 `c
+-> 117 `c
+-> 115 `c
+-> 0 `c
+..
+-> - -> 7 `ui -> -> 1 `i `ui `c
+-> . `E4489 9 `c
+-> . `E4454 3 `c
+..
+:U ..
+:U ..
+-> 97 `c
+-> 99 `c
+-> 99 `c
+-> 0 `c
+..
+-> - -> 4 `ui -> -> 1 `i `ui `c
+-> . `E4489 10 `c
+-> . `E4454 3 `c
+..
+:U ..
+:U ..
+-> 97 `c
+-> 100 `c
+-> 114 `c
+-> 0 `c
+..
+-> - -> 4 `ui -> -> 1 `i `ui `c
+-> . `E4489 11 `c
+-> . `E4454 3 `c
+..
+:U ..
+:U ..
+-> 101 `c
+-> 114 `c
+-> 114 `c
+-> 111 `c
+-> 114 `c
+-> 0 `c
+..
+-> - -> 6 `ui -> -> 1 `i `ui `c
+-> . `E4489 12 `c
+-> . `E4454 3 `c
+..
+:U ..
+:U ..
+-> 100 `c
+-> 101 `c
+-> 102 `c
+-> 97 `c
+-> 117 `c
+-> 108 `c
+-> 116 `c
+-> 115 `c
+-> 0 `c
+..
+-> - -> 9 `ui -> -> 1 `i `ui `c
+-> . `E4489 13 `c
+-> . `E4454 3 `c
+..
+:U ..
+:U ..
+-> 109 `c
+-> 111 `c
+-> 100 `c
+-> 0 `c
+..
+-> - -> 4 `ui -> -> 1 `i `ui `c
+-> . `E4489 14 `c
+-> . `E4454 1 `c
+..
+:U ..
+:U ..
+-> 112 `c
+-> 114 `c
+-> 111 `c
+-> 102 `c
+-> 105 `c
+-> 108 `c
+-> 101 `c
+-> 0 `c
+..
+-> - -> 8 `ui -> -> 1 `i `ui `c
+-> . `E4489 15 `c
+-> . `E4454 3 `c
+..
+:U ..
+:U ..
+-> 112 `c
+-> 119 `c
+-> 114 `c
+-> 116 `c
+-> 114 `c
+-> 105 `c
+-> 103 `c
+-> 0 `c
+..
+-> - -> 8 `ui -> -> 1 `i `ui `c
+-> . `E4489 16 `c
+-> . `E4454 3 `c
+..
+:U ..
+:U ..
+-> 97 `c
+-> 99 `c
+-> 99 `c
+-> 116 `c
+-> 114 `c
+-> 105 `c
+-> 103 `c
+-> 0 `c
+..
+-> - -> 8 `ui -> -> 1 `i `ui `c
+-> . `E4489 17 `c
+-> . `E4454 3 `c
+..
+:U ..
+:U ..
+-> 116 `c
+-> 114 `c
+-> 105 `c
+-> 103 `c
+-> 108 `c
+-> 101 `c
+-> 118 `c
+-> 0 `c
+..
+-> - -> 8 `ui -> -> 1 `i `ui `c
+-> . `E4489 18 `c
+-> . `E4454 3 `c
+..
+:U ..
+:U ..
+-> 116 `c
+-> 114 `c
+-> 105 `c
+-> 103 `c
+-> 115 `c
+-> 117 `c
+-> 109 `c
+-> 0 `c
+..
+-> - -> 8 `ui -> -> 1 `i `ui `c
+-> . `E4489 19 `c
+-> . `E4454 3 `c
+..
+:U ..
+:U ..
+-> 116 `c
+-> 114 `c
+-> 105 `c
+-> 103 `c
+-> 99 `c
+-> 110 `c
+-> 116 `c
+-> 0 `c
+..
+-> - -> 8 `ui -> -> 1 `i `ui `c
+-> . `E4489 20 `c
+-> . `E4454 3 `c
+..
+:U ..
+:U ..
+-> 119 `c
+-> 97 `c
+-> 118 `c
+-> 116 `c
+-> 111 `c
+-> 108 `c
+-> 101 `c
+-> 0 `c
+..
+-> - -> 8 `ui -> -> 1 `i `ui `c
+-> . `E4489 21 `c
+-> . `E4454 3 `c
+..
+:U ..
+:U ..
+-> 119 `c
+-> 97 `c
+-> 118 `c
+-> 116 `c
+-> 114 `c
+-> 105 `c
+-> 103 `c
+-> 0 `c
+..
+-> - -> 8 `ui -> -> 1 `i `ui `c
+-> . `E4489 22 `c
+-> . `E4454 3 `c
+..
+:U ..
+:U ..
+-> 119 `c
+-> 97 `c
+-> 118 `c
+-> 108 `c
+-> 99 `c
+-> 110 `c
+-> 116 `c
+-> 0 `c
+..
+-> - -> 8 `ui -> -> 1 `i `ui `c
+-> . `E4489 23 `c
+-> . `E4454 3 `c
+..
+:U ..
+:U ..
+-> 119 `c
+-> 97 `c
+-> 118 `c
+-> 114 `c
+-> 99 `c
+-> 110 `c
+-> 116 `c
+-> 0 `c
+..
+-> - -> 8 `ui -> -> 1 `i `ui `c
+-> . `E4489 24 `c
+-> . `E4454 3 `c
+..
+:U ..
+:U ..
+-> 105 `c
+-> 100 `c
+-> 105 `c
+-> 100 `c
+-> 0 `c
+..
+-> - -> 5 `ui -> -> 1 `i `ui `c
+-> . `E4489 25 `c
+-> . `E4454 3 `c
+..
+:U ..
+:U ..
+-> 112 `c
+-> 115 `c
+-> 119 `c
+-> 112 `c
+-> 115 `c
+-> 119 `c
+-> 0 `c
+..
+-> - -> 7 `ui -> -> 1 `i `ui `c
+-> . `E4489 26 `c
+-> . `E4454 3 `c
+..
+..
+]
+[; ;syntax.h: 61: static const SyntaxItem_t syntax_data[SYNTAX_COUNT] = {
+[; ;syntax.h: 62: {"set",sizeof("set")-1,Command_set,PARSER_TYPE_NO_TYPE}, {"get",sizeof("get")-1,Command_get,PARSER_TYPE_NO_TYPE}, {"init",sizeof("init")-1,Command_init,PARSER_TYPE_NO_TYPE}, {"selftest",sizeof("selftest")-1,Command_selftest,PARSER_TYPE_NO_TYPE}, {"si
+[; ;syntax.h: 63: };
+[; ;syntax.h: 67: void on_parameter_found(ParserOperation_t operation ,INT8 cmd_id
+[; ;syntax.h: 68: , INT8 p_id ,const void* p, ParserType_t type);
 [; ;scheduler.h: 8: typedef void (*PEVENT)(void);
 [; ;scheduler.h: 11: extern volatile UINT8 pool[8];
 [; ;scheduler.h: 12: extern volatile PEVENT events[8];
@@ -4044,9 +4421,9 @@ Version 3.2 HI-TECH Software Intermediate Code
 [v _pool `Vuc ~T0 @X0 -> 8 `i e ]
 [; ;scheduler.h: 15: volatile UINT8 pool[8];
 "8
-[v _PEVENT `*F4498 ~T0 @X0 1 t ]
+[v _PEVENT `*F4526 ~T0 @X0 1 t ]
 "16
-[v _events `V*F4498 ~T0 @X0 -> 8 `i e ]
+[v _events `V*F4526 ~T0 @X0 -> 8 `i e ]
 [; ;scheduler.h: 16: volatile PEVENT events[8];
 "17
 [v _event_miss `Vuc ~T0 @X0 -> 8 `i e ]
@@ -4078,10 +4455,10 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;serialport.c: 20: return result;
 "20
 [e ) _result ]
-[e $UE 394  ]
+[e $UE 393  ]
 [; ;serialport.c: 21: }
 "21
-[e :UE 394 ]
+[e :UE 393 ]
 }
 "24
 [v _serialport_service `(v ~T0 @X0 1 ef ]
@@ -4095,120 +4472,138 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;serialport.c: 25: UINT8 byte;
 [; ;serialport.c: 26: if (uart_byte_available()) {
 "26
-[e $ ! != -> ( _uart_byte_available ..  `i -> -> -> 0 `i `uc `i 396  ]
+[e $ ! != -> ( _uart_byte_available ..  `i -> -> -> 0 `i `uc `i 395  ]
 {
 [; ;serialport.c: 27: if (uart_getc(&byte) == RESULT_SUCCESS) {
 "27
-[e $ ! == -> ( _uart_getc (1 &U _byte `i -> . `E3388 0 `i 397  ]
+[e $ ! == -> ( _uart_getc (1 &U _byte `i -> . `E3388 0 `i 396  ]
 {
 [; ;serialport.c: 28: rd_buffer_put(&g_rx_buffer, &byte);
 "28
 [e ( _rd_buffer_put (2 , &U _g_rx_buffer &U _byte ]
-[; ;serialport.c: 29: do{pool[(5)] = 1;event_miss[(5)]= (10);}while(0);
 "29
+}
+[e :U 396 ]
+[; ;serialport.c: 29: }
+[; ;serialport.c: 30: if(byte=='\n' || byte=='\r')
+"30
+[e $ ! || == -> _byte `ui -> 10 `ui == -> _byte `ui -> 13 `ui 397  ]
+[; ;serialport.c: 31: {
+"31
+{
+[; ;serialport.c: 32: do{pool[(5)] = 1;event_miss[(5)]= (10);}while(0);
+"32
 [e :U 400 ]
 {
 [e = *U + &U _pool * -> -> -> 5 `i `ui `ux -> -> # *U &U _pool `ui `ux -> -> 1 `i `uc ]
 [e = *U + &U _event_miss * -> -> -> 5 `i `ui `ux -> -> # *U &U _event_miss `ui `ux -> -> 10 `i `uc ]
 }
 [e :U 399 ]
-"30
+"33
 }
 [e :U 397 ]
-"31
+"34
 }
-[e :U 396 ]
-[; ;serialport.c: 30: }
-[; ;serialport.c: 31: }
-[; ;serialport.c: 32: }
-"32
-[e :UE 395 ]
-}
+[e :U 395 ]
+[; ;serialport.c: 33: }
+[; ;serialport.c: 34: }
+[; ;serialport.c: 35: }
 "35
+[e :UE 394 ]
+}
+"38
 [v _serialport_task `(v ~T0 @X0 1 ef ]
 {
-[; ;serialport.c: 34: void serialport_task()
-[; ;serialport.c: 35: {
+[; ;serialport.c: 37: void serialport_task()
+[; ;serialport.c: 38: {
 [e :U _serialport_task ]
 [f ]
-"36
-[v _size `i ~T0 @X0 1 a ]
-[; ;serialport.c: 36: SIZE size;
-[; ;serialport.c: 37: if (rd_buffer_readline(&g_rx_buffer, &serialport_buffer, &size)) {
-"37
-[e $ ! != -> ( _rd_buffer_readline (3 , , &U _g_rx_buffer &U _serialport_buffer &U _size `i -> -> -> 0 `i `uc `i 402  ]
-{
-[; ;serialport.c: 38: syntax_string(serialport_buffer, FALSE);
-"38
-[e ( _syntax_string (2 , -> &U _serialport_buffer `*Cuc -> . `E3585 0 `uc ]
 "39
+[v _size `i ~T0 @X0 1 a ]
+"40
+[v _byte `uc ~T0 @X0 1 a ]
+[; ;serialport.c: 39: SIZE size;
+[; ;serialport.c: 40: UINT8 byte;
+[; ;serialport.c: 41: while (rd_buffer_readline(&g_rx_buffer, &serialport_buffer, &size)) {
+"41
+[e $U 402  ]
+[e :U 403 ]
+{
+[; ;serialport.c: 42: syntax_string(serialport_buffer, size,FALSE);
+"42
+[e ( _syntax_string (3 , , -> &U _serialport_buffer `*Cuc _size -> . `E3585 0 `uc ]
+"43
 }
 [e :U 402 ]
-[; ;serialport.c: 39: }
-[; ;serialport.c: 40: size = rd_buffer_cnt(&g_tx_buffer);
-"40
-[e = _size ( _rd_buffer_cnt (1 &U _g_tx_buffer ]
-[; ;serialport.c: 41: if (size > 0) {
 "41
-[e $ ! > _size -> 0 `i 403  ]
-{
-[; ;serialport.c: 42: rd_buffer_getn(&g_tx_buffer, &serialport_buffer, size);
-"42
-[e ( _rd_buffer_getn (3 , , &U _g_tx_buffer &U _serialport_buffer _size ]
-[; ;serialport.c: 43: uart_puts(serialport_buffer, size);
-"43
-[e ( _uart_puts (2 , -> &U _serialport_buffer `*Cuc _size ]
+[e $ != -> ( _rd_buffer_readline (3 , , &U _g_rx_buffer &U _serialport_buffer &U _size `i -> -> -> 0 `i `uc `i 403  ]
+[e :U 404 ]
+[; ;serialport.c: 43: }
+[; ;serialport.c: 44: while (rd_buffer_cnt(&g_tx_buffer)> 0) {
 "44
+[e $U 405  ]
+[e :U 406 ]
+{
+[; ;serialport.c: 46: rd_buffer_get(&g_tx_buffer, &byte);
+"46
+[e ( _rd_buffer_get (2 , &U _g_tx_buffer &U _byte ]
+[; ;serialport.c: 47: uart_putc(byte);
+"47
+[e ( _uart_putc (1 _byte ]
+"48
 }
-[e :U 403 ]
-[; ;serialport.c: 44: }
-[; ;serialport.c: 45: }
-"45
+[e :U 405 ]
+"44
+[e $ > ( _rd_buffer_cnt (1 &U _g_tx_buffer -> 0 `i 406  ]
+[e :U 407 ]
+[; ;serialport.c: 48: }
+[; ;serialport.c: 49: }
+"49
 [e :UE 401 ]
 }
-"48
+"52
 [v _serialport_write `(v ~T0 @X0 1 ef1`*Cuc ]
 {
-[; ;serialport.c: 47: void serialport_write(const CHAR *pstr)
-[; ;serialport.c: 48: {
+[; ;serialport.c: 51: void serialport_write(const CHAR *pstr)
+[; ;serialport.c: 52: {
 [e :U _serialport_write ]
 [v _pstr `*Cuc ~T0 @X0 1 r1 ]
 [f ]
-[; ;serialport.c: 49: while (pstr && *pstr)
-"49
-[e $U 405  ]
-[e :U 406 ]
-[; ;serialport.c: 50: {
-"50
-{
-[; ;serialport.c: 51: rd_buffer_put(&g_tx_buffer, (UINT8*)pstr);
-"51
-[e ( _rd_buffer_put (2 , &U _g_tx_buffer -> _pstr `*uc ]
-[; ;serialport.c: 52: pstr++;
-"52
-[e ++ _pstr * -> -> 1 `i `x -> -> # *U _pstr `i `x ]
+[; ;serialport.c: 53: while (pstr && *pstr)
 "53
-}
-[e :U 405 ]
-"49
-[e $ && != _pstr -> -> 0 `i `*Cuc != -> *U _pstr `i -> -> -> 0 `i `Cuc `i 406  ]
-[e :U 407 ]
-[; ;serialport.c: 53: }
-[; ;serialport.c: 54: }
+[e $U 409  ]
+[e :U 410 ]
+[; ;serialport.c: 54: {
 "54
-[e :UE 404 ]
-}
-"56
-[v _putch `(v ~T0 @X0 1 ef1`uc ]
 {
-[; ;serialport.c: 56: void putch(unsigned char byte){
-[e :U _putch ]
-[v _byte `uc ~T0 @X0 1 r1 ]
-[f ]
-[; ;serialport.c: 57: rd_buffer_put(&g_tx_buffer, &byte);
+[; ;serialport.c: 55: rd_buffer_put(&g_tx_buffer, (UINT8*)pstr);
+"55
+[e ( _rd_buffer_put (2 , &U _g_tx_buffer -> _pstr `*uc ]
+[; ;serialport.c: 56: pstr++;
+"56
+[e ++ _pstr * -> -> 1 `i `x -> -> # *U _pstr `i `x ]
 "57
-[e ( _rd_buffer_put (2 , &U _g_tx_buffer &U _byte ]
+}
+[e :U 409 ]
+"53
+[e $ && != _pstr -> -> 0 `i `*Cuc != -> *U _pstr `i -> -> -> 0 `i `Cuc `i 410  ]
+[e :U 411 ]
+[; ;serialport.c: 57: }
 [; ;serialport.c: 58: }
 "58
 [e :UE 408 ]
+}
+"60
+[v _putch `(v ~T0 @X0 1 ef1`uc ]
+{
+[; ;serialport.c: 60: void putch(unsigned char byte){
+[e :U _putch ]
+[v _byte `uc ~T0 @X0 1 r1 ]
+[f ]
+[; ;serialport.c: 61: rd_buffer_put(&g_tx_buffer, &byte);
+"61
+[e ( _rd_buffer_put (2 , &U _g_tx_buffer &U _byte ]
+[; ;serialport.c: 62: }
+"62
+[e :UE 412 ]
 }

@@ -1,6 +1,8 @@
 #include "syntax.h"
 #include "cmd_data.h"
 #include "serialport.h"
+#include "potentiometer.h"
+#include "config.h"
 
 BOOL set_parameter(INT8 p_id);
 BOOL get_parameter(INT8 p_id);
@@ -21,20 +23,18 @@ void on_parameter_found(ParserOperation_t operation, INT8 cmd_id
 			ok = get_parameter(p_id);
 			break;
 
-//		case Command_run:
-//			ok = run_command();
-//			break;
-
 		default:
 			break;
 		}
 	}
+	
 	else if (operation == PARSER_STOP) {
-		if(cmd_id==Command_reset)
-		{
-			// TODO reset();
-		}
-	} else if (operation == PARSER_ERROR) {
+//		if(cmd_id==Command_reset)
+//		{
+//			// TODO reset();
+//		}
+	} 
+	else if (operation == PARSER_ERROR) {
 		serialport_write("err\n");
 	}
 }
@@ -50,6 +50,7 @@ BOOL set_parameter(INT8 p_id ) {
 
   case Parameter_pot:
     SET_TRIMMER(syntax_as_integer());
+    ok = TRUE;
   break;
 
   case Parameter_mod:
@@ -100,8 +101,7 @@ BOOL set_parameter(INT8 p_id ) {
 
 	  
   }
-  serialport_write( syntax_get_text() );
-  
+  serialport_write( syntax_get_text() ); 
   if( ok )
   {
 		serialport_write(  ":ok " );
@@ -115,6 +115,8 @@ BOOL set_parameter(INT8 p_id ) {
 
 BOOL get_parameter(INT8 p_id) {
   BOOL  ok = FALSE;
+
+  serialport_write( syntax_get_text() ); 
       
   switch (p_id ) {
 
