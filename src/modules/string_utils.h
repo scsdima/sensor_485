@@ -31,7 +31,8 @@ void string_utils_to_upper_case(char pstr[]);
 BOOL string_utils_strcmp(const char pstr1[],const char pstr2[],BOOL case_sensitive);
 BOOL string_utils_strncmp(const char pstr1[], const char pstr2[], 
 						SIZE len, BOOL case_sensitive);
-						
+INT16 string_utils_atoi(const char *c);		
+FLOAT  string_utils_atof(const char *s);
 char string_utils_toHex(unsigned char byte);						
 
 #endif

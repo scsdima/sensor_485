@@ -1,28 +1,28 @@
 Version 3.2 HI-TECH Software Intermediate Code
-[c E4364 0 1 2 3 4 5 6 7 .. ]
-[n E4364 . PROFILE_DIS PROFILE1 PROFILE2 PROFILE3 PROFILE4 PROFILE5 PROFILE6 PROFILES_COUNT  ]
-[c E4343 0 1 2 3 .. ]
-[n E4343 . DETECTION_MODE_OFF DETECTION_MODE_CLA DETECTION_MODE_PEAK DETECTION_MODE_COUNT  ]
+[c E4365 0 1 2 3 4 5 6 7 .. ]
+[n E4365 . PROFILE_DIS PROFILE1 PROFILE2 PROFILE3 PROFILE4 PROFILE5 PROFILE6 PROFILES_COUNT  ]
+[c E4344 0 1 2 3 .. ]
+[n E4344 . DETECTION_MODE_OFF DETECTION_MODE_CLA DETECTION_MODE_PEAK DETECTION_MODE_COUNT  ]
 [s S394 `i 1 `i 1 `i 1 ]
 [n S394 . sig_max_count sig_sum_trig sig_trig ]
 [s S391 `i 1 `i 1 `uc 1 `uc 1 ]
 [n S391 . wtrigger tolerance lval_cnt rval_cnt ]
-[s S397 `uc 1 `E4364 1 `uc 1 `uc 1 `uc 1 `ui 1 `E4343 1 `S394 1 `S391 1 ]
+[s S397 `uc 1 `E4365 1 `uc 1 `uc 1 `uc 1 `ui 1 `E4344 1 `S394 1 `S391 1 ]
 [n S397 . checksum profile_number address potentiometer acc_sensitivity power_trig det_mode cla_config pd_config ]
-[c E3585 0 1 .. ]
-[n E3585 _BOOL FALSE TRUE  ]
-[c E3388 1 0 .. ]
-[n E3388 . RESULT_SUCCESS RESULT_FAIL  ]
-[c E3382 0 -1 -2 -3 .. ]
-[n E3382 . RESULT_NO_ERROR RESULT_ERROR RESULT_NULL RESULT_EMPTY  ]
+[c E3586 0 1 .. ]
+[n E3586 _BOOL FALSE TRUE  ]
+[c E3389 1 0 .. ]
+[n E3389 . RESULT_SUCCESS RESULT_FAIL  ]
+[c E3383 0 -1 -2 -3 .. ]
+[n E3383 . RESULT_NO_ERROR RESULT_ERROR RESULT_NULL RESULT_EMPTY  ]
 "20 src/modules/device_config.h
 [v _device_config_checksum `(uc ~T0 @X0 0 ef2`*uc`uc ]
-[c E4195 0 1 .. ]
-[n E4195 . EEPROM_BY_BLOCK EEPROM_BY_BYTE  ]
+[c E4196 0 1 .. ]
+[n E4196 . EEPROM_BY_BLOCK EEPROM_BY_BYTE  ]
 "19 src/drivers\eeprom.h
-[v _eeprom_write_data `(E3382 ~T0 @X0 0 ef4`ui`*Cuc`ui`E4195 ]
+[v _eeprom_write_data `(E3383 ~T0 @X0 0 ef4`ui`*Cuc`ui`E4196 ]
 "21
-[v _eeprom_read_data `(E3382 ~T0 @X0 0 ef4`ui`*uc`ui`E4195 ]
+[v _eeprom_read_data `(E3383 ~T0 @X0 0 ef4`ui`*uc`ui`E4196 ]
 [; ;pic18f45k20.h: 44: extern volatile unsigned char SSPMSK @ 0xF77;
 "46 C:\Program Files\Microchip\xc8\v1.12\include\pic18f45k20.h
 [; ;pic18f45k20.h: 46: asm("SSPMSK equ 0F77h");
@@ -3164,7 +3164,8 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;compiler.h: 16: typedef signed long INT32;
 [; ;compiler.h: 17: typedef unsigned char IDX8;
 [; ;compiler.h: 18: typedef unsigned int IDX16;
-[; ;compiler.h: 20: typedef signed int SIZE;
+[; ;compiler.h: 20: typedef float FLOAT;
+[; ;compiler.h: 21: typedef signed int SIZE;
 [; ;typedef_global.h: 11: typedef enum {
 [; ;typedef_global.h: 12: RESULT_NO_ERROR = 0,
 [; ;typedef_global.h: 13: RESULT_ERROR = -1,
@@ -4040,11 +4041,11 @@ Version 3.2 HI-TECH Software Intermediate Code
 "40 src/modules/device_config.c
 [v _locked `uc ~T0 @X0 1 s ]
 [i _locked
--> . `E3585 1 `uc
+-> . `E3586 1 `uc
 ]
 [; ;device_config.c: 40: static CHAR locked = TRUE;
 "52
-[v _device_config_save `(E3388 ~T0 @X0 1 ef ]
+[v _device_config_save `(E3389 ~T0 @X0 1 ef ]
 {
 [; ;device_config.c: 51: ResultSuccess_t device_config_save(void)
 [; ;device_config.c: 52: {
@@ -4062,9 +4063,9 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;device_config.c: 55: UINT8 retries=3;
 [e = _retries -> -> 3 `i `uc ]
 "56
-[v _result `E3382 ~T0 @X0 1 a ]
+[v _result `E3383 ~T0 @X0 1 a ]
 [; ;device_config.c: 56: ResultError_t result = RESULT_FAIL;
-[e = _result -> . `E3388 1 `E3382 ]
+[e = _result -> . `E3389 1 `E3383 ]
 [; ;device_config.c: 59: checksum = device_config_checksum(&p_config[1], sizeof(Config_t) - 1);
 "59
 [e = _checksum ( _device_config_checksum (2 , &U *U + _p_config * -> -> 1 `i `x -> -> # *U _p_config `i `x -> - -> # `S397 `ui -> -> 1 `i `ui `uc ]
@@ -4079,14 +4080,14 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;device_config.c: 63: result = eeprom_write_data((0x0000)
 [; ;device_config.c: 64: , p_config, sizeof(Config_t),EEPROM_BY_BYTE);
 "64
-[e = _result ( _eeprom_write_data (4 , , , -> -> 0 `i `ui -> _p_config `*Cuc -> # `S397 `ui -> . `E4195 1 `E4195 ]
+[e = _result ( _eeprom_write_data (4 , , , -> -> 0 `i `ui -> _p_config `*Cuc -> # `S397 `ui -> . `E4196 1 `E4196 ]
 [; ;device_config.c: 65: if( result == RESULT_NO_ERROR){
 "65
-[e $ ! == -> _result `i -> . `E3382 0 `i 403  ]
+[e $ ! == -> _result `i -> . `E3383 0 `i 403  ]
 {
 [; ;device_config.c: 66: result= RESULT_SUCCESS;
 "66
-[e = _result -> . `E3388 0 `E3382 ]
+[e = _result -> . `E3389 0 `E3383 ]
 "67
 }
 [e :U 403 ]
@@ -4107,7 +4108,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e :UE 399 ]
 }
 "80
-[v _device_config_load `(E3388 ~T0 @X0 1 ef ]
+[v _device_config_load `(E3389 ~T0 @X0 1 ef ]
 {
 [; ;device_config.c: 80: ResultSuccess_t device_config_load(void) {
 [e :U _device_config_load ]
@@ -4124,9 +4125,9 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;device_config.c: 83: UINT8 retries=3;
 [e = _retries -> -> 3 `i `uc ]
 "84
-[v _result `E3382 ~T0 @X0 1 a ]
+[v _result `E3383 ~T0 @X0 1 a ]
 [; ;device_config.c: 84: ResultError_t result = RESULT_FAIL;
-[e = _result -> . `E3388 1 `E3382 ]
+[e = _result -> . `E3389 1 `E3383 ]
 [; ;device_config.c: 85: while(retries--){
 "85
 [e $U 405  ]
@@ -4135,17 +4136,17 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;device_config.c: 86: result = eeprom_read_data((0x0000)
 [; ;device_config.c: 87: , p_config, sizeof(Config_t), EEPROM_BY_BYTE);
 "87
-[e = _result ( _eeprom_read_data (4 , , , -> -> 0 `i `ui _p_config -> # `S397 `ui -> . `E4195 1 `E4195 ]
+[e = _result ( _eeprom_read_data (4 , , , -> -> 0 `i `ui _p_config -> # `S397 `ui -> . `E4196 1 `E4196 ]
 [; ;device_config.c: 88: checksum = device_config_checksum(&p_config[1], sizeof(Config_t) - 1);
 "88
 [e = _checksum ( _device_config_checksum (2 , &U *U + _p_config * -> -> 1 `i `x -> -> # *U _p_config `i `x -> - -> # `S397 `ui -> -> 1 `i `ui `uc ]
 [; ;device_config.c: 89: if (result == RESULT_NO_ERROR && g_CONFIG.checksum == checksum) {
 "89
-[e $ ! && == -> _result `i -> . `E3382 0 `i == -> . _g_CONFIG 0 `i -> _checksum `i 408  ]
+[e $ ! && == -> _result `i -> . `E3383 0 `i == -> . _g_CONFIG 0 `i -> _checksum `i 408  ]
 {
 [; ;device_config.c: 90: result= RESULT_SUCCESS;
 "90
-[e = _result -> . `E3388 0 `E3382 ]
+[e = _result -> . `E3389 0 `E3383 ]
 "91
 }
 [e :U 408 ]
@@ -4184,7 +4185,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [f ]
 [; ;device_config.c: 122: return FALSE;
 "122
-[e ) -> . `E3585 0 `uc ]
+[e ) -> . `E3586 0 `uc ]
 [e $UE 410  ]
 [; ;device_config.c: 124: }
 "124
@@ -4199,7 +4200,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [f ]
 [; ;device_config.c: 137: locked = TRUE;
 "137
-[e = _locked -> . `E3585 1 `uc ]
+[e = _locked -> . `E3586 1 `uc ]
 [; ;device_config.c: 138: }
 "138
 [e :UE 411 ]
@@ -4217,16 +4218,16 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e :UE 412 ]
 }
 "170
-[v _device_config_apply `(E3388 ~T0 @X0 1 ef ]
+[v _device_config_apply `(E3389 ~T0 @X0 1 ef ]
 {
 [; ;device_config.c: 169: ResultSuccess_t device_config_apply(void)
 [; ;device_config.c: 170: {
 [e :U _device_config_apply ]
 [f ]
 "171
-[v _result `E3388 ~T0 @X0 1 a ]
+[v _result `E3389 ~T0 @X0 1 a ]
 [; ;device_config.c: 171: ResultSuccess_t result =RESULT_FAIL;
-[e = _result -> . `E3388 1 `E3388 ]
+[e = _result -> . `E3389 1 `E3389 ]
 [; ;device_config.c: 181: return result;
 "181
 [e ) _result ]

@@ -3161,7 +3161,8 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;compiler.h: 16: typedef signed long INT32;
 [; ;compiler.h: 17: typedef unsigned char IDX8;
 [; ;compiler.h: 18: typedef unsigned int IDX16;
-[; ;compiler.h: 20: typedef signed int SIZE;
+[; ;compiler.h: 20: typedef float FLOAT;
+[; ;compiler.h: 21: typedef signed int SIZE;
 [; ;typedef_global.h: 11: typedef enum {
 [; ;typedef_global.h: 12: RESULT_NO_ERROR = 0,
 [; ;typedef_global.h: 13: RESULT_ERROR = -1,

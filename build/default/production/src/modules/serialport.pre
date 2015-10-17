@@ -4187,6 +4187,7 @@ typedef signed long INT32;
 typedef unsigned char IDX8;
 typedef unsigned int IDX16;
 
+typedef float FLOAT;
 typedef signed int SIZE;
 
 # 11 "src\typedef_global.h"
@@ -5336,7 +5337,8 @@ void string_utils_to_upper_case(char pstr[]);
 CHAR string_utils_strcmp(const char pstr1[],const char pstr2[],CHAR case_sensitive);
 CHAR string_utils_strncmp(const char pstr1[], const char pstr2[],
 SIZE len, CHAR case_sensitive);
-
+INT16 string_utils_atoi(const char *c);
+FLOAT string_utils_atof(const char *s);
 char string_utils_toHex(unsigned char byte);
 
 # 14 "src/modules/syntax.h"
@@ -5367,7 +5369,7 @@ INT8 type;
 
 
 
-INT8 syntax_string(const char *pstr,SIZE str_len, CHAR case_sensitive);
+INT8 syntax_string(const char *pstr,SIZE str_len);
 
 
 const char* syntax_get_text(void);
@@ -5551,7 +5553,7 @@ void serialport_task()
 SIZE size;
 UINT8 byte;
 while (rd_buffer_readline(&g_rx_buffer, &serialport_buffer, &size)) {
-syntax_string(serialport_buffer, size,FALSE);
+syntax_string(serialport_buffer, size);
 }
 while (rd_buffer_cnt(&g_tx_buffer)> 0) {
 

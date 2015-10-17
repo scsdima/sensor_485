@@ -4187,6 +4187,7 @@ typedef signed long INT32;
 typedef unsigned char IDX8;
 typedef unsigned int IDX16;
 
+typedef float FLOAT;
 typedef signed int SIZE;
 
 # 11 "src\typedef_global.h"
@@ -5144,7 +5145,7 @@ extern void _delay3(unsigned char);
 
 #pragma config EBTRB = OFF
 
-# 19 "src/drivers/delay.h"
+# 8 "src/drivers/delay.h"
 extern volatile UINT16 this_delay_timerMs;
 extern volatile UINT16 this_delay_timerUs;
 
@@ -5156,29 +5157,29 @@ inline CHAR delay_timeout(void);
 
 void delay_interrupt_service(void);
 
-# 14 "src/drivers/delay.c"
+# 4 "src/drivers/delay.c"
 volatile UINT16 this_delay_timer_ms;
 
-# 27
+# 17
 void delay_ms(UINT16 delay)
 {
 this_delay_timer_ms = delay;
 while(this_delay_timer_ms) {};
 }
 
-# 42
+# 32
 void delay_timeout_set(UINT16 delay)
 {
 this_delay_timer_ms = delay;
 }
 
-# 56
+# 46
 inline CHAR delay_timeout(void)
 {
 return (this_delay_timer_ms == 0u);
 }
 
-# 70
+# 60
 void delay_interrupt_service(void){
 if(this_delay_timer_ms > 0u) {
 this_delay_timer_ms--;

@@ -1,30 +1,28 @@
 Version 3.2 HI-TECH Software Intermediate Code
-[c E4489 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 .. ]
-[n E4489 . Command_set Command_get Command_init Command_selftest Parameter_signal Parameter_imp Parameter_pwr Parameter_pot Parameter_ver Parameter_status Parameter_acc Parameter_adr Parameter_error Parameter_defaults Parameter_mod Parameter_profile Parameter_pwrtrig Parameter_acctrig Parameter_triglev Parameter_trigsum Parameter_trigcnt Parameter_wavtole Parameter_wavtrig Parameter_wavlcnt Parameter_wavrcnt Parameter_id Parameter_psw SYNTAX_COUNT  ]
+[c E4493 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 .. ]
+[n E4493 . Command_set Command_get Command_init Command_selftest Parameter_signal Parameter_imp Parameter_pwr Parameter_pot Parameter_ver Parameter_status Parameter_acc Parameter_adr Parameter_error Parameter_defaults Parameter_mod Parameter_profile Parameter_pwrtrig Parameter_acctrig Parameter_triglev Parameter_trigsum Parameter_trigcnt Parameter_wavtole Parameter_wavtrig Parameter_wavlcnt Parameter_wavrcnt Parameter_id Parameter_psw SYNTAX_COUNT  ]
 [s S392 `uc -> 20 `i `c 1 `c 1 `c 1 ]
 [n S392 . name name_len id type ]
-[c E4454 0 1 2 3 4 5 6 .. ]
-[n E4454 . PARSER_TYPE_NO_TYPE PARSER_TYPE_BYTEARRAY PARSER_TYPE_HEXARRAY PARSER_TYPE_INTEGER PARSER_TYPE_REAL PARSER_TYPE_BOOL PARSER_TYPE_DOUBLE  ]
+[c E4459 0 1 2 3 4 5 6 .. ]
+[n E4459 . PARSER_TYPE_NO_TYPE PARSER_TYPE_BYTEARRAY PARSER_TYPE_HEXARRAY PARSER_TYPE_INTEGER PARSER_TYPE_REAL PARSER_TYPE_BOOL PARSER_TYPE_DOUBLE  ]
 "8 src/modules/scheduler.h
-[v F4526 `(v ~T0 @X0 0 tf ]
+[v F4530 `(v ~T0 @X0 0 tf ]
 [s S390 `i 1 `i 1 `i 1 ]
 [n S390 . last first size ]
 [s S389 `S390 1 `uc + -> 100 `i -> 1 `i ]
 [n S389 . head list ]
-[c E3388 1 0 .. ]
-[n E3388 . RESULT_SUCCESS RESULT_FAIL  ]
+[c E3389 1 0 .. ]
+[n E3389 . RESULT_SUCCESS RESULT_FAIL  ]
 "24 src/modules/rd_buffer.h
 [v _rd_buffer_init `(uc ~T0 @X0 0 ef2`*S389`i ]
 "21 src/drivers\uart.h
 [v _uart_byte_available `(uc ~T0 @X0 0 ef ]
 "15
-[v _uart_getc `(E3388 ~T0 @X0 0 ef1`*uc ]
+[v _uart_getc `(E3389 ~T0 @X0 0 ef1`*uc ]
 "43 src/modules/rd_buffer.h
 [v _rd_buffer_put `(uc ~T0 @X0 0 ef2`*S389`*uc ]
 "41 src/modules/syntax.h
-[v _syntax_string `(c ~T0 @X0 0 ef3`*Cuc`i`uc ]
-[c E3585 0 1 .. ]
-[n E3585 _BOOL FALSE TRUE  ]
+[v _syntax_string `(c ~T0 @X0 0 ef2`*Cuc`i ]
 "26 src/modules/rd_buffer.h
 [v _rd_buffer_readline `(uc ~T0 @X0 0 ef3`*S389`*uc`*i ]
 "40
@@ -3174,7 +3172,8 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;compiler.h: 16: typedef signed long INT32;
 [; ;compiler.h: 17: typedef unsigned char IDX8;
 [; ;compiler.h: 18: typedef unsigned int IDX16;
-[; ;compiler.h: 20: typedef signed int SIZE;
+[; ;compiler.h: 20: typedef float FLOAT;
+[; ;compiler.h: 21: typedef signed int SIZE;
 [; ;typedef_global.h: 11: typedef enum {
 [; ;typedef_global.h: 12: RESULT_NO_ERROR = 0,
 [; ;typedef_global.h: 13: RESULT_ERROR = -1,
@@ -4009,7 +4008,9 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;string_utils.h: 31: CHAR string_utils_strcmp(const char pstr1[],const char pstr2[],CHAR case_sensitive);
 [; ;string_utils.h: 32: CHAR string_utils_strncmp(const char pstr1[], const char pstr2[],
 [; ;string_utils.h: 33: SIZE len, CHAR case_sensitive);
-[; ;string_utils.h: 35: char string_utils_toHex(unsigned char byte);
+[; ;string_utils.h: 34: INT16 string_utils_atoi(const char *c);
+[; ;string_utils.h: 35: FLOAT string_utils_atof(const char *s);
+[; ;string_utils.h: 36: char string_utils_toHex(unsigned char byte);
 [; ;syntax.h: 14: typedef enum {
 [; ;syntax.h: 15: PARSER_TYPE_NO_TYPE,
 [; ;syntax.h: 16: PARSER_TYPE_BYTEARRAY,
@@ -4031,7 +4032,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;syntax.h: 35: INT8 id;
 [; ;syntax.h: 36: INT8 type;
 [; ;syntax.h: 37: } SyntaxItem_t;
-[; ;syntax.h: 41: INT8 syntax_string(const char *pstr,SIZE str_len, CHAR case_sensitive);
+[; ;syntax.h: 41: INT8 syntax_string(const char *pstr,SIZE str_len);
 [; ;syntax.h: 44: const char* syntax_get_text(void);
 [; ;syntax.h: 45: INT16 syntax_as_integer(void);
 [; ;syntax.h: 46: double syntax_as_double(void);
@@ -4042,7 +4043,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;syntax.h: 56: SYNTAX_COUNT
 [; ;syntax.h: 57: };
 "61 src/modules/syntax.h
-[v _syntax_data `CS392 ~T0 @X0 . `E4489 27 s ]
+[v _syntax_data `CS392 ~T0 @X0 . `E4493 27 s ]
 [i _syntax_data
 :U ..
 :U ..
@@ -4054,8 +4055,8 @@ Version 3.2 HI-TECH Software Intermediate Code
 ..
 "62
 -> - -> 4 `ui -> -> 1 `i `ui `c
--> . `E4489 0 `c
--> . `E4454 0 `c
+-> . `E4493 0 `c
+-> . `E4459 0 `c
 ..
 :U ..
 :U ..
@@ -4065,8 +4066,8 @@ Version 3.2 HI-TECH Software Intermediate Code
 -> 0 `c
 ..
 -> - -> 4 `ui -> -> 1 `i `ui `c
--> . `E4489 1 `c
--> . `E4454 0 `c
+-> . `E4493 1 `c
+-> . `E4459 0 `c
 ..
 :U ..
 :U ..
@@ -4077,8 +4078,8 @@ Version 3.2 HI-TECH Software Intermediate Code
 -> 0 `c
 ..
 -> - -> 5 `ui -> -> 1 `i `ui `c
--> . `E4489 2 `c
--> . `E4454 0 `c
+-> . `E4493 2 `c
+-> . `E4459 0 `c
 ..
 :U ..
 :U ..
@@ -4093,8 +4094,8 @@ Version 3.2 HI-TECH Software Intermediate Code
 -> 0 `c
 ..
 -> - -> 9 `ui -> -> 1 `i `ui `c
--> . `E4489 3 `c
--> . `E4454 0 `c
+-> . `E4493 3 `c
+-> . `E4459 0 `c
 ..
 :U ..
 :U ..
@@ -4107,8 +4108,8 @@ Version 3.2 HI-TECH Software Intermediate Code
 -> 0 `c
 ..
 -> - -> 7 `ui -> -> 1 `i `ui `c
--> . `E4489 4 `c
--> . `E4454 3 `c
+-> . `E4493 4 `c
+-> . `E4459 3 `c
 ..
 :U ..
 :U ..
@@ -4118,8 +4119,8 @@ Version 3.2 HI-TECH Software Intermediate Code
 -> 0 `c
 ..
 -> - -> 4 `ui -> -> 1 `i `ui `c
--> . `E4489 5 `c
--> . `E4454 3 `c
+-> . `E4493 5 `c
+-> . `E4459 3 `c
 ..
 :U ..
 :U ..
@@ -4129,8 +4130,8 @@ Version 3.2 HI-TECH Software Intermediate Code
 -> 0 `c
 ..
 -> - -> 4 `ui -> -> 1 `i `ui `c
--> . `E4489 6 `c
--> . `E4454 3 `c
+-> . `E4493 6 `c
+-> . `E4459 3 `c
 ..
 :U ..
 :U ..
@@ -4140,8 +4141,8 @@ Version 3.2 HI-TECH Software Intermediate Code
 -> 0 `c
 ..
 -> - -> 4 `ui -> -> 1 `i `ui `c
--> . `E4489 7 `c
--> . `E4454 3 `c
+-> . `E4493 7 `c
+-> . `E4459 3 `c
 ..
 :U ..
 :U ..
@@ -4151,8 +4152,8 @@ Version 3.2 HI-TECH Software Intermediate Code
 -> 0 `c
 ..
 -> - -> 4 `ui -> -> 1 `i `ui `c
--> . `E4489 8 `c
--> . `E4454 3 `c
+-> . `E4493 8 `c
+-> . `E4459 3 `c
 ..
 :U ..
 :U ..
@@ -4165,8 +4166,8 @@ Version 3.2 HI-TECH Software Intermediate Code
 -> 0 `c
 ..
 -> - -> 7 `ui -> -> 1 `i `ui `c
--> . `E4489 9 `c
--> . `E4454 3 `c
+-> . `E4493 9 `c
+-> . `E4459 3 `c
 ..
 :U ..
 :U ..
@@ -4176,8 +4177,8 @@ Version 3.2 HI-TECH Software Intermediate Code
 -> 0 `c
 ..
 -> - -> 4 `ui -> -> 1 `i `ui `c
--> . `E4489 10 `c
--> . `E4454 3 `c
+-> . `E4493 10 `c
+-> . `E4459 3 `c
 ..
 :U ..
 :U ..
@@ -4187,8 +4188,8 @@ Version 3.2 HI-TECH Software Intermediate Code
 -> 0 `c
 ..
 -> - -> 4 `ui -> -> 1 `i `ui `c
--> . `E4489 11 `c
--> . `E4454 3 `c
+-> . `E4493 11 `c
+-> . `E4459 3 `c
 ..
 :U ..
 :U ..
@@ -4200,8 +4201,8 @@ Version 3.2 HI-TECH Software Intermediate Code
 -> 0 `c
 ..
 -> - -> 6 `ui -> -> 1 `i `ui `c
--> . `E4489 12 `c
--> . `E4454 3 `c
+-> . `E4493 12 `c
+-> . `E4459 3 `c
 ..
 :U ..
 :U ..
@@ -4216,8 +4217,8 @@ Version 3.2 HI-TECH Software Intermediate Code
 -> 0 `c
 ..
 -> - -> 9 `ui -> -> 1 `i `ui `c
--> . `E4489 13 `c
--> . `E4454 3 `c
+-> . `E4493 13 `c
+-> . `E4459 3 `c
 ..
 :U ..
 :U ..
@@ -4227,8 +4228,8 @@ Version 3.2 HI-TECH Software Intermediate Code
 -> 0 `c
 ..
 -> - -> 4 `ui -> -> 1 `i `ui `c
--> . `E4489 14 `c
--> . `E4454 1 `c
+-> . `E4493 14 `c
+-> . `E4459 1 `c
 ..
 :U ..
 :U ..
@@ -4242,8 +4243,8 @@ Version 3.2 HI-TECH Software Intermediate Code
 -> 0 `c
 ..
 -> - -> 8 `ui -> -> 1 `i `ui `c
--> . `E4489 15 `c
--> . `E4454 3 `c
+-> . `E4493 15 `c
+-> . `E4459 3 `c
 ..
 :U ..
 :U ..
@@ -4257,8 +4258,8 @@ Version 3.2 HI-TECH Software Intermediate Code
 -> 0 `c
 ..
 -> - -> 8 `ui -> -> 1 `i `ui `c
--> . `E4489 16 `c
--> . `E4454 3 `c
+-> . `E4493 16 `c
+-> . `E4459 3 `c
 ..
 :U ..
 :U ..
@@ -4272,8 +4273,8 @@ Version 3.2 HI-TECH Software Intermediate Code
 -> 0 `c
 ..
 -> - -> 8 `ui -> -> 1 `i `ui `c
--> . `E4489 17 `c
--> . `E4454 3 `c
+-> . `E4493 17 `c
+-> . `E4459 3 `c
 ..
 :U ..
 :U ..
@@ -4287,8 +4288,8 @@ Version 3.2 HI-TECH Software Intermediate Code
 -> 0 `c
 ..
 -> - -> 8 `ui -> -> 1 `i `ui `c
--> . `E4489 18 `c
--> . `E4454 3 `c
+-> . `E4493 18 `c
+-> . `E4459 3 `c
 ..
 :U ..
 :U ..
@@ -4302,8 +4303,8 @@ Version 3.2 HI-TECH Software Intermediate Code
 -> 0 `c
 ..
 -> - -> 8 `ui -> -> 1 `i `ui `c
--> . `E4489 19 `c
--> . `E4454 3 `c
+-> . `E4493 19 `c
+-> . `E4459 3 `c
 ..
 :U ..
 :U ..
@@ -4317,8 +4318,8 @@ Version 3.2 HI-TECH Software Intermediate Code
 -> 0 `c
 ..
 -> - -> 8 `ui -> -> 1 `i `ui `c
--> . `E4489 20 `c
--> . `E4454 3 `c
+-> . `E4493 20 `c
+-> . `E4459 3 `c
 ..
 :U ..
 :U ..
@@ -4332,8 +4333,8 @@ Version 3.2 HI-TECH Software Intermediate Code
 -> 0 `c
 ..
 -> - -> 8 `ui -> -> 1 `i `ui `c
--> . `E4489 21 `c
--> . `E4454 3 `c
+-> . `E4493 21 `c
+-> . `E4459 3 `c
 ..
 :U ..
 :U ..
@@ -4347,8 +4348,8 @@ Version 3.2 HI-TECH Software Intermediate Code
 -> 0 `c
 ..
 -> - -> 8 `ui -> -> 1 `i `ui `c
--> . `E4489 22 `c
--> . `E4454 3 `c
+-> . `E4493 22 `c
+-> . `E4459 3 `c
 ..
 :U ..
 :U ..
@@ -4362,8 +4363,8 @@ Version 3.2 HI-TECH Software Intermediate Code
 -> 0 `c
 ..
 -> - -> 8 `ui -> -> 1 `i `ui `c
--> . `E4489 23 `c
--> . `E4454 3 `c
+-> . `E4493 23 `c
+-> . `E4459 3 `c
 ..
 :U ..
 :U ..
@@ -4377,8 +4378,8 @@ Version 3.2 HI-TECH Software Intermediate Code
 -> 0 `c
 ..
 -> - -> 8 `ui -> -> 1 `i `ui `c
--> . `E4489 24 `c
--> . `E4454 3 `c
+-> . `E4493 24 `c
+-> . `E4459 3 `c
 ..
 :U ..
 :U ..
@@ -4389,8 +4390,8 @@ Version 3.2 HI-TECH Software Intermediate Code
 -> 0 `c
 ..
 -> - -> 5 `ui -> -> 1 `i `ui `c
--> . `E4489 25 `c
--> . `E4454 3 `c
+-> . `E4493 25 `c
+-> . `E4459 3 `c
 ..
 :U ..
 :U ..
@@ -4403,8 +4404,8 @@ Version 3.2 HI-TECH Software Intermediate Code
 -> 0 `c
 ..
 -> - -> 7 `ui -> -> 1 `i `ui `c
--> . `E4489 26 `c
--> . `E4454 3 `c
+-> . `E4493 26 `c
+-> . `E4459 3 `c
 ..
 ..
 ]
@@ -4421,9 +4422,9 @@ Version 3.2 HI-TECH Software Intermediate Code
 [v _pool `Vuc ~T0 @X0 -> 8 `i e ]
 [; ;scheduler.h: 15: volatile UINT8 pool[8];
 "8
-[v _PEVENT `*F4526 ~T0 @X0 1 t ]
+[v _PEVENT `*F4530 ~T0 @X0 1 t ]
 "16
-[v _events `V*F4526 ~T0 @X0 -> 8 `i e ]
+[v _events `V*F4530 ~T0 @X0 -> 8 `i e ]
 [; ;scheduler.h: 16: volatile PEVENT events[8];
 "17
 [v _event_miss `Vuc ~T0 @X0 -> 8 `i e ]
@@ -4438,20 +4439,20 @@ Version 3.2 HI-TECH Software Intermediate Code
 [v _g_tx_buffer `S389 ~T0 @X0 1 s ]
 [; ;serialport.c: 13: static RdBuffer g_tx_buffer;
 "16
-[v _serialport_startup `(E3388 ~T0 @X0 1 ef ]
+[v _serialport_startup `(E3389 ~T0 @X0 1 ef ]
 {
 [; ;serialport.c: 15: ResultSuccess_t serialport_startup(void)
 [; ;serialport.c: 16: {
 [e :U _serialport_startup ]
 [f ]
 "17
-[v _result `E3388 ~T0 @X0 1 a ]
+[v _result `E3389 ~T0 @X0 1 a ]
 [; ;serialport.c: 17: ResultSuccess_t result = RESULT_FAIL;
-[e = _result -> . `E3388 1 `E3388 ]
+[e = _result -> . `E3389 1 `E3389 ]
 [; ;serialport.c: 18: result = (ResultSuccess_t) rd_buffer_init(&g_rx_buffer, ((100)))
 [; ;serialport.c: 19: | (ResultSuccess_t) rd_buffer_init(&g_tx_buffer, ((100)));
 "19
-[e = _result -> | -> -> ( _rd_buffer_init (2 , &U _g_rx_buffer -> 100 `i `E3388 `i -> -> ( _rd_buffer_init (2 , &U _g_tx_buffer -> 100 `i `E3388 `i `E3388 ]
+[e = _result -> | -> -> ( _rd_buffer_init (2 , &U _g_rx_buffer -> 100 `i `E3389 `i -> -> ( _rd_buffer_init (2 , &U _g_tx_buffer -> 100 `i `E3389 `i `E3389 ]
 [; ;serialport.c: 20: return result;
 "20
 [e ) _result ]
@@ -4476,7 +4477,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 {
 [; ;serialport.c: 27: if (uart_getc(&byte) == RESULT_SUCCESS) {
 "27
-[e $ ! == -> ( _uart_getc (1 &U _byte `i -> . `E3388 0 `i 396  ]
+[e $ ! == -> ( _uart_getc (1 &U _byte `i -> . `E3389 0 `i 396  ]
 {
 [; ;serialport.c: 28: rd_buffer_put(&g_rx_buffer, &byte);
 "28
@@ -4529,9 +4530,9 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e $U 402  ]
 [e :U 403 ]
 {
-[; ;serialport.c: 42: syntax_string(serialport_buffer, size,FALSE);
+[; ;serialport.c: 42: syntax_string(serialport_buffer, size);
 "42
-[e ( _syntax_string (3 , , -> &U _serialport_buffer `*Cuc _size -> . `E3585 0 `uc ]
+[e ( _syntax_string (2 , -> &U _serialport_buffer `*Cuc _size ]
 "43
 }
 [e :U 402 ]

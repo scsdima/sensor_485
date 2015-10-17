@@ -3140,7 +3140,8 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;compiler.h: 16: typedef signed long INT32;
 [; ;compiler.h: 17: typedef unsigned char IDX8;
 [; ;compiler.h: 18: typedef unsigned int IDX16;
-[; ;compiler.h: 20: typedef signed int SIZE;
+[; ;compiler.h: 20: typedef float FLOAT;
+[; ;compiler.h: 21: typedef signed int SIZE;
 [; ;typedef_global.h: 11: typedef enum {
 [; ;typedef_global.h: 12: RESULT_NO_ERROR = 0,
 [; ;typedef_global.h: 13: RESULT_ERROR = -1,
@@ -3869,28 +3870,28 @@ Version 3.2 HI-TECH Software Intermediate Code
 [p x EBTR3=OFF ]
 "62
 [p x EBTRB=OFF ]
-[; ;delay.h: 19: extern volatile UINT16 this_delay_timerMs;
-[; ;delay.h: 20: extern volatile UINT16 this_delay_timerUs;
-[; ;delay.h: 23: void delay_ms(UINT16 delay);
-[; ;delay.h: 24: void delay_timeout_set(UINT16 delay);
-[; ;delay.h: 25: inline CHAR delay_timeout(void);
-[; ;delay.h: 28: void delay_interrupt_service(void);
-"14 src/drivers/delay.c
+[; ;delay.h: 8: extern volatile UINT16 this_delay_timerMs;
+[; ;delay.h: 9: extern volatile UINT16 this_delay_timerUs;
+[; ;delay.h: 12: void delay_ms(UINT16 delay);
+[; ;delay.h: 13: void delay_timeout_set(UINT16 delay);
+[; ;delay.h: 14: inline CHAR delay_timeout(void);
+[; ;delay.h: 17: void delay_interrupt_service(void);
+"4 src/drivers/delay.c
 [v _this_delay_timer_ms `Vui ~T0 @X0 1 e ]
-[; ;delay.c: 14: volatile UINT16 this_delay_timer_ms;
-"28
+[; ;delay.c: 4: volatile UINT16 this_delay_timer_ms;
+"18
 [v _delay_ms `(v ~T0 @X0 1 ef1`ui ]
 {
-[; ;delay.c: 27: void delay_ms(UINT16 delay)
-[; ;delay.c: 28: {
+[; ;delay.c: 17: void delay_ms(UINT16 delay)
+[; ;delay.c: 18: {
 [e :U _delay_ms ]
 [v _delay `ui ~T0 @X0 1 r1 ]
 [f ]
-[; ;delay.c: 29: this_delay_timer_ms = delay;
-"29
+[; ;delay.c: 19: this_delay_timer_ms = delay;
+"19
 [e = _this_delay_timer_ms _delay ]
-[; ;delay.c: 30: while(this_delay_timer_ms) {};
-"30
+[; ;delay.c: 20: while(this_delay_timer_ms) {};
+"20
 [e $U 390  ]
 [e :U 391 ]
 {
@@ -3898,60 +3899,60 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e :U 390 ]
 [e $ != _this_delay_timer_ms -> -> 0 `i `Vui 391  ]
 [e :U 392 ]
-[; ;delay.c: 31: }
-"31
+[; ;delay.c: 21: }
+"21
 [e :UE 389 ]
 }
-"43
+"33
 [v _delay_timeout_set `(v ~T0 @X0 1 ef1`ui ]
 {
-[; ;delay.c: 42: void delay_timeout_set(UINT16 delay)
-[; ;delay.c: 43: {
+[; ;delay.c: 32: void delay_timeout_set(UINT16 delay)
+[; ;delay.c: 33: {
 [e :U _delay_timeout_set ]
 [v _delay `ui ~T0 @X0 1 r1 ]
 [f ]
-[; ;delay.c: 44: this_delay_timer_ms = delay;
-"44
+[; ;delay.c: 34: this_delay_timer_ms = delay;
+"34
 [e = _this_delay_timer_ms _delay ]
-[; ;delay.c: 45: }
-"45
+[; ;delay.c: 35: }
+"35
 [e :UE 393 ]
 }
-"25 src/drivers/delay.h
-[v F4203 `(uc ~T0 @X0 1 tf ]
-"57 src/drivers/delay.c
-[v _delay_timeout `TF4203 ~T0 @X0 1 e ]
+"14 src/drivers/delay.h
+[v F4204 `(uc ~T0 @X0 1 tf ]
+"47 src/drivers/delay.c
+[v _delay_timeout `TF4204 ~T0 @X0 1 e ]
 {
-[; ;delay.c: 56: inline CHAR delay_timeout(void)
-[; ;delay.c: 57: {
+[; ;delay.c: 46: inline CHAR delay_timeout(void)
+[; ;delay.c: 47: {
 [e :U _delay_timeout ]
 [f ]
-[; ;delay.c: 58: return (this_delay_timer_ms == 0u);
-"58
+[; ;delay.c: 48: return (this_delay_timer_ms == 0u);
+"48
 [e ) -> -> == _this_delay_timer_ms -> 0 `ui `i `uc ]
 [e $UE 394  ]
-[; ;delay.c: 59: }
-"59
+[; ;delay.c: 49: }
+"49
 [e :UE 394 ]
 }
-"70
+"60
 [v _delay_interrupt_service `(v ~T0 @X0 1 ef ]
 {
-[; ;delay.c: 70: void delay_interrupt_service(void){
+[; ;delay.c: 60: void delay_interrupt_service(void){
 [e :U _delay_interrupt_service ]
 [f ]
-[; ;delay.c: 71: if(this_delay_timer_ms > 0u) {
-"71
+[; ;delay.c: 61: if(this_delay_timer_ms > 0u) {
+"61
 [e $ ! > _this_delay_timer_ms -> 0 `ui 396  ]
 {
-[; ;delay.c: 72: this_delay_timer_ms--;
-"72
+[; ;delay.c: 62: this_delay_timer_ms--;
+"62
 [e -- _this_delay_timer_ms -> -> 1 `i `ui ]
-"73
+"63
 }
 [e :U 396 ]
-[; ;delay.c: 73: }
-[; ;delay.c: 74: }
-"74
+[; ;delay.c: 63: }
+[; ;delay.c: 64: }
+"64
 [e :UE 395 ]
 }

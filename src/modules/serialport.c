@@ -39,7 +39,7 @@ void serialport_task()
 	SIZE size;
 	UINT8 byte;	
 	while (rd_buffer_readline(&g_rx_buffer, &serialport_buffer, &size)) {						
-		syntax_string(serialport_buffer, size,FALSE);
+		syntax_string(serialport_buffer, size);
 	}		
 	while (rd_buffer_cnt(&g_tx_buffer)> 0) {		
 			

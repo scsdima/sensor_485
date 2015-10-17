@@ -1,8 +1,8 @@
 Version 3.2 HI-TECH Software Intermediate Code
 "25 src/modules/string_utils.h
 [v _string_utils_is_symbol `(uc ~T0 @X0 0 ef1`uc ]
-[c E3585 0 1 .. ]
-[n E3585 _BOOL FALSE TRUE  ]
+[c E3586 0 1 .. ]
+[n E3586 _BOOL FALSE TRUE  ]
 "33
 [v _string_utils_strncmp `(uc ~T0 @X0 0 ef4`*Cuc`*Cuc`i`uc ]
 [; ;pic18f45k20.h: 44: extern volatile unsigned char SSPMSK @ 0xF77;
@@ -3146,7 +3146,8 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;compiler.h: 16: typedef signed long INT32;
 [; ;compiler.h: 17: typedef unsigned char IDX8;
 [; ;compiler.h: 18: typedef unsigned int IDX16;
-[; ;compiler.h: 20: typedef signed int SIZE;
+[; ;compiler.h: 20: typedef float FLOAT;
+[; ;compiler.h: 21: typedef signed int SIZE;
 [; ;typedef_global.h: 11: typedef enum {
 [; ;typedef_global.h: 12: RESULT_NO_ERROR = 0,
 [; ;typedef_global.h: 13: RESULT_ERROR = -1,
@@ -3880,7 +3881,9 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;string_utils.h: 31: CHAR string_utils_strcmp(const char pstr1[],const char pstr2[],CHAR case_sensitive);
 [; ;string_utils.h: 32: CHAR string_utils_strncmp(const char pstr1[], const char pstr2[],
 [; ;string_utils.h: 33: SIZE len, CHAR case_sensitive);
-[; ;string_utils.h: 35: char string_utils_toHex(unsigned char byte);
+[; ;string_utils.h: 34: INT16 string_utils_atoi(const char *c);
+[; ;string_utils.h: 35: FLOAT string_utils_atof(const char *s);
+[; ;string_utils.h: 36: char string_utils_toHex(unsigned char byte);
 "12 src/modules/string_utils.c
 [v _string_utils_strlen `(i ~T0 @X0 1 ef1`*Cuc ]
 {
@@ -4443,7 +4446,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 "268
 [v _result `uc ~T0 @X0 1 a ]
 [; ;string_utils.c: 268: CHAR result = FALSE;
-[e = _result -> . `E3585 0 `uc ]
+[e = _result -> . `E3586 0 `uc ]
 [; ;string_utils.c: 269: if (pstr1 != (0) && pstr2 != (0) )
 "269
 [e $ ! && != _pstr1 -> -> 0 `i `*Cuc != _pstr2 -> -> 0 `i `*Cuc 439  ]
@@ -4497,7 +4500,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 "293
 [v _result `uc ~T0 @X0 1 a ]
 [; ;string_utils.c: 293: CHAR result = FALSE;
-[e = _result -> . `E3585 0 `uc ]
+[e = _result -> . `E3586 0 `uc ]
 [; ;string_utils.c: 294: if (pstr1 != (0) && pstr2 != (0) )
 "294
 [e $ ! && != _pstr1 -> -> 0 `i `*Cuc != _pstr2 -> -> 0 `i `*Cuc 442  ]
@@ -4567,7 +4570,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 {
 [; ;string_utils.c: 315: result = TRUE;
 "315
-[e = _result -> . `E3585 1 `uc ]
+[e = _result -> . `E3586 1 `uc ]
 "316
 }
 [; ;string_utils.c: 316: }
@@ -4580,7 +4583,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 {
 [; ;string_utils.c: 319: result = FALSE;
 "319
-[e = _result -> . `E3585 0 `uc ]
+[e = _result -> . `E3586 0 `uc ]
 [; ;string_utils.c: 320: break;
 "320
 [e $U 445  ]
@@ -4926,4 +4929,236 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;string_utils.c: 411: }
 "411
 [e :UE 497 ]
+}
+"414
+[v _string_utils_atoi `(i ~T0 @X0 1 ef1`*Cuc ]
+{
+[; ;string_utils.c: 413: INT16 string_utils_atoi(const char *c)
+[; ;string_utils.c: 414: {
+[e :U _string_utils_atoi ]
+[v _c `*Cuc ~T0 @X0 1 r1 ]
+[f ]
+"415
+[v _value `i ~T0 @X0 1 a ]
+[; ;string_utils.c: 415: INT16 value = 0;
+[e = _value -> 0 `i ]
+"416
+[v _sign `i ~T0 @X0 1 a ]
+[; ;string_utils.c: 416: int sign = 1;
+[e = _sign -> 1 `i ]
+[; ;string_utils.c: 417: if( *c == '+' || *c == '-' )
+"417
+[e $ ! || == -> *U _c `ui -> 43 `ui == -> *U _c `ui -> 45 `ui 502  ]
+[; ;string_utils.c: 418: {
+"418
+{
+[; ;string_utils.c: 419: if( *c == '-' ) sign = -1;
+"419
+[e $ ! == -> *U _c `ui -> 45 `ui 503  ]
+[e = _sign -U -> 1 `i ]
+[e :U 503 ]
+[; ;string_utils.c: 420: c++;
+"420
+[e ++ _c * -> -> 1 `i `x -> -> # *U _c `i `x ]
+"421
+}
+[e :U 502 ]
+[; ;string_utils.c: 421: }
+[; ;string_utils.c: 422: while (string_utils_is_digit(*c))
+"422
+[e $U 504  ]
+[e :U 505 ]
+[; ;string_utils.c: 423: {
+"423
+{
+[; ;string_utils.c: 424: value *= 10;
+"424
+[e =* _value -> 10 `i ]
+[; ;string_utils.c: 425: value += (int) (*c-'0');
+"425
+[e =+ _value -> - -> *U _c `ui -> 48 `ui `i ]
+[; ;string_utils.c: 426: c++;
+"426
+[e ++ _c * -> -> 1 `i `x -> -> # *U _c `i `x ]
+"427
+}
+[e :U 504 ]
+"422
+[e $ != -> ( _string_utils_is_digit (1 *U _c `i -> -> -> 0 `i `uc `i 505  ]
+[e :U 506 ]
+[; ;string_utils.c: 427: }
+[; ;string_utils.c: 428: return (value * sign);
+"428
+[e ) * _value _sign ]
+[e $UE 501  ]
+[; ;string_utils.c: 429: }
+"429
+[e :UE 501 ]
+}
+"432
+[v _string_utils_atof `(f ~T0 @X0 1 ef1`*Cuc ]
+{
+[; ;string_utils.c: 431: FLOAT string_utils_atof(const char *s)
+[; ;string_utils.c: 432: {
+[e :U _string_utils_atof ]
+[v _s `*Cuc ~T0 @X0 1 r1 ]
+[f ]
+"433
+[v _a `f ~T0 @X0 1 a ]
+[; ;string_utils.c: 433: FLOAT a = 0.0;
+[e = _a -> .0.0 `f ]
+"434
+[v _e `i ~T0 @X0 1 a ]
+[; ;string_utils.c: 434: int e = 0;
+[e = _e -> 0 `i ]
+"435
+[v _c `i ~T0 @X0 1 a ]
+[; ;string_utils.c: 435: int c;
+[; ;string_utils.c: 436: while ((c = *s++) != '\0' && string_utils_is_digit(c)) {
+"436
+[e $U 508  ]
+[e :U 509 ]
+{
+[; ;string_utils.c: 437: a = a*10.0 + (c - '0');
+"437
+[e = _a -> + * -> _a `d .10.0 -> - -> _c `ui -> 48 `ui `d `f ]
+"438
+}
+[e :U 508 ]
+"436
+[e $ && != -> = _c -> *U ++ _s * -> -> 1 `i `x -> -> # *U _s `i `x `i `ui -> 0 `ui != -> ( _string_utils_is_digit (1 -> _c `uc `i -> -> -> 0 `i `uc `i 509  ]
+[e :U 510 ]
+[; ;string_utils.c: 438: }
+[; ;string_utils.c: 439: if (c == '.') {
+"439
+[e $ ! == -> _c `ui -> 46 `ui 511  ]
+{
+[; ;string_utils.c: 440: while ((c = *s++) != '\0' && string_utils_is_digit(c)) {
+"440
+[e $U 512  ]
+[e :U 513 ]
+{
+[; ;string_utils.c: 441: a = a*10.0 + (c - '0');
+"441
+[e = _a -> + * -> _a `d .10.0 -> - -> _c `ui -> 48 `ui `d `f ]
+[; ;string_utils.c: 442: e = e-1;
+"442
+[e = _e - _e -> 1 `i ]
+"443
+}
+[e :U 512 ]
+"440
+[e $ && != -> = _c -> *U ++ _s * -> -> 1 `i `x -> -> # *U _s `i `x `i `ui -> 0 `ui != -> ( _string_utils_is_digit (1 -> _c `uc `i -> -> -> 0 `i `uc `i 513  ]
+[e :U 514 ]
+"444
+}
+[e :U 511 ]
+[; ;string_utils.c: 443: }
+[; ;string_utils.c: 444: }
+[; ;string_utils.c: 445: if (c == 'e' || c == 'E') {
+"445
+[e $ ! || == -> _c `ui -> 101 `ui == -> _c `ui -> 69 `ui 515  ]
+{
+"446
+[v _sign `i ~T0 @X0 1 a ]
+[; ;string_utils.c: 446: int sign = 1;
+[e = _sign -> 1 `i ]
+"447
+[v _i `i ~T0 @X0 1 a ]
+[; ;string_utils.c: 447: int i = 0;
+[e = _i -> 0 `i ]
+[; ;string_utils.c: 448: c = *s++;
+"448
+[e = _c -> *U ++ _s * -> -> 1 `i `x -> -> # *U _s `i `x `i ]
+[; ;string_utils.c: 449: if (c == '+')
+"449
+[e $ ! == -> _c `ui -> 43 `ui 516  ]
+[; ;string_utils.c: 450: c = *s++;
+"450
+[e = _c -> *U ++ _s * -> -> 1 `i `x -> -> # *U _s `i `x `i ]
+[e $U 517  ]
+"451
+[e :U 516 ]
+[; ;string_utils.c: 451: else if (c == '-') {
+[e $ ! == -> _c `ui -> 45 `ui 518  ]
+{
+[; ;string_utils.c: 452: c = *s++;
+"452
+[e = _c -> *U ++ _s * -> -> 1 `i `x -> -> # *U _s `i `x `i ]
+[; ;string_utils.c: 453: sign = -1;
+"453
+[e = _sign -U -> 1 `i ]
+"454
+}
+[e :U 518 ]
+"455
+[e :U 517 ]
+[; ;string_utils.c: 454: }
+[; ;string_utils.c: 455: while (string_utils_is_digit(c)) {
+[e $U 519  ]
+[e :U 520 ]
+{
+[; ;string_utils.c: 456: i = i*10 + (c - '0');
+"456
+[e = _i -> + -> * _i -> 10 `i `ui - -> _c `ui -> 48 `ui `i ]
+[; ;string_utils.c: 457: c = *s++;
+"457
+[e = _c -> *U ++ _s * -> -> 1 `i `x -> -> # *U _s `i `x `i ]
+"458
+}
+[e :U 519 ]
+"455
+[e $ != -> ( _string_utils_is_digit (1 -> _c `uc `i -> -> -> 0 `i `uc `i 520  ]
+[e :U 521 ]
+[; ;string_utils.c: 458: }
+[; ;string_utils.c: 459: e += i*sign;
+"459
+[e =+ _e * _i _sign ]
+"460
+}
+[e :U 515 ]
+[; ;string_utils.c: 460: }
+[; ;string_utils.c: 461: while (e > 0) {
+"461
+[e $U 522  ]
+[e :U 523 ]
+{
+[; ;string_utils.c: 462: a *= 10.0;
+"462
+[e =* _a -> .10.0 `f ]
+[; ;string_utils.c: 463: e--;
+"463
+[e -- _e -> 1 `i ]
+"464
+}
+[e :U 522 ]
+"461
+[e $ > _e -> 0 `i 523  ]
+[e :U 524 ]
+[; ;string_utils.c: 464: }
+[; ;string_utils.c: 465: while (e < 0) {
+"465
+[e $U 525  ]
+[e :U 526 ]
+{
+[; ;string_utils.c: 466: a *= 0.1;
+"466
+[e =* _a -> .0.1 `f ]
+[; ;string_utils.c: 467: e++;
+"467
+[e ++ _e -> 1 `i ]
+"468
+}
+[e :U 525 ]
+"465
+[e $ < _e -> 0 `i 526  ]
+[e :U 527 ]
+[; ;string_utils.c: 468: }
+[; ;string_utils.c: 469: return a;
+"469
+[e ) _a ]
+[e $UE 507  ]
+[; ;string_utils.c: 470: }
+"470
+[e :UE 507 ]
 }

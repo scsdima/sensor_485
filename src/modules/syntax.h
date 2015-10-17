@@ -38,7 +38,7 @@ typedef struct {
 
 
 
-INT8 syntax_string(const char *pstr,SIZE str_len, BOOL case_sensitive);
+INT8 syntax_string(const char *pstr,SIZE str_len);
 
 
 const char* syntax_get_text(void);

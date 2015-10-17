@@ -3,8 +3,8 @@ Version 3.2 HI-TECH Software Intermediate Code
 [n S390 . last first size ]
 [s S389 `S390 1 `uc + -> 100 `i -> 1 `i ]
 [n S389 . head list ]
-[c E3585 0 1 .. ]
-[n E3585 _BOOL FALSE TRUE  ]
+[c E3586 0 1 .. ]
+[n E3586 _BOOL FALSE TRUE  ]
 "40 src/modules/rd_buffer.h
 [v _rd_buffer_get `(uc ~T0 @X0 0 ef2`*S389`*uc ]
 [; ;pic18f45k20.h: 44: extern volatile unsigned char SSPMSK @ 0xF77;
@@ -3148,7 +3148,8 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;compiler.h: 16: typedef signed long INT32;
 [; ;compiler.h: 17: typedef unsigned char IDX8;
 [; ;compiler.h: 18: typedef unsigned int IDX16;
-[; ;compiler.h: 20: typedef signed int SIZE;
+[; ;compiler.h: 20: typedef float FLOAT;
+[; ;compiler.h: 21: typedef signed int SIZE;
 [; ;typedef_global.h: 11: typedef enum {
 [; ;typedef_global.h: 12: RESULT_NO_ERROR = 0,
 [; ;typedef_global.h: 13: RESULT_ERROR = -1,
@@ -3911,7 +3912,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 "17
 [v _result `uc ~T0 @X0 1 a ]
 [; ;rd_buffer.c: 17: CHAR result = FALSE;
-[e = _result -> . `E3585 0 `uc ]
+[e = _result -> . `E3586 0 `uc ]
 [; ;rd_buffer.c: 18: if(pbuffer != (0) ){
 "18
 [e $ ! != _pbuffer -> -> 0 `i `*S389 392  ]
@@ -3927,7 +3928,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e = . . *U _pbuffer 0 2 _size ]
 [; ;rd_buffer.c: 23: result = TRUE;
 "23
-[e = _result -> . `E3585 1 `uc ]
+[e = _result -> . `E3586 1 `uc ]
 "24
 }
 [e :U 392 ]
@@ -4000,10 +4001,10 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;rd_buffer.c: 53: }
 [; ;rd_buffer.c: 54: this_contains_crlf = FALSE;
 "54
-[e = _this_contains_crlf -> . `E3585 0 `uc ]
+[e = _this_contains_crlf -> . `E3586 0 `uc ]
 [; ;rd_buffer.c: 55: return TRUE;
 "55
-[e ) -> . `E3585 1 `uc ]
+[e ) -> . `E3586 1 `uc ]
 [e $UE 393  ]
 "56
 }
@@ -4011,7 +4012,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;rd_buffer.c: 56: }
 [; ;rd_buffer.c: 57: return FALSE;
 "57
-[e ) -> . `E3585 0 `uc ]
+[e ) -> . `E3586 0 `uc ]
 [e $UE 393  ]
 [; ;rd_buffer.c: 58: }
 "58
@@ -4119,7 +4120,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 "128
 [v _result `uc ~T0 @X0 1 a ]
 [; ;rd_buffer.c: 128: CHAR result = FALSE;
-[e = _result -> . `E3585 0 `uc ]
+[e = _result -> . `E3586 0 `uc ]
 "129
 [v _first `i ~T0 @X0 1 a ]
 [; ;rd_buffer.c: 129: INT16 first = pbuffer->head.first;
@@ -4154,7 +4155,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;rd_buffer.c: 137: }
 [; ;rd_buffer.c: 138: result = TRUE;
 "138
-[e = _result -> . `E3585 1 `uc ]
+[e = _result -> . `E3586 1 `uc ]
 "139
 }
 [e :U 405 ]
@@ -4178,7 +4179,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 "154
 [v _result `uc ~T0 @X0 1 a ]
 [; ;rd_buffer.c: 154: CHAR result = FALSE;
-[e = _result -> . `E3585 0 `uc ]
+[e = _result -> . `E3586 0 `uc ]
 "155
 [v _sz `i ~T0 @X0 1 a ]
 [; ;rd_buffer.c: 155: SIZE sz ;
@@ -4235,7 +4236,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e = . . *U _pbuffer 0 0 _ind ]
 [; ;rd_buffer.c: 173: result = TRUE;
 "173
-[e = _result -> . `E3585 1 `uc ]
+[e = _result -> . `E3586 1 `uc ]
 "174
 }
 [e :U 409 ]
@@ -4264,7 +4265,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 "192
 [v _result `uc ~T0 @X0 1 a ]
 [; ;rd_buffer.c: 192: CHAR result = TRUE;
-[e = _result -> . `E3585 1 `uc ]
+[e = _result -> . `E3586 1 `uc ]
 [; ;rd_buffer.c: 193: while(rec_count--){
 "193
 [e $U 412  ]
@@ -4272,11 +4273,11 @@ Version 3.2 HI-TECH Software Intermediate Code
 {
 [; ;rd_buffer.c: 194: if(rd_buffer_get(pbuffer, &prec[i]) == FALSE ) {
 "194
-[e $ ! == -> ( _rd_buffer_get (2 , _pbuffer &U *U + _prec * -> _i `x -> -> # *U _prec `i `x `i -> . `E3585 0 `i 415  ]
+[e $ ! == -> ( _rd_buffer_get (2 , _pbuffer &U *U + _prec * -> _i `x -> -> # *U _prec `i `x `i -> . `E3586 0 `i 415  ]
 {
 [; ;rd_buffer.c: 195: result = FALSE;
 "195
-[e = _result -> . `E3585 0 `uc ]
+[e = _result -> . `E3586 0 `uc ]
 [; ;rd_buffer.c: 196: break;
 "196
 [e $U 414  ]
@@ -4313,7 +4314,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 "214
 [v _result `uc ~T0 @X0 1 a ]
 [; ;rd_buffer.c: 214: CHAR result = FALSE;
-[e = _result -> . `E3585 0 `uc ]
+[e = _result -> . `E3586 0 `uc ]
 [; ;rd_buffer.c: 215: if(rd_buffer_cnt(pbuffer) > 0){
 "215
 [e $ ! > ( _rd_buffer_cnt (1 _pbuffer -> 0 `i 417  ]
@@ -4331,7 +4332,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e = *U _prec *U _mes_rec ]
 [; ;rd_buffer.c: 219: result = TRUE;
 "219
-[e = _result -> . `E3585 1 `uc ]
+[e = _result -> . `E3586 1 `uc ]
 "220
 }
 [e :U 417 ]
@@ -4355,7 +4356,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 "234
 [v _result `uc ~T0 @X0 1 a ]
 [; ;rd_buffer.c: 234: CHAR result = FALSE;
-[e = _result -> . `E3585 0 `uc ]
+[e = _result -> . `E3586 0 `uc ]
 [; ;rd_buffer.c: 235: if(rd_buffer_cnt(pbuffer) > 0){
 "235
 [e $ ! > ( _rd_buffer_cnt (1 _pbuffer -> 0 `i 419  ]
@@ -4384,7 +4385,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e = *U _prec *U _mes_rec ]
 [; ;rd_buffer.c: 242: result = TRUE;
 "242
-[e = _result -> . `E3585 1 `uc ]
+[e = _result -> . `E3586 1 `uc ]
 "243
 }
 [e :U 419 ]

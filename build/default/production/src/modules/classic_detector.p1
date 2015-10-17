@@ -5,8 +5,8 @@ Version 3.2 HI-TECH Software Intermediate Code
 [n S389 . sig_max_count sig_sum_trig sig_trig ]
 [s S390 `i 1 `i 1 `i 1 `i 1 `i 1 `i 1 `i 1 `S391 1 `S389 1 ]
 [n S390 . cur_v zero over_trig_value sig_sum sig_count last_sig_sum last_sig_count status config ]
-[c E3585 0 1 .. ]
-[n E3585 _BOOL FALSE TRUE  ]
+[c E3586 0 1 .. ]
+[n E3586 _BOOL FALSE TRUE  ]
 [; ;pic18f45k20.h: 44: extern volatile unsigned char SSPMSK @ 0xF77;
 "46 C:\Program Files\Microchip\xc8\v1.12\include\pic18f45k20.h
 [; ;pic18f45k20.h: 46: asm("SSPMSK equ 0F77h");
@@ -3148,7 +3148,8 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;compiler.h: 16: typedef signed long INT32;
 [; ;compiler.h: 17: typedef unsigned char IDX8;
 [; ;compiler.h: 18: typedef unsigned int IDX16;
-[; ;compiler.h: 20: typedef signed int SIZE;
+[; ;compiler.h: 20: typedef float FLOAT;
+[; ;compiler.h: 21: typedef signed int SIZE;
 [; ;typedef_global.h: 11: typedef enum {
 [; ;typedef_global.h: 12: RESULT_NO_ERROR = 0,
 [; ;typedef_global.h: 13: RESULT_ERROR = -1,
@@ -3887,16 +3888,16 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e =+ . *U _d 3 . *U _d 2 ]
 [; ;classic_detector.c: 40: if (d->sig_sum > d->config.sig_sum_trig && d->status.alarm == FALSE)
 "40
-[e $ ! && > . *U _d 3 . . *U _d 8 1 == -> . . *U _d 7 0 `i -> . `E3585 0 `i 395  ]
+[e $ ! && > . *U _d 3 . . *U _d 8 1 == -> . . *U _d 7 0 `i -> . `E3586 0 `i 395  ]
 [; ;classic_detector.c: 41: {
 "41
 {
 [; ;classic_detector.c: 42: d->status.over_trig = FALSE;
 "42
-[e = . . *U _d 7 2 -> . `E3585 0 `uc ]
+[e = . . *U _d 7 2 -> . `E3586 0 `uc ]
 [; ;classic_detector.c: 43: d->status.alarm=TRUE;
 "43
-[e = . . *U _d 7 0 -> . `E3585 1 `uc ]
+[e = . . *U _d 7 0 -> . `E3586 1 `uc ]
 [; ;classic_detector.c: 44: d->last_sig_count = d->sig_count;
 "44
 [e = . *U _d 6 . *U _d 4 ]
@@ -3911,7 +3912,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e = . *U _d 3 -> 0 `i ]
 [; ;classic_detector.c: 48: return TRUE;
 "48
-[e ) -> . `E3585 1 `uc ]
+[e ) -> . `E3586 1 `uc ]
 [e $UE 393  ]
 "49
 }
@@ -3925,10 +3926,10 @@ Version 3.2 HI-TECH Software Intermediate Code
 {
 [; ;classic_detector.c: 53: d->status.over_trig = FALSE;
 "53
-[e = . . *U _d 7 2 -> . `E3585 0 `uc ]
+[e = . . *U _d 7 2 -> . `E3586 0 `uc ]
 [; ;classic_detector.c: 54: d->status.alarm = FALSE;
 "54
-[e = . . *U _d 7 0 -> . `E3585 0 `uc ]
+[e = . . *U _d 7 0 -> . `E3586 0 `uc ]
 "55
 }
 [e :U 396 ]
@@ -3946,10 +3947,10 @@ Version 3.2 HI-TECH Software Intermediate Code
 {
 [; ;classic_detector.c: 61: d->status.over_trig = TRUE;
 "61
-[e = . . *U _d 7 2 -> . `E3585 1 `uc ]
+[e = . . *U _d 7 2 -> . `E3586 1 `uc ]
 [; ;classic_detector.c: 62: d->status.alarm = FALSE;
 "62
-[e = . . *U _d 7 0 -> . `E3585 0 `uc ]
+[e = . . *U _d 7 0 -> . `E3586 0 `uc ]
 [; ;classic_detector.c: 63: d->last_sig_count = 0;
 "63
 [e = . *U _d 6 -> 0 `i ]
@@ -3969,7 +3970,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e :U 397 ]
 [; ;classic_detector.c: 67: }
 [; ;classic_detector.c: 68: return FALSE;
-[e ) -> . `E3585 0 `uc ]
+[e ) -> . `E3586 0 `uc ]
 [e $UE 393  ]
 [; ;classic_detector.c: 69: }
 "69

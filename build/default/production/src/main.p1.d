@@ -6,6 +6,7 @@ src/compiler.h  \
 src/modules/serialport.h  \
 src/interrupts.c  \
 src/drivers/adc.h  \
+src/modules/string_utils.h  \
 src/drivers/uart.h  \
 src/modules/scheduler.h  \
 src/drivers/delay.h  \

@@ -4187,6 +4187,7 @@ typedef signed long INT32;
 typedef unsigned char IDX8;
 typedef unsigned int IDX16;
 
+typedef float FLOAT;
 typedef signed int SIZE;
 
 # 11 "src\typedef_global.h"
@@ -5200,7 +5201,8 @@ void string_utils_to_upper_case(char pstr[]);
 CHAR string_utils_strcmp(const char pstr1[],const char pstr2[],CHAR case_sensitive);
 CHAR string_utils_strncmp(const char pstr1[], const char pstr2[],
 SIZE len, CHAR case_sensitive);
-
+INT16 string_utils_atoi(const char *c);
+FLOAT string_utils_atof(const char *s);
 char string_utils_toHex(unsigned char byte);
 
 # 14 "src/modules/syntax.h"
@@ -5231,7 +5233,7 @@ INT8 type;
 
 
 
-INT8 syntax_string(const char *pstr,SIZE str_len, CHAR case_sensitive);
+INT8 syntax_string(const char *pstr,SIZE str_len);
 
 
 const char* syntax_get_text(void);
@@ -5363,6 +5365,8 @@ serialport_write("err\n");
 
 
 CHAR set_parameter(INT8 p_id ) {
+INT16 u16_value;
+CHAR b_value;
 CHAR ok = FALSE;
 switch (p_id )
 {
@@ -5371,11 +5375,12 @@ case Parameter_signal:
 break;
 
 case Parameter_pot:
-LATD = syntax_as_integer()&0x0f;
+u16_value = syntax_as_integer();
+if(u16_value<16)
+{
+LATD = u16_value&0x0f;
 ok = TRUE;
-break;
-
-case Parameter_mod:
+}
 break;
 
 case Parameter_mod:
@@ -5426,11 +5431,11 @@ break;
 serialport_write( syntax_get_text() );
 if( ok )
 {
-serialport_write( ":ok " );
+serialport_write(":ok ");
 }
 else
 {
-serialport_write( ":err " );
+serialport_write(":err ");
 }
 return ok;
 }
@@ -5491,11 +5496,7 @@ break;
 }
 
 
-if(ok)
-{
-
-}
-else
+if(!ok)
 {
 serialport_write( ":err " );
 }

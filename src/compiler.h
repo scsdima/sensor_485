@@ -17,6 +17,7 @@ typedef signed long     INT32;
 typedef unsigned char   IDX8;//index 8 bit
 typedef unsigned int   IDX16;//index 16 bit
 
+typedef float FLOAT;
 typedef signed  int     SIZE;
 
 #define BOOL CHAR

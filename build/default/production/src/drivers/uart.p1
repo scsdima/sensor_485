@@ -41,8 +41,8 @@ Version 3.2 HI-TECH Software Intermediate Code
 [v _TXIF `Vb ~T0 @X0 0 e@31988 ]
 "8219
 [v _RC1IF `Vb ~T0 @X0 0 e@31989 ]
-[c E3388 1 0 .. ]
-[n E3388 . RESULT_SUCCESS RESULT_FAIL  ]
+[c E3389 1 0 .. ]
+[n E3389 . RESULT_SUCCESS RESULT_FAIL  ]
 "27 src/drivers/uart.h
 [v _uart_error `(uc ~T0 @X0 0 ef ]
 "29
@@ -3204,7 +3204,8 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;compiler.h: 16: typedef signed long INT32;
 [; ;compiler.h: 17: typedef unsigned char IDX8;
 [; ;compiler.h: 18: typedef unsigned int IDX16;
-[; ;compiler.h: 20: typedef signed int SIZE;
+[; ;compiler.h: 20: typedef float FLOAT;
+[; ;compiler.h: 21: typedef signed int SIZE;
 [; ;typedef_global.h: 11: typedef enum {
 [; ;typedef_global.h: 12: RESULT_NO_ERROR = 0,
 [; ;typedef_global.h: 13: RESULT_ERROR = -1,
@@ -4026,7 +4027,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e :UE 401 ]
 }
 "56
-[v _uart_getc `(E3388 ~T0 @X0 1 ef1`*uc ]
+[v _uart_getc `(E3389 ~T0 @X0 1 ef1`*uc ]
 {
 [; ;uart.c: 55: ResultSuccess_t uart_getc(CHAR *pbyte)
 [; ;uart.c: 56: {
@@ -4034,9 +4035,9 @@ Version 3.2 HI-TECH Software Intermediate Code
 [v _pbyte `*uc ~T0 @X0 1 r1 ]
 [f ]
 "57
-[v _result `E3388 ~T0 @X0 1 a ]
+[v _result `E3389 ~T0 @X0 1 a ]
 [; ;uart.c: 57: ResultSuccess_t result = RESULT_FAIL;
-[e = _result -> . `E3388 1 `E3388 ]
+[e = _result -> . `E3389 1 `E3389 ]
 [; ;uart.c: 58: if ( uart_error())
 "58
 [e $ ! != -> ( _uart_error ..  `i -> -> -> 0 `i `uc `i 403  ]
@@ -4067,7 +4068,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e = _RCIF -> -> 0 `i `b ]
 [; ;uart.c: 67: result = RESULT_SUCCESS;
 "67
-[e = _result -> . `E3388 0 `E3388 ]
+[e = _result -> . `E3389 0 `E3389 ]
 "68
 }
 [e :U 405 ]

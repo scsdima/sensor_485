@@ -1,13 +1,13 @@
 Version 3.2 HI-TECH Software Intermediate Code
-[c E4323 0 1 2 3 4 5 6 7 .. ]
-[n E4323 . PROFILE_DIS PROFILE1 PROFILE2 PROFILE3 PROFILE4 PROFILE5 PROFILE6 PROFILES_COUNT  ]
-[c E4263 0 1 2 3 .. ]
-[n E4263 . DETECTION_MODE_OFF DETECTION_MODE_CLA DETECTION_MODE_PEAK DETECTION_MODE_COUNT  ]
+[c E4324 0 1 2 3 4 5 6 7 .. ]
+[n E4324 . PROFILE_DIS PROFILE1 PROFILE2 PROFILE3 PROFILE4 PROFILE5 PROFILE6 PROFILES_COUNT  ]
+[c E4264 0 1 2 3 .. ]
+[n E4264 . DETECTION_MODE_OFF DETECTION_MODE_CLA DETECTION_MODE_PEAK DETECTION_MODE_COUNT  ]
 [s S392 `i 1 `i 1 `i 1 ]
 [n S392 . sig_max_count sig_sum_trig sig_trig ]
 [s S389 `i 1 `i 1 `uc 1 `uc 1 ]
 [n S389 . wtrigger tolerance lval_cnt rval_cnt ]
-[s S397 `uc 1 `E4323 1 `uc 1 `uc 1 `uc 1 `ui 1 `E4263 1 `S392 1 `S389 1 ]
+[s S397 `uc 1 `E4324 1 `uc 1 `uc 1 `uc 1 `ui 1 `E4264 1 `S392 1 `S389 1 ]
 [n S397 . checksum profile_number address potentiometer acc_sensitivity power_trig det_mode cla_config pd_config ]
 [s S391 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
 [n S391 . alarm warning firststart ]
@@ -25,8 +25,8 @@ Version 3.2 HI-TECH Software Intermediate Code
 [v _pd_init `(v ~T0 @X0 0 ef1`*VS390 ]
 "35 src/modules/classic_detector.h
 [v _cla_init `(v ~T0 @X0 0 ef1`*VS393 ]
-[c E3585 0 1 .. ]
-[n E3585 _BOOL FALSE TRUE  ]
+[c E3586 0 1 .. ]
+[n E3586 _BOOL FALSE TRUE  ]
 "48 src/modules/peak_detector.h
 [v _pd_add_value `(uc ~T0 @X0 0 ef2`*VS390`i ]
 "37 src/modules/classic_detector.h
@@ -3178,7 +3178,8 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;compiler.h: 16: typedef signed long INT32;
 [; ;compiler.h: 17: typedef unsigned char IDX8;
 [; ;compiler.h: 18: typedef unsigned int IDX16;
-[; ;compiler.h: 20: typedef signed int SIZE;
+[; ;compiler.h: 20: typedef float FLOAT;
+[; ;compiler.h: 21: typedef signed int SIZE;
 [; ;typedef_global.h: 11: typedef enum {
 [; ;typedef_global.h: 12: RESULT_NO_ERROR = 0,
 [; ;typedef_global.h: 13: RESULT_ERROR = -1,
@@ -4103,7 +4104,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [f ]
 [; ;detection.c: 68: return TRUE;
 "68
-[e ) -> . `E3585 1 `uc ]
+[e ) -> . `E3586 1 `uc ]
 [e $UE 402  ]
 [; ;detection.c: 69: }
 "69
@@ -4117,9 +4118,9 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e :U _detection_task ]
 [f ]
 "82
-[v F4363 `uc ~T0 @X0 1 s alarm_cla ]
+[v F4364 `uc ~T0 @X0 1 s alarm_cla ]
 "83
-[v F4364 `uc ~T0 @X0 1 s alarm_wav ]
+[v F4365 `uc ~T0 @X0 1 s alarm_wav ]
 "84
 [v _zero `m ~T0 @X0 1 a ]
 [; ;detection.c: 82: static CHAR alarm_cla;
@@ -4127,13 +4128,13 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;detection.c: 84: INT24 zero;
 [; ;detection.c: 86: alarm_wav = (CHAR)pd_add_value(&pd_detector, (INT24)g_analog0);
 "86
-[e = F4364 ( _pd_add_value (2 , &U _pd_detector -> -> _g_analog0 `m `i ]
+[e = F4365 ( _pd_add_value (2 , &U _pd_detector -> -> _g_analog0 `m `i ]
 [; ;detection.c: 87: zero = pd_detector.ref_v;
 "87
 [e = _zero -> . _pd_detector 5 `m ]
 [; ;detection.c: 88: alarm_cla = (CHAR)cla_add_value(&cla_detector, (INT24)g_analog0, zero);
 "88
-[e = F4363 ( _cla_add_value (3 , , &U _cla_detector -> -> _g_analog0 `m `i -> _zero `i ]
+[e = F4364 ( _cla_add_value (3 , , &U _cla_detector -> -> _g_analog0 `m `i -> _zero `i ]
 [; ;detection.c: 89: this_warning = cla_detector.status.over_trig;
 "89
 [e = _this_warning . . _cla_detector 7 2 ]
@@ -4148,7 +4149,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e :U 406 ]
 [; ;detection.c: 97: this_alarm = FALSE;
 "97
-[e = _this_alarm -> . `E3585 0 `uc ]
+[e = _this_alarm -> . `E3586 0 `uc ]
 [; ;detection.c: 98: break;
 "98
 [e $U 404  ]
@@ -4157,7 +4158,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e :U 407 ]
 [; ;detection.c: 102: this_alarm = alarm_cla;
 "102
-[e = _this_alarm F4363 ]
+[e = _this_alarm F4364 ]
 [; ;detection.c: 103: break;
 "103
 [e $U 404  ]
@@ -4166,7 +4167,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e :U 408 ]
 [; ;detection.c: 110: this_alarm= alarm_wav;
 "110
-[e = _this_alarm F4364 ]
+[e = _this_alarm F4365 ]
 [; ;detection.c: 111: break;
 "111
 [e $U 404  ]
@@ -4175,7 +4176,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e :U 409 ]
 [; ;detection.c: 114: this_alarm = FALSE;
 "114
-[e = _this_alarm -> . `E3585 0 `uc ]
+[e = _this_alarm -> . `E3586 0 `uc ]
 [; ;detection.c: 115: break;
 "115
 [e $U 404  ]
@@ -4185,9 +4186,9 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e $U 404  ]
 "91
 [e :U 405 ]
-[e [\ . _g_CONFIG 6 , $ -> . `E4263 0 `VE4263 406
- , $ -> . `E4263 1 `VE4263 407
- , $ -> . `E4263 2 `VE4263 408
+[e [\ . _g_CONFIG 6 , $ -> . `E4264 0 `VE4264 406
+ , $ -> . `E4264 1 `VE4264 407
+ , $ -> . `E4264 2 `VE4264 408
  409 ]
 "117
 [e :U 404 ]

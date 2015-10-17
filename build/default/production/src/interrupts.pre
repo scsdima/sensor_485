@@ -4187,6 +4187,7 @@ typedef signed long INT32;
 typedef unsigned char IDX8;
 typedef unsigned int IDX16;
 
+typedef float FLOAT;
 typedef signed int SIZE;
 
 # 11 "src\typedef_global.h"
@@ -5144,7 +5145,7 @@ extern void _delay3(unsigned char);
 
 #pragma config EBTRB = OFF
 
-# 19 "src/drivers\delay.h"
+# 8 "src/drivers\delay.h"
 extern volatile UINT16 this_delay_timerMs;
 extern volatile UINT16 this_delay_timerUs;
 

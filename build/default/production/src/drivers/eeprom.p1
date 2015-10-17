@@ -1,8 +1,8 @@
 Version 3.2 HI-TECH Software Intermediate Code
-[c E3382 0 -1 -2 -3 .. ]
-[n E3382 . RESULT_NO_ERROR RESULT_ERROR RESULT_NULL RESULT_EMPTY  ]
-[c E4195 0 1 .. ]
-[n E4195 . EEPROM_BY_BLOCK EEPROM_BY_BYTE  ]
+[c E3383 0 -1 -2 -3 .. ]
+[n E3383 . RESULT_NO_ERROR RESULT_ERROR RESULT_NULL RESULT_EMPTY  ]
+[c E4196 0 1 .. ]
+[n E4196 . EEPROM_BY_BLOCK EEPROM_BY_BYTE  ]
 [; ;pic18f45k20.h: 44: extern volatile unsigned char SSPMSK @ 0xF77;
 "46 C:\Program Files\Microchip\xc8\v1.12\include\pic18f45k20.h
 [; ;pic18f45k20.h: 46: asm("SSPMSK equ 0F77h");
@@ -3144,7 +3144,8 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;compiler.h: 16: typedef signed long INT32;
 [; ;compiler.h: 17: typedef unsigned char IDX8;
 [; ;compiler.h: 18: typedef unsigned int IDX16;
-[; ;compiler.h: 20: typedef signed int SIZE;
+[; ;compiler.h: 20: typedef float FLOAT;
+[; ;compiler.h: 21: typedef signed int SIZE;
 [; ;typedef_global.h: 11: typedef enum {
 [; ;typedef_global.h: 12: RESULT_NO_ERROR = 0,
 [; ;typedef_global.h: 13: RESULT_ERROR = -1,
@@ -3880,12 +3881,12 @@ Version 3.2 HI-TECH Software Intermediate Code
 [p x EBTR3=OFF ]
 "62
 [p x EBTRB=OFF ]
-[; ;delay.h: 19: extern volatile UINT16 this_delay_timerMs;
-[; ;delay.h: 20: extern volatile UINT16 this_delay_timerUs;
-[; ;delay.h: 23: void delay_ms(UINT16 delay);
-[; ;delay.h: 24: void delay_timeout_set(UINT16 delay);
-[; ;delay.h: 25: inline CHAR delay_timeout(void);
-[; ;delay.h: 28: void delay_interrupt_service(void);
+[; ;delay.h: 8: extern volatile UINT16 this_delay_timerMs;
+[; ;delay.h: 9: extern volatile UINT16 this_delay_timerUs;
+[; ;delay.h: 12: void delay_ms(UINT16 delay);
+[; ;delay.h: 13: void delay_timeout_set(UINT16 delay);
+[; ;delay.h: 14: inline CHAR delay_timeout(void);
+[; ;delay.h: 17: void delay_interrupt_service(void);
 "15 src/drivers/eeprom.c
 [v _eeprom_lock `(v ~T0 @X0 1 ef ]
 {
@@ -3907,7 +3908,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e :UE 390 ]
 }
 "48
-[v _eeprom_write_byte `(E3382 ~T0 @X0 1 ef2`ui`uc ]
+[v _eeprom_write_byte `(E3383 ~T0 @X0 1 ef2`ui`uc ]
 {
 [; ;eeprom.c: 48: ResultError_t eeprom_write_byte(UINT16 addr, UINT8 byte) {
 [e :U _eeprom_write_byte ]
@@ -3915,9 +3916,9 @@ Version 3.2 HI-TECH Software Intermediate Code
 [v _byte `uc ~T0 @X0 1 r2 ]
 [f ]
 "49
-[v _result `E3382 ~T0 @X0 1 a ]
+[v _result `E3383 ~T0 @X0 1 a ]
 [; ;eeprom.c: 49: ResultError_t result = RESULT_NO_ERROR;
-[e = _result -> . `E3382 0 `E3382 ]
+[e = _result -> . `E3383 0 `E3383 ]
 [; ;eeprom.c: 56: return result;
 "56
 [e ) _result ]
@@ -3927,19 +3928,19 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e :UE 391 ]
 }
 "70
-[v _eeprom_write_data `(E3382 ~T0 @X0 1 ef4`ui`*Cuc`ui`E4195 ]
+[v _eeprom_write_data `(E3383 ~T0 @X0 1 ef4`ui`*Cuc`ui`E4196 ]
 {
 [; ;eeprom.c: 70: ResultError_t eeprom_write_data(UINT16 addr, const UINT8 *data, UINT16 len, EepromReadMode_t mode) {
 [e :U _eeprom_write_data ]
 [v _addr `ui ~T0 @X0 1 r1 ]
 [v _data `*Cuc ~T0 @X0 1 r2 ]
 [v _len `ui ~T0 @X0 1 r3 ]
-[v _mode `E4195 ~T0 @X0 1 r4 ]
+[v _mode `E4196 ~T0 @X0 1 r4 ]
 [f ]
 "73
-[v _result `E3382 ~T0 @X0 1 a ]
+[v _result `E3383 ~T0 @X0 1 a ]
 [; ;eeprom.c: 73: ResultError_t result = RESULT_NO_ERROR;
-[e = _result -> . `E3382 0 `E3382 ]
+[e = _result -> . `E3383 0 `E3383 ]
 [; ;eeprom.c: 118: return result;
 "118
 [e ) _result ]
@@ -3949,7 +3950,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e :UE 392 ]
 }
 "130
-[v _eeprom_read_byte `(E3382 ~T0 @X0 1 ef2`ui`*uc ]
+[v _eeprom_read_byte `(E3383 ~T0 @X0 1 ef2`ui`*uc ]
 {
 [; ;eeprom.c: 130: ResultError_t eeprom_read_byte(UINT16 addr, UINT8 *byte) {
 [e :U _eeprom_read_byte ]
@@ -3957,9 +3958,9 @@ Version 3.2 HI-TECH Software Intermediate Code
 [v _byte `*uc ~T0 @X0 1 r2 ]
 [f ]
 "131
-[v _result `E3382 ~T0 @X0 1 a ]
+[v _result `E3383 ~T0 @X0 1 a ]
 [; ;eeprom.c: 131: ResultError_t result = RESULT_NO_ERROR;
-[e = _result -> . `E3382 0 `E3382 ]
+[e = _result -> . `E3383 0 `E3383 ]
 [; ;eeprom.c: 139: return result;
 "139
 [e ) _result ]
@@ -3969,19 +3970,19 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e :UE 393 ]
 }
 "153
-[v _eeprom_read_data `(E3382 ~T0 @X0 1 ef4`ui`*uc`ui`E4195 ]
+[v _eeprom_read_data `(E3383 ~T0 @X0 1 ef4`ui`*uc`ui`E4196 ]
 {
 [; ;eeprom.c: 153: ResultError_t eeprom_read_data(UINT16 addr, UINT8 *data, UINT16 len, EepromReadMode_t mode) {
 [e :U _eeprom_read_data ]
 [v _addr `ui ~T0 @X0 1 r1 ]
 [v _data `*uc ~T0 @X0 1 r2 ]
 [v _len `ui ~T0 @X0 1 r3 ]
-[v _mode `E4195 ~T0 @X0 1 r4 ]
+[v _mode `E4196 ~T0 @X0 1 r4 ]
 [f ]
 "154
-[v _result `E3382 ~T0 @X0 1 a ]
+[v _result `E3383 ~T0 @X0 1 a ]
 [; ;eeprom.c: 154: ResultError_t result = RESULT_NO_ERROR;
-[e = _result -> . `E3382 0 `E3382 ]
+[e = _result -> . `E3383 0 `E3383 ]
 [; ;eeprom.c: 197: return result;
 "197
 [e ) _result ]

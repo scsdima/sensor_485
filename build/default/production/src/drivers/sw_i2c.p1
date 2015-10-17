@@ -1,6 +1,6 @@
 Version 3.2 HI-TECH Software Intermediate Code
-[c E3382 0 -1 -2 -3 .. ]
-[n E3382 . RESULT_NO_ERROR RESULT_ERROR RESULT_NULL RESULT_EMPTY  ]
+[c E3383 0 -1 -2 -3 .. ]
+[n E3383 . RESULT_NO_ERROR RESULT_ERROR RESULT_NULL RESULT_EMPTY  ]
 [; ;pic18f45k20.h: 44: extern volatile unsigned char SSPMSK @ 0xF77;
 "46 C:\Program Files\Microchip\xc8\v1.12\include\pic18f45k20.h
 [; ;pic18f45k20.h: 46: asm("SSPMSK equ 0F77h");
@@ -3142,7 +3142,8 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;compiler.h: 16: typedef signed long INT32;
 [; ;compiler.h: 17: typedef unsigned char IDX8;
 [; ;compiler.h: 18: typedef unsigned int IDX16;
-[; ;compiler.h: 20: typedef signed int SIZE;
+[; ;compiler.h: 20: typedef float FLOAT;
+[; ;compiler.h: 21: typedef signed int SIZE;
 [; ;typedef_global.h: 11: typedef enum {
 [; ;typedef_global.h: 12: RESULT_NO_ERROR = 0,
 [; ;typedef_global.h: 13: RESULT_ERROR = -1,
@@ -4039,7 +4040,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e :UE 398 ]
 }
 "177
-[v _sw_i2c_read_ack `(E3382 ~T0 @X0 1 ef ]
+[v _sw_i2c_read_ack `(E3383 ~T0 @X0 1 ef ]
 {
 [; ;sw_i2c.c: 177: ResultError_t sw_i2c_read_ack(void) {
 [e :U _sw_i2c_read_ack ]
@@ -4059,7 +4060,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 {
 [; ;sw_i2c.c: 184: return ( RESULT_ERROR);
 "184
-[e ) -> . `E3382 1 `E3382 ]
+[e ) -> . `E3383 1 `E3383 ]
 [e $UE 399  ]
 "185
 }
@@ -4067,14 +4068,14 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;sw_i2c.c: 185: }
 [; ;sw_i2c.c: 186: return ( RESULT_NO_ERROR);
 "186
-[e ) -> . `E3382 0 `E3382 ]
+[e ) -> . `E3383 0 `E3383 ]
 [e $UE 399  ]
 [; ;sw_i2c.c: 187: }
 "187
 [e :UE 399 ]
 }
 "199
-[v _this_clock_test1 `(E3382 ~T0 @X0 1 ef ]
+[v _this_clock_test1 `(E3383 ~T0 @X0 1 ef ]
 {
 [; ;sw_i2c.c: 199: ResultError_t this_clock_test1(void) {
 [e :U _this_clock_test1 ]
@@ -4088,7 +4089,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 {
 [; ;sw_i2c.c: 202: return ( RESULT_NULL);
 "202
-[e ) -> . `E3382 2 `E3382 ]
+[e ) -> . `E3383 2 `E3383 ]
 [e $UE 401  ]
 "203
 }
@@ -4096,14 +4097,14 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;sw_i2c.c: 203: }
 [; ;sw_i2c.c: 204: return ( RESULT_NO_ERROR);
 "204
-[e ) -> . `E3382 0 `E3382 ]
+[e ) -> . `E3383 0 `E3383 ]
 [e $UE 401  ]
 [; ;sw_i2c.c: 205: }
 "205
 [e :UE 401 ]
 }
 "217
-[v _sw_i2c_read_byte `(E3382 ~T0 @X0 1 ef1`*uc ]
+[v _sw_i2c_read_byte `(E3383 ~T0 @X0 1 ef1`*uc ]
 {
 [; ;sw_i2c.c: 217: ResultError_t sw_i2c_read_byte(UINT8 *byte) {
 [e :U _sw_i2c_read_byte ]
@@ -4139,11 +4140,11 @@ Version 3.2 HI-TECH Software Intermediate Code
 {
 [; ;sw_i2c.c: 230: if (this_clock_test1() != RESULT_NO_ERROR) {
 "230
-[e $ ! != -> ( _this_clock_test1 ..  `i -> . `E3382 0 `i 408  ]
+[e $ ! != -> ( _this_clock_test1 ..  `i -> . `E3383 0 `i 408  ]
 {
 [; ;sw_i2c.c: 231: return RESULT_NULL;
 "231
-[e ) -> . `E3382 2 `E3382 ]
+[e ) -> . `E3383 2 `E3383 ]
 [e $UE 403  ]
 "232
 }
@@ -4178,14 +4179,14 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e = *U _byte _i2c_buff ]
 [; ;sw_i2c.c: 241: return ( RESULT_NO_ERROR);
 "241
-[e ) -> . `E3382 0 `E3382 ]
+[e ) -> . `E3383 0 `E3383 ]
 [e $UE 403  ]
 [; ;sw_i2c.c: 242: }
 "242
 [e :UE 403 ]
 }
 "254
-[v _sw_i2c_write_byte `(E3382 ~T0 @X0 1 ef1`uc ]
+[v _sw_i2c_write_byte `(E3383 ~T0 @X0 1 ef1`uc ]
 {
 [; ;sw_i2c.c: 254: ResultError_t sw_i2c_write_byte(UINT8 byte) {
 [e :U _sw_i2c_write_byte ]
@@ -4209,11 +4210,11 @@ Version 3.2 HI-TECH Software Intermediate Code
 {
 [; ;sw_i2c.c: 260: if (this_clock_test1() != RESULT_NO_ERROR) {
 "260
-[e $ ! != -> ( _this_clock_test1 ..  `i -> . `E3382 0 `i 415  ]
+[e $ ! != -> ( _this_clock_test1 ..  `i -> . `E3383 0 `i 415  ]
 {
 [; ;sw_i2c.c: 261: return ( RESULT_ERROR);
 "261
-[e ) -> . `E3382 1 `E3382 ]
+[e ) -> . `E3383 1 `E3383 ]
 [e $UE 410  ]
 "262
 }

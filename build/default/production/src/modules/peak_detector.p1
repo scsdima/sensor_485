@@ -5,8 +5,8 @@ Version 3.2 HI-TECH Software Intermediate Code
 [n S389 . wtrigger tolerance lval_cnt rval_cnt ]
 [s S390 `i -> 20 `i `uc 1 `ui 1 `i -> 20 `i `uc 1 `i 1 `i 1 `i 1 `i 1 `i 1 `S391 1 `S389 1 ]
 [n S390 . last_v_buf last_v_idx last_v ref_v_buf ref_v_idx ref_v avlv cur_v next_v wval status config ]
-[c E3585 0 1 .. ]
-[n E3585 _BOOL FALSE TRUE  ]
+[c E3586 0 1 .. ]
+[n E3586 _BOOL FALSE TRUE  ]
 [; ;pic18f45k20.h: 44: extern volatile unsigned char SSPMSK @ 0xF77;
 "46 C:\Program Files\Microchip\xc8\v1.12\include\pic18f45k20.h
 [; ;pic18f45k20.h: 46: asm("SSPMSK equ 0F77h");
@@ -3148,7 +3148,8 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;compiler.h: 16: typedef signed long INT32;
 [; ;compiler.h: 17: typedef unsigned char IDX8;
 [; ;compiler.h: 18: typedef unsigned int IDX16;
-[; ;compiler.h: 20: typedef signed int SIZE;
+[; ;compiler.h: 20: typedef float FLOAT;
+[; ;compiler.h: 21: typedef signed int SIZE;
 [; ;typedef_global.h: 11: typedef enum {
 [; ;typedef_global.h: 12: RESULT_NO_ERROR = 0,
 [; ;typedef_global.h: 13: RESULT_ERROR = -1,
@@ -3877,7 +3878,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e = . *U _d 4 -> -> 0 `i `uc ]
 [; ;peak_detector.c: 21: d->status.firststart = TRUE;
 "21
-[e = . . *U _d 10 2 -> . `E3585 1 `uc ]
+[e = . . *U _d 10 2 -> . `E3586 1 `uc ]
 [; ;peak_detector.c: 22: }
 "22
 [e :UE 392 ]
@@ -3956,7 +3957,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e = . . *U _d 10 0 -> -> 1 `i `uc ]
 [; ;peak_detector.c: 55: return TRUE;
 "55
-[e ) -> . `E3585 1 `uc ]
+[e ) -> . `E3586 1 `uc ]
 [e $UE 397  ]
 "56
 }
@@ -3994,7 +3995,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;peak_detector.c: 64: }
 [; ;peak_detector.c: 65: d->status.alarm = FALSE;
 "65
-[e = . . *U _d 10 0 -> . `E3585 0 `uc ]
+[e = . . *U _d 10 0 -> . `E3586 0 `uc ]
 "66
 }
 [e :U 404 ]
@@ -4009,7 +4010,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 {
 [; ;peak_detector.c: 71: d->status.firststart = FALSE;
 "71
-[e = . . *U _d 10 2 -> . `E3585 0 `uc ]
+[e = . . *U _d 10 2 -> . `E3586 0 `uc ]
 "72
 }
 [e :U 410 ]
@@ -4052,7 +4053,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;peak_detector.c: 85: }
 [; ;peak_detector.c: 87: return FALSE;
 "87
-[e ) -> . `E3585 0 `uc ]
+[e ) -> . `E3586 0 `uc ]
 [e $UE 397  ]
 [; ;peak_detector.c: 88: }
 "88

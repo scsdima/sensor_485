@@ -1,18 +1,18 @@
 Version 3.2 HI-TECH Software Intermediate Code
-[c E4325 0 1 2 3 4 5 6 7 .. ]
-[n E4325 . PROFILE_DIS PROFILE1 PROFILE2 PROFILE3 PROFILE4 PROFILE5 PROFILE6 PROFILES_COUNT  ]
-[c E4304 0 1 2 3 .. ]
-[n E4304 . DETECTION_MODE_OFF DETECTION_MODE_CLA DETECTION_MODE_PEAK DETECTION_MODE_COUNT  ]
+[c E4326 0 1 2 3 4 5 6 7 .. ]
+[n E4326 . PROFILE_DIS PROFILE1 PROFILE2 PROFILE3 PROFILE4 PROFILE5 PROFILE6 PROFILES_COUNT  ]
+[c E4305 0 1 2 3 .. ]
+[n E4305 . DETECTION_MODE_OFF DETECTION_MODE_CLA DETECTION_MODE_PEAK DETECTION_MODE_COUNT  ]
 [s S394 `i 1 `i 1 `i 1 ]
 [n S394 . sig_max_count sig_sum_trig sig_trig ]
 [s S391 `i 1 `i 1 `uc 1 `uc 1 ]
 [n S391 . wtrigger tolerance lval_cnt rval_cnt ]
-[s S397 `uc 1 `E4325 1 `uc 1 `uc 1 `uc 1 `ui 1 `E4304 1 `S394 1 `S391 1 ]
+[s S397 `uc 1 `E4326 1 `uc 1 `uc 1 `uc 1 `ui 1 `E4305 1 `S394 1 `S391 1 ]
 [n S397 . checksum profile_number address potentiometer acc_sensitivity power_trig det_mode cla_config pd_config ]
 "8 src/modules\scheduler.h
-[v F4426 `(v ~T0 @X0 0 tf ]
-[c E3388 1 0 .. ]
-[n E3388 . RESULT_SUCCESS RESULT_FAIL  ]
+[v F4427 `(v ~T0 @X0 0 tf ]
+[c E3389 1 0 .. ]
+[n E3389 . RESULT_SUCCESS RESULT_FAIL  ]
 "5 src/drivers\gpio.h
 [v _gpio_init `(v ~T0 @X0 0 ef ]
 "17 src/drivers\sysclk.h
@@ -28,7 +28,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 "13 src/drivers\uart.h
 [v _uart_puts `(v ~T0 @X0 0 ef2`*Cuc`i ]
 "7 src/modules\serialport.h
-[v _serialport_startup `(E3388 ~T0 @X0 0 ef ]
+[v _serialport_startup `(E3389 ~T0 @X0 0 ef ]
 [; ;pic18f45k20.h: 44: extern volatile unsigned char SSPMSK @ 0xF77;
 "46 C:\Program Files\Microchip\xc8\v1.12\include\pic18f45k20.h
 [; ;pic18f45k20.h: 46: asm("SSPMSK equ 0F77h");
@@ -3170,7 +3170,8 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;compiler.h: 16: typedef signed long INT32;
 [; ;compiler.h: 17: typedef unsigned char IDX8;
 [; ;compiler.h: 18: typedef unsigned int IDX16;
-[; ;compiler.h: 20: typedef signed int SIZE;
+[; ;compiler.h: 20: typedef float FLOAT;
+[; ;compiler.h: 21: typedef signed int SIZE;
 [; ;typedef_global.h: 11: typedef enum {
 [; ;typedef_global.h: 12: RESULT_NO_ERROR = 0,
 [; ;typedef_global.h: 13: RESULT_ERROR = -1,
@@ -4074,24 +4075,24 @@ Version 3.2 HI-TECH Software Intermediate Code
 [v _pool `Vuc ~T0 @X0 -> 8 `i e ]
 [; ;modules\scheduler.h: 15: volatile UINT8 pool[8];
 "8
-[v _PEVENT `*F4426 ~T0 @X0 1 t ]
+[v _PEVENT `*F4427 ~T0 @X0 1 t ]
 "16
-[v _events `V*F4426 ~T0 @X0 -> 8 `i e ]
+[v _events `V*F4427 ~T0 @X0 -> 8 `i e ]
 [; ;modules\scheduler.h: 16: volatile PEVENT events[8];
 "17
 [v _event_miss `Vuc ~T0 @X0 -> 8 `i e ]
 [; ;modules\scheduler.h: 17: volatile UINT8 event_miss[8];
 "16 src/startup/startup.c
-[v _startup `(E3388 ~T0 @X0 1 ef ]
+[v _startup `(E3389 ~T0 @X0 1 ef ]
 {
 [; ;startup.c: 15: ResultSuccess_t startup(void)
 [; ;startup.c: 16: {
 [e :U _startup ]
 [f ]
 "17
-[v _result `E3388 ~T0 @X0 1 a ]
+[v _result `E3389 ~T0 @X0 1 a ]
 [; ;startup.c: 17: ResultSuccess_t result = RESULT_FAIL;
-[e = _result -> . `E3388 1 `E3388 ]
+[e = _result -> . `E3389 1 `E3389 ]
 [; ;startup.c: 18: gpio_init();
 "18
 [e ( _gpio_init ..  ]
@@ -4106,10 +4107,10 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e ( _uart_init ..  ]
 [; ;startup.c: 22: events[(5)] = (PEVENT)serialport_task;
 "22
-[e = *U + &U _events * -> -> -> 5 `i `ui `ux -> -> # *U &U _events `ui `ux -> -> &U _serialport_task `*F4426 `V*F4426 ]
+[e = *U + &U _events * -> -> -> 5 `i `ui `ux -> -> # *U &U _events `ui `ux -> -> &U _serialport_task `*F4427 `V*F4427 ]
 [; ;startup.c: 23: events[(2)] = (PEVENT)detection_task;
 "23
-[e = *U + &U _events * -> -> -> 2 `i `ui `ux -> -> # *U &U _events `ui `ux -> &U _detection_task `V*F4426 ]
+[e = *U + &U _events * -> -> -> 2 `i `ui `ux -> -> # *U &U _events `ui `ux -> &U _detection_task `V*F4427 ]
 [; ;startup.c: 25: uart_puts("hello",100);
 "25
 [e ( _uart_puts (2 , :s 1C -> 100 `i ]
@@ -4119,12 +4120,12 @@ Version 3.2 HI-TECH Software Intermediate Code
 {
 [; ;startup.c: 27: if(!serialport_startup()) break;
 "27
-[e $ ! ! != -> ( _serialport_startup ..  `i -> -> -> 0 `i `E3388 `i 403  ]
+[e $ ! ! != -> ( _serialport_startup ..  `i -> -> -> 0 `i `E3389 `i 403  ]
 [e $U 401  ]
 [e :U 403 ]
 [; ;startup.c: 31: result = RESULT_SUCCESS;
 "31
-[e = _result -> . `E3388 0 `E3388 ]
+[e = _result -> . `E3389 0 `E3389 ]
 "32
 }
 [e :U 401 ]

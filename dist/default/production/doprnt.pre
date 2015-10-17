@@ -284,12 +284,14 @@ const static unsigned int dpowers[] = {1, 10, 100, 1000, 10000,
 # 455
 int
 
-# 464
-printf(const char * f, ...)
+# 492
+sprintf(char * sp, const char * f, ...)
 {
 va_list ap;
 
-# 499
+
+
+
 signed char c;
 
 # 506
@@ -315,7 +317,7 @@ while(c = *f++) {
 if(c != '%')
 
 {
-(putch(c) );
+((*sp++ = (c)));
 continue;
 }
 
@@ -365,7 +367,7 @@ break;
 
 # 1445
 if(flag & 0x03)
-(putch('-') );
+((*sp++ = ('-')));
 
 # 1476
 }
@@ -383,7 +385,7 @@ c = (_val._val / dpowers[prec]) % 10 + '0';
 
 # 1530
 }
-(putch(c) );
+((*sp++ = (c)));
 }
 
 # 1540
@@ -391,7 +393,9 @@ c = (_val._val / dpowers[prec]) % 10 + '0';
 
 alldone:
 
-# 1547
+
+*sp = 0;
+
 return 0;
 }
 

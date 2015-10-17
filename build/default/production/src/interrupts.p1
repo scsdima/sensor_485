@@ -13,7 +13,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [n S346 . . . . . . ]
 "7091 C:\Program Files\Microchip\xc8\v1.12\include\pic18f45k20.h
 [v _INTCONbits `VS346 ~T0 @X0 0 e@4082 ]
-"28 src/drivers\delay.h
+"17 src/drivers\delay.h
 [v _delay_interrupt_service `(v ~T0 @X0 0 ef ]
 "6622 C:\Program Files\Microchip\xc8\v1.12\include\pic18f45k20.h
 [v _TMR0 `Vus ~T0 @X0 0 e@4054 ]
@@ -3172,7 +3172,8 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;compiler.h: 16: typedef signed long INT32;
 [; ;compiler.h: 17: typedef unsigned char IDX8;
 [; ;compiler.h: 18: typedef unsigned int IDX16;
-[; ;compiler.h: 20: typedef signed int SIZE;
+[; ;compiler.h: 20: typedef float FLOAT;
+[; ;compiler.h: 21: typedef signed int SIZE;
 [; ;typedef_global.h: 11: typedef enum {
 [; ;typedef_global.h: 12: RESULT_NO_ERROR = 0,
 [; ;typedef_global.h: 13: RESULT_ERROR = -1,
@@ -3901,12 +3902,12 @@ Version 3.2 HI-TECH Software Intermediate Code
 [p x EBTR3=OFF ]
 "62
 [p x EBTRB=OFF ]
-[; ;drivers\delay.h: 19: extern volatile UINT16 this_delay_timerMs;
-[; ;drivers\delay.h: 20: extern volatile UINT16 this_delay_timerUs;
-[; ;drivers\delay.h: 23: void delay_ms(UINT16 delay);
-[; ;drivers\delay.h: 24: void delay_timeout_set(UINT16 delay);
-[; ;drivers\delay.h: 25: inline CHAR delay_timeout(void);
-[; ;drivers\delay.h: 28: void delay_interrupt_service(void);
+[; ;drivers\delay.h: 8: extern volatile UINT16 this_delay_timerMs;
+[; ;drivers\delay.h: 9: extern volatile UINT16 this_delay_timerUs;
+[; ;drivers\delay.h: 12: void delay_ms(UINT16 delay);
+[; ;drivers\delay.h: 13: void delay_timeout_set(UINT16 delay);
+[; ;drivers\delay.h: 14: inline CHAR delay_timeout(void);
+[; ;drivers\delay.h: 17: void delay_interrupt_service(void);
 [; ;modules\serialport.h: 7: ResultSuccess_t serialport_startup(void);
 [; ;modules\serialport.h: 10: void serialport_service(void);
 [; ;modules\serialport.h: 13: void serialport_task();
@@ -3976,8 +3977,8 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;modules\detection.h: 25: void detection_task(void);
 [; ;modules\detection.h: 26: void detection_obtain_analog_service(void);
 "16 src/interrupts.c
-[v F4304 `(v ~T0 @X0 1 tf ]
-[v _isr_high `IF4304 ~T0 @X0 1 s ]
+[v F4305 `(v ~T0 @X0 1 tf ]
+[v _isr_high `IF4305 ~T0 @X0 1 s ]
 {
 [; ;interrupts.c: 15: interrupt static void isr_high(void)
 [; ;interrupts.c: 16: {

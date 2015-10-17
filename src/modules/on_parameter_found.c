@@ -41,6 +41,8 @@ void on_parameter_found(ParserOperation_t operation, INT8 cmd_id
 
 
 BOOL set_parameter(INT8 p_id ) {
+  INT16 u16_value;
+  BOOL b_value;
   BOOL ok  = FALSE;
   switch (p_id ) 
   {
@@ -49,14 +51,15 @@ BOOL set_parameter(INT8 p_id ) {
   break;
 
   case Parameter_pot:
-    SET_TRIMMER(syntax_as_integer());
+    u16_value = syntax_as_integer();
+    if(u16_value<16)
+    {
+        SET_TRIMMER(u16_value);
     ok = TRUE;
+    }
   break;
 
   case Parameter_mod:
-  break;
-
-  case Parameter_mod:         
   break;
 
   case  Parameter_profile:     
@@ -104,11 +107,11 @@ BOOL set_parameter(INT8 p_id ) {
   serialport_write( syntax_get_text() ); 
   if( ok )
   {
-		serialport_write(  ":ok " );
+		serialport_write(":ok ");
   }
   else 
   {
-	  serialport_write( ":err " );
+	  serialport_write(":err ");
   }
   return ok;
 }
@@ -169,11 +172,7 @@ break;
 }
 
   
-  if(ok) 
-    {
-	  //serialport_write( parameter_out);
-	}
-  else 
+  if(!ok)     
     {
     serialport_write( ":err " );	   
 	}
