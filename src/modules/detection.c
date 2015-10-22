@@ -16,6 +16,11 @@ PeakDetector_t    pd_detector;
 ClassicDetector_t   cla_detector;
 RdBuffer meas_buffer;
 
+BOOL detection_profile_set(UINT8 profile_number)
+{
+    // todo
+    return TRUE;
+}
 
 /* *********************************************************************
   @Function name:  detection_get_zero
@@ -129,7 +134,7 @@ void detection_task(void)
 
  ********************************************************************* */
 
- INT24   detection_get_zero(void){
+ INT16   detection_get_zero(void){
     return pd_detector.ref_v;
 }
 
@@ -139,3 +144,9 @@ void detection_task(void)
 	adc_data = adc_read(ANALOG_SIGNAL); 
 	rd_buffer_put(&meas_buffer, &adc_data);
  }
+
+BOOL detection_defaults_set(void)
+{
+  // TODO
+  return TRUE;
+}

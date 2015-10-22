@@ -4204,10 +4204,10 @@ RESULT_SUCCESS = 1,
 RESULT_FAIL = 0
 } ResultSuccess_t;
 
-# 6 "src/drivers\adc.h"
+# 12 "src/drivers\adc.h"
 void adc_init(void);
 
-UINT16 adc_read(UINT8 adc_number);
+UINT8 adc_read(UINT8 adc_number);
 void adc_enable(CHAR on);
 
 # 90 "C:\Program Files\Microchip\xc8\v1.12\include\plib\ancomp.h"
@@ -4962,17 +4962,6 @@ void Open_RTCC(void);
 void Close_RTCC(void);
 unsigned char update_RTCC(void);
 
-# 18 "src/drivers\sw_i2c.h"
-void sw_i2c_switch(UINT16 gpio_sda, UINT16 gpio_scl);
-void sw_i2c_stop(void);
-void sw_i2c_start(void);
-void sw_i2c_restart(void);
-ResultError_t sw_i2c_read_ack(void);
-ResultError_t sw_i2c_read_byte(UINT8 *byte);
-ResultError_t sw_i2c_write_byte(UINT8 byte);
-void sw_i2c_write_nak(void);
-void sw_i2c_write_ack(void);
-
 # 84 "C:\Program Files\Microchip\xc8\v1.12\include\plib\sw_spi.h"
 void OpenSWSPI(void);
 
@@ -5188,10 +5177,7 @@ CHAR rd_buffer_first(RdBuffer *pbuffer, UINT8 *prec);
 
 CHAR rd_buffer_last(RdBuffer *pbuffer, UINT8 *prec);
 
-# 3 "src/modules/rd_buffer.c"
-CHAR this_contains_crlf;
-
-# 15
+# 14 "src/modules/rd_buffer.c"
 CHAR rd_buffer_init(RdBuffer *pbuffer ,SIZE size)
 {
 CHAR result = FALSE;
@@ -5199,17 +5185,17 @@ if(pbuffer != (0) ){
 pbuffer->head.first = 0;
 pbuffer->head.last = 0;
 
-pbuffer->head.size = size;
+pbuffer->head.size = size+1;
 result = TRUE;
 }
 return result;
 }
 
-# 38
+# 37
 CHAR rd_buffer_readline(RdBuffer *pbuffer, CHAR *pdata, SIZE *psize)
 {
 *psize=0;
-if(this_contains_crlf && pdata )
+if( pdata )
 {
 CHAR ch;
 while(rd_buffer_get(pbuffer,(UINT8*)&ch))
@@ -5222,13 +5208,12 @@ break;
 *pdata++ = ch;
 (*psize)++;
 }
-this_contains_crlf = FALSE;
 return TRUE;
 }
 return FALSE;
 }
 
-# 68
+# 66
 SIZE rd_buffer_cnt(RdBuffer *pbuffer){
 SIZE sz;
 sz = pbuffer->head.last - pbuffer->head.first;
@@ -5238,28 +5223,28 @@ sz += pbuffer->head.size;
 return sz;
 }
 
-# 85
+# 83
 void rd_buffer_reset(RdBuffer *pbuffer){
 
 pbuffer->head.first=0;
 pbuffer->head.last =0;
 }
 
-# 98
+# 96
 CHAR rd_buffer_is_empty(RdBuffer *pbuffer){
 CHAR result;
 result = (CHAR)(rd_buffer_cnt(pbuffer) == 0);
 return result;
 }
 
-# 112
+# 110
 CHAR rd_buffer_is_full(RdBuffer *pbuffer){
 CHAR result;
 result = (CHAR)(rd_buffer_cnt(pbuffer) == (SIZE)pbuffer->head.size);
 return result;
 }
 
-# 127
+# 125
 CHAR rd_buffer_get(RdBuffer *pbuffer, UINT8 *prec){
 CHAR result = FALSE;
 INT16 first = pbuffer->head.first;
@@ -5276,12 +5261,11 @@ result = TRUE;
 return result;
 }
 
-# 153
+# 151
 CHAR rd_buffer_put(RdBuffer *pbuffer, UINT8 *prec){
 CHAR result = FALSE;
 SIZE sz ;
 sz = pbuffer->head.last - pbuffer->head.first;
-this_contains_crlf |= (((CHAR)*prec) == '\n') || (((CHAR)*prec) == '\r');
 
 if(sz < 0 ) {
 sz += pbuffer->head.size;
@@ -5302,7 +5286,7 @@ result = TRUE;
 return result;
 }
 
-# 190
+# 187
 CHAR rd_buffer_getn(RdBuffer *pbuffer, UINT8 prec[], SIZE rec_count){
 SIZE i=0;
 CHAR result = TRUE;
@@ -5316,7 +5300,7 @@ i++;
 return result;
 }
 
-# 213
+# 210
 CHAR rd_buffer_first(RdBuffer *pbuffer, UINT8 *prec){
 CHAR result = FALSE;
 if(rd_buffer_cnt(pbuffer) > 0){
@@ -5328,7 +5312,7 @@ result = TRUE;
 return result;
 }
 
-# 233
+# 230
 CHAR rd_buffer_last(RdBuffer *pbuffer, UINT8 *prec){
 CHAR result = FALSE;
 if(rd_buffer_cnt(pbuffer) > 0){

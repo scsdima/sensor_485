@@ -4204,10 +4204,10 @@ RESULT_SUCCESS = 1,
 RESULT_FAIL = 0
 } ResultSuccess_t;
 
-# 6 "src/drivers\adc.h"
+# 12 "src/drivers\adc.h"
 void adc_init(void);
 
-UINT16 adc_read(UINT8 adc_number);
+UINT8 adc_read(UINT8 adc_number);
 void adc_enable(CHAR on);
 
 # 90 "C:\Program Files\Microchip\xc8\v1.12\include\plib\ancomp.h"
@@ -4962,17 +4962,6 @@ void Open_RTCC(void);
 void Close_RTCC(void);
 unsigned char update_RTCC(void);
 
-# 18 "src/drivers\sw_i2c.h"
-void sw_i2c_switch(UINT16 gpio_sda, UINT16 gpio_scl);
-void sw_i2c_stop(void);
-void sw_i2c_start(void);
-void sw_i2c_restart(void);
-ResultError_t sw_i2c_read_ack(void);
-ResultError_t sw_i2c_read_byte(UINT8 *byte);
-ResultError_t sw_i2c_write_byte(UINT8 byte);
-void sw_i2c_write_nak(void);
-void sw_i2c_write_ack(void);
-
 # 84 "C:\Program Files\Microchip\xc8\v1.12\include\plib\sw_spi.h"
 void OpenSWSPI(void);
 
@@ -5377,8 +5366,9 @@ INT16 syntax_as_integer(void);
 double syntax_as_double(void);
 CHAR syntax_as_bool(void);
 UINT8 * syntax_as_bytearray(void);
+ParserType_t syntax_type(void);
 
-# 54
+# 56
 enum {
 Command_set, Command_get, Command_init, Command_selftest, Parameter_signal, Parameter_imp, Parameter_pwr, Parameter_pot, Parameter_ver, Parameter_status, Parameter_acc, Parameter_adr, Parameter_error, Parameter_defaults, Parameter_mod, Parameter_profile, Parameter_pwrtrig, Parameter_acctrig, Parameter_triglev, Parameter_trigsum, Parameter_trigcnt, Parameter_wavtole, Parameter_wavtrig, Parameter_wavlcnt, Parameter_wavrcnt, Parameter_id, Parameter_psw,
 SYNTAX_COUNT
@@ -5393,7 +5383,7 @@ static const SyntaxItem_t syntax_data[SYNTAX_COUNT] = {
 
 
 void on_parameter_found(ParserOperation_t operation ,INT8 cmd_id
-, INT8 p_id ,const void* p, ParserType_t type);
+, INT8 p_id ,const void* p);
 
 
 # 9 "src\config.h"
@@ -5571,6 +5561,7 @@ pstr++;
 }
 }
 
-void putch(unsigned char byte){
+void putch(unsigned char byte)
+{
 rd_buffer_put(&g_tx_buffer, &byte);
 }

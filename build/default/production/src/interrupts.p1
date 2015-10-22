@@ -29,7 +29,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [v _PIR1bits `VS169 ~T0 @X0 0 e@3998 ]
 "10 src/modules\serialport.h
 [v _serialport_service `(v ~T0 @X0 0 ef ]
-"26 src/modules\detection.h
+"28 src/modules\detection.h
 [v _detection_obtain_analog_service `(v ~T0 @X0 0 ef ]
 [; ;pic18f45k20.h: 44: extern volatile unsigned char SSPMSK @ 0xF77;
 "46 C:\Program Files\Microchip\xc8\v1.12\include\pic18f45k20.h
@@ -3184,9 +3184,9 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;typedef_global.h: 20: RESULT_SUCCESS = 1,
 [; ;typedef_global.h: 21: RESULT_FAIL = 0
 [; ;typedef_global.h: 22: } ResultSuccess_t;
-[; ;drivers\adc.h: 6: void adc_init(void);
-[; ;drivers\adc.h: 8: UINT16 adc_read(UINT8 adc_number);
-[; ;drivers\adc.h: 9: void adc_enable(CHAR on);
+[; ;drivers\adc.h: 12: void adc_init(void);
+[; ;drivers\adc.h: 14: UINT8 adc_read(UINT8 adc_number);
+[; ;drivers\adc.h: 15: void adc_enable(CHAR on);
 [; ;ancomp.h: 90: void Close_ancomp1( void );
 [; ;ancomp.h: 91: void Open_ancomp1(unsigned char config);
 [; ;ancomp.h: 92: void Close_ancomp2( void );
@@ -3766,15 +3766,6 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;rtcc.h: 687: void Open_RTCC(void);
 [; ;rtcc.h: 688: void Close_RTCC(void);
 [; ;rtcc.h: 689: unsigned char update_RTCC(void);
-[; ;drivers\sw_i2c.h: 18: void sw_i2c_switch(UINT16 gpio_sda, UINT16 gpio_scl);
-[; ;drivers\sw_i2c.h: 19: void sw_i2c_stop(void);
-[; ;drivers\sw_i2c.h: 20: void sw_i2c_start(void);
-[; ;drivers\sw_i2c.h: 21: void sw_i2c_restart(void);
-[; ;drivers\sw_i2c.h: 22: ResultError_t sw_i2c_read_ack(void);
-[; ;drivers\sw_i2c.h: 23: ResultError_t sw_i2c_read_byte(UINT8 *byte);
-[; ;drivers\sw_i2c.h: 24: ResultError_t sw_i2c_write_byte(UINT8 byte);
-[; ;drivers\sw_i2c.h: 25: void sw_i2c_write_nak(void);
-[; ;drivers\sw_i2c.h: 26: void sw_i2c_write_ack(void);
 [; ;sw_spi.h: 84: void OpenSWSPI(void);
 [; ;sw_spi.h: 87: char WriteSWSPI( char output);
 [; ;sw_spi.h: 90: void SetCSSWSPI(void);
@@ -3970,15 +3961,17 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;modules\detection.h: 15: DETECTION_MODE_COUNT
 [; ;modules\detection.h: 17: } DetectionMode_t;
 [; ;modules\detection.h: 20: void detection_init(void);
-[; ;modules\detection.h: 21: CHAR detection_config_apply(void);
-[; ;modules\detection.h: 22: CHAR detection_is_warning(void);
-[; ;modules\detection.h: 23: CHAR detection_is_alarm(void) ;
-[; ;modules\detection.h: 24: INT24 detection_get_zero(void) ;
-[; ;modules\detection.h: 25: void detection_task(void);
-[; ;modules\detection.h: 26: void detection_obtain_analog_service(void);
+[; ;modules\detection.h: 21: CHAR detection_profile_set(UINT8 profile_number);
+[; ;modules\detection.h: 22: CHAR detection_defaults_set(void);
+[; ;modules\detection.h: 23: CHAR detection_config_apply(void);
+[; ;modules\detection.h: 24: CHAR detection_is_warning(void);
+[; ;modules\detection.h: 25: CHAR detection_is_alarm(void) ;
+[; ;modules\detection.h: 26: INT16 detection_get_zero(void) ;
+[; ;modules\detection.h: 27: void detection_task(void);
+[; ;modules\detection.h: 28: void detection_obtain_analog_service(void);
 "16 src/interrupts.c
-[v F4305 `(v ~T0 @X0 1 tf ]
-[v _isr_high `IF4305 ~T0 @X0 1 s ]
+[v F4290 `(v ~T0 @X0 1 tf ]
+[v _isr_high `IF4290 ~T0 @X0 1 s ]
 {
 [; ;interrupts.c: 15: interrupt static void isr_high(void)
 [; ;interrupts.c: 16: {

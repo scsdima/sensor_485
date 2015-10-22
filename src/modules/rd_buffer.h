@@ -10,7 +10,7 @@
 
 typedef struct {
     struct {    
-	/*last added record*/
+	/*last added record*/   	 
     INT16  last;  
 	/*current unread rcord*/
     INT16  first;

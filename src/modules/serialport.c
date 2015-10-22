@@ -57,6 +57,7 @@ void serialport_write(const CHAR *pstr)
 	}
 }
 
-void putch(unsigned char byte){
+void putch(unsigned char byte)
+{
 	rd_buffer_put(&g_tx_buffer, &byte);
 }

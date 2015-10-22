@@ -1,8 +1,8 @@
 Version 3.2 HI-TECH Software Intermediate Code
 [c E3383 0 -1 -2 -3 .. ]
 [n E3383 . RESULT_NO_ERROR RESULT_ERROR RESULT_NULL RESULT_EMPTY  ]
-[c E4196 0 1 .. ]
-[n E4196 . EEPROM_BY_BLOCK EEPROM_BY_BYTE  ]
+[c E4177 0 1 .. ]
+[n E4177 . EEPROM_BY_BLOCK EEPROM_BY_BYTE  ]
 [; ;pic18f45k20.h: 44: extern volatile unsigned char SSPMSK @ 0xF77;
 "46 C:\Program Files\Microchip\xc8\v1.12\include\pic18f45k20.h
 [; ;pic18f45k20.h: 46: asm("SSPMSK equ 0F77h");
@@ -3156,9 +3156,9 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;typedef_global.h: 20: RESULT_SUCCESS = 1,
 [; ;typedef_global.h: 21: RESULT_FAIL = 0
 [; ;typedef_global.h: 22: } ResultSuccess_t;
-[; ;drivers\adc.h: 6: void adc_init(void);
-[; ;drivers\adc.h: 8: UINT16 adc_read(UINT8 adc_number);
-[; ;drivers\adc.h: 9: void adc_enable(CHAR on);
+[; ;drivers\adc.h: 12: void adc_init(void);
+[; ;drivers\adc.h: 14: UINT8 adc_read(UINT8 adc_number);
+[; ;drivers\adc.h: 15: void adc_enable(CHAR on);
 [; ;ancomp.h: 90: void Close_ancomp1( void );
 [; ;ancomp.h: 91: void Open_ancomp1(unsigned char config);
 [; ;ancomp.h: 92: void Close_ancomp2( void );
@@ -3738,15 +3738,6 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;rtcc.h: 687: void Open_RTCC(void);
 [; ;rtcc.h: 688: void Close_RTCC(void);
 [; ;rtcc.h: 689: unsigned char update_RTCC(void);
-[; ;drivers\sw_i2c.h: 18: void sw_i2c_switch(UINT16 gpio_sda, UINT16 gpio_scl);
-[; ;drivers\sw_i2c.h: 19: void sw_i2c_stop(void);
-[; ;drivers\sw_i2c.h: 20: void sw_i2c_start(void);
-[; ;drivers\sw_i2c.h: 21: void sw_i2c_restart(void);
-[; ;drivers\sw_i2c.h: 22: ResultError_t sw_i2c_read_ack(void);
-[; ;drivers\sw_i2c.h: 23: ResultError_t sw_i2c_read_byte(UINT8 *byte);
-[; ;drivers\sw_i2c.h: 24: ResultError_t sw_i2c_write_byte(UINT8 byte);
-[; ;drivers\sw_i2c.h: 25: void sw_i2c_write_nak(void);
-[; ;drivers\sw_i2c.h: 26: void sw_i2c_write_ack(void);
 [; ;sw_spi.h: 84: void OpenSWSPI(void);
 [; ;sw_spi.h: 87: char WriteSWSPI( char output);
 [; ;sw_spi.h: 90: void SetCSSWSPI(void);
@@ -3928,14 +3919,14 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e :UE 391 ]
 }
 "70
-[v _eeprom_write_data `(E3383 ~T0 @X0 1 ef4`ui`*Cuc`ui`E4196 ]
+[v _eeprom_write_data `(E3383 ~T0 @X0 1 ef4`ui`*Cuc`ui`E4177 ]
 {
 [; ;eeprom.c: 70: ResultError_t eeprom_write_data(UINT16 addr, const UINT8 *data, UINT16 len, EepromReadMode_t mode) {
 [e :U _eeprom_write_data ]
 [v _addr `ui ~T0 @X0 1 r1 ]
 [v _data `*Cuc ~T0 @X0 1 r2 ]
 [v _len `ui ~T0 @X0 1 r3 ]
-[v _mode `E4196 ~T0 @X0 1 r4 ]
+[v _mode `E4177 ~T0 @X0 1 r4 ]
 [f ]
 "73
 [v _result `E3383 ~T0 @X0 1 a ]
@@ -3970,14 +3961,14 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e :UE 393 ]
 }
 "153
-[v _eeprom_read_data `(E3383 ~T0 @X0 1 ef4`ui`*uc`ui`E4196 ]
+[v _eeprom_read_data `(E3383 ~T0 @X0 1 ef4`ui`*uc`ui`E4177 ]
 {
 [; ;eeprom.c: 153: ResultError_t eeprom_read_data(UINT16 addr, UINT8 *data, UINT16 len, EepromReadMode_t mode) {
 [e :U _eeprom_read_data ]
 [v _addr `ui ~T0 @X0 1 r1 ]
 [v _data `*uc ~T0 @X0 1 r2 ]
 [v _len `ui ~T0 @X0 1 r3 ]
-[v _mode `E4196 ~T0 @X0 1 r4 ]
+[v _mode `E4177 ~T0 @X0 1 r4 ]
 [f ]
 "154
 [v _result `E3383 ~T0 @X0 1 a ]

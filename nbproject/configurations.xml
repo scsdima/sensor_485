@@ -54,6 +54,8 @@
           <itemPath>src/modules/detection.h</itemPath>
           <itemPath>src/modules/on_parameter_found.c</itemPath>
           <itemPath>src/modules/scheduler.h</itemPath>
+          <itemPath>src/modules/potentiometer.c</itemPath>
+          <itemPath>src/modules/potentiometer.h</itemPath>
         </logicalFolder>
         <logicalFolder name="startup" displayName="startup" projectFiles="true">
           <itemPath>src/startup/startup.h</itemPath>
@@ -184,6 +186,7 @@
         <property key="ToolFirmwareFilePath"
                   value="Press to browse for a specific firmware version"/>
         <property key="ToolFirmwareOption.UseLatestFirmware" value="true"/>
+        <property key="firmware.download.all" value="false"/>
         <property key="hwtoolclock.frcindebug" value="false"/>
         <property key="memories.aux" value="false"/>
         <property key="memories.bootflash" value="true"/>

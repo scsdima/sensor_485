@@ -1,10 +1,10 @@
 Version 3.2 HI-TECH Software Intermediate Code
 "18 src/modules/timers.h
-[v F4176 `(v ~T0 @X0 0 tf ]
-[s S389 `uc 1 `ui 1 `uc 1 `ui 1 `*F4176 1 ]
+[v F4157 `(v ~T0 @X0 0 tf ]
+[s S389 `uc 1 `ui 1 `uc 1 `ui 1 `*F4157 1 ]
 [n S389 . shot timer option interval callback_function ]
-[c E4178 1 3 .. ]
-[n E4178 . TIMER_RUN TIMER_SINGLESHOT  ]
+[c E4159 1 3 .. ]
+[n E4159 . TIMER_RUN TIMER_SINGLESHOT  ]
 [c E3586 0 1 .. ]
 [n E3586 _BOOL FALSE TRUE  ]
 [; ;pic18f45k20.h: 44: extern volatile unsigned char SSPMSK @ 0xF77;
@@ -3160,9 +3160,9 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;typedef_global.h: 20: RESULT_SUCCESS = 1,
 [; ;typedef_global.h: 21: RESULT_FAIL = 0
 [; ;typedef_global.h: 22: } ResultSuccess_t;
-[; ;drivers\adc.h: 6: void adc_init(void);
-[; ;drivers\adc.h: 8: UINT16 adc_read(UINT8 adc_number);
-[; ;drivers\adc.h: 9: void adc_enable(CHAR on);
+[; ;drivers\adc.h: 12: void adc_init(void);
+[; ;drivers\adc.h: 14: UINT8 adc_read(UINT8 adc_number);
+[; ;drivers\adc.h: 15: void adc_enable(CHAR on);
 [; ;ancomp.h: 90: void Close_ancomp1( void );
 [; ;ancomp.h: 91: void Open_ancomp1(unsigned char config);
 [; ;ancomp.h: 92: void Close_ancomp2( void );
@@ -3742,15 +3742,6 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;rtcc.h: 687: void Open_RTCC(void);
 [; ;rtcc.h: 688: void Close_RTCC(void);
 [; ;rtcc.h: 689: unsigned char update_RTCC(void);
-[; ;drivers\sw_i2c.h: 18: void sw_i2c_switch(UINT16 gpio_sda, UINT16 gpio_scl);
-[; ;drivers\sw_i2c.h: 19: void sw_i2c_stop(void);
-[; ;drivers\sw_i2c.h: 20: void sw_i2c_start(void);
-[; ;drivers\sw_i2c.h: 21: void sw_i2c_restart(void);
-[; ;drivers\sw_i2c.h: 22: ResultError_t sw_i2c_read_ack(void);
-[; ;drivers\sw_i2c.h: 23: ResultError_t sw_i2c_read_byte(UINT8 *byte);
-[; ;drivers\sw_i2c.h: 24: ResultError_t sw_i2c_write_byte(UINT8 byte);
-[; ;drivers\sw_i2c.h: 25: void sw_i2c_write_nak(void);
-[; ;drivers\sw_i2c.h: 26: void sw_i2c_write_ack(void);
 [; ;sw_spi.h: 84: void OpenSWSPI(void);
 [; ;sw_spi.h: 87: char WriteSWSPI( char output);
 [; ;sw_spi.h: 90: void SetCSSWSPI(void);
@@ -3871,7 +3862,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 {
 [; ;timers.c: 55: if ((timers_list[timer_n].option & TIMER_RUN) == 0u) {
 "55
-[e $ ! == -> & -> . *U + &U _timers_list * -> _timer_n `ux -> -> # *U &U _timers_list `ui `ux 2 `i -> . `E4178 0 `i `ui -> 0 `ui 396  ]
+[e $ ! == -> & -> . *U + &U _timers_list * -> _timer_n `ux -> -> # *U &U _timers_list `ui `ux 2 `i -> . `E4159 0 `i `ui -> 0 `ui 396  ]
 {
 [; ;timers.c: 56: continue;
 "56
@@ -3889,8 +3880,8 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e = . *U + &U _timers_list * -> _timer_n `ux -> -> # *U &U _timers_list `ui `ux 0 -> . `E3586 1 `uc ]
 [; ;timers.c: 62: if (timers_list[timer_n].callback_function != (0)) {
 "62
-[v F4209 `*F4176 ~T0 @X0 1 t ]
-[e $ ! != . *U + &U _timers_list * -> _timer_n `ux -> -> # *U &U _timers_list `ui `ux 4 -> -> 0 `i `V*F4176 398  ]
+[v F4190 `*F4157 ~T0 @X0 1 t ]
+[e $ ! != . *U + &U _timers_list * -> _timer_n `ux -> -> # *U &U _timers_list `ui `ux 4 -> -> 0 `i `V*F4157 398  ]
 {
 [; ;timers.c: 63: timers_list[timer_n].callback_function();
 "63
@@ -3901,11 +3892,11 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;timers.c: 64: }
 [; ;timers.c: 65: if ((timers_list[timer_n].option & TIMER_SINGLESHOT) == TIMER_SINGLESHOT){
 "65
-[e $ ! == & -> . *U + &U _timers_list * -> _timer_n `ux -> -> # *U &U _timers_list `ui `ux 2 `i -> . `E4178 1 `i -> . `E4178 1 `i 399  ]
+[e $ ! == & -> . *U + &U _timers_list * -> _timer_n `ux -> -> # *U &U _timers_list `ui `ux 2 `i -> . `E4159 1 `i -> . `E4159 1 `i 399  ]
 {
 [; ;timers.c: 66: timers_list[timer_n].option &= ~TIMER_RUN;
 "66
-[e =& . *U + &U _timers_list * -> _timer_n `ux -> -> # *U &U _timers_list `ui `ux 2 -> ~ -> . `E4178 0 `i `uc ]
+[e =& . *U + &U _timers_list * -> _timer_n `ux -> -> # *U &U _timers_list `ui `ux 2 -> ~ -> . `E4159 0 `i `uc ]
 "67
 }
 [e :U 399 ]
@@ -3941,25 +3932,25 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e :UE 392 ]
 }
 "86
-[v _timers_setup `(uc ~T0 @X0 1 ef3`uc`ui`*F4176 ]
+[v _timers_setup `(uc ~T0 @X0 1 ef3`uc`ui`*F4157 ]
 {
 [; ;timers.c: 86: CHAR timers_setup(UINT8 timer_n, UINT16 interval, TimerCallbackPtr_t pcallback_function){
 [e :U _timers_setup ]
 [v _timer_n `uc ~T0 @X0 1 r1 ]
 [v _interval `ui ~T0 @X0 1 r2 ]
-[v _pcallback_function `*F4176 ~T0 @X0 1 r3 ]
+[v _pcallback_function `*F4157 ~T0 @X0 1 r3 ]
 [f ]
 [; ;timers.c: 87: if(pcallback_function != (0)){
 "87
-[e $ ! != _pcallback_function -> -> 0 `i `*F4176 402  ]
+[e $ ! != _pcallback_function -> -> 0 `i `*F4157 402  ]
 {
 [; ;timers.c: 88: timers_list[timer_n].interval = interval;
 "88
 [e = . *U + &U _timers_list * -> _timer_n `ux -> -> # *U &U _timers_list `ui `ux 3 _interval ]
 [; ;timers.c: 89: timers_list[timer_n].callback_function = pcallback_function;
 "89
-[v F4214 `*F4176 ~T0 @X0 1 t ]
-[e = . *U + &U _timers_list * -> _timer_n `ux -> -> # *U &U _timers_list `ui `ux 4 -> _pcallback_function `V*F4176 ]
+[v F4195 `*F4157 ~T0 @X0 1 t ]
+[e = . *U + &U _timers_list * -> _timer_n `ux -> -> # *U &U _timers_list `ui `ux 4 -> _pcallback_function `V*F4157 ]
 [; ;timers.c: 90: return TRUE;
 "90
 [e ) -> . `E3586 1 `uc ]

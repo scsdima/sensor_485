@@ -134,14 +134,14 @@ INT8 syntax_string(const char *pstr, SIZE str_len)
                     result = 0;
                     break;
                 }
-                on_parameter_found(PARSER_START, command_id, -1, (void*) NULL, PARSER_TYPE_NO_TYPE);
+                on_parameter_found(PARSER_START, command_id, -1, (void*) NULL);
             } else {
                 /* parse parameter*/
                 if (this_parse_item(pchain, &parameter_id) == TRUE) {
-                    on_parameter_found(PARSER_PARAMETER, command_id, parameter_id, (void*) parameter_value, parameter_type);
+                    on_parameter_found(PARSER_PARAMETER, command_id, parameter_id, (void*) parameter_value);
                 }/* parameter not found*/
                 else {
-                    on_parameter_found(PARSER_PARAMETER, command_id, -1, (void*) parameter_text, PARSER_TYPE_NO_TYPE);
+                    on_parameter_found(PARSER_PARAMETER, command_id, -1, (void*) parameter_text);
                 }
             }
             /* switch to next parameter */
@@ -149,9 +149,9 @@ INT8 syntax_string(const char *pstr, SIZE str_len)
         }
     }
     if (result > 0) {
-        on_parameter_found(PARSER_STOP, command_id, -1, (void*) NULL, PARSER_TYPE_NO_TYPE);
+        on_parameter_found(PARSER_STOP, command_id, -1, (void*) NULL);
     } else {
-        on_parameter_found(PARSER_ERROR, -1, -1, (void*) NULL, PARSER_TYPE_NO_TYPE);
+        on_parameter_found(PARSER_ERROR, -1, -1, (void*) NULL);
     }
 
     return result;
@@ -188,4 +188,9 @@ BOOL syntax_as_BOOL(void)
 UINT8 * syntax_as_bytearray(void)
 {
     return(UINT8*) parameter_value;
+}
+
+ParserType_t syntax_type(void)
+{
+    return parameter_type;
 }

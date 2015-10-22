@@ -4204,10 +4204,10 @@ RESULT_SUCCESS = 1,
 RESULT_FAIL = 0
 } ResultSuccess_t;
 
-# 6 "src/drivers\adc.h"
+# 12 "src/drivers\adc.h"
 void adc_init(void);
 
-UINT16 adc_read(UINT8 adc_number);
+UINT8 adc_read(UINT8 adc_number);
 void adc_enable(CHAR on);
 
 # 90 "C:\Program Files\Microchip\xc8\v1.12\include\plib\ancomp.h"
@@ -4962,17 +4962,6 @@ void Open_RTCC(void);
 void Close_RTCC(void);
 unsigned char update_RTCC(void);
 
-# 18 "src/drivers\sw_i2c.h"
-void sw_i2c_switch(UINT16 gpio_sda, UINT16 gpio_scl);
-void sw_i2c_stop(void);
-void sw_i2c_start(void);
-void sw_i2c_restart(void);
-ResultError_t sw_i2c_read_ack(void);
-ResultError_t sw_i2c_read_byte(UINT8 *byte);
-ResultError_t sw_i2c_write_byte(UINT8 byte);
-void sw_i2c_write_nak(void);
-void sw_i2c_write_ack(void);
-
 # 84 "C:\Program Files\Microchip\xc8\v1.12\include\plib\sw_spi.h"
 void OpenSWSPI(void);
 
@@ -5241,8 +5230,9 @@ INT16 syntax_as_integer(void);
 double syntax_as_double(void);
 CHAR syntax_as_bool(void);
 UINT8 * syntax_as_bytearray(void);
+ParserType_t syntax_type(void);
 
-# 54
+# 56
 enum {
 Command_set, Command_get, Command_init, Command_selftest, Parameter_signal, Parameter_imp, Parameter_pwr, Parameter_pot, Parameter_ver, Parameter_status, Parameter_acc, Parameter_adr, Parameter_error, Parameter_defaults, Parameter_mod, Parameter_profile, Parameter_pwrtrig, Parameter_acctrig, Parameter_triglev, Parameter_trigsum, Parameter_trigcnt, Parameter_wavtole, Parameter_wavtrig, Parameter_wavlcnt, Parameter_wavrcnt, Parameter_id, Parameter_psw,
 SYNTAX_COUNT
@@ -5257,7 +5247,7 @@ static const SyntaxItem_t syntax_data[SYNTAX_COUNT] = {
 
 
 void on_parameter_found(ParserOperation_t operation ,INT8 cmd_id
-, INT8 p_id ,const void* p, ParserType_t type);
+, INT8 p_id ,const void* p);
 
 # 7 "src/modules/serialport.h"
 ResultSuccess_t serialport_startup(void);
@@ -5327,66 +5317,280 @@ void serialport_write(const CHAR *pstr);
 
 #pragma config EBTRB = OFF
 
-# 7 "src/modules/on_parameter_found.c"
-CHAR set_parameter(INT8 p_id);
-CHAR get_parameter(INT8 p_id);
-CHAR run_command(void);
+# 11 "src/modules\rd_buffer.h"
+typedef struct {
+struct {
 
+INT16 last;
+
+INT16 first;
+SIZE size;
+} head;
+UINT8 list[((100))+1];
+} RdBuffer;
+
+
+
+CHAR rd_buffer_init(RdBuffer *pbuffer, SIZE size);
+
+CHAR rd_buffer_readline(RdBuffer *pbuffer, CHAR *pdata, SIZE *psize);
+
+SIZE rd_buffer_cnt(RdBuffer *pbuffer);
+
+void rd_buffer_reset(RdBuffer *pbuffer);
+
+
+CHAR rd_buffer_is_empty(RdBuffer *pbuffer);
+
+
+CHAR rd_buffer_is_full(RdBuffer *pbuffer);
+
+
+
+CHAR rd_buffer_get(RdBuffer *pbuffer,UINT8 *prec);
+
+
+CHAR rd_buffer_put(RdBuffer *pbuffer,UINT8 *prec);
+
+
+
+CHAR rd_buffer_getn(RdBuffer *pbuffer, UINT8 prec[], SIZE rec_count);
+
+CHAR rd_buffer_first(RdBuffer *pbuffer, UINT8 *prec);
+
+CHAR rd_buffer_last(RdBuffer *pbuffer, UINT8 *prec);
+
+# 14 "src/modules\peak_detector.h"
+typedef struct {
+INT16 wtrigger;
+INT16 tolerance;
+UINT8 lval_cnt;
+UINT8 rval_cnt;
+} PeakDetectorConfig_t;
+
+typedef volatile struct {
+
+INT16 last_v_buf[(20)];
+UINT8 last_v_idx;
+UINT16 last_v;
+
+INT16 ref_v_buf[(20)];
+UINT8 ref_v_idx;
+INT16 ref_v;
+
+INT16 avlv;
+INT16 cur_v;
+INT16 next_v;
+INT16 wval;
+
+struct {
+unsigned alarm : 1;
+unsigned warning : 1;
+unsigned firststart : 1;
+} status;
+
+PeakDetectorConfig_t config;
+} PeakDetector_t;
+
+
+void pd_init(PeakDetector_t *d);
+
+CHAR pd_add_value(PeakDetector_t *d, INT16 val);
+
+void pd_result(PeakDetector_t *d, INT16 *pvalue, INT16 *ptime);
+
+# 11 "src/modules\classic_detector.h"
+typedef struct {
+INT16 sig_max_count;
+INT16 sig_sum_trig;
+INT16 sig_trig;
+} ClassicDetectorConfig_t;
+
+typedef volatile struct {
+INT16 cur_v;
+INT16 zero;
+INT16 over_trig_value;
+INT16 sig_sum;
+INT16 sig_count;
+INT16 last_sig_sum;
+INT16 last_sig_count;
+struct {
+unsigned alarm : 1;
+unsigned warning : 1;
+unsigned over_trig : 1;
+} status;
+ClassicDetectorConfig_t config;
+
+} ClassicDetector_t;
+
+
+void cla_init(ClassicDetector_t *d);
+
+CHAR cla_add_value(ClassicDetector_t *d,INT16 val,INT16 zero);
+
+void cla_setup(ClassicDetector_t *d,INT16 trig, INT16 trig_sum, INT16 trig_window);
+
+void cla_result(ClassicDetector_t *d, INT16 *value, INT16 *time);
+
+# 11 "src/modules\detection.h"
+typedef enum {
+DETECTION_MODE_OFF = (UINT8)0,
+DETECTION_MODE_CLA = 1,
+DETECTION_MODE_PEAK = 2,
+DETECTION_MODE_COUNT
+
+} DetectionMode_t;
+
+
+void detection_init(void);
+CHAR detection_profile_set(UINT8 profile_number);
+CHAR detection_defaults_set(void);
+CHAR detection_config_apply(void);
+CHAR detection_is_warning(void);
+CHAR detection_is_alarm(void) ;
+INT16 detection_get_zero(void) ;
+void detection_task(void);
+void detection_obtain_analog_service(void);
+
+# 9 "src\memory_register_map.h"
+typedef enum {
+PROFILE_DIS=0,
+PROFILE1,
+PROFILE2,
+PROFILE3,
+PROFILE4,
+PROFILE5,
+PROFILE6,
+PROFILES_COUNT
+} ProfileNumber_t;
+
+
+typedef struct
+{
+UINT8 checksum;
+ProfileNumber_t profile_number;
+UINT8 address;
+UINT8 potentiometer;
+UINT8 acc_sensitivity;
+UINT16 power_trig;
+DetectionMode_t det_mode;
+ClassicDetectorConfig_t cla_config;
+PeakDetectorConfig_t pd_config;
+} Config_t;
+
+
+
+typedef struct {
+UINT16 id;
+UINT16 psw;
+} DevInf_t;
+
+
+volatile Config_t g_CONFIG;
+volatile UINT16 g_STATUS;
+volatile UINT16 g_analog0;
+volatile UINT16 g_analog1;
+volatile UINT16 g_analog2;
+
+# 53
+extern volatile Config_t g_CONFIG;
+extern volatile UINT16 g_STATUS;
+extern volatile UINT16 g_analog0;
+extern volatile UINT16 g_analog1;
+extern volatile UINT16 g_analog2;
+
+# 6 "src/modules/potentiometer.h"
+CHAR potentiometer_init();
+CHAR potentiometer_set(UINT8 value);
+
+
+# 9 "src\config.h"
+#pragma config FOSC = INTIO67
+#pragma config FCMEN = OFF
+#pragma config IESO = OFF
+
+
+#pragma config PWRT = ON
+#pragma config BOREN = OFF
+#pragma config BORV = 27
+
+
+#pragma config WDTEN = ON
+#pragma config WDTPS = 1024
+
+
+#pragma config CCP2MX = PORTC
+#pragma config PBADEN = OFF
+#pragma config LPT1OSC = ON
+#pragma config HFOFST = ON
+#pragma config MCLRE = ON
+
+
+#pragma config STVREN = ON
+#pragma config LVP = OFF
+#pragma config XINST = OFF
+
+
+#pragma config CP0 = OFF
+#pragma config CP1 = OFF
+#pragma config CP2 = OFF
+#pragma config CP3 = OFF
+
+
+#pragma config CPB = OFF
+#pragma config CPD = OFF
+
+
+#pragma config WRT0 = OFF
+#pragma config WRT1 = OFF
+#pragma config WRT2 = OFF
+#pragma config WRT3 = OFF
+
+
+#pragma config WRTC = OFF
+#pragma config WRTB = OFF
+#pragma config WRTD = OFF
+
+
+#pragma config EBTR0 = OFF
+#pragma config EBTR1 = OFF
+#pragma config EBTR2 = OFF
+#pragma config EBTR3 = OFF
+
+
+#pragma config EBTRB = OFF
+
+# 10 "src/modules/on_parameter_found.c"
+static CHAR set_parameter(INT8 p_id);
+static CHAR run_command(void);
+static CHAR ok;
+static UINT16 u16_value;
 
 void on_parameter_found(ParserOperation_t operation, INT8 cmd_id
-, INT8 p_id, const void* p, ParserType_t type)
+, INT8 p_id, const void* p)
 {
-CHAR ok;
+
+
 if (operation == PARSER_PARAMETER) {
+ok = FALSE;
 switch (cmd_id) {
 case Command_set:
-ok = set_parameter(p_id);
-break;
-
-case Command_get:
-ok = get_parameter(p_id);
-break;
-
-default:
-break;
-}
-}
-
-else if (operation == PARSER_STOP) {
-
-
-
-
-}
-else if (operation == PARSER_ERROR) {
-serialport_write("err\n");
-}
-}
-
-
-CHAR set_parameter(INT8 p_id ) {
-INT16 u16_value;
-CHAR b_value;
-CHAR ok = FALSE;
-switch (p_id )
-{
+switch (p_id) {
 
 case Parameter_signal:
 break;
 
 case Parameter_pot:
 u16_value = syntax_as_integer();
-if(u16_value<16)
-{
-LATD = u16_value&0x0f;
-ok = TRUE;
-}
+ok =potentiometer_set(u16_value);
 break;
 
 case Parameter_mod:
+
 break;
 
 case Parameter_profile:
+ok = detection_profile_set(syntax_as_integer());
 break;
 
 case Parameter_pwrtrig:
@@ -5417,89 +5621,103 @@ case Parameter_wavrcnt:
 break;
 
 case Parameter_defaults:
+ok = detection_defaults_set();
 break;
 
 case Parameter_id:
+
 break;
 
 case Parameter_psw:
+
 break;
 
-
-
 }
-serialport_write( syntax_get_text() );
-if( ok )
-{
+serialport_write(syntax_get_text());
+if (ok) {
 serialport_write(":ok ");
-}
-else
-{
+} else {
 serialport_write(":err ");
 }
-return ok;
-}
 
-CHAR get_parameter(INT8 p_id) {
-CHAR ok = FALSE;
+break;
 
-serialport_write( syntax_get_text() );
+case Command_get:
+ok = FALSE;
+serialport_write(syntax_get_text());
+switch (p_id) {
 
-switch (p_id ) {
-
-case Parameter_signal :
+case Parameter_signal:
+printf("=%d\n", adc_read(1));
+ok = TRUE;
 break;
-case Parameter_imp :
+case Parameter_imp:
+printf("=%d", adc_read(1));
+ok = TRUE;
 break;
-case Parameter_pwr :
+case Parameter_pwr:
+printf("=%d\n", adc_read(2));
+ok = TRUE;
 break;
-case Parameter_pot :
+case Parameter_pot:
+printf("=%d", (g_CONFIG.potentiometer));
+ok = TRUE;
 break;
-case Parameter_ver :
+case Parameter_ver:
 break;
-case Parameter_status :
+case Parameter_status:
 break;
-case Parameter_acc :
+case Parameter_acc:
 break;
-case Parameter_adr :
+case Parameter_adr:
 break;
-case Parameter_error :
+case Parameter_error:
 break;
-case Parameter_defaults :
+case Parameter_defaults:
 break;
-case Parameter_mod :
+case Parameter_mod:
 break;
-case Parameter_profile :
+case Parameter_profile:
 break;
-case Parameter_pwrtrig :
+case Parameter_pwrtrig:
 break;
-case Parameter_acctrig :
+case Parameter_acctrig:
 break;
-case Parameter_triglev :
+case Parameter_triglev:
 break;
-case Parameter_trigsum :
+case Parameter_trigsum:
 break;
-case Parameter_trigcnt :
+case Parameter_trigcnt:
 break;
-case Parameter_wavtole :
+case Parameter_wavtole:
 break;
-case Parameter_wavtrig :
+case Parameter_wavtrig:
 break;
-case Parameter_wavlcnt :
+case Parameter_wavlcnt:
 break;
-case Parameter_wavrcnt :
+case Parameter_wavrcnt:
 break;
 case Parameter_id:
 break;
 case Parameter_psw:
 break;
 }
-
-
-if(!ok)
-{
-serialport_write( ":err " );
+if (!ok) {
+serialport_write(":err ");
 }
-return ok;
-}
+break;
 
+default:
+break;
+}
+}
+else if (operation == PARSER_STOP) {
+
+
+
+
+}
+else if (operation == PARSER_ERROR) {
+serialport_write("err\n");
+}
+}

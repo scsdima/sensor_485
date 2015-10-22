@@ -32,19 +32,11 @@
 	"buffers":
 	[
 		{
-			"file": "/C/Users/Lenovo/Dropbox/workspaces/mamba2_project/firmware/mamba2.X/src/framework/protocols/mamba_protocol/standard_protocol.c",
+			"file": "src/main.c",
 			"settings":
 			{
-				"buffer_size": 22267,
+				"buffer_size": 623,
 				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "/C/Users/Lenovo/Dropbox/workspaces/mamba2_project/firmware/mamba2.X/src/framework/protocols/mamba_protocol/standard_protocol.h",
-			"settings":
-			{
-				"buffer_size": 4278,
-				"line_ending": "Unix"
 			}
 		}
 	],
@@ -55,11 +47,11 @@
 		"selected_items":
 		[
 			[
-				"inst",
+				"ins",
 				"Package Control: Install Package"
 			],
 			[
-				"ins",
+				"inst",
 				"Package Control: Install Package"
 			],
 			[
@@ -88,34 +80,54 @@
 	},
 	"file_history":
 	[
-		"/C/Users/Lenovo/Dropbox/workspaces/mamba3_project/mamba3.X/src/modules/serialport.h",
+		"/C/Users/Lenovo/Dropbox/workspaces/mamba3_project/mamba3.X/src/modules/on_parameter_found.c",
 		"/C/Users/Lenovo/Dropbox/workspaces/mamba3_project/mamba3.X/src/modules/serialport.c",
-		"/C/Users/Lenovo/Dropbox/workspaces/mamba3_project/mamba3.X/h.txt",
-		"/C/Users/Lenovo/Dropbox/workspaces/mamba3_project/mamba3.X/src/main.c",
+		"/C/Users/Lenovo/Dropbox/workspaces/mamba3_project/mamba3.X/src/modules/detection.h",
+		"/C/Users/Lenovo/Dropbox/workspaces/mamba3_project/mamba3.X/src/modules/detection.c",
+		"/C/Users/Lenovo/Dropbox/workspaces/mamba3_project/mamba3.X/src/modules/potentiometer.h",
+		"/C/Users/Lenovo/Dropbox/workspaces/mamba3_project/mamba3.X/src/modules/potentiometer.c",
 		"/C/Users/Lenovo/Dropbox/workspaces/mamba3_project/mamba3.X/src/memory_register_map.h",
+		"/C/Users/Lenovo/Dropbox/workspaces/mamba3_project/mamba3.X/src/modules/syntax.h",
+		"/C/Users/Lenovo/Dropbox/workspaces/mamba3_project/mamba3.X/src/modules/syntax.c",
+		"/C/Users/Lenovo/Dropbox/workspaces/mamba3_project/mamba3.X/src/drivers/adc.h",
+		"/C/Users/Lenovo/Dropbox/workspaces/mamba3_project/mamba3.X/src/drivers/adc.c",
+		"/C/Users/Lenovo/Dropbox/workspaces/mamba3_project/mamba3.X/src/modules/rd_buffer.h",
+		"/C/Users/Lenovo/Dropbox/workspaces/mamba3_project/mamba3.X/src/modules/rd_buffer.c",
+		"/C/Users/Lenovo/Dropbox/workspaces/mamba3_project/mamba3.X/src/main.c",
+		"/C/Users/Lenovo/AppData/Roaming/Sublime Text 2/Packages/SublimeAStyleFormatter/SublimeAStyleFormatter.sublime-settings",
+		"/C/Users/Lenovo/AppData/Roaming/Sublime Text 2/Packages/User/SublimeAStyleFormatter.sublime-settings",
+		"/C/Users/Lenovo/Dropbox/workspaces/mamba3_project/mamba3.X/src/modules/string_utils.c",
+		"/C/Users/Lenovo/Dropbox/workspaces/mamba3_project/mamba3.X/src/modules/string_utils.h",
+		"/C/Users/Lenovo/Dropbox/workspaces/mamba3_project/mamba3.X/src/modules/meter.h",
+		"/C/Users/Lenovo/Dropbox/workspaces/mamba3_project/mamba3.X/src/modules/meter.c",
+		"/C/Users/Lenovo/Dropbox/workspaces/mamba3_project/mamba3.X/src/drivers/delay.c",
+		"/C/Users/Lenovo/Dropbox/workspaces/mamba3_project/mamba3.X/src/drivers/delay.h",
+		"/C/Users/Lenovo/Dropbox/workspaces/mamba3_project/mamba3.X/src/drivers/eeprom.h",
+		"/C/Users/Lenovo/Dropbox/workspaces/mamba3_project/mamba3.X/src/drivers/eeprom.c",
+		"/C/Users/Lenovo/Dropbox/workspaces/mamba3_project/mamba3.X/src/drivers/gpio.c",
+		"/C/Users/Lenovo/Dropbox/workspaces/mamba3_project/mamba3.X/src/drivers/gpio.h",
+		"/C/Users/Lenovo/Dropbox/workspaces/mamba3_project/mamba3.X/src/drivers/sw_i2c.c",
+		"/C/Users/Lenovo/Dropbox/workspaces/mamba3_project/mamba3.X/src/drivers/sw_i2c.h",
+		"/C/Users/Lenovo/Dropbox/workspaces/mamba2_project/firmware/mamba2.X/src/framework/protocols/mamba_protocol/standard_protocol.c",
+		"/C/Users/Lenovo/Dropbox/workspaces/mamba2_project/firmware/mamba2.X/src/framework/protocols/mamba_protocol/standard_protocol.h",
+		"/C/Users/Lenovo/Dropbox/workspaces/mamba3_project/mamba3.X/src/modules/serialport.h",
+		"/C/Users/Lenovo/Dropbox/workspaces/mamba3_project/mamba3.X/h.txt",
 		"/C/Users/Lenovo/Projects/text_protocol/syntax.h",
 		"/C/Users/Lenovo/Projects/text_protocol/test/main.c",
 		"/C/Users/Lenovo/Projects/text_protocol/syntax.c",
 		"/C/Users/Lenovo/Projects/text_protocol/cmd_data.h",
 		"/C/Users/Lenovo/Dropbox/workspaces/mamba3_project/mamba3.X/src/interrupts.c",
 		"/C/Users/Lenovo/Dropbox/workspaces/mamba3_project/mamba3.X/src/modules/scheduler.h",
-		"/C/Users/Lenovo/Dropbox/workspaces/mamba3_project/mamba3.X/src/modules/rd_buffer.h",
 		"/C/Users/Lenovo/Dropbox/workspaces/mamba3_project/mamba3.X/project.sublime-project",
 		"/C/Users/Lenovo/Dropbox/workspaces/mamba3_project/mamba3.X/src/drivers/uart.c",
-		"/C/Users/Lenovo/Dropbox/workspaces/mamba3_project/mamba3.X/src/modules/rd_buffer.c",
 		"/C/Users/Lenovo/AppData/Roaming/Sublime Text 2/Packages/User/SublimeClang.sublime-settings",
 		"/C/Users/Lenovo/AppData/Roaming/Sublime Text 2/Packages/Default/Preferences.sublime-settings",
-		"/C/Users/Lenovo/Dropbox/workspaces/mamba3_project/mamba3.X/src/drivers/adc.h",
-		"/C/Users/Lenovo/Dropbox/workspaces/mamba3_project/mamba3.X/src/drivers/gpio.c",
-		"/C/Users/Lenovo/Dropbox/workspaces/mamba3_project/mamba3.X/src/drivers/adc.c",
-		"/C/Users/Lenovo/Dropbox/workspaces/mamba3_project/mamba3.X/src/drivers/gpio.h",
 		"/C/Users/Lenovo/Dropbox/workspaces/mamba3_project/mamba3.X/src/typedef_global.h",
 		"/C/Users/Lenovo/Dropbox/workspaces/mamba3_project/mamba3.X/src/sensor_config.h",
 		"/C/Users/Lenovo/Dropbox/workspaces/mamba3_project/mamba3.X/src/startup/startup.h",
 		"/C/Users/Lenovo/Dropbox/workspaces/mamba3_project/mamba3.X/src/startup/startup.c",
 		"/C/Users/Lenovo/Dropbox/workspaces/mamba3_project/mamba3.X/src/drivers/uart.h",
 		"/C/Users/Lenovo/Dropbox/workspaces/mamba3_project/mamba3.X/src/drivers/sysclk.h",
-		"/C/Users/Lenovo/Dropbox/workspaces/mamba3_project/mamba3.X/src/drivers/eeprom.h",
 		"/C/Users/Lenovo/Dropbox/workspaces/mamba3_project/mamba3.X/src/drivers/sysclk.c",
 		"/C/Users/Lenovo/Projects/pic12_f1822.X/system.c"
 	],
@@ -135,6 +147,7 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"this_contains_crlf",
 			"parameter_text",
 			"this_parse_item",
 			"PARSER_TYPE_COMMAND",
@@ -158,23 +171,23 @@
 	"groups":
 	[
 		{
-			"selected": 1,
+			"selected": 0,
 			"sheets":
 			[
 				{
 					"buffer": 0,
-					"file": "/C/Users/Lenovo/Dropbox/workspaces/mamba2_project/firmware/mamba2.X/src/framework/protocols/mamba_protocol/standard_protocol.c",
+					"file": "src/main.c",
 					"settings":
 					{
-						"buffer_size": 22267,
+						"buffer_size": 623,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								0,
-								0
+								544,
+								544
 							]
 						],
 						"settings":
@@ -185,34 +198,6 @@
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 1,
-					"file": "/C/Users/Lenovo/Dropbox/workspaces/mamba2_project/firmware/mamba2.X/src/framework/protocols/mamba_protocol/standard_protocol.h",
-					"settings":
-					{
-						"buffer_size": 4278,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								547,
-								552
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/C++/C++.tmLanguage",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 57.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
@@ -253,7 +238,7 @@
 		"cols":
 		[
 			0.0,
-			0.92657856094,
+			0.929676511955,
 			1.0
 		],
 		"rows":
@@ -263,6 +248,10 @@
 		]
 	},
 	"menu_visible": true,
+	"output.astyle_error_message":
+	{
+		"height": 0.0
+	},
 	"output.clang":
 	{
 		"height": 45.0
@@ -296,6 +285,6 @@
 	"show_open_files": false,
 	"show_tabs": true,
 	"side_bar_visible": true,
-	"side_bar_width": 232.0,
+	"side_bar_width": 202.0,
 	"status_bar_visible": true
 }

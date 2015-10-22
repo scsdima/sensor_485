@@ -9,16 +9,6 @@ Version 3.2 HI-TECH Software Intermediate Code
 [v _ANSEL `Vuc ~T0 @X0 0 e@3966 ]
 "484
 [v _ANSELH `Vuc ~T0 @X0 0 e@3967 ]
-[s S166 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
-[n S166 . TMR1IE TMR2IE CCP1IE SSPIE TXIE RCIE ADIE PSPIE ]
-[s S167 :5 `uc 1 :1 `uc 1 ]
-[n S167 . . RC1IE ]
-[s S168 :4 `uc 1 :1 `uc 1 ]
-[n S168 . . TX1IE ]
-[u S165 `S166 1 `S167 1 `S168 1 ]
-[n S165 . . . . ]
-"3392
-[v _PIE1bits `VS165 ~T0 @X0 0 e@3997 ]
 [s S268 :1 `uc 1 :1 `uc 1 ]
 [n S268 . . GO_NOT_DONE ]
 [s S269 :1 `uc 1 :1 `uc 1 :4 `uc 1 ]
@@ -41,12 +31,10 @@ Version 3.2 HI-TECH Software Intermediate Code
 [v _ADCON0bits `VS267 ~T0 @X0 0 e@4034 ]
 [c E3557 0 1 .. ]
 [n E3557 _BOOL FALSE TRUE  ]
-"7713
-[v _GODONE `Vb ~T0 @X0 0 e@32273 ]
 "7391
 [v _ADIF `Vb ~T0 @X0 0 e@31990 ]
-"5452
-[v _ADRES `Vus ~T0 @X0 0 e@4035 ]
+"5458
+[v _ADRESL `Vuc ~T0 @X0 0 e@4035 ]
 [; ;pic18f45k20.h: 44: extern volatile unsigned char SSPMSK @ 0xF77;
 "46 C:\Program Files\Microchip\xc8\v1.12\include\pic18f45k20.h
 [; ;pic18f45k20.h: 46: asm("SSPMSK equ 0F77h");
@@ -3779,15 +3767,6 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;typedef_global.h: 20: RESULT_SUCCESS = 1,
 [; ;typedef_global.h: 21: RESULT_FAIL = 0
 [; ;typedef_global.h: 22: } ResultSuccess_t;
-[; ;drivers\sw_i2c.h: 18: void sw_i2c_switch(UINT16 gpio_sda, UINT16 gpio_scl);
-[; ;drivers\sw_i2c.h: 19: void sw_i2c_stop(void);
-[; ;drivers\sw_i2c.h: 20: void sw_i2c_start(void);
-[; ;drivers\sw_i2c.h: 21: void sw_i2c_restart(void);
-[; ;drivers\sw_i2c.h: 22: ResultError_t sw_i2c_read_ack(void);
-[; ;drivers\sw_i2c.h: 23: ResultError_t sw_i2c_read_byte(UINT8 *byte);
-[; ;drivers\sw_i2c.h: 24: ResultError_t sw_i2c_write_byte(UINT8 byte);
-[; ;drivers\sw_i2c.h: 25: void sw_i2c_write_nak(void);
-[; ;drivers\sw_i2c.h: 26: void sw_i2c_write_ack(void);
 [; ;sw_spi.h: 84: void OpenSWSPI(void);
 [; ;sw_spi.h: 87: char WriteSWSPI( char output);
 [; ;sw_spi.h: 90: void SetCSSWSPI(void);
@@ -3847,9 +3826,9 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;pic18.h: 144: extern void _delay(unsigned long);
 [; ;pic18.h: 146: extern void _delaywdt(unsigned long);
 [; ;pic18.h: 148: extern void _delay3(unsigned char);
-[; ;adc.h: 6: void adc_init(void);
-[; ;adc.h: 8: UINT16 adc_read(UINT8 adc_number);
-[; ;adc.h: 9: void adc_enable(CHAR on);
+[; ;adc.h: 12: void adc_init(void);
+[; ;adc.h: 14: UINT8 adc_read(UINT8 adc_number);
+[; ;adc.h: 15: void adc_enable(CHAR on);
 "5 src/drivers/adc.c
 [v _adc_init `(v ~T0 @X0 1 ef ]
 {
@@ -3863,18 +3842,15 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;adc.c: 7: ADCON1 = 0b00000000;
 "7
 [e = _ADCON1 -> -> 0 `i `uc ]
-[; ;adc.c: 8: ADCON2 = 0b00010110;
+[; ;adc.c: 8: ADCON2 = 0b00001000;
 "8
-[e = _ADCON2 -> -> 22 `i `uc ]
+[e = _ADCON2 -> -> 8 `i `uc ]
 [; ;adc.c: 9: ANSEL = 0b01100011;
 "9
 [e = _ANSEL -> -> 99 `i `uc ]
 [; ;adc.c: 10: ANSELH = 0;
 "10
 [e = _ANSELH -> -> 0 `i `uc ]
-[; ;adc.c: 11: PIE1bits.ADIE = 1;
-"11
-[e = . . _PIE1bits 0 6 -> -> 1 `i `uc ]
 [; ;adc.c: 13: }
 "13
 [e :UE 389 ]
@@ -3898,9 +3874,9 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e :UE 390 ]
 }
 "22
-[v _adc_read `(us ~T0 @X0 1 ef1`uc ]
+[v _adc_read `(uc ~T0 @X0 1 ef1`uc ]
 {
-[; ;adc.c: 21: UINT16 adc_read(UINT8 adc_number )
+[; ;adc.c: 21: UINT8 adc_read(UINT8 adc_number )
 [; ;adc.c: 22: {
 [e :U _adc_read ]
 [v _adc_number `uc ~T0 @X0 1 r1 ]
@@ -3930,23 +3906,21 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;adc.c: 28: ADCON0bits.GO_nDONE = TRUE;
 "28
 [e = . . _ADCON0bits 1 1 -> . `E3557 1 `uc ]
-[; ;adc.c: 29: while (GODONE) {asm(" nop");asm(" nop");}
+[; ;adc.c: 29: while (ADCON0bits.GO_nDONE) {}
 "29
 [e $U 393  ]
 [e :U 394 ]
 {
-[; <"  nop ;# ">
-[; <"  nop ;# ">
 }
 [e :U 393 ]
-[e $ _GODONE 394  ]
+[e $ != -> . . _ADCON0bits 1 1 `i -> -> -> 0 `i `Vuc `i 394  ]
 [e :U 395 ]
 [; ;adc.c: 30: ADIF = FALSE;
 "30
 [e = _ADIF -> . `E3557 0 `b ]
-[; ;adc.c: 31: return ADRES;
+[; ;adc.c: 31: return ADRESL;
 "31
-[e ) _ADRES ]
+[e ) _ADRESL ]
 [e $UE 391  ]
 [; ;adc.c: 32: }
 "32

@@ -1,13 +1,13 @@
 Version 3.2 HI-TECH Software Intermediate Code
-[c E4365 0 1 2 3 4 5 6 7 .. ]
-[n E4365 . PROFILE_DIS PROFILE1 PROFILE2 PROFILE3 PROFILE4 PROFILE5 PROFILE6 PROFILES_COUNT  ]
-[c E4344 0 1 2 3 .. ]
-[n E4344 . DETECTION_MODE_OFF DETECTION_MODE_CLA DETECTION_MODE_PEAK DETECTION_MODE_COUNT  ]
+[c E4350 0 1 2 3 4 5 6 7 .. ]
+[n E4350 . PROFILE_DIS PROFILE1 PROFILE2 PROFILE3 PROFILE4 PROFILE5 PROFILE6 PROFILES_COUNT  ]
+[c E4325 0 1 2 3 .. ]
+[n E4325 . DETECTION_MODE_OFF DETECTION_MODE_CLA DETECTION_MODE_PEAK DETECTION_MODE_COUNT  ]
 [s S394 `i 1 `i 1 `i 1 ]
 [n S394 . sig_max_count sig_sum_trig sig_trig ]
 [s S391 `i 1 `i 1 `uc 1 `uc 1 ]
 [n S391 . wtrigger tolerance lval_cnt rval_cnt ]
-[s S397 `uc 1 `E4365 1 `uc 1 `uc 1 `uc 1 `ui 1 `E4344 1 `S394 1 `S391 1 ]
+[s S397 `uc 1 `E4350 1 `uc 1 `uc 1 `uc 1 `ui 1 `E4325 1 `S394 1 `S391 1 ]
 [n S397 . checksum profile_number address potentiometer acc_sensitivity power_trig det_mode cla_config pd_config ]
 [c E3586 0 1 .. ]
 [n E3586 _BOOL FALSE TRUE  ]
@@ -17,12 +17,12 @@ Version 3.2 HI-TECH Software Intermediate Code
 [n E3383 . RESULT_NO_ERROR RESULT_ERROR RESULT_NULL RESULT_EMPTY  ]
 "20 src/modules/device_config.h
 [v _device_config_checksum `(uc ~T0 @X0 0 ef2`*uc`uc ]
-[c E4196 0 1 .. ]
-[n E4196 . EEPROM_BY_BLOCK EEPROM_BY_BYTE  ]
+[c E4177 0 1 .. ]
+[n E4177 . EEPROM_BY_BLOCK EEPROM_BY_BYTE  ]
 "19 src/drivers\eeprom.h
-[v _eeprom_write_data `(E3383 ~T0 @X0 0 ef4`ui`*Cuc`ui`E4196 ]
+[v _eeprom_write_data `(E3383 ~T0 @X0 0 ef4`ui`*Cuc`ui`E4177 ]
 "21
-[v _eeprom_read_data `(E3383 ~T0 @X0 0 ef4`ui`*uc`ui`E4196 ]
+[v _eeprom_read_data `(E3383 ~T0 @X0 0 ef4`ui`*uc`ui`E4177 ]
 [; ;pic18f45k20.h: 44: extern volatile unsigned char SSPMSK @ 0xF77;
 "46 C:\Program Files\Microchip\xc8\v1.12\include\pic18f45k20.h
 [; ;pic18f45k20.h: 46: asm("SSPMSK equ 0F77h");
@@ -3176,9 +3176,9 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;typedef_global.h: 20: RESULT_SUCCESS = 1,
 [; ;typedef_global.h: 21: RESULT_FAIL = 0
 [; ;typedef_global.h: 22: } ResultSuccess_t;
-[; ;drivers\adc.h: 6: void adc_init(void);
-[; ;drivers\adc.h: 8: UINT16 adc_read(UINT8 adc_number);
-[; ;drivers\adc.h: 9: void adc_enable(CHAR on);
+[; ;drivers\adc.h: 12: void adc_init(void);
+[; ;drivers\adc.h: 14: UINT8 adc_read(UINT8 adc_number);
+[; ;drivers\adc.h: 15: void adc_enable(CHAR on);
 [; ;ancomp.h: 90: void Close_ancomp1( void );
 [; ;ancomp.h: 91: void Open_ancomp1(unsigned char config);
 [; ;ancomp.h: 92: void Close_ancomp2( void );
@@ -3758,15 +3758,6 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;rtcc.h: 687: void Open_RTCC(void);
 [; ;rtcc.h: 688: void Close_RTCC(void);
 [; ;rtcc.h: 689: unsigned char update_RTCC(void);
-[; ;drivers\sw_i2c.h: 18: void sw_i2c_switch(UINT16 gpio_sda, UINT16 gpio_scl);
-[; ;drivers\sw_i2c.h: 19: void sw_i2c_stop(void);
-[; ;drivers\sw_i2c.h: 20: void sw_i2c_start(void);
-[; ;drivers\sw_i2c.h: 21: void sw_i2c_restart(void);
-[; ;drivers\sw_i2c.h: 22: ResultError_t sw_i2c_read_ack(void);
-[; ;drivers\sw_i2c.h: 23: ResultError_t sw_i2c_read_byte(UINT8 *byte);
-[; ;drivers\sw_i2c.h: 24: ResultError_t sw_i2c_write_byte(UINT8 byte);
-[; ;drivers\sw_i2c.h: 25: void sw_i2c_write_nak(void);
-[; ;drivers\sw_i2c.h: 26: void sw_i2c_write_ack(void);
 [; ;sw_spi.h: 84: void OpenSWSPI(void);
 [; ;sw_spi.h: 87: char WriteSWSPI( char output);
 [; ;sw_spi.h: 90: void SetCSSWSPI(void);
@@ -3986,12 +3977,14 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;modules\detection.h: 15: DETECTION_MODE_COUNT
 [; ;modules\detection.h: 17: } DetectionMode_t;
 [; ;modules\detection.h: 20: void detection_init(void);
-[; ;modules\detection.h: 21: CHAR detection_config_apply(void);
-[; ;modules\detection.h: 22: CHAR detection_is_warning(void);
-[; ;modules\detection.h: 23: CHAR detection_is_alarm(void) ;
-[; ;modules\detection.h: 24: INT24 detection_get_zero(void) ;
-[; ;modules\detection.h: 25: void detection_task(void);
-[; ;modules\detection.h: 26: void detection_obtain_analog_service(void);
+[; ;modules\detection.h: 21: CHAR detection_profile_set(UINT8 profile_number);
+[; ;modules\detection.h: 22: CHAR detection_defaults_set(void);
+[; ;modules\detection.h: 23: CHAR detection_config_apply(void);
+[; ;modules\detection.h: 24: CHAR detection_is_warning(void);
+[; ;modules\detection.h: 25: CHAR detection_is_alarm(void) ;
+[; ;modules\detection.h: 26: INT16 detection_get_zero(void) ;
+[; ;modules\detection.h: 27: void detection_task(void);
+[; ;modules\detection.h: 28: void detection_obtain_analog_service(void);
 [; ;memory_register_map.h: 9: typedef enum {
 [; ;memory_register_map.h: 10: PROFILE_DIS=0,
 [; ;memory_register_map.h: 11: PROFILE1,
@@ -4080,7 +4073,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;device_config.c: 63: result = eeprom_write_data((0x0000)
 [; ;device_config.c: 64: , p_config, sizeof(Config_t),EEPROM_BY_BYTE);
 "64
-[e = _result ( _eeprom_write_data (4 , , , -> -> 0 `i `ui -> _p_config `*Cuc -> # `S397 `ui -> . `E4196 1 `E4196 ]
+[e = _result ( _eeprom_write_data (4 , , , -> -> 0 `i `ui -> _p_config `*Cuc -> # `S397 `ui -> . `E4177 1 `E4177 ]
 [; ;device_config.c: 65: if( result == RESULT_NO_ERROR){
 "65
 [e $ ! == -> _result `i -> . `E3383 0 `i 403  ]
@@ -4136,7 +4129,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;device_config.c: 86: result = eeprom_read_data((0x0000)
 [; ;device_config.c: 87: , p_config, sizeof(Config_t), EEPROM_BY_BYTE);
 "87
-[e = _result ( _eeprom_read_data (4 , , , -> -> 0 `i `ui _p_config -> # `S397 `ui -> . `E4196 1 `E4196 ]
+[e = _result ( _eeprom_read_data (4 , , , -> -> 0 `i `ui _p_config -> # `S397 `ui -> . `E4177 1 `E4177 ]
 [; ;device_config.c: 88: checksum = device_config_checksum(&p_config[1], sizeof(Config_t) - 1);
 "88
 [e = _checksum ( _device_config_checksum (2 , &U *U + _p_config * -> -> 1 `i `x -> -> # *U _p_config `i `x -> - -> # `S397 `ui -> -> 1 `i `ui `uc ]

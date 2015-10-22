@@ -1,10 +1,10 @@
 Version 3.2 HI-TECH Software Intermediate Code
-[c E4426 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 .. ]
-[n E4426 . Command_set Command_get Command_init Command_selftest Parameter_signal Parameter_imp Parameter_pwr Parameter_pot Parameter_ver Parameter_status Parameter_acc Parameter_adr Parameter_error Parameter_defaults Parameter_mod Parameter_profile Parameter_pwrtrig Parameter_acctrig Parameter_triglev Parameter_trigsum Parameter_trigcnt Parameter_wavtole Parameter_wavtrig Parameter_wavlcnt Parameter_wavrcnt Parameter_id Parameter_psw SYNTAX_COUNT  ]
+[c E4409 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 .. ]
+[n E4409 . Command_set Command_get Command_init Command_selftest Parameter_signal Parameter_imp Parameter_pwr Parameter_pot Parameter_ver Parameter_status Parameter_acc Parameter_adr Parameter_error Parameter_defaults Parameter_mod Parameter_profile Parameter_pwrtrig Parameter_acctrig Parameter_triglev Parameter_trigsum Parameter_trigcnt Parameter_wavtole Parameter_wavtrig Parameter_wavlcnt Parameter_wavrcnt Parameter_id Parameter_psw SYNTAX_COUNT  ]
 [s S390 `uc -> 20 `i `c 1 `c 1 `c 1 ]
 [n S390 . name name_len id type ]
-[c E4392 0 1 2 3 4 5 6 .. ]
-[n E4392 . PARSER_TYPE_NO_TYPE PARSER_TYPE_BYTEARRAY PARSER_TYPE_HEXARRAY PARSER_TYPE_INTEGER PARSER_TYPE_REAL PARSER_TYPE_BOOL PARSER_TYPE_DOUBLE  ]
+[c E4373 0 1 2 3 4 5 6 .. ]
+[n E4373 . PARSER_TYPE_NO_TYPE PARSER_TYPE_BYTEARRAY PARSER_TYPE_HEXARRAY PARSER_TYPE_INTEGER PARSER_TYPE_REAL PARSER_TYPE_BOOL PARSER_TYPE_DOUBLE  ]
 [c E3586 0 1 .. ]
 [n E3586 _BOOL FALSE TRUE  ]
 "17 src/modules/string_utils.h
@@ -23,10 +23,10 @@ Version 3.2 HI-TECH Software Intermediate Code
 [v _string_utils_from_hex `(i ~T0 @X0 0 ef2`*uc`*Cuc ]
 "21
 [v _string_utils_split `(i ~T0 @X0 0 ef4`*uc`*Cuc`i`uc ]
-[c E4401 0 1 2 3 .. ]
-[n E4401 . PARSER_PARAMETER PARSER_START PARSER_STOP PARSER_ERROR  ]
-"68 src/modules/syntax.h
-[v _on_parameter_found `(v ~T0 @X0 0 ef5`E4401`c`c`*Cv`E4392 ]
+[c E4382 0 1 2 3 .. ]
+[n E4382 . PARSER_PARAMETER PARSER_START PARSER_STOP PARSER_ERROR  ]
+"70 src/modules/syntax.h
+[v _on_parameter_found `(v ~T0 @X0 0 ef4`E4382`c`c`*Cv ]
 [; ;pic18f45k20.h: 44: extern volatile unsigned char SSPMSK @ 0xF77;
 "46 C:\Program Files\Microchip\xc8\v1.12\include\pic18f45k20.h
 [; ;pic18f45k20.h: 46: asm("SSPMSK equ 0F77h");
@@ -3180,9 +3180,9 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;typedef_global.h: 20: RESULT_SUCCESS = 1,
 [; ;typedef_global.h: 21: RESULT_FAIL = 0
 [; ;typedef_global.h: 22: } ResultSuccess_t;
-[; ;drivers\adc.h: 6: void adc_init(void);
-[; ;drivers\adc.h: 8: UINT16 adc_read(UINT8 adc_number);
-[; ;drivers\adc.h: 9: void adc_enable(CHAR on);
+[; ;drivers\adc.h: 12: void adc_init(void);
+[; ;drivers\adc.h: 14: UINT8 adc_read(UINT8 adc_number);
+[; ;drivers\adc.h: 15: void adc_enable(CHAR on);
 [; ;ancomp.h: 90: void Close_ancomp1( void );
 [; ;ancomp.h: 91: void Open_ancomp1(unsigned char config);
 [; ;ancomp.h: 92: void Close_ancomp2( void );
@@ -3762,15 +3762,6 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;rtcc.h: 687: void Open_RTCC(void);
 [; ;rtcc.h: 688: void Close_RTCC(void);
 [; ;rtcc.h: 689: unsigned char update_RTCC(void);
-[; ;drivers\sw_i2c.h: 18: void sw_i2c_switch(UINT16 gpio_sda, UINT16 gpio_scl);
-[; ;drivers\sw_i2c.h: 19: void sw_i2c_stop(void);
-[; ;drivers\sw_i2c.h: 20: void sw_i2c_start(void);
-[; ;drivers\sw_i2c.h: 21: void sw_i2c_restart(void);
-[; ;drivers\sw_i2c.h: 22: ResultError_t sw_i2c_read_ack(void);
-[; ;drivers\sw_i2c.h: 23: ResultError_t sw_i2c_read_byte(UINT8 *byte);
-[; ;drivers\sw_i2c.h: 24: ResultError_t sw_i2c_write_byte(UINT8 byte);
-[; ;drivers\sw_i2c.h: 25: void sw_i2c_write_nak(void);
-[; ;drivers\sw_i2c.h: 26: void sw_i2c_write_ack(void);
 [; ;sw_spi.h: 84: void OpenSWSPI(void);
 [; ;sw_spi.h: 87: char WriteSWSPI( char output);
 [; ;sw_spi.h: 90: void SetCSSWSPI(void);
@@ -3933,12 +3924,13 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;syntax.h: 46: double syntax_as_double(void);
 [; ;syntax.h: 47: CHAR syntax_as_bool(void);
 [; ;syntax.h: 48: UINT8 * syntax_as_bytearray(void);
-[; ;syntax.h: 54: enum {
-[; ;syntax.h: 55: Command_set, Command_get, Command_init, Command_selftest, Parameter_signal, Parameter_imp, Parameter_pwr, Parameter_pot, Parameter_ver, Parameter_status, Parameter_acc, Parameter_adr, Parameter_error, Parameter_defaults, Parameter_mod, Parameter_prof
-[; ;syntax.h: 56: SYNTAX_COUNT
-[; ;syntax.h: 57: };
-"61 src/modules/syntax.h
-[v _syntax_data `CS390 ~T0 @X0 . `E4426 27 s ]
+[; ;syntax.h: 49: ParserType_t syntax_type(void);
+[; ;syntax.h: 56: enum {
+[; ;syntax.h: 57: Command_set, Command_get, Command_init, Command_selftest, Parameter_signal, Parameter_imp, Parameter_pwr, Parameter_pot, Parameter_ver, Parameter_status, Parameter_acc, Parameter_adr, Parameter_error, Parameter_defaults, Parameter_mod, Parameter_prof
+[; ;syntax.h: 58: SYNTAX_COUNT
+[; ;syntax.h: 59: };
+"63 src/modules/syntax.h
+[v _syntax_data `CS390 ~T0 @X0 . `E4409 27 s ]
 [i _syntax_data
 :U ..
 :U ..
@@ -3948,10 +3940,10 @@ Version 3.2 HI-TECH Software Intermediate Code
 -> 116 `c
 -> 0 `c
 ..
-"62
+"64
 -> - -> 4 `ui -> -> 1 `i `ui `c
--> . `E4426 0 `c
--> . `E4392 0 `c
+-> . `E4409 0 `c
+-> . `E4373 0 `c
 ..
 :U ..
 :U ..
@@ -3961,8 +3953,8 @@ Version 3.2 HI-TECH Software Intermediate Code
 -> 0 `c
 ..
 -> - -> 4 `ui -> -> 1 `i `ui `c
--> . `E4426 1 `c
--> . `E4392 0 `c
+-> . `E4409 1 `c
+-> . `E4373 0 `c
 ..
 :U ..
 :U ..
@@ -3973,8 +3965,8 @@ Version 3.2 HI-TECH Software Intermediate Code
 -> 0 `c
 ..
 -> - -> 5 `ui -> -> 1 `i `ui `c
--> . `E4426 2 `c
--> . `E4392 0 `c
+-> . `E4409 2 `c
+-> . `E4373 0 `c
 ..
 :U ..
 :U ..
@@ -3989,8 +3981,8 @@ Version 3.2 HI-TECH Software Intermediate Code
 -> 0 `c
 ..
 -> - -> 9 `ui -> -> 1 `i `ui `c
--> . `E4426 3 `c
--> . `E4392 0 `c
+-> . `E4409 3 `c
+-> . `E4373 0 `c
 ..
 :U ..
 :U ..
@@ -4003,8 +3995,8 @@ Version 3.2 HI-TECH Software Intermediate Code
 -> 0 `c
 ..
 -> - -> 7 `ui -> -> 1 `i `ui `c
--> . `E4426 4 `c
--> . `E4392 3 `c
+-> . `E4409 4 `c
+-> . `E4373 3 `c
 ..
 :U ..
 :U ..
@@ -4014,8 +4006,8 @@ Version 3.2 HI-TECH Software Intermediate Code
 -> 0 `c
 ..
 -> - -> 4 `ui -> -> 1 `i `ui `c
--> . `E4426 5 `c
--> . `E4392 3 `c
+-> . `E4409 5 `c
+-> . `E4373 3 `c
 ..
 :U ..
 :U ..
@@ -4025,8 +4017,8 @@ Version 3.2 HI-TECH Software Intermediate Code
 -> 0 `c
 ..
 -> - -> 4 `ui -> -> 1 `i `ui `c
--> . `E4426 6 `c
--> . `E4392 3 `c
+-> . `E4409 6 `c
+-> . `E4373 3 `c
 ..
 :U ..
 :U ..
@@ -4036,8 +4028,8 @@ Version 3.2 HI-TECH Software Intermediate Code
 -> 0 `c
 ..
 -> - -> 4 `ui -> -> 1 `i `ui `c
--> . `E4426 7 `c
--> . `E4392 3 `c
+-> . `E4409 7 `c
+-> . `E4373 3 `c
 ..
 :U ..
 :U ..
@@ -4047,8 +4039,8 @@ Version 3.2 HI-TECH Software Intermediate Code
 -> 0 `c
 ..
 -> - -> 4 `ui -> -> 1 `i `ui `c
--> . `E4426 8 `c
--> . `E4392 3 `c
+-> . `E4409 8 `c
+-> . `E4373 3 `c
 ..
 :U ..
 :U ..
@@ -4061,8 +4053,8 @@ Version 3.2 HI-TECH Software Intermediate Code
 -> 0 `c
 ..
 -> - -> 7 `ui -> -> 1 `i `ui `c
--> . `E4426 9 `c
--> . `E4392 3 `c
+-> . `E4409 9 `c
+-> . `E4373 3 `c
 ..
 :U ..
 :U ..
@@ -4072,8 +4064,8 @@ Version 3.2 HI-TECH Software Intermediate Code
 -> 0 `c
 ..
 -> - -> 4 `ui -> -> 1 `i `ui `c
--> . `E4426 10 `c
--> . `E4392 3 `c
+-> . `E4409 10 `c
+-> . `E4373 3 `c
 ..
 :U ..
 :U ..
@@ -4083,8 +4075,8 @@ Version 3.2 HI-TECH Software Intermediate Code
 -> 0 `c
 ..
 -> - -> 4 `ui -> -> 1 `i `ui `c
--> . `E4426 11 `c
--> . `E4392 3 `c
+-> . `E4409 11 `c
+-> . `E4373 3 `c
 ..
 :U ..
 :U ..
@@ -4096,8 +4088,8 @@ Version 3.2 HI-TECH Software Intermediate Code
 -> 0 `c
 ..
 -> - -> 6 `ui -> -> 1 `i `ui `c
--> . `E4426 12 `c
--> . `E4392 3 `c
+-> . `E4409 12 `c
+-> . `E4373 3 `c
 ..
 :U ..
 :U ..
@@ -4112,8 +4104,8 @@ Version 3.2 HI-TECH Software Intermediate Code
 -> 0 `c
 ..
 -> - -> 9 `ui -> -> 1 `i `ui `c
--> . `E4426 13 `c
--> . `E4392 3 `c
+-> . `E4409 13 `c
+-> . `E4373 3 `c
 ..
 :U ..
 :U ..
@@ -4123,8 +4115,8 @@ Version 3.2 HI-TECH Software Intermediate Code
 -> 0 `c
 ..
 -> - -> 4 `ui -> -> 1 `i `ui `c
--> . `E4426 14 `c
--> . `E4392 1 `c
+-> . `E4409 14 `c
+-> . `E4373 1 `c
 ..
 :U ..
 :U ..
@@ -4138,8 +4130,8 @@ Version 3.2 HI-TECH Software Intermediate Code
 -> 0 `c
 ..
 -> - -> 8 `ui -> -> 1 `i `ui `c
--> . `E4426 15 `c
--> . `E4392 3 `c
+-> . `E4409 15 `c
+-> . `E4373 3 `c
 ..
 :U ..
 :U ..
@@ -4153,8 +4145,8 @@ Version 3.2 HI-TECH Software Intermediate Code
 -> 0 `c
 ..
 -> - -> 8 `ui -> -> 1 `i `ui `c
--> . `E4426 16 `c
--> . `E4392 3 `c
+-> . `E4409 16 `c
+-> . `E4373 3 `c
 ..
 :U ..
 :U ..
@@ -4168,8 +4160,8 @@ Version 3.2 HI-TECH Software Intermediate Code
 -> 0 `c
 ..
 -> - -> 8 `ui -> -> 1 `i `ui `c
--> . `E4426 17 `c
--> . `E4392 3 `c
+-> . `E4409 17 `c
+-> . `E4373 3 `c
 ..
 :U ..
 :U ..
@@ -4183,8 +4175,8 @@ Version 3.2 HI-TECH Software Intermediate Code
 -> 0 `c
 ..
 -> - -> 8 `ui -> -> 1 `i `ui `c
--> . `E4426 18 `c
--> . `E4392 3 `c
+-> . `E4409 18 `c
+-> . `E4373 3 `c
 ..
 :U ..
 :U ..
@@ -4198,8 +4190,8 @@ Version 3.2 HI-TECH Software Intermediate Code
 -> 0 `c
 ..
 -> - -> 8 `ui -> -> 1 `i `ui `c
--> . `E4426 19 `c
--> . `E4392 3 `c
+-> . `E4409 19 `c
+-> . `E4373 3 `c
 ..
 :U ..
 :U ..
@@ -4213,8 +4205,8 @@ Version 3.2 HI-TECH Software Intermediate Code
 -> 0 `c
 ..
 -> - -> 8 `ui -> -> 1 `i `ui `c
--> . `E4426 20 `c
--> . `E4392 3 `c
+-> . `E4409 20 `c
+-> . `E4373 3 `c
 ..
 :U ..
 :U ..
@@ -4228,8 +4220,8 @@ Version 3.2 HI-TECH Software Intermediate Code
 -> 0 `c
 ..
 -> - -> 8 `ui -> -> 1 `i `ui `c
--> . `E4426 21 `c
--> . `E4392 3 `c
+-> . `E4409 21 `c
+-> . `E4373 3 `c
 ..
 :U ..
 :U ..
@@ -4243,8 +4235,8 @@ Version 3.2 HI-TECH Software Intermediate Code
 -> 0 `c
 ..
 -> - -> 8 `ui -> -> 1 `i `ui `c
--> . `E4426 22 `c
--> . `E4392 3 `c
+-> . `E4409 22 `c
+-> . `E4373 3 `c
 ..
 :U ..
 :U ..
@@ -4258,8 +4250,8 @@ Version 3.2 HI-TECH Software Intermediate Code
 -> 0 `c
 ..
 -> - -> 8 `ui -> -> 1 `i `ui `c
--> . `E4426 23 `c
--> . `E4392 3 `c
+-> . `E4409 23 `c
+-> . `E4373 3 `c
 ..
 :U ..
 :U ..
@@ -4273,8 +4265,8 @@ Version 3.2 HI-TECH Software Intermediate Code
 -> 0 `c
 ..
 -> - -> 8 `ui -> -> 1 `i `ui `c
--> . `E4426 24 `c
--> . `E4392 3 `c
+-> . `E4409 24 `c
+-> . `E4373 3 `c
 ..
 :U ..
 :U ..
@@ -4285,8 +4277,8 @@ Version 3.2 HI-TECH Software Intermediate Code
 -> 0 `c
 ..
 -> - -> 5 `ui -> -> 1 `i `ui `c
--> . `E4426 25 `c
--> . `E4392 3 `c
+-> . `E4409 25 `c
+-> . `E4373 3 `c
 ..
 :U ..
 :U ..
@@ -4299,16 +4291,16 @@ Version 3.2 HI-TECH Software Intermediate Code
 -> 0 `c
 ..
 -> - -> 7 `ui -> -> 1 `i `ui `c
--> . `E4426 26 `c
--> . `E4392 3 `c
+-> . `E4409 26 `c
+-> . `E4373 3 `c
 ..
 ..
 ]
-[; ;syntax.h: 61: static const SyntaxItem_t syntax_data[SYNTAX_COUNT] = {
-[; ;syntax.h: 62: {"set",sizeof("set")-1,Command_set,PARSER_TYPE_NO_TYPE}, {"get",sizeof("get")-1,Command_get,PARSER_TYPE_NO_TYPE}, {"init",sizeof("init")-1,Command_init,PARSER_TYPE_NO_TYPE}, {"selftest",sizeof("selftest")-1,Command_selftest,PARSER_TYPE_NO_TYPE}, {"si
-[; ;syntax.h: 63: };
-[; ;syntax.h: 67: void on_parameter_found(ParserOperation_t operation ,INT8 cmd_id
-[; ;syntax.h: 68: , INT8 p_id ,const void* p, ParserType_t type);
+[; ;syntax.h: 63: static const SyntaxItem_t syntax_data[SYNTAX_COUNT] = {
+[; ;syntax.h: 64: {"set",sizeof("set")-1,Command_set,PARSER_TYPE_NO_TYPE}, {"get",sizeof("get")-1,Command_get,PARSER_TYPE_NO_TYPE}, {"init",sizeof("init")-1,Command_init,PARSER_TYPE_NO_TYPE}, {"selftest",sizeof("selftest")-1,Command_selftest,PARSER_TYPE_NO_TYPE}, {"si
+[; ;syntax.h: 65: };
+[; ;syntax.h: 69: void on_parameter_found(ParserOperation_t operation ,INT8 cmd_id
+[; ;syntax.h: 70: , INT8 p_id ,const void* p);
 [; ;stdlib.h: 27: typedef struct {
 [; ;stdlib.h: 28: int rem;
 [; ;stdlib.h: 29: int quot;
@@ -4367,7 +4359,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [v _parameter_id `c ~T0 @X0 1 e ]
 [; ;syntax.c: 13: INT8 parameter_id;
 "14
-[v _parameter_type `E4392 ~T0 @X0 1 e ]
+[v _parameter_type `E4373 ~T0 @X0 1 e ]
 [; ;syntax.c: 14: ParserType_t parameter_type;
 "16
 [v _parameter_value `uc ~T0 @X0 -> 127 `ui e ]
@@ -4459,7 +4451,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 "62
 {
 [e = _i -> -> 0 `i `c ]
-[e $ < -> _i `i -> . `E4426 27 `i 399  ]
+[e $ < -> _i `i -> . `E4409 27 `i 399  ]
 [e $U 400  ]
 [e :U 399 ]
 {
@@ -4481,7 +4473,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 {
 [; ;syntax.c: 69: parameter_type = syntax_data[i].type;
 "69
-[e = _parameter_type -> . *U + &U _syntax_data * -> -> _i `uc `ux -> -> # *U &U _syntax_data `ui `ux 3 `E4392 ]
+[e = _parameter_type -> . *U + &U _syntax_data * -> -> _i `uc `ux -> -> # *U &U _syntax_data `ui `ux 3 `E4373 ]
 [; ;syntax.c: 70: switch (parameter_type) {
 "70
 [e $U 406  ]
@@ -4555,11 +4547,11 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e $U 405  ]
 "70
 [e :U 406 ]
-[e [\ _parameter_type , $ -> . `E4392 1 `E4392 407
- , $ -> . `E4392 5 `E4392 408
- , $ -> . `E4392 3 `E4392 409
- , $ -> . `E4392 6 `E4392 410
- , $ -> . `E4392 2 `E4392 411
+[e [\ _parameter_type , $ -> . `E4373 1 `E4373 407
+ , $ -> . `E4373 5 `E4373 408
+ , $ -> . `E4373 3 `E4373 409
+ , $ -> . `E4373 6 `E4373 410
+ , $ -> . `E4373 2 `E4373 411
  412 ]
 "98
 [e :U 405 ]
@@ -4580,7 +4572,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 }
 "62
 [e ++ _i -> -> 1 `i `c ]
-[e $ < -> _i `i -> . `E4426 27 `i 399  ]
+[e $ < -> _i `i -> . `E4409 27 `i 399  ]
 [e :U 400 ]
 "103
 }
@@ -4669,9 +4661,9 @@ Version 3.2 HI-TECH Software Intermediate Code
 }
 [e :U 419 ]
 [; ;syntax.c: 136: }
-[; ;syntax.c: 137: on_parameter_found(PARSER_START, command_id, -1, (void*) (0), PARSER_TYPE_NO_TYPE);
+[; ;syntax.c: 137: on_parameter_found(PARSER_START, command_id, -1, (void*) (0));
 "137
-[e ( _on_parameter_found (4 , , , , -> . `E4401 1 `E4401 _command_id -> -U -> 1 `i `c -> -> -> 0 `i `*v `*Cv -> . `E4392 0 `E4392 ]
+[e ( _on_parameter_found (4 , , , -> . `E4382 1 `E4382 _command_id -> -U -> 1 `i `c -> -> -> 0 `i `*v `*Cv ]
 "138
 }
 [; ;syntax.c: 138: } else {
@@ -4682,9 +4674,9 @@ Version 3.2 HI-TECH Software Intermediate Code
 "140
 [e $ ! == -> ( _this_parse_item (2 , -> _pchain `*Cuc &U _parameter_id `i -> . `E3586 1 `i 421  ]
 {
-[; ;syntax.c: 141: on_parameter_found(PARSER_PARAMETER, command_id, parameter_id, (void*) parameter_value, parameter_type);
+[; ;syntax.c: 141: on_parameter_found(PARSER_PARAMETER, command_id, parameter_id, (void*) parameter_value);
 "141
-[e ( _on_parameter_found (4 , , , , -> . `E4401 0 `E4401 _command_id _parameter_id -> -> &U _parameter_value `*v `*Cv _parameter_type ]
+[e ( _on_parameter_found (4 , , , -> . `E4382 0 `E4382 _command_id _parameter_id -> -> &U _parameter_value `*v `*Cv ]
 "142
 }
 [; ;syntax.c: 142: }
@@ -4693,9 +4685,9 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e :U 421 ]
 [; ;syntax.c: 143: else {
 {
-[; ;syntax.c: 144: on_parameter_found(PARSER_PARAMETER, command_id, -1, (void*) parameter_text, PARSER_TYPE_NO_TYPE);
+[; ;syntax.c: 144: on_parameter_found(PARSER_PARAMETER, command_id, -1, (void*) parameter_text);
 "144
-[e ( _on_parameter_found (4 , , , , -> . `E4401 0 `E4401 _command_id -> -U -> 1 `i `c -> -> &U _parameter_text `*v `*Cv -> . `E4392 0 `E4392 ]
+[e ( _on_parameter_found (4 , , , -> . `E4382 0 `E4382 _command_id -> -U -> 1 `i `c -> -> &U _parameter_text `*v `*Cv ]
 "145
 }
 [e :U 422 ]
@@ -4722,18 +4714,18 @@ Version 3.2 HI-TECH Software Intermediate Code
 "151
 [e $ ! > -> _result `i -> 0 `i 423  ]
 {
-[; ;syntax.c: 152: on_parameter_found(PARSER_STOP, command_id, -1, (void*) (0), PARSER_TYPE_NO_TYPE);
+[; ;syntax.c: 152: on_parameter_found(PARSER_STOP, command_id, -1, (void*) (0));
 "152
-[e ( _on_parameter_found (4 , , , , -> . `E4401 2 `E4401 _command_id -> -U -> 1 `i `c -> -> -> 0 `i `*v `*Cv -> . `E4392 0 `E4392 ]
+[e ( _on_parameter_found (4 , , , -> . `E4382 2 `E4382 _command_id -> -U -> 1 `i `c -> -> -> 0 `i `*v `*Cv ]
 "153
 }
 [; ;syntax.c: 153: } else {
 [e $U 424  ]
 [e :U 423 ]
 {
-[; ;syntax.c: 154: on_parameter_found(PARSER_ERROR, -1, -1, (void*) (0), PARSER_TYPE_NO_TYPE);
+[; ;syntax.c: 154: on_parameter_found(PARSER_ERROR, -1, -1, (void*) (0));
 "154
-[e ( _on_parameter_found (4 , , , , -> . `E4401 3 `E4401 -> -U -> 1 `i `c -> -U -> 1 `i `c -> -> -> 0 `i `*v `*Cv -> . `E4392 0 `E4392 ]
+[e ( _on_parameter_found (4 , , , -> . `E4382 3 `E4382 -> -U -> 1 `i `c -> -U -> 1 `i `c -> -> -> 0 `i `*v `*Cv ]
 "155
 }
 [e :U 424 ]
@@ -4820,4 +4812,19 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;syntax.c: 191: }
 "191
 [e :UE 429 ]
+}
+"194
+[v _syntax_type `(E4373 ~T0 @X0 1 ef ]
+{
+[; ;syntax.c: 193: ParserType_t syntax_type(void)
+[; ;syntax.c: 194: {
+[e :U _syntax_type ]
+[f ]
+[; ;syntax.c: 195: return parameter_type;
+"195
+[e ) _parameter_type ]
+[e $UE 430  ]
+[; ;syntax.c: 196: }
+"196
+[e :UE 430 ]
 }

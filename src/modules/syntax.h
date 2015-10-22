@@ -46,6 +46,8 @@ INT16 syntax_as_integer(void);
 double syntax_as_double(void);
 BOOL syntax_as_bool(void);
 UINT8 * syntax_as_bytearray(void);
+ParserType_t syntax_type(void);
+
 
 
 #include "cmd_data.h"
@@ -65,6 +67,6 @@ static const SyntaxItem_t syntax_data[SYNTAX_COUNT] = {
 
 /*declare this function must be declared in the code*/
 void on_parameter_found(ParserOperation_t operation ,INT8 cmd_id 
-			, INT8 p_id  ,const void* p, ParserType_t type);
+			, INT8 p_id  ,const void* p);
 
 #endif

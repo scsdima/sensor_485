@@ -4204,10 +4204,10 @@ RESULT_SUCCESS = 1,
 RESULT_FAIL = 0
 } ResultSuccess_t;
 
-# 6 "src/drivers\adc.h"
+# 12 "src/drivers\adc.h"
 void adc_init(void);
 
-UINT16 adc_read(UINT8 adc_number);
+UINT8 adc_read(UINT8 adc_number);
 void adc_enable(CHAR on);
 
 # 90 "C:\Program Files\Microchip\xc8\v1.12\include\plib\ancomp.h"
@@ -4962,17 +4962,6 @@ void Open_RTCC(void);
 void Close_RTCC(void);
 unsigned char update_RTCC(void);
 
-# 18 "src/drivers\sw_i2c.h"
-void sw_i2c_switch(UINT16 gpio_sda, UINT16 gpio_scl);
-void sw_i2c_stop(void);
-void sw_i2c_start(void);
-void sw_i2c_restart(void);
-ResultError_t sw_i2c_read_ack(void);
-ResultError_t sw_i2c_read_byte(UINT8 *byte);
-ResultError_t sw_i2c_write_byte(UINT8 byte);
-void sw_i2c_write_nak(void);
-void sw_i2c_write_ack(void);
-
 # 84 "C:\Program Files\Microchip\xc8\v1.12\include\plib\sw_spi.h"
 void OpenSWSPI(void);
 
@@ -5336,10 +5325,12 @@ DETECTION_MODE_COUNT
 
 
 void detection_init(void);
+CHAR detection_profile_set(UINT8 profile_number);
+CHAR detection_defaults_set(void);
 CHAR detection_config_apply(void);
 CHAR detection_is_warning(void);
 CHAR detection_is_alarm(void) ;
-INT24 detection_get_zero(void) ;
+INT16 detection_get_zero(void) ;
 void detection_task(void);
 void detection_obtain_analog_service(void);
 
@@ -5568,19 +5559,21 @@ INT16 string_utils_atoi(const char *c);
 FLOAT string_utils_atof(const char *s);
 char string_utils_toHex(unsigned char byte);
 
-# 16 "src/main.c"
-char tmp[10];
+# 17 "src/main.c"
+char tmp[20];
+
 int main(void)
 {
 while(startup() != RESULT_SUCCESS)
 {
 delay_ms(1000);
 };
-sprintf(tmp,"\n%d",string_utils_atoi("1"));
-uart_puts(tmp,100);
+
 do{INTCONbits.GIEH=(1); INTCONbits.GIEL=(1);}while(0);;
+
+# 36
 while(1)
-{ ;
+{
 do{ INT8 event_old=-1; INT8 event_priority=-1; UINT8 i; for(i=0;i<8;i++) { if(pool[i]==1) { if(event_miss[i] == 0 ) event_old=i; else event_miss[i]--; if(event_priority<0) event_priority=i; } } if(event_old >= 0) { events[event_old](); pool[event_old]=0;; } else if(event_priority >= 0) { events[event_priority](); pool[event_priority]=0;; }}while(0);;
 asm(" clrwdt");
 }

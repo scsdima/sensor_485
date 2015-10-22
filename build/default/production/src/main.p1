@@ -29,10 +29,10 @@ Version 3.2 HI-TECH Software Intermediate Code
 [v _PIR1bits `VS169 ~T0 @X0 0 e@3998 ]
 "10 src/modules\serialport.h
 [v _serialport_service `(v ~T0 @X0 0 ef ]
-"26 src/modules\detection.h
+"28 src/modules\detection.h
 [v _detection_obtain_analog_service `(v ~T0 @X0 0 ef ]
 "8 src/modules\scheduler.h
-[v F4330 `(v ~T0 @X0 0 tf ]
+[v F4315 `(v ~T0 @X0 0 tf ]
 [p mainexit ]
 "12 src/drivers\delay.h
 [v _delay_ms `(v ~T0 @X0 0 ef1`ui ]
@@ -40,12 +40,6 @@ Version 3.2 HI-TECH Software Intermediate Code
 [n E3389 . RESULT_SUCCESS RESULT_FAIL  ]
 "7 src/startup\startup.h
 [v _startup `(E3389 ~T0 @X0 0 ef ]
-"205 C:\Program Files\Microchip\xc8\v1.12\include\stdio.h
-[v _sprintf `(i ~T0 @X0 0 e1v`*uc`*Cuc ]
-"34 src/modules\string_utils.h
-[v _string_utils_atoi `(i ~T0 @X0 0 ef1`*Cuc ]
-"13 src/drivers\uart.h
-[v _uart_puts `(v ~T0 @X0 0 ef2`*Cuc`i ]
 [; ;pic18f45k20.h: 44: extern volatile unsigned char SSPMSK @ 0xF77;
 "46 C:\Program Files\Microchip\xc8\v1.12\include\pic18f45k20.h
 [; ;pic18f45k20.h: 46: asm("SSPMSK equ 0F77h");
@@ -3199,9 +3193,9 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;typedef_global.h: 20: RESULT_SUCCESS = 1,
 [; ;typedef_global.h: 21: RESULT_FAIL = 0
 [; ;typedef_global.h: 22: } ResultSuccess_t;
-[; ;drivers\adc.h: 6: void adc_init(void);
-[; ;drivers\adc.h: 8: UINT16 adc_read(UINT8 adc_number);
-[; ;drivers\adc.h: 9: void adc_enable(CHAR on);
+[; ;drivers\adc.h: 12: void adc_init(void);
+[; ;drivers\adc.h: 14: UINT8 adc_read(UINT8 adc_number);
+[; ;drivers\adc.h: 15: void adc_enable(CHAR on);
 [; ;ancomp.h: 90: void Close_ancomp1( void );
 [; ;ancomp.h: 91: void Open_ancomp1(unsigned char config);
 [; ;ancomp.h: 92: void Close_ancomp2( void );
@@ -3781,15 +3775,6 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;rtcc.h: 687: void Open_RTCC(void);
 [; ;rtcc.h: 688: void Close_RTCC(void);
 [; ;rtcc.h: 689: unsigned char update_RTCC(void);
-[; ;drivers\sw_i2c.h: 18: void sw_i2c_switch(UINT16 gpio_sda, UINT16 gpio_scl);
-[; ;drivers\sw_i2c.h: 19: void sw_i2c_stop(void);
-[; ;drivers\sw_i2c.h: 20: void sw_i2c_start(void);
-[; ;drivers\sw_i2c.h: 21: void sw_i2c_restart(void);
-[; ;drivers\sw_i2c.h: 22: ResultError_t sw_i2c_read_ack(void);
-[; ;drivers\sw_i2c.h: 23: ResultError_t sw_i2c_read_byte(UINT8 *byte);
-[; ;drivers\sw_i2c.h: 24: ResultError_t sw_i2c_write_byte(UINT8 byte);
-[; ;drivers\sw_i2c.h: 25: void sw_i2c_write_nak(void);
-[; ;drivers\sw_i2c.h: 26: void sw_i2c_write_ack(void);
 [; ;sw_spi.h: 84: void OpenSWSPI(void);
 [; ;sw_spi.h: 87: char WriteSWSPI( char output);
 [; ;sw_spi.h: 90: void SetCSSWSPI(void);
@@ -3996,15 +3981,17 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;modules\detection.h: 15: DETECTION_MODE_COUNT
 [; ;modules\detection.h: 17: } DetectionMode_t;
 [; ;modules\detection.h: 20: void detection_init(void);
-[; ;modules\detection.h: 21: CHAR detection_config_apply(void);
-[; ;modules\detection.h: 22: CHAR detection_is_warning(void);
-[; ;modules\detection.h: 23: CHAR detection_is_alarm(void) ;
-[; ;modules\detection.h: 24: INT24 detection_get_zero(void) ;
-[; ;modules\detection.h: 25: void detection_task(void);
-[; ;modules\detection.h: 26: void detection_obtain_analog_service(void);
+[; ;modules\detection.h: 21: CHAR detection_profile_set(UINT8 profile_number);
+[; ;modules\detection.h: 22: CHAR detection_defaults_set(void);
+[; ;modules\detection.h: 23: CHAR detection_config_apply(void);
+[; ;modules\detection.h: 24: CHAR detection_is_warning(void);
+[; ;modules\detection.h: 25: CHAR detection_is_alarm(void) ;
+[; ;modules\detection.h: 26: INT16 detection_get_zero(void) ;
+[; ;modules\detection.h: 27: void detection_task(void);
+[; ;modules\detection.h: 28: void detection_obtain_analog_service(void);
 "16 src/interrupts.c
-[v F4328 `(v ~T0 @X0 1 tf ]
-[v _isr_high `IF4328 ~T0 @X0 1 s ]
+[v F4313 `(v ~T0 @X0 1 tf ]
+[v _isr_high `IF4313 ~T0 @X0 1 s ]
 {
 [; ;interrupts.c: 15: interrupt static void isr_high(void)
 [; ;interrupts.c: 16: {
@@ -4075,9 +4062,9 @@ Version 3.2 HI-TECH Software Intermediate Code
 [v _pool `Vuc ~T0 @X0 -> 8 `i e ]
 [; ;modules\scheduler.h: 15: volatile UINT8 pool[8];
 "8
-[v _PEVENT `*F4330 ~T0 @X0 1 t ]
+[v _PEVENT `*F4315 ~T0 @X0 1 t ]
 "16
-[v _events `V*F4330 ~T0 @X0 -> 8 `i e ]
+[v _events `V*F4315 ~T0 @X0 -> 8 `i e ]
 [; ;modules\scheduler.h: 16: volatile PEVENT events[8];
 "17
 [v _event_miss `Vuc ~T0 @X0 -> 8 `i e ]
@@ -4209,55 +4196,49 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;modules\string_utils.h: 34: INT16 string_utils_atoi(const char *c);
 [; ;modules\string_utils.h: 35: FLOAT string_utils_atof(const char *s);
 [; ;modules\string_utils.h: 36: char string_utils_toHex(unsigned char byte);
-"16 src/main.c
-[v _tmp `uc ~T0 @X0 -> 10 `i e ]
-[; ;main.c: 16: char tmp[10];
-"18
+"17 src/main.c
+[v _tmp `uc ~T0 @X0 -> 20 `i e ]
+[; ;main.c: 17: char tmp[20];
+"20
 [v _main `(i ~T0 @X0 1 ef ]
 {
-[; ;main.c: 17: int main(void)
-[; ;main.c: 18: {
+[; ;main.c: 19: int main(void)
+[; ;main.c: 20: {
 [e :U _main ]
 [f ]
-[; ;main.c: 19: while(startup() != RESULT_SUCCESS)
-"19
+[; ;main.c: 21: while(startup() != RESULT_SUCCESS)
+"21
 [e $U 408  ]
 [e :U 409 ]
-[; ;main.c: 20: {
-"20
-{
-[; ;main.c: 21: delay_ms(1000);
-"21
-[e ( _delay_ms (1 -> -> 1000 `i `ui ]
+[; ;main.c: 22: {
 "22
+{
+[; ;main.c: 23: delay_ms(1000);
+"23
+[e ( _delay_ms (1 -> -> 1000 `i `ui ]
+"24
 }
 [e :U 408 ]
-"19
+"21
 [e $ != -> ( _startup ..  `i -> . `E3389 0 `i 409  ]
 [e :U 410 ]
-[; ;main.c: 22: };
-[; ;main.c: 23: sprintf(tmp,"\n%d",string_utils_atoi("1"));
-"23
-[e ( _sprintf (1 , (. , &U _tmp :s 1C ( _string_utils_atoi (1 :s 2C ]
-[; ;main.c: 24: uart_puts(tmp,100);
-"24
-[e ( _uart_puts (2 , -> &U _tmp `*Cuc -> 100 `i ]
-[; ;main.c: 25: do{INTCONbits.GIEH=(1); INTCONbits.GIEL=(1);}while(0);;
-"25
+[; ;main.c: 24: };
+[; ;main.c: 26: do{INTCONbits.GIEH=(1); INTCONbits.GIEL=(1);}while(0);;
+"26
 [e :U 413 ]
 {
 [e = . . _INTCONbits 2 7 -> -> 1 `i `uc ]
 [e = . . _INTCONbits 2 6 -> -> 1 `i `uc ]
 }
 [e :U 412 ]
-[; ;main.c: 26: while(1)
-"26
+[; ;main.c: 36: while(1)
+"36
 [e :U 415 ]
-[; ;main.c: 27: { ;
-"27
+[; ;main.c: 37: {
+"37
 {
-[; ;main.c: 28: do{ INT8 event_old=-1; INT8 event_priority=-1; UINT8 i; for(i=0;i<8;i++) { if(pool[i]==1) { if(event_miss[i] == 0 ) event_old=i; else event_miss[i]--; if(event_priority<0) event_priority=i; } } if(event_old >= 0) { events[event_old](); pool[event_old
-"28
+[; ;main.c: 38: do{ INT8 event_old=-1; INT8 event_priority=-1; UINT8 i; for(i=0;i<8;i++) { if(pool[i]==1) { if(event_miss[i] == 0 ) event_old=i; else event_miss[i]--; if(event_priority<0) event_priority=i; } } if(event_old >= 0) { events[event_old](); pool[event_old
+"38
 [e :U 419 ]
 {
 [v _event_old `c ~T0 @X0 1 a ]
@@ -4305,20 +4286,17 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e :U 428 ]
 }
 [e :U 418 ]
-[; ;main.c: 29: asm(" clrwdt");
-"29
+[; ;main.c: 39: asm(" clrwdt");
+"39
 [; <"  clrwdt ;# ">
-"30
+"40
 }
 [e :U 414 ]
-"26
+"36
 [e $U 415  ]
 [e :U 416 ]
-[; ;main.c: 30: }
-[; ;main.c: 31: }
-"31
+[; ;main.c: 40: }
+[; ;main.c: 41: }
+"41
 [e :UE 407 ]
 }
-[p f _sprintf 8388736 ]
-[a 1C 10 37 100 0 ]
-[a 2C 49 0 ]
