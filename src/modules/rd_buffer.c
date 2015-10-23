@@ -35,7 +35,7 @@ BOOL rd_buffer_init(RdBuffer *pbuffer ,SIZE size)
 
 ********************************************************************* */
 BOOL rd_buffer_readline(RdBuffer *pbuffer, CHAR *pdata, SIZE *psize)
-{
+{    
   *psize=0;
   if( pdata )
   {
@@ -45,12 +45,11 @@ BOOL rd_buffer_readline(RdBuffer *pbuffer, CHAR *pdata, SIZE *psize)
 	    if(ch=='\n' || ch=='\r') 
 		{
 			*(++pdata) = '\0';
-			break;
+			return TRUE;
 		}     
       *pdata++ = ch;      
       (*psize)++;
-    }    
-    return TRUE;
+    }        
   }
   return FALSE;
 }
@@ -172,71 +171,3 @@ BOOL rd_buffer_put(RdBuffer *pbuffer, UINT8 *prec){
   return result;
 }
 
-
-
-/* ********************************************************************* 
-@Function name: rd_buffer_getn
-@Return: (BOOL) successfull -1
-@Parameters: 
-      RdBuffer *pbuffer - buffer pointer
-      UINT8 rec[] -  records array
-      UINT rec_count - record count to get
-@Description: get number of records
-
-********************************************************************* */
-BOOL rd_buffer_getn(RdBuffer *pbuffer, UINT8 prec[], SIZE rec_count){
-  SIZE i=0;  
-  BOOL result = TRUE;
-  while(rec_count--){
-  if(rd_buffer_get(pbuffer, &prec[i]) == FALSE ) {
-    result = FALSE;
-    break;  
-  }
-  i++;
- }  
- return result;
-}
-
-
-/* ********************************************************************* 
-@Function name: rd_buffer_first
-@Return: (BOOL) 
-@Parameters: 
-    RdBuffer *pbuffer - buffer pointer
-    UINT8 *prec  -record pointer
-@Description: gets first element, and do not delete it from list
-
-********************************************************************* */
-BOOL rd_buffer_first(RdBuffer *pbuffer, UINT8 *prec){
-BOOL result = FALSE;
-if(rd_buffer_cnt(pbuffer) > 0){
-  INT16 ind = pbuffer->head.first;
-  volatile UINT8 *mes_rec = (volatile UINT8*)&pbuffer->list[ind];
-    (*prec) = (*mes_rec); 
-    result = TRUE;
-}
-return result;
-}
-
-/* ********************************************************************* 
-@Function name: rd_buffer_last
-@Return: (BOOL) 
-@Parameters: 
-    RdBuffer *pbuffer - buffer pointer
-    UINT8 *prec -record pointer
-@Description: gets last element, and do not delete it from list
-
-********************************************************************* */
-BOOL rd_buffer_last(RdBuffer *pbuffer, UINT8 *prec){
-BOOL result = FALSE;
-if(rd_buffer_cnt(pbuffer) > 0){  
-  INT16 ind = pbuffer->head.last - 1;
-  if(ind < 0) {
-    ind = pbuffer->head.size;
-  }
-  volatile UINT8 *mes_rec = (volatile UINT8*)&pbuffer->list[ind];
-    (*prec) = (*mes_rec); 
-    result = TRUE;
-}
-return result;
-}

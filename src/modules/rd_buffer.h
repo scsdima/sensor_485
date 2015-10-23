@@ -42,13 +42,5 @@ BOOL rd_buffer_get(RdBuffer *pbuffer,UINT8 *prec);
 /*puts record to periodical data buffer*/
 BOOL rd_buffer_put(RdBuffer *pbuffer,UINT8 *prec);
 
-
-/*get number of records*/
-BOOL rd_buffer_getn(RdBuffer *pbuffer, UINT8 prec[], SIZE rec_count);
-
-BOOL rd_buffer_first(RdBuffer *pbuffer, UINT8 *prec);
-
-BOOL rd_buffer_last(RdBuffer *pbuffer, UINT8 *prec);
-
 #endif 
 
