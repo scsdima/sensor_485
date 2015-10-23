@@ -171,3 +171,16 @@ BOOL rd_buffer_put(RdBuffer *pbuffer, UINT8 *prec){
   return result;
 }
 
+BOOL rd_buffer_contains(RdBuffer *pbuffer, CHAR ch)
+{
+  INT8 i;
+  SIZE sz = rd_buffer_cnt(pbuffer);
+  i= pbuffer->head.first;
+  while(sz--)
+  {
+    if(pbuffer->list[i] == ch) return TRUE;
+    i++;
+    if(i == pbuffer->head.size) i=0;    
+  }
+  return FALSE;
+}

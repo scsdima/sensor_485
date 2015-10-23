@@ -42,5 +42,7 @@ BOOL rd_buffer_get(RdBuffer *pbuffer,UINT8 *prec);
 /*puts record to periodical data buffer*/
 BOOL rd_buffer_put(RdBuffer *pbuffer,UINT8 *prec);
 
+BOOL rd_buffer_contains(RdBuffer *pbuffer, CHAR ch);
+
 #endif 
 
